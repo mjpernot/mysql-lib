@@ -1,0 +1,6 @@
+# Files to ignore in Git repository.
+*.pyc
+*.py.HOLD
+*swp
+lib
+.coverage*
