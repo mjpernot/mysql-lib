@@ -122,7 +122,7 @@ cd {Python_Project}/mysql-lib
 
 ### Unit:  
 ```
-test/unit/mysql_class/
+test/unit/mysql_class/Server_init.py
 ```
 
 ### All unit testing for mysql_class.py:
