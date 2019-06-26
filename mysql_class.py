@@ -31,7 +31,7 @@
 import copy
 
 # Third-party
-import MySQLdb
+import mysql.connector
 import collections
 
 # Local
@@ -1039,14 +1039,15 @@ class Server(object):
 
             # To deal with down server.
             try:
-                self.conn = MySQLdb.connect(host=self.host, user=self.sql_user,
-                                            passwd=self.sql_pass,
-                                            port=self.port)
+                self.conn = mysql.connector.connect(host=self.host,
+                                                    user=self.sql_user,
+                                                    passwd=self.sql_pass,
+                                                    port=self.port)
 
                 if database:
                     self.conn.select_db(database)
 
-            except MySQLdb.Error, err:
+            except mysql.connector.Error, err:
                 print("Couldn't connect to database.  MySQL error %d: %s" %
                       (err.args[0], err.args[1]))
 
