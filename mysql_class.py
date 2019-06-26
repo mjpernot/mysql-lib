@@ -1037,7 +1037,6 @@ class Server(object):
 
         if not self.conn:
 
-            # To deal with down server.
             try:
                 self.conn = mysql.connector.connect(host=self.host,
                                                     user=self.sql_user,
@@ -1045,7 +1044,7 @@ class Server(object):
                                                     port=self.port)
 
                 if database:
-                    self.conn.select_db(database)
+                    self.conn.database = database
 
             except mysql.connector.Error, err:
                 print("Couldn't connect to database.  MySQL error %d: %s" %

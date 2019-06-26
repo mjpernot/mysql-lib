@@ -5,7 +5,12 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 
 ## [4.0.0] - 2019-06-26
-- Replaced the MySQLdb imported module with the mysql.connector module.
+Breaking Change
+
+- Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
+
+### Changed
+- mysql_class.Server.connect:  Modified to use mysql.connector library.
 
 
 ## [3.2.1] - 2018-11-02
