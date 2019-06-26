@@ -2,13 +2,12 @@
 # Classification (U)
 
 # Description:
-  This project consists of a number of Python files that are common function libraries and classes for connecting to and operating in a MySQL database system.  These programs are not standalone programs, but are available for python programs to utilize.
+  This project consists of a number of Python files that contain common function libraries and classes for connecting to and operating in a MySQL database and Mysql replication set.
 
 
 ###  This README file is broken down into the following sections:
   * Prerequisites
   * Installation
-  * Program Descriptions
   * Testing
     - Unit
 
@@ -21,7 +20,6 @@
     - git
     - python-pip
     - mysql-connector-python
-    - MySQL-python
     - mysql-utilities
 
   * Local class/library dependencies within the program structure.
@@ -85,22 +83,6 @@ umask 022
 pip install -r requirements.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic.gov
 exit
 ```
-
-
-# Program Descriptions:
-### Program:  mysql_libs.py
-##### Description: Library of function calls for SQL commands for a MySQL database.
-
-### Program:  mysql_class.py
-##### Description: Class holding MySQL server definitions.
-##### Classes:
-  * Position:  Class which holds a binary log position for a specific server.  
-  * GTIDSet:  Class which is a representation of a GTID set within the MySQL database.
-  * Server:  Class which is a representation of a MySQL server.
-  * Row:  A row (iterator) is returned when executing a SQL statement.
-  * Rep:  Class which is a representation of a Replication MySQL server.
-  * MasterRep:  Class which is a representation of a Master Replication MySQL server.
-  * SlaveRep:  Class which is a representation of a Slave Replication MySQL server.
 
 
 # Testing
@@ -169,6 +151,4 @@ test/unit/mysql_lib/unit_test_run.sh
 ```
 test/unit/mysql_lib/code_coverage.sh
 ```
-
-
 
