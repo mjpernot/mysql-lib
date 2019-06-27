@@ -15,6 +15,7 @@ pipeline {
                 virtualenv test_env
                 source test_env/bin/activate
                 pip2 install mock --user
+                pip2 install mysql-connector-python --user
                 ./test/unit/mysql_class/Server_init.py
                 deactivate
                 rm -rf test_env
