@@ -16,6 +16,18 @@ pipeline {
                 source test_env/bin/activate
                 pip2 install mock --user
                 pip2 install mysql-connector-python --user
+                ./test/unit/mysql_class/fetch_global_var.py
+                ./test/unit/mysql_class/fetch_sys_var.py
+                ./test/unit/mysql_class/flush_logs.py
+                ./test/unit/mysql_class/show_master_stat.py
+                ./test/unit/mysql_class/show_slave_hosts.py
+                ./test/unit/mysql_class/show_slave_stat.py
+                ./test/unit/mysql_class/slave_start.py
+                ./test/unit/mysql_class/slave_stop.py
+                ./test/unit/mysql_class/GTIDSet_init.py
+                ./test/unit/mysql_class/GTIDSet_str.py
+                ./test/unit/mysql_class/GTIDSet_union.py
+                ./test/unit/mysql_class/Position_cmp.py
                 ./test/unit/mysql_class/Server_init.py
                 deactivate
                 rm -rf test_env

@@ -8,6 +8,18 @@ coverage erase
 
 echo ""
 echo "Running unit test modules in conjunction with coverage"
+coverage run -a --source=mysql_class test/unit/mysql_class/fetch_global_var.py
+coverage run -a --source=mysql_class test/unit/mysql_class/fetch_sys_var.py
+coverage run -a --source=mysql_class test/unit/mysql_class/flush_logs.py
+coverage run -a --source=mysql_class test/unit/mysql_class/show_master_stat.py
+coverage run -a --source=mysql_class test/unit/mysql_class/show_slave_hosts.py
+coverage run -a --source=mysql_class test/unit/mysql_class/show_slave_stat.py
+coverage run -a --source=mysql_class test/unit/mysql_class/slave_start.py
+coverage run -a --source=mysql_class test/unit/mysql_class/slave_stop.py
+coverage run -a --source=mysql_class test/unit/mysql_class/GTIDSet_init.py
+coverage run -a --source=mysql_class test/unit/mysql_class/GTIDSet_str.py
+coverage run -a --source=mysql_class test/unit/mysql_class/GTIDSet_union.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Position_cmp.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_init.py
 
 echo ""
