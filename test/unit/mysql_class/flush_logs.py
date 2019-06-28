@@ -45,7 +45,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        iter_commits -> Stub holder for iter_commits method.
+        sql -> Stub holder for Server.sql method.
 
     """
 
