@@ -132,6 +132,7 @@ test/unit/mysql_class/slave_start.py
 test/unit/mysql_class/slave_stop.py
 test/unit/mysql_class/GTIDSet_init.py
 test/unit/mysql_class/GTIDSet_str.py
+test/unit/mysql_class/GTIDSet_union.py
 test/unit/mysql_class/Position_cmp.py
 test/unit/mysql_class/Server_init.py
 ```
