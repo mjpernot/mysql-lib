@@ -114,7 +114,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertFalse(mysql_class.show_master_stat(self.Server)
+        self.assertTrue(mysql_class.show_master_stat(self.Server)
 
 
 if __name__ == "__main__":
