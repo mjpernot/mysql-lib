@@ -62,14 +62,15 @@ class Server(object):
 
         pass
 
-    def col_sql(self, cmd):
+    def sql(self, cmd, res_set):
 
-        """Method:  col_sql
+        """Method:  sql
 
-        Description:  Stub holder for Server.col_sql method.
+        Description:  Stub holder for Server.sql method.
 
         Arguments:
             (input) cmd -> Stub holder for argument.
+            (input) res_set -> row|all - Single row or all rows returned.
 
         """
 
@@ -114,7 +115,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_class.show_master_stat(self.Server)
+        self.assertTrue(mysql_class.show_master_stat(self.Server))
 
 
 if __name__ == "__main__":

@@ -62,7 +62,7 @@ class Server(object):
 
         pass
 
-    def sql(self, cmd):
+    def sql(self, cmd, var, res_set):
 
         """Method:  sql
 
@@ -70,6 +70,8 @@ class Server(object):
 
         Arguments:
             (input) cmd -> Stub holder for argument.
+            (input) var -> Global variable name.
+            (input) res_set -> row|all - Single row or all rows returned.
 
         """
 
@@ -114,7 +116,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_class.fetch_global_var(self.Server, "Variable")
+        self.assertTrue(mysql_class.fetch_global_var(self.Server, "Variable"))
 
 
 if __name__ == "__main__":
