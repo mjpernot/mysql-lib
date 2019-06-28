@@ -17,6 +17,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/show_slave_stat.py
 coverage run -a --source=mysql_class test/unit/mysql_class/slave_start.py
 coverage run -a --source=mysql_class test/unit/mysql_class/slave_stop.py
 coverage run -a --source=mysql_class test/unit/mysql_class/GTIDSet_init.py
+coverage run -a --source=mysql_class test/unit/mysql_class/GTIDSet_str.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Position_cmp.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_init.py
 
