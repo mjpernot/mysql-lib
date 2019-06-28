@@ -114,7 +114,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_class.show_master_stat(self.Server)
+        self.assertTrue(mysql_class.show_slave_hosts(self.Server)
 
 
 if __name__ == "__main__":
