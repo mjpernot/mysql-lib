@@ -74,9 +74,9 @@ class UnitTest(unittest.TestCase):
         """
 
         gtid1 = mysql_class.GTIDSet(self.gtidset1)
-        gtid2 = mysql_class.GTIDSet(self.gtidset2)
+        gtid2 = mysql_class.GTIDSet(self.gtidset1)
 
-        self.assertFalse(gtid1 < gtid1)
+        self.assertFalse(gtid1 < gtid2)
 
     def test_gtidset_lt_true(self):
 
