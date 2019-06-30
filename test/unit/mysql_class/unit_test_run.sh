@@ -16,6 +16,12 @@ test/unit/mysql_class/slave_stop.py
 test/unit/mysql_class/GTIDSet_init.py
 test/unit/mysql_class/GTIDSet_str.py
 test/unit/mysql_class/GTIDSet_union.py
+test/unit/mysql_class/GTIDSet_eq.py
+test/unit/mysql_class/GTIDSet_ge.py
+test/unit/mysql_class/GTIDSet_gt.py
+test/unit/mysql_class/GTIDSet_le.py
+test/unit/mysql_class/GTIDSet_lt.py
+test/unit/mysql_class/GTIDSet_ne.py
 test/unit/mysql_class/Position_cmp.py
 test/unit/mysql_class/Server_init.py
 
