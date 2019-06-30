@@ -24,4 +24,5 @@ test/unit/mysql_class/GTIDSet_lt.py
 test/unit/mysql_class/GTIDSet_ne.py
 test/unit/mysql_class/Position_cmp.py
 test/unit/mysql_class/Server_init.py
+test/unit/mysql_class/Server_setsrvbinlogcrc.py
 

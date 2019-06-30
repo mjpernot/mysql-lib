@@ -27,6 +27,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/GTIDSet_lt.py
 coverage run -a --source=mysql_class test/unit/mysql_class/GTIDSet_ne.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Position_cmp.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_init.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_setsrvbinlogcrc.py
 
 echo ""
 echo "Producing code coverage report"
