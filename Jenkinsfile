@@ -37,6 +37,12 @@ pipeline {
                 ./test/unit/mysql_class/Server_init.py
                 ./test/unit/mysql_class/Server_setsrvbinlogcrc.py
                 ./test/unit/mysql_class/Server_setsrvgtid.py
+                ./test/unit/mysql_class/Server_fetchmstrepcfg.py
+                ./test/unit/mysql_class/Server_fetchslvrepcfg.py
+                ./test/unit/mysql_class/Server_updmstrepstat.py
+                ./test/unit/mysql_class/Server_updslvrepstat.py
+                ./test/unit/mysql_class/Server_updsrvperf.py
+                ./test/unit/mysql_class/Server_updsrvstat.py
                 deactivate
                 rm -rf test_env
                 """

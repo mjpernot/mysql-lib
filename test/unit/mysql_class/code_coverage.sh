@@ -29,6 +29,12 @@ coverage run -a --source=mysql_class test/unit/mysql_class/Position_cmp.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_init.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_setsrvbinlogcrc.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_setsrvgtid.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_fetchmstrepcfg.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_fetchslvrepcfg.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_updmstrepstat.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_updslvrepstat.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_updsrvperf.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_updsrvstat.py
 
 echo ""
 echo "Producing code coverage report"
