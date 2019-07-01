@@ -6,7 +6,7 @@
     Description:  Unit testing of SlaveRep.get_thr_stat in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/SlaveRep_getthrstat.pypy
+        test/unit/mysql_class/SlaveRep_getthrstat.py
 
     Arguments:
 
