@@ -79,7 +79,7 @@ class UnitTest(unittest.TestCase):
         Arguments:
 
         """
-        
+
         mock_hosts.return_value = True
         mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
                                    self.sql_pass, self.machine,
