@@ -1085,6 +1085,20 @@ class Server(object):
         else:
             return cur.fetchall()
 
+    def cmd_sql(self, cmd):
+
+        """Method:  cmd_sql
+
+        Description:  Execute a command sql and return the status results of
+            the command executed.
+
+        Arguments:
+            (input) cmd -> Command SQL.
+            (output) Results of the command executed in dictionary format.
+
+        """
+
+        return self.conn.cmd_query(cmd)
 
 class Rep(Server):
 

@@ -18,6 +18,9 @@ Breaking Change
 - mysql_class.Server.connect:  Modified to use mysql.connector library.
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 
+### Added
+- mysql_class.Server.cmd_sql:  Method to run command sql.
+
 
 ## [3.2.1] - 2018-11-02
 ### Changed
