@@ -3,7 +3,7 @@
 
 """Program:  SlaveRep_startslave.py
 
-    Description:  Unit testing of Server.start_slave in mysql_class.py.
+    Description:  Unit testing of SlaveRep.start_slave in mysql_class.py.
 
     Usage:
         test/unit/mysql_class/SlaveRep_startslave.py
