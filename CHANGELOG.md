@@ -4,13 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
-## [4.0.0] - 2019-06-26
+## [4.0.0] - 2019-07-01
 Breaking Change
 
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
 - mysql_class.Server.connect:  Modified to use mysql.connector library.
+- mysql_class.Server.connect:  Moved change database to within the connection string.
 
 
 ## [3.2.1] - 2018-11-02

@@ -1041,10 +1041,8 @@ class Server(object):
                 self.conn = mysql.connector.connect(host=self.host,
                                                     user=self.sql_user,
                                                     passwd=self.sql_pass,
-                                                    port=self.port)
-
-                if database:
-                    self.conn.database = database
+                                                    port=self.port,
+                                                    database=database)
 
             except mysql.connector.Error, err:
                 print("Couldn't connect to database.  MySQL error %d: %s" %
