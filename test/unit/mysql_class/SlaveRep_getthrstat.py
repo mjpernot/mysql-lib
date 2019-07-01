@@ -73,7 +73,7 @@ class UnitTest(unittest.TestCase):
 
         """Function:  test_default
 
-        Description:  Test get_log_info method.
+        Description:  Test get_thr_stat method.
 
         Arguments:
 
