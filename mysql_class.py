@@ -1061,36 +1061,26 @@ class Server(object):
         self.conn.disconnect()
 
 
-    def sql(self, command, res_set="row", params=None, database=""):
+    def sql(self, command, res_set="row", params=None):
 
         """Method:  sql
 
-        Description:  Execute a SQL command in the database, calls either the
-            Row class to iterate through the results or returns as a
-            single result set.  Will setup a connection to the
-            database if not already connected.
+        Description:  Execute a SQL command in a cursor.  Returns the results
+            as either a cursor row iteration or single result set.
 
         Arguments:
             (input) command -> SQL command.
-            (input) res_set -> row or all - determines the result set.
+            (input) res_set -> row|all - determines the result set.
             (input) params -> Position arguments for the SQL command.
-            (input) database -> Database name.
-            (output) Returns one of two items depending on res_set:
-                An instance of the Row class or the full result set.
+            (output) Returns cursor row iteration or single result set of data.
 
         """
 
-        if not self.conn:
-            self.connect(database)
+        cur = self.conn.cursor()
+        cur.execute(command, params=params)
 
-        # Setup cursor and execute SQL.
-        with self.conn:
-            cur = self.conn.cursor(MySQLdb.cursors.DictCursor)
-            cur.execute(command, params)
-
-        # Return results as instance of the Row class or full results set.
         if res_set == "row":
-            return Server.Row(cur)
+            return cur
 
         else:
             return cur.fetchall()
