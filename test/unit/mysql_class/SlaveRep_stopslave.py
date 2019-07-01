@@ -3,7 +3,7 @@
 
 """Program:  SlaveRep_stopslave.py
 
-    Description:  Unit testing of Server.stop_slave in mysql_class.py.
+    Description:  Unit testing of SlaveRep.stop_slave in mysql_class.py.
 
     Usage:
         test/unit/mysql_class/SlaveRep_stopslave.py
