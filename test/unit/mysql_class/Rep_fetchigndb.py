@@ -45,7 +45,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_default -> Test fetch_ign_db method.
+        test_list -> Test fetch_ign_db method with data.
+        test_default -> Test fetch_ign_db method with no data.
 
     """
 
@@ -69,11 +70,11 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-    def test_default(self):
+    def test_list(self):
 
-        """Function:  test_default
+        """Function:  test_list
 
-        Description:  Test fetch_ign_db method.
+        Description:  Test fetch_ign_db method with data.
 
         Arguments:
 
@@ -82,8 +83,25 @@ class UnitTest(unittest.TestCase):
         mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)
-                                   
-        self.assertFalse(mysqlrep.fetch_ign_db())
+        mysqlrep.do_dic = "DB1, DB2, DB3"
+
+        self.assertEqual(mysqlrep.fetch_ign_db(), ["DB1", "DB2", "DB3"])
+
+    def test_default(self):
+
+        """Function:  test_default
+
+        Description:  Test fetch_ign_db method with no data.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
+                                   self.sql_pass, self.machine,
+                                   defaults_file=self.defaults_file)
+
+        self.assertEqual(mysqlrep.fetch_ign_db(), [])
 
 
 if __name__ == "__main__":
