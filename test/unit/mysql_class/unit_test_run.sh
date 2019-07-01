@@ -23,6 +23,14 @@ test/unit/mysql_class/GTIDSet_le.py
 test/unit/mysql_class/GTIDSet_lt.py
 test/unit/mysql_class/GTIDSet_ne.py
 test/unit/mysql_class/Position_cmp.py
+test/unit/mysql_class/Rep_fetchdodb.py
+test/unit/mysql_class/Rep_fetchigndb.py
+test/unit/mysql_class/Rep_getservid.py
+test/unit/mysql_class/Rep_init.py
+test/unit/mysql_class/Rep_showslvhosts.py
+test/unit/mysql_class/Rep_showslvstate.py
+test/unit/mysql_class/Rep_startslave.py
+test/unit/mysql_class/Rep_stopslave.py
 test/unit/mysql_class/Server_init.py
 test/unit/mysql_class/Server_setsrvbinlogcrc.py
 test/unit/mysql_class/Server_setsrvgtid.py
