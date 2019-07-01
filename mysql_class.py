@@ -1061,7 +1061,7 @@ class Server(object):
         self.conn.disconnect()
 
 
-    def sql(self, command, res_set="row", params=None):
+    def sql(self, cmd, res_set="row", params=None):
 
         """Method:  sql
 
@@ -1069,7 +1069,7 @@ class Server(object):
             as either a cursor row iteration or single result set.
 
         Arguments:
-            (input) command -> SQL command.
+            (input) cmd -> SQL command.
             (input) res_set -> row|all - determines the result set.
             (input) params -> Position arguments for the SQL command.
             (output) Returns cursor row iteration or single result set of data.
@@ -1077,7 +1077,7 @@ class Server(object):
         """
 
         cur = self.conn.cursor()
-        cur.execute(command, params=params)
+        cur.execute(cmd, params=params)
 
         if res_set == "row":
             return cur
