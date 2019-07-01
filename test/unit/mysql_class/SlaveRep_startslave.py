@@ -70,9 +70,7 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-        self.show_stat = [
-            {"Variable_name": "io_state", "Value" : "Up"},
-            {"Variable_name": "secs_behind", "Value" : 0}]
+        self.show_stat = [{"io_state": "Up"}, {"secs_behind": 0}]
 
     @mock.patch("mysql_class.slave_start")
     @mock.patch("mysql_class.show_slave_stat")
