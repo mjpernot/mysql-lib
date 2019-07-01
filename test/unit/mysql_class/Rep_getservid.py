@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -80,7 +81,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_fetch.return_value = 11
+        mock_fetch.return_value = [{"Value": 11}]
         mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)

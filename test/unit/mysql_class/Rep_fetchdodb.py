@@ -84,7 +84,7 @@ class UnitTest(unittest.TestCase):
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)
 
-        mysqlrep.do_dic = "DB1, DB2, DB3"
+        mysqlrep.do_db = "DB1,DB2,DB3"
         self.assertEqual(mysqlrep.fetch_do_db(), ["DB1", "DB2", "DB3"])
 
     def test_default(self):

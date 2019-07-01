@@ -83,7 +83,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)
-        mysqlrep.do_dic = "DB1, DB2, DB3"
+        mysqlrep.ign_db = "DB1,DB2,DB3"
 
         self.assertEqual(mysqlrep.fetch_ign_db(), ["DB1", "DB2", "DB3"])
 
