@@ -1060,7 +1060,6 @@ class Server(object):
 
         self.conn.disconnect()
 
-
     def sql(self, cmd, res_set="row", params=None):
 
         """Method:  sql
