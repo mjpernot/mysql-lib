@@ -91,7 +91,6 @@ class UnitTest(unittest.TestCase):
                                      defaults_file=self.defaults_file)
 
         mysqldb.upd_mst_rep_stat()
-
         self.assertEqual((mysqldb.log_bin, mysqldb.log_format),
                          ("log_bin", "binlog_format"))
 
