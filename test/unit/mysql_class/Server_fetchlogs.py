@@ -71,7 +71,7 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-    def test_fetch_logs_name(self, mock_update):
+    def test_fetch_logs_name(self):
 
         """Function:  test_fetch_logs_name
 
