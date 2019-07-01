@@ -93,7 +93,6 @@ class UnitTest(unittest.TestCase):
                                      defaults_file=self.defaults_file)
 
         mysqldb.upd_log_stats()
-
         self.assertEqual((mysqldb.pos, mysqldb.do_db, mysqldb.file,
                           mysqldb.ign_db),
                          ("23678", None, "mysql-bin.01234", "tempdb"))
