@@ -149,6 +149,11 @@ test/unit/mysql_class/Server_updmstrepstat.py
 test/unit/mysql_class/Server_updslvrepstat.py
 test/unit/mysql_class/Server_updsrvperf.py
 test/unit/mysql_class/Server_updsrvstat.py
+test/unit/mysql_class/Server_connect.py
+test/unit/mysql_class/Server_disconnect.py
+test/unit/mysql_class/Server_fetchlogs.py
+test/unit/mysql_class/Server_flushlogs.py
+test/unit/mysql_class/Server_updlogstats.py
 ```
 
 ### All unit testing for mysql_class.py:
