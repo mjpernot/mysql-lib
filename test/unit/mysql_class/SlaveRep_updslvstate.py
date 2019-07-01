@@ -3,7 +3,7 @@
 
 """Program:  SlaveRep_updslvstate.py
 
-    Description:  Unit testing of Server.upd_slv_state in mysql_class.py.
+    Description:  Unit testing of SlaveRep.upd_slv_state in mysql_class.py.
 
     Usage:
         test/unit/mysql_class/SlaveRep_updslvstate.py
