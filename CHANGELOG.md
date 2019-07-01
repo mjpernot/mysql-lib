@@ -10,6 +10,8 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.Server.disconnect:  Modified to use mysql.connector library.
+- mysql_class.Server.disconnect:  Removed returning the connection handler to the calling function.
 - mysql_class.Server.connect:  Modified to use mysql.connector library.
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 

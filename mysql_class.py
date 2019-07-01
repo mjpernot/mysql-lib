@@ -1052,16 +1052,14 @@ class Server(object):
 
         """Method:  disconnect
 
-        Description:  Disconnects from a database.
+        Description:  Disconnects from a database connection.
 
         Arguments:
-            (output) Returns a Null for the connection handler.
 
         """
 
-        self.conn = None
+        self.conn.disconnect()
 
-        return self
 
     def sql(self, command, res_set="row", params=None, database=""):
 
