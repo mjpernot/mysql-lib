@@ -35,6 +35,48 @@ import version
 __version__ = version.__version__
 
 
+class Server(object):
+
+    """Class:  Server
+
+    Description:  Class which is a representation of a Server class.
+
+    Super-Class:  object
+
+    Sub-Classes:
+
+    Methods:
+        __init__ -> Initialize environment.
+        disconnect -> Test of disconnect method.
+
+    """
+
+
+    def __init__(self):
+
+        """Function:  __init__
+
+        Description:  Initialize environment.
+
+        Arguments:
+
+        """
+
+        pass
+
+    def disconnect(self):
+
+        """Function:  disconnect
+
+        Description:  Test of disconnect method.
+
+        Arguments:
+
+        """
+
+        pass
+
+
 class UnitTest(unittest.TestCase):
 
     """Class:  UnitTest
@@ -61,32 +103,21 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.name = "Mysql_Server"
-        self.server_id = 10
-        self.sql_user = "mysql_user"
-        self.sql_pass = "my_pwd"
-        self.machine = "Linux"
-        self.host = "host_server"
-        self.port = 3307
-        self.defaults_file = "def_cfg_file"
-        self.extra_def_file = "extra_cfg_file"
+        self.conn = Server()
 
-    def test_connect(self):
+    def test_disconnect(self):
 
-        """Function:  test_connect
+        """Function:  test_disconnect
 
-        Description:  Test connect method.
+        Description:  Test disconnect method.
 
         Arguments:
 
         """
 
-        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                     self.sql_pass, self.machine,
-                                     defaults_file=self.defaults_file)
-        mysqldb = mysqldb.disconnect()
+        mysqldb = self.conn
 
-        self.assertEqual(mysqldb.conn, None)
+        self.assertFalse(mysqldb.disconnect())
 
 
 if __name__ == "__main__":
