@@ -82,7 +82,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)
-                                   
+
         self.assertFalse(mysqlrep.stop_slave())
 
 
