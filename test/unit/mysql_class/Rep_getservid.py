@@ -69,7 +69,8 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-    def test_default(self):
+    @mock.patch("mysql_class.fetch_sys_var")
+    def test_default(self, mock_fetch):
 
         """Function:  test_default
 
@@ -79,11 +80,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        mock_fetch.return_value = 11
         mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)
-                                   
-        self.assertFalse(mysqlrep.get_serv_id())
+
+        self.assertEqual(mysqlrep.get_serv_id(), 11)
 
 
 if __name__ == "__main__":
