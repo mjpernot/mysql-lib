@@ -70,9 +70,9 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-        self.show_stat = [{"Position": "23678"}, {"Binlog_Do_DB": None},
-                          {"File": "mysql-bin.01234"},
-                          {"Binlog_Ignore_DB": "tempdb"}]
+        self.show_stat = [{"Position": "23678", "Binlog_Do_DB": None,
+                           "File": "mysql-bin.01234",
+                           "Binlog_Ignore_DB": "tempdb"}]
 
     @mock.patch("mysql_class.show_master_stat")
     def test_value(self, mock_stat):

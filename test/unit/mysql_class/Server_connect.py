@@ -89,7 +89,7 @@ class UnitTest(unittest.TestCase):
         with gen_libs.no_std_out():
             self.assertFalse(mysqldb.connect())
 
-    @mock.patch("mysql_class.MySQLdb.connect")
+    @mock.patch("mysql_class.mysql.connector.connect")
     def test_connect(self, mock_connect):
 
         """Function:  test_connect

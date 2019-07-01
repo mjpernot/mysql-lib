@@ -99,7 +99,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_logs.return_value = True
+        mock_update.return_value = True
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
