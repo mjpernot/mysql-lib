@@ -128,7 +128,7 @@ class UnitTest(unittest.TestCase):
 
         """Function:  test_default
 
-        Description:  Test show_slv_state method.
+        Description:  Test is_slave_up method.
 
         Arguments:
 
