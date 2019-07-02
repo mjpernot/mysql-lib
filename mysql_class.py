@@ -102,7 +102,7 @@ def show_master_stat(server):
 
     """Function:  show_master_stat
 
-    Description:  Return results of the show master status command.
+    Description:  Return results of the 'show master status' command.
 
     Arguments:
         (input) server -> Server instance.
@@ -113,21 +113,19 @@ def show_master_stat(server):
     return server.col_sql("show master status")
 
 
-def show_slave_hosts(SERVER, res_set="all"):
+def show_slave_hosts(server):
 
     """Function:  show_slave_hosts
 
-    Description:  Return the output of the show slave hosts command.
+    Description:  Return the output of the 'show slave hosts' command.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Return slave host IDs.
+        (input) server -> Server instance.
+        (output) Return list of slave host IDs.
 
     """
 
-    return SERVER.sql("show slave hosts", res_set)
+    return server.col_sql("show slave hosts")
 
 
 def show_slave_stat(SERVER, res_set="all"):
