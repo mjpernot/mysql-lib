@@ -919,13 +919,16 @@ class Server(object):
 
         """
 
-        self.log_bin = fetch_sys_var(self, "log_bin")[0]["Value"]
-        self.read_only = fetch_sys_var(self, "read_only")[0]["Value"]
-        self.log_slv_upd = fetch_sys_var(self, "log_slave_updates")[0]["Value"]
-        self.sync_mst = fetch_sys_var(self, "sync_master_info")[0]["Value"]
-        self.sync_relay = fetch_sys_var(self, "sync_relay_log")[0]["Value"]
+        self.log_bin = fetch_sys_var(self, "log_bin")["log_bin"]
+        self.read_only = fetch_sys_var(self, "read_only")["read_only"]
+        self.log_slv_upd = fetch_sys_var(self,
+            "log_slave_updates")["log_slave_updates"]
+        self.sync_mst = fetch_sys_var(self,
+            "sync_master_info")["sync_master_info"]
+        self.sync_relay = fetch_sys_var(self,
+            "sync_relay_log")["sync_relay_log"]
         self.sync_rly_info = fetch_sys_var(self,
-                                           "sync_relay_log_info")[0]["Value"]
+            "sync_relay_log_info")["sync_relay_log_info"]
 
     def fetch_mst_rep_cfg(self):
 
