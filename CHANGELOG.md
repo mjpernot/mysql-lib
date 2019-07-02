@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.SlaveRep.upd_slv_status:  Modified to use mysql.connector library.
 - mysql_class.SlaveRep.__init__:  Modified to use mysql.connector library.
 - mysql_class.SlaveRep.__init__:  Removed the connection to the replication server.  Moved to rep_conn() method.
 - mysql_class.MasterRep.upd_mst_status:  Replaced log stats update with call to upd_log_stats method.
