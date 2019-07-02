@@ -1235,7 +1235,6 @@ class Rep(Server):
         Description:  Place holder for the show_slv_hosts method in subclass.
 
         Arguments:
-            None
 
         """
 
@@ -1248,7 +1247,6 @@ class Rep(Server):
         Description:  Place holder for the stop_slave method in subclass.
 
         Arguments:
-            None
 
         """
 
@@ -1261,7 +1259,6 @@ class Rep(Server):
         Description:  Place holder for the start_slave method in subclass.
 
         Arguments:
-            None
 
         """
 
@@ -1274,7 +1271,6 @@ class Rep(Server):
         Description:  Place holder for the show_slv_state method in subclass.
 
         Arguments:
-            None
 
         """
 
@@ -1344,10 +1340,10 @@ class MasterRep(Rep):
     Super-Class:  Rep
 
     Sub-Classes:
-        None
 
     Methods:
         __init__
+        rep_conn
         show_slv_hosts
         get_log_info
         get_name
@@ -1392,6 +1388,23 @@ class MasterRep(Rep):
 
         self.exe_gtid = results.get("Executed_Gtid_Set", None)
 
+    def rep_conn(self):
+
+        """Method:  rep_conn
+
+        Description:  Setups a connection to a replication server and updates
+            the replication attributes.
+
+        Arguments:
+
+        """
+
+        super(MasterRep, self).connect()
+        super(MasterRep, self).set_srv_gtid()
+
+        self.upd_mst_status()
+
+        
     def show_slv_hosts(self, res_set="all"):
 
         """Method:  show_slv_hosts
