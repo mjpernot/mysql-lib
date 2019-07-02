@@ -68,6 +68,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_startslave.p
 coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_stopslave.py
 coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_updslvstate.py
 coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_updslvtime.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/analyze_tbl.py
 
 echo ""
 echo "Producing code coverage report"
