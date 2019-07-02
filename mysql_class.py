@@ -752,10 +752,11 @@ class Server(object):
 
         """
 
-        val = fetch_sys_var(self, "binlog_checksum")
+        var = "binlog_checksum"
+        data = fetch_sys_var(self, var)
 
-        if val:
-            self.crc = val["binlog_checksum"]
+        if data:
+            self.crc = data[var]
 
     def set_srv_gtid(self):
         # 20161019 - Added method
