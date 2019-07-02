@@ -1518,78 +1518,72 @@ class SlaveRep(Rep):
                                        **kwargs)
 
         # Use parent class connect.
-        super(SlaveRep, self).connect()
+        #super(SlaveRep, self).connect()
+        #super(SlaveRep, self).set_srv_gtid()
 
-        super(SlaveRep, self).set_srv_gtid()
+        results = show_slave_stat(self)[0]
+        self.io_state = results["Slave_IO_State"]
+        self.mst_host = results["Master_Host"]
+        self.mst_port = results["Master_Port"]
+        self.retry = results["Connect_Retry"]
+        self.mst_log = results["Master_Log_File"]
+        self.mst_read_pos = results["Read_Master_Log_Pos"]
+        self.relay_log = results["Relay_Log_File"]
+        self.relay_pos = results["Relay_Log_Pos"]
+        self.relay_mst_log = results["Relay_Master_Log_File"]
+        self.slv_io = results["Slave_IO_Running"]
+        self.slv_sql = results["Slave_SQL_Running"]
+        self.do_db = results["Replicate_Do_DB"]
+        self.ign_db = results["Replicate_Ignore_DB"]
+        self.do_tbl = results["Replicate_Do_Table"]
+        self.ign_tbl = results["Replicate_Ignore_Table"]
+        self.wild_do_tbl = results["Replicate_Wild_Do_Table"]
+        self.wild_ign_tbl = results["Replicate_Wild_Ignore_Table"]
+        self.last_err = results["Last_Errno"]
+        self.err_msg = results["Last_Error"]
+        self.skip_ctr = results["Skip_Counter"]
+        self.exec_mst_pos = results["Exec_Master_Log_Pos"]
+        self.log_space = results["Relay_Log_Space"]
+        self.until_cond = results["Until_Condition"]
+        self.until_log = results["Until_Log_File"]
+        self.until_pos = results["Until_Log_Pos"]
+        self.ssl_allow = results["Master_SSL_Allowed"]
+        self.ssl_file = results["Master_SSL_CA_File"]
+        self.ssl_path = results["Master_SSL_CA_Path"]
+        self.ssl_cert = results["Master_SSL_Cert"]
+        self.ssl_cipher = results["Master_SSL_Cipher"]
+        self.ssl_key = results["Master_SSL_Key"]
+        self.secs_behind = results["Seconds_Behind_Master"]
+        self.ssl_verify = results["Master_SSL_Verify_Server_Cert"]
+        self.io_err = results["Last_IO_Errno"]
+        self.io_msg = results["Last_IO_Error"]
+        self.sql_err = results["Last_SQL_Errno"]
+        self.sql_msg = results["Last_SQL_Error"]
+        self.ign_ids = results["Replicate_Ignore_Server_Ids"]
+        self.mst_id = results["Master_Server_Id"]
+        self.mst_uuid = results.get("Master_UUID", None)
+        self.mst_info = results.get("Master_Info_File", None)
+        self.sql_delay = results.get("SQL_Delay", None)
+        self.sql_remain = results.get("SQL_Remaining_Delay", None)
+        self.slv_sql_state = results.get("Slave_SQL_Running_State", None)
+        self.mst_retry = results.get("Master_Retry_Count", None)
+        self.mst_bind = results.get("Master_Bind", None)
+        self.io_err_time = results.get("Last_IO_Error_Timestamp", None)
+        self.sql_err_time = results.get("Last_SQL_Error_Timestamp", None)
+        self.ssl_crl = results.get("Master_SSL_Crl", None)
+        self.ssl_crl_path = results.get("Master_SSL_Crlpath", None)
+        self.retrieved_gtid = results.get("Retrieved_Gtid_Set", None)
+        self.exe_gtid = results.get("Executed_Gtid_Set", None)
+        self.auto_pos = results.get("Auto_Position", None)
 
-        # Do not update an unreachable server.
-        if self.conn:
-            results = show_slave_stat(self)[0]
-            self.io_state = results["Slave_IO_State"]
-            self.mst_host = results["Master_Host"]
-            self.mst_port = results["Master_Port"]
-            self.retry = results["Connect_Retry"]
-            self.mst_log = results["Master_Log_File"]
-            self.mst_read_pos = results["Read_Master_Log_Pos"]
-            self.relay_log = results["Relay_Log_File"]
-            self.relay_pos = results["Relay_Log_Pos"]
-            self.relay_mst_log = results["Relay_Master_Log_File"]
-            self.slv_io = results["Slave_IO_Running"]
-            self.slv_sql = results["Slave_SQL_Running"]
-            self.do_db = results["Replicate_Do_DB"]
-            self.ign_db = results["Replicate_Ignore_DB"]
-            self.do_tbl = results["Replicate_Do_Table"]
-            self.ign_tbl = results["Replicate_Ignore_Table"]
-            self.wild_do_tbl = results["Replicate_Wild_Do_Table"]
-            self.wild_ign_tbl = results["Replicate_Wild_Ignore_Table"]
-            self.last_err = results["Last_Errno"]
-            self.err_msg = results["Last_Error"]
-            self.skip_ctr = results["Skip_Counter"]
-            self.exec_mst_pos = results["Exec_Master_Log_Pos"]
-            self.log_space = results["Relay_Log_Space"]
-            self.until_cond = results["Until_Condition"]
-            self.until_log = results["Until_Log_File"]
-            self.until_pos = results["Until_Log_Pos"]
-            self.ssl_allow = results["Master_SSL_Allowed"]
-            self.ssl_file = results["Master_SSL_CA_File"]
-            self.ssl_path = results["Master_SSL_CA_Path"]
-            self.ssl_cert = results["Master_SSL_Cert"]
-            self.ssl_cipher = results["Master_SSL_Cipher"]
-            self.ssl_key = results["Master_SSL_Key"]
-            self.secs_behind = results["Seconds_Behind_Master"]
-            self.ssl_verify = results["Master_SSL_Verify_Server_Cert"]
-            self.io_err = results["Last_IO_Errno"]
-            self.io_msg = results["Last_IO_Error"]
-            self.sql_err = results["Last_SQL_Errno"]
-            self.sql_msg = results["Last_SQL_Error"]
-            self.ign_ids = results["Replicate_Ignore_Server_Ids"]
-            self.mst_id = results["Master_Server_Id"]
+        self.run = fetch_global_var(self, "slave_running")["slave_running"]
+        self.tmp_tbl = fetch_global_var(self,
+            "slave_open_temp_tables")["slave_open_temp_tables"]
+        self.retry = fetch_global_var(self,
+            "slave_retried_transactions")["slave_retried_transactions"]
+        self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
-            self.run = fetch_global_var(self, "slave_running")[0]["Value"]
-            self.tmp_tbl = fetch_global_var(
-                self, "slave_open_temp_tables")[0]["Value"]
-            self.retry = fetch_global_var(
-                self, "slave_retried_transactions")[0]["Value"]
-            self.read_only = fetch_sys_var(self, "read_only")[0]["Value"]
-
-            self.mst_uuid = results.get("Master_UUID", None)
-            self.mst_info = results.get("Master_Info_File", None)
-            self.sql_delay = results.get("SQL_Delay", None)
-            self.sql_remain = results.get("SQL_Remaining_Delay", None)
-            self.slv_sql_state = results.get("Slave_SQL_Running_State", None)
-            self.mst_retry = results.get("Master_Retry_Count", None)
-            self.mst_bind = results.get("Master_Bind", None)
-            self.io_err_time = results.get("Last_IO_Error_Timestamp", None)
-            self.sql_err_time = results.get("Last_SQL_Error_Timestamp", None)
-            self.ssl_crl = results.get("Master_SSL_Crl", None)
-            self.ssl_crl_path = results.get("Master_SSL_Crlpath", None)
-
-            self.retrieved_gtid = results.get("Retrieved_Gtid_Set", None)
-            self.exe_gtid = results.get("Executed_Gtid_Set", None)
-
-            self.auto_pos = results.get("Auto_Position", None)
-
-            self.upd_gtid_pos()
+        self.upd_gtid_pos()
 
     def stop_slave(self):
 
