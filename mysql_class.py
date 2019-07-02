@@ -958,8 +958,10 @@ class Server(object):
 
         """
 
-        return {"log_bin": self.log_bin, "sync_relay_log": self.sync_relay,
-                "read_only": self.read_only, "sync_master_info": self.sync_mst,
+        return {"log_bin": self.log_bin,
+                "sync_relay_log": self.sync_relay,
+                "read_only": self.read_only,
+                "sync_master_info": self.sync_mst,
                 "log_slave_updates": self.log_slv_upd,
                 "sync_relay_log_info": self.sync_rly_info}
 
