@@ -62,16 +62,15 @@ class Server(object):
 
         pass
 
-    def sql(self, cmd, res_set, var):
+    def vert_sql(self, cmd, var):
 
         """Method:  sql
 
-        Description:  Stub holder for Server.sql method.
+        Description:  Stub holder for Server.vert_sql method.
 
         Arguments:
-            (input) cmd -> Stub holder for argument.
-            (input) res_set -> row|all - Single row or all rows returned.
-            (input) var -> Global variable name.
+            (input) cmd -> Query command.
+            (input) var -> Variable name.
 
         """
 
