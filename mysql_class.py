@@ -976,11 +976,11 @@ class Server(object):
 
         """
 
-        results = show_master_stat(self)[0]
-        self.pos = results["Position"]
-        self.do_db = results["Binlog_Do_DB"]
-        self.file = results["File"]
-        self.ign_db = results["Binlog_Ignore_DB"]
+        data = show_master_stat(self)[0]
+        self.pos = data["Position"]
+        self.do_db = data["Binlog_Do_DB"]
+        self.file = data["File"]
+        self.ign_db = data["Binlog_Ignore_DB"]
 
     def flush_logs(self):
 
