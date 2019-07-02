@@ -47,7 +47,6 @@ import lib.machine as machine
 import mysql_class
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -62,7 +61,6 @@ def analyze_tbl(SERVER, db, tbl, res_set="all", **kwargs):
         (input) db -> Database name.
         (input) tbl -> Table name.
         (input) res_set -> row|all - Returning result set format.
-        (input) **kwargs:  None
         (output) Return check table results.
 
     """
@@ -141,7 +139,6 @@ def check_tbl(SERVER, db, tbl, res_set="all", **kwargs):
         (input) db -> Database name.
         (input) tbl -> Table name.
         (input) res_set -> row|all - Returning result set format.
-        (input) **kwargs:  None
         (output) Return check table results.
 
     """
@@ -501,7 +498,6 @@ def optimize_tbl(SERVER, db, tbl, res_set="all", **kwargs):
         (input) db -> Database name.
         (input) tbl -> Table name.
         (input) res_set -> row|all - Returning result set format.
-        (input) **kwargs:  None
         (output) Return check table results.
 
     """
@@ -726,8 +722,6 @@ def sync_rep_slv(MST, SLV, **kwargs):
     Arguments:
         (input) MST -> Master class instance.
         (input) SLV -> Slave class instance.
-        (input) **kwargs:
-            None
         (output) err_flag -> True|False - if an error has occurred.
         (output) err_msg -> Error message.
 
