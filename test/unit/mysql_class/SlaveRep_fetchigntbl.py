@@ -80,10 +80,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
-        mysqlrep.do_dic = "Tbl1, Tbl2, Tbl3"
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+        mysqlrep.do_dic = "Tbl1,Tbl2,Tbl3"
 
         self.assertEqual(mysqlrep.fetch_ign_tbl(), ["Tbl1, Tbl2, Tbl3"])
 
@@ -97,9 +98,10 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
 
         self.assertEqual(mysqlrep.fetch_ign_tbl(), [])
 

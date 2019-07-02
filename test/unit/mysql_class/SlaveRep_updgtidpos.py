@@ -71,8 +71,8 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-        self.show_stat = [{"Retrieved_Gtid_Set": "35588520:333217-740055"},
-                          {"Executed_Gtid_Set": "35588520:333217-740045"}]
+        self.show_stat = [{"Retrieved_Gtid_Set": "35588520:333217-740055",
+                           "Executed_Gtid_Set": "35588520:333217-740045"}]
 
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -88,14 +88,15 @@ class UnitTest(unittest.TestCase):
 
         mock_stat.return_value = self.show_stat
         mock_var.return_value = "35588520:333220-333227"
-        mysqlrep = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                      self.sql_pass, self.machine,
-                                      defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
         mysqlrep.gtid_mode = True
 
         mysqlrep.upd_gtid_pos()
         self.assertEqual((mysqlrep.retrieved_gtidset,
-                          mysqlrep.exec_gtidset, mysqlrep.purged_gtidset),
+                          mysqlrep.exe_gtidset, mysqlrep.purged_gtidset),
                          ("35588520:333217-740055", "35588520:333217-740045",
                           "35588520:333220-333227"))
 
@@ -111,13 +112,14 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                      self.sql_pass, self.machine,
-                                      defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
 
         mysqlrep.upd_gtid_pos()
         self.assertEqual((mysqlrep.retrieved_gtidset,
-                          mysqlrep.exec_gtidset, mysqlrep.purged_gtidset),
+                          mysqlrep.exe_gtidset, mysqlrep.purged_gtidset),
                          ("35588520:333217-740055", "35588520:333217-740045",
                           None))
 
