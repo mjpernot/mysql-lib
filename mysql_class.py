@@ -761,14 +761,13 @@ class Server(object):
         Description:  Set the Server's GTID mode attribute.
 
         Arguments:
-            None
 
         """
 
-        x = fetch_sys_var(self, "gtid_mode")
+        var = "gtid_mode"
+        data = fetch_sys_var(self, var)
 
-        # If "OFF" or NULL then server is not GTID enabled.
-        if x and x[0]["Value"] == "ON":
+        if data and data[var] == "ON":
             self.gtid_mode = True
 
         else:
