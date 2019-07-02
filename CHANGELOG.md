@@ -39,6 +39,9 @@ Breaking Change
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 
 ### Added
+- mysql_class.Server.is_connected:  Checks to see if the connection is still active.
+- mysql_class.Server.reconnect:  Reconnects to database if connect is non-active.
+- mysql_class.Server.chg_db:  Change to another database.
 - mysql_class.Server.cmd_sql:  Method to run command sql.
 - mysql_class.Server.col_sql:  Method to run sql code with column definitions and return list of dictionaries.
 - mysql_class.Server.vert_sql:  Method to run sql code with vertical definitions and return in dictionary format.

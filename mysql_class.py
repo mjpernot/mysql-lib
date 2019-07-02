@@ -512,6 +512,9 @@ class Server(object):
         cmd_sql
         col_sql
         vert_sql
+        is_connected
+        reconnect
+        chg_db
 
     """
 
@@ -1132,6 +1135,46 @@ class Server(object):
             data[x[0]] = x[1]
 
         return data
+
+    def is_connected(self):
+
+        """Method:  is_connected
+
+        Description:  Checks to see if the connection is still active.
+
+        Arguments:
+            (output) -> Returns True|False on whether connection is active.
+
+        """
+
+        return self.conn.is_connected()
+
+    def reconnect(self):
+
+        """Method:  reconnect
+
+        Description:  Reconnects to database if connect is non-active.
+
+        Arguments:
+
+        """
+
+        if not self.is_connected():
+            self.conn.reconnect()
+
+    def chg_db(self, db=None):
+
+        """Method:  chg_db
+
+        Description:  Change to another database.
+
+        Arguments:
+            (input) db -> Name of database.
+
+        """
+
+        if db:
+            self.conn.database = db
 
 
 class Rep(Server):
