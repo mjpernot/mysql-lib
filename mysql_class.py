@@ -1399,20 +1399,18 @@ class MasterRep(Rep):
         self.upd_mst_status()
 
         
-    def show_slv_hosts(self, res_set="all"):
+    def show_slv_hosts(self):
 
         """Method:  show_slv_hosts
 
-        Description:  Calls the show_slv_hosts function with class instance.
+        Description:  Gets a list of the slave hosts attached to the server.
 
         Arguments:
-            (input) res_set -> 'row' - return a single row at a time or
-                               'all' - return a list of tuples.
-            (output) Return output of show_slv_hosts function.
+            (output) Return output of show_slave_hosts function.
 
         """
 
-        return show_slave_hosts(self, res_set)
+        return show_slave_hosts(self)
 
     def get_log_info(self):
 
