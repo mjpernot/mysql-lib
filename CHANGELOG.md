@@ -11,6 +11,7 @@ Breaking Change
 
 ### Changed
 - mysql_class.fetch_sys_var:  Modified to use mysql.connector library.
+- mysql_class.fetch_sys_var: Removed res_set from the function argument list as it is no longer required.
 - mysql_class.Server.sql:  Modified to use mysql.connector library.
 - mysql_class.Server.sql:  Removed the check to see if the connection is active.
 - mysql_class.Server.sql:  Removed the database parameter from the function argument list as it is no longer required.
