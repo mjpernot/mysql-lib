@@ -10,6 +10,8 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.SlaveRep.__init__:  Modified to use mysql.connector library.
+- mysql_class.SlaveRep.__init__:  Removed the connection to the replication server.  Moved to rep_conn() method.
 - mysql_class.MasterRep.upd_mst_status:  Replaced log stats update with call to upd_log_stats method.
 - mysql_class.MasterRep.show_slv_hosts:  Modified to use mysql.connector library.
 - mysql_class.MasterRep.show_slv_hosts:  Removed res_set from the function argument list as it is no longer required.
@@ -46,7 +48,8 @@ Breaking Change
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 
 ### Added
-- mysql_class.MasterRep.repconn:  Setups a connection to a replication server.
+- mysql_class.SlaveRep.rep_conn:  Setups a connection to a replication server.
+- mysql_class.MasterRep.rep_conn:  Setups a connection to a replication server.
 - mysql_class.Server.is_connected:  Checks to see if the connection is still active.
 - mysql_class.Server.reconnect:  Reconnects to database if connect is non-active.
 - mysql_class.Server.chg_db:  Change to another database.

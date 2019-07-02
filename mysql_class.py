@@ -1471,6 +1471,7 @@ class SlaveRep(Rep):
 
     Methods:
         __init__
+        rep_conn
         stop_slave
         start_slave
         show_slv_state
@@ -1517,73 +1518,80 @@ class SlaveRep(Rep):
                                        machine, host, port, defaults_file,
                                        **kwargs)
 
-        # Use parent class connect.
-        #super(SlaveRep, self).connect()
-        #super(SlaveRep, self).set_srv_gtid()
+        self.io_state = None
+        self.mst_host = None
+        self.mst_port = None
+        self.retry = None
+        self.mst_log = None
+        self.mst_read_pos = None
+        self.relay_log = None
+        self.relay_pos = None
+        self.relay_mst_log = None
+        self.slv_io = None
+        self.slv_sql = None
+        self.do_db = None
+        self.ign_db = None
+        self.do_tbl = None
+        self.ign_tbl = None
+        self.wild_do_tbl = None
+        self.wild_ign_tbl = None
+        self.last_err = None
+        self.err_msg = None
+        self.skip_ctr = None
+        self.exec_mst_pos = None
+        self.log_space = None
+        self.until_cond = None
+        self.until_log = None
+        self.until_pos = None
+        self.ssl_allow = None
+        self.ssl_file = None
+        self.ssl_path = None
+        self.ssl_cert = None
+        self.ssl_cipher = None
+        self.ssl_key = None
+        self.secs_behind = None
+        self.ssl_verify = None
+        self.io_err = None
+        self.io_msg = None
+        self.sql_err = None
+        self.sql_msg = None
+        self.ign_ids = None
+        self.mst_id = None
+        self.mst_uuid = None
+        self.mst_info = None
+        self.sql_delay = None
+        self.sql_remain = None
+        self.slv_sql_state = None
+        self.mst_retry = None
+        self.mst_bind = None
+        self.io_err_time = None
+        self.sql_err_time = None
+        self.ssl_crl = None
+        self.ssl_crl_path = None
+        self.retrieved_gtid = None
+        self.exe_gtid = None
+        self.auto_pos = None
+        self.run = None
+        self.tmp_tbl = None
+        self.retry = None
+        self.read_only = None
+        self.purged_gtidset = None
 
-        results = show_slave_stat(self)[0]
-        self.io_state = results["Slave_IO_State"]
-        self.mst_host = results["Master_Host"]
-        self.mst_port = results["Master_Port"]
-        self.retry = results["Connect_Retry"]
-        self.mst_log = results["Master_Log_File"]
-        self.mst_read_pos = results["Read_Master_Log_Pos"]
-        self.relay_log = results["Relay_Log_File"]
-        self.relay_pos = results["Relay_Log_Pos"]
-        self.relay_mst_log = results["Relay_Master_Log_File"]
-        self.slv_io = results["Slave_IO_Running"]
-        self.slv_sql = results["Slave_SQL_Running"]
-        self.do_db = results["Replicate_Do_DB"]
-        self.ign_db = results["Replicate_Ignore_DB"]
-        self.do_tbl = results["Replicate_Do_Table"]
-        self.ign_tbl = results["Replicate_Ignore_Table"]
-        self.wild_do_tbl = results["Replicate_Wild_Do_Table"]
-        self.wild_ign_tbl = results["Replicate_Wild_Ignore_Table"]
-        self.last_err = results["Last_Errno"]
-        self.err_msg = results["Last_Error"]
-        self.skip_ctr = results["Skip_Counter"]
-        self.exec_mst_pos = results["Exec_Master_Log_Pos"]
-        self.log_space = results["Relay_Log_Space"]
-        self.until_cond = results["Until_Condition"]
-        self.until_log = results["Until_Log_File"]
-        self.until_pos = results["Until_Log_Pos"]
-        self.ssl_allow = results["Master_SSL_Allowed"]
-        self.ssl_file = results["Master_SSL_CA_File"]
-        self.ssl_path = results["Master_SSL_CA_Path"]
-        self.ssl_cert = results["Master_SSL_Cert"]
-        self.ssl_cipher = results["Master_SSL_Cipher"]
-        self.ssl_key = results["Master_SSL_Key"]
-        self.secs_behind = results["Seconds_Behind_Master"]
-        self.ssl_verify = results["Master_SSL_Verify_Server_Cert"]
-        self.io_err = results["Last_IO_Errno"]
-        self.io_msg = results["Last_IO_Error"]
-        self.sql_err = results["Last_SQL_Errno"]
-        self.sql_msg = results["Last_SQL_Error"]
-        self.ign_ids = results["Replicate_Ignore_Server_Ids"]
-        self.mst_id = results["Master_Server_Id"]
-        self.mst_uuid = results.get("Master_UUID", None)
-        self.mst_info = results.get("Master_Info_File", None)
-        self.sql_delay = results.get("SQL_Delay", None)
-        self.sql_remain = results.get("SQL_Remaining_Delay", None)
-        self.slv_sql_state = results.get("Slave_SQL_Running_State", None)
-        self.mst_retry = results.get("Master_Retry_Count", None)
-        self.mst_bind = results.get("Master_Bind", None)
-        self.io_err_time = results.get("Last_IO_Error_Timestamp", None)
-        self.sql_err_time = results.get("Last_SQL_Error_Timestamp", None)
-        self.ssl_crl = results.get("Master_SSL_Crl", None)
-        self.ssl_crl_path = results.get("Master_SSL_Crlpath", None)
-        self.retrieved_gtid = results.get("Retrieved_Gtid_Set", None)
-        self.exe_gtid = results.get("Executed_Gtid_Set", None)
-        self.auto_pos = results.get("Auto_Position", None)
+    def rep_conn(self):
 
-        self.run = fetch_global_var(self, "slave_running")["slave_running"]
-        self.tmp_tbl = fetch_global_var(self,
-            "slave_open_temp_tables")["slave_open_temp_tables"]
-        self.retry = fetch_global_var(self,
-            "slave_retried_transactions")["slave_retried_transactions"]
-        self.read_only = fetch_sys_var(self, "read_only")["read_only"]
+        """Method:  rep_conn
 
-        self.upd_gtid_pos()
+        Description:  Setups a connection to a replication server and updates
+            the slave replication attributes.
+
+        Arguments:
+
+        """
+
+        super(SlaveRep, self).connect()
+        super(SlaveRep, self).set_srv_gtid()
+
+        self.upd_slv_status()
 
     def stop_slave(self):
 
