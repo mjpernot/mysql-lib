@@ -79,9 +79,9 @@ def fetch_sys_var(server, var, **kwargs):
 
     """
 
-    qry = "show " + kwargs.get("level", "session") + " variables like %s"
+    cmd = "show " + kwargs.get("level", "session") + " variables like %s"
 
-    return server.vert_sql(qry, (var,))
+    return server.vert_sql(cmd, (var,))
 
 
 def flush_logs(SERVER):
