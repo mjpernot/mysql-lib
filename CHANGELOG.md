@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.Server.upd_srv_perf:  Modified to use mysql.connector library.
 - mysql_class.Server.set_srv_gtid:  Modified to use mysql.connector library.
 - mysql_class.Server.set_srv_binlog_crc:  Modified to use mysql.connector library.
 - mysql_class.Server.set_srv_binlog_crc:  Removed setting crc attr to none as its been done in __init__.

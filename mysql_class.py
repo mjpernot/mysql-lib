@@ -780,14 +780,12 @@ class Server(object):
         Description:  Updates the Server's performance attributes.
 
         Arguments:
-            None
 
         """
 
         data = {}
 
-        # Loop on data and convert from tuple to dictionary.
-        for x in self.sql("show status", "all"):
+        for x in self.col_sql("show status"):
             data.update({x["Variable_name"]: x["Value"]})
 
         self.indb_buf_free = int(data["Innodb_buffer_pool_pages_free"])
