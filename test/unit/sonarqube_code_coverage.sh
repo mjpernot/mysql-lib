@@ -28,6 +28,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/GTIDSet_ne.py
 coverage run -a --source=mysql_class test/unit/mysql_class/MasterRep_init.py
 coverage run -a --source=mysql_class test/unit/mysql_class/MasterRep_showslvhosts.py
 coverage run -a --source=mysql_class test/unit/mysql_class/MasterRep_getloginfo.py
+coverage run -a --source=mysql_class test/unit/mysql_class/MasterRep_updmststatus.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Position_cmp.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Rep_fetchdodb.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Rep_fetchigndb.py
