@@ -858,8 +858,8 @@ class Server(object):
         self.max_conn = int(data["max_connections"])
         self.max_heap_tbl = int(data["max_heap_table_size"])
         self.tmp_tbl = int(data["tmp_table_size"])
-        self.cur_conn = int(fetch_global_var(self,
-            "Threads_connected")["Threads_connected"])
+        self.cur_conn = int(fetch_global_var(
+            self, "Threads_connected")["Threads_connected"])
         self.uptime = int(fetch_global_var(self, "Uptime")["Uptime"])
 
         # Data derived from above status values.
@@ -909,9 +909,11 @@ class Server(object):
 
         self.log_bin = fetch_sys_var(self, "log_bin")["log_bin"]
         self.sync_log = fetch_sys_var(self, "sync_binlog")["sync_binlog"]
-        self.innodb_flush = fetch_sys_var(self,
+        self.innodb_flush = fetch_sys_var(
+            self,
             "innodb_flush_log_at_trx_commit")["innodb_flush_log_at_trx_commit"]
-        self.innodb_xa = fetch_sys_var(self,
+        self.innodb_xa = fetch_sys_var(
+            self,
             "innodb_support_xa")["innodb_support_xa"]
         self.log_format = fetch_sys_var(self, "binlog_format")["binlog_format"]
 
@@ -928,14 +930,14 @@ class Server(object):
 
         self.log_bin = fetch_sys_var(self, "log_bin")["log_bin"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
-        self.log_slv_upd = fetch_sys_var(self,
-            "log_slave_updates")["log_slave_updates"]
-        self.sync_mst = fetch_sys_var(self,
-            "sync_master_info")["sync_master_info"]
-        self.sync_relay = fetch_sys_var(self,
-            "sync_relay_log")["sync_relay_log"]
-        self.sync_rly_info = fetch_sys_var(self,
-            "sync_relay_log_info")["sync_relay_log_info"]
+        self.log_slv_upd = fetch_sys_var(
+            self, "log_slave_updates")["log_slave_updates"]
+        self.sync_mst = fetch_sys_var(
+            self, "sync_master_info")["sync_master_info"]
+        self.sync_relay = fetch_sys_var(
+            self, "sync_relay_log")["sync_relay_log"]
+        self.sync_rly_info = fetch_sys_var(
+            self, "sync_relay_log_info")["sync_relay_log_info"]
 
     def fetch_mst_rep_cfg(self):
 
@@ -1402,7 +1404,6 @@ class MasterRep(Rep):
 
         self.upd_mst_status()
 
-        
     def show_slv_hosts(self):
 
         """Method:  show_slv_hosts
@@ -1731,10 +1732,10 @@ class SlaveRep(Rep):
         self.auto_pos = data.get("Auto_Position", None)
 
         self.run = fetch_global_var(self, "slave_running")["slave_running"]
-        self.tmp_tbl = fetch_global_var(self,
-            "slave_open_temp_tables")["slave_open_temp_tables"]
-        self.retry = fetch_global_var(self,
-            "slave_retried_transactions")["slave_retried_transactions"]
+        self.tmp_tbl = fetch_global_var(
+            self, "slave_open_temp_tables")["slave_open_temp_tables"]
+        self.retry = fetch_global_var(
+            self, "slave_retried_transactions")["slave_retried_transactions"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
         self.upd_gtid_pos()
