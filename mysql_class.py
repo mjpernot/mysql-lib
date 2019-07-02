@@ -900,12 +900,13 @@ class Server(object):
 
         """
 
-        self.log_bin = fetch_sys_var(self, "log_bin")[0]["Value"]
-        self.sync_log = fetch_sys_var(self, "sync_binlog")[0]["Value"]
-        self.innodb_flush = fetch_sys_var(
-            self, "innodb_flush_log_at_trx_commit")[0]["Value"]
-        self.innodb_xa = fetch_sys_var(self, "innodb_support_xa")[0]["Value"]
-        self.log_format = fetch_sys_var(self, "binlog_format")[0]["Value"]
+        self.log_bin = fetch_sys_var(self, "log_bin")["log_bin"]
+        self.sync_log = fetch_sys_var(self, "sync_binlog")["sync_binlog"]
+        self.innodb_flush = fetch_sys_var(self,
+            "innodb_flush_log_at_trx_commit")["innodb_flush_log_at_trx_commit"]
+        self.innodb_xa = fetch_sys_var(self,
+            "innodb_support_xa")["innodb_support_xa"]
+        self.log_format = fetch_sys_var(self, "binlog_format")["binlog_format"]
 
     def upd_slv_rep_stat(self):
 
