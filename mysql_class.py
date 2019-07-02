@@ -84,18 +84,18 @@ def fetch_sys_var(server, var, **kwargs):
     return server.vert_sql(cmd, (var,))
 
 
-def flush_logs(SERVER):
+def flush_logs(server):
 
     """Function:  flush_logs
 
-    Description:  Run the flush logs command.
+    Description:  Run the MySQL 'flush logs' command.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
 
     """
 
-    SERVER.sql("flush logs")
+    server.cmd_sql("flush logs")
 
 
 def show_master_stat(SERVER, res_set="all"):
