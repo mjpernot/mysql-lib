@@ -106,7 +106,7 @@ class UnitTest(unittest.TestCase):
             {"Variable_name": "Created_tmp_disk_tables",
              "Value" : "16"}]
 
-    @mock.patch("mysql_class.Server.sql")
+    @mock.patch("mysql_class.Server.col_sql")
     def test_value(self, mock_sql):
 
         """Function:  test_value
