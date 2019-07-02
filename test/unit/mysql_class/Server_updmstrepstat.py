@@ -81,18 +81,17 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_sysvar.side_effect = [[{"Value": "log_bin"}],
-                                   [{"Value": "sync_binlog"}],
-                                   [{"Value": "innodb_flush"}],
-                                   [{"Value": "innodb_support_xa"}],
-                                   [{"Value": "binlog_format"}]]
+        mock_sysvar.side_effect = [{"log_bin": "ON"},
+                                   {"sync_binlog": "YES"},
+                                   {"innodb_flush_log_at_trx_commit": "YES"},
+                                   {"innodb_support_xa": "YES"},
+                                   {"binlog_format": "BIN"}]
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
 
         mysqldb.upd_mst_rep_stat()
-        self.assertEqual((mysqldb.log_bin, mysqldb.log_format),
-                         ("log_bin", "binlog_format"))
+        self.assertEqual((mysqldb.log_bin, mysqldb.log_format), ("ON", "BIN"))
 
 
 if __name__ == "__main__":
