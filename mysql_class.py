@@ -121,28 +121,26 @@ def show_slave_hosts(server):
 
     Arguments:
         (input) server -> Server instance.
-        (output) Return list of slave host IDs.
+        (output) Results of command in dictionary format.
 
     """
 
     return server.col_sql("show slave hosts")
 
 
-def show_slave_stat(SERVER, res_set="all"):
+def show_slave_stat(server):
 
     """Function:  show_slave_stat
 
-    Description:  Return the output of the show slave status command.
+    Description:  Return the output of the 'show slave status' command.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Dictionary array of show slave status command.
+        (input) server -> Server instance.
+        (output) Results of command in dictionary format.
 
     """
 
-    return SERVER.sql("show slave status", res_set)
+    return server.col_sql("show slave status")
 
 
 def slave_start(SERVER):
