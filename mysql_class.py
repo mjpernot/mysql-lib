@@ -40,7 +40,6 @@ import lib.machine as machine
 import lib.errors as errors
 import version
 
-# Version
 __version__ = version.__version__
 
 
@@ -832,30 +831,29 @@ class Server(object):
 
         """
 
-        results = {}
+        data = {}
 
-        # Loop on data and convert from tuple to dictionary.
-        for x in self.sql("show global variables", "all"):
-            results.update({x["Variable_name"]: x["Value"]})
+        for x in self.col_sql("show global variables"):
+            data.update({x["Variable_name"]: x["Value"]})
 
-        self.buf_size = int(results["key_buffer_size"])
-        self.indb_buf = int(results["innodb_buffer_pool_size"])
-        self.indb_add_pool = int(results["innodb_additional_mem_pool_size"])
-        self.indb_log_buf = int(results["innodb_log_buffer_size"])
-        self.qry_cache = int(results["query_cache_size"])
-        self.read_buf = int(results["read_buffer_size"])
-        self.read_rnd_buf = int(results["read_rnd_buffer_size"])
-        self.sort_buf = int(results["sort_buffer_size"])
-        self.join_buf = int(results["join_buffer_size"])
-        self.thrd_stack = int(results["thread_stack"])
-        self.max_pkt = int(results["max_allowed_packet"])
-        self.net_buf = int(results["net_buffer_length"])
-        self.max_conn = int(results["max_connections"])
-        self.max_heap_tbl = int(results["max_heap_table_size"])
-        self.tmp_tbl = int(results["tmp_table_size"])
+        self.buf_size = int(data["key_buffer_size"])
+        self.indb_buf = int(data["innodb_buffer_pool_size"])
+        self.indb_add_pool = int(data["innodb_additional_mem_pool_size"])
+        self.indb_log_buf = int(data["innodb_log_buffer_size"])
+        self.qry_cache = int(data["query_cache_size"])
+        self.read_buf = int(data["read_buffer_size"])
+        self.read_rnd_buf = int(data["read_rnd_buffer_size"])
+        self.sort_buf = int(data["sort_buffer_size"])
+        self.join_buf = int(data["join_buffer_size"])
+        self.thrd_stack = int(data["thread_stack"])
+        self.max_pkt = int(data["max_allowed_packet"])
+        self.net_buf = int(data["net_buffer_length"])
+        self.max_conn = int(data["max_connections"])
+        self.max_heap_tbl = int(data["max_heap_table_size"])
+        self.tmp_tbl = int(data["tmp_table_size"])
         self.cur_conn = int(fetch_global_var(self,
-                                             "Threads_connected")[0]["Value"])
-        self.uptime = int(fetch_global_var(self, "Uptime")[0]["Value"])
+            "Threads_connected")["Threads_connected"])
+        self.uptime = int(fetch_global_var(self, "Uptime")["Uptime"])
 
         # Data derived from above status values.
         # Days up since last recycle.
