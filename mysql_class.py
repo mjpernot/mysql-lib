@@ -44,24 +44,22 @@ import version
 __version__ = version.__version__
 
 
-def fetch_global_var(SERVER, gbl_var, res_set="all"):
+def fetch_global_var(server, var):
 
     """Function:  fetch_global_var
 
     Description:  Returns the value for a global variable.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) gbl_var -> Global variable name.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Return value of global variable.
+        (input) server -> Server instance.
+        (input) var -> Global variable name.
+        (output) Variable returned in dictionary format (e.g. {name: value}).
 
     """
 
-    sql_cmd = "show global status like %s"
+    cmd = "show global status like %s"
 
-    return SERVER.sql(sql_cmd, res_set, gbl_var)
+    return server.vert_sql(cmd, (var,))
 
 
 def fetch_sys_var(server, var, **kwargs):
