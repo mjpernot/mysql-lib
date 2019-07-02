@@ -61,6 +61,7 @@ pipeline {
                 ./test/unit/mysql_class/Server_flushlogs.py
                 ./test/unit/mysql_class/Server_vertsql.py
                 ./test/unit/mysql_class/Server_updlogstats.py
+                ./test/unit/mysql_class/SlaveRep_init.py
                 deactivate
                 rm -rf test_env
                 """
