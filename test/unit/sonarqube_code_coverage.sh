@@ -55,6 +55,19 @@ coverage run -a --source=mysql_class test/unit/mysql_class/Server_vertsql.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_updlogstats.py
 coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_init.py
 coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_updslvstatus.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_geterrstat.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_getloginfo.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_getothers.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_getthrstat.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_gettime.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_isslaveup.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_isslverror.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_isslvrunning.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_showslvstate.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_startslave.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_stopslave.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_updslvstate.py
+coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_updslvtime.py
 
 echo ""
 echo "Producing code coverage report"

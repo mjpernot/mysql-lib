@@ -169,6 +169,19 @@ test/unit/mysql_class/Server_vertsql.py
 test/unit/mysql_class/Server_updlogstats.py
 test/unit/mysql_class/SlaveRep_init.py
 test/unit/mysql_class/SlaveRep_updslvstatus.py
+test/unit/mysql_class/SlaveRep_geterrstat.py
+test/unit/mysql_class/SlaveRep_getloginfo.py
+test/unit/mysql_class/SlaveRep_getothers.py
+test/unit/mysql_class/SlaveRep_getthrstat.py
+test/unit/mysql_class/SlaveRep_gettime.py
+test/unit/mysql_class/SlaveRep_isslaveup.py
+test/unit/mysql_class/SlaveRep_isslverror.py
+test/unit/mysql_class/SlaveRep_isslvrunning.py
+test/unit/mysql_class/SlaveRep_showslvstate.py
+test/unit/mysql_class/SlaveRep_startslave.py
+test/unit/mysql_class/SlaveRep_stopslave.py
+test/unit/mysql_class/SlaveRep_updslvstate.py
+test/unit/mysql_class/SlaveRep_updslvtime.py
 ```
 
 ### All unit testing for mysql_class.py:
