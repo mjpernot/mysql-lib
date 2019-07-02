@@ -102,7 +102,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_sysvar.return_value = [{"Value": "ON"}]
+        mock_sysvar.return_value = {"gtid_mode": "ON"}
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
