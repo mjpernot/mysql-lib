@@ -82,7 +82,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_sysvar.return_value = []
+        mock_sysvar.return_value = {}
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
@@ -102,7 +102,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_sysvar.return_value = [{"Value": "Var_Value"}]
+        mock_sysvar.return_value = {"binlog_checksum": "Var_Value"}
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
