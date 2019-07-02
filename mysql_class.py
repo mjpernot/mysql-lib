@@ -1143,7 +1143,7 @@ class Server(object):
 
         data = {}
 
-        for x in self.sql(cmd):
+        for x in self.sql(cmd, params=params):
             data[x[0]] = x[1]
 
         return data
