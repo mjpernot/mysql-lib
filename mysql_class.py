@@ -181,7 +181,6 @@ class Position(collections.namedtuple("Position", "file, pos")):
     Super-Class:  collections.namedtuple
 
     Sub-Classes:
-        None
 
     Methods:
         __cmp__
@@ -276,7 +275,6 @@ class GTIDSet(object):
     Super-Class:  object
 
     Sub-Classes:
-        None
 
     Methods:
         __init__
@@ -529,7 +527,6 @@ class Server(object):
         Super-Class:  object
 
         Sub-Classes:
-            None
 
         Methods:
             __init__
@@ -748,7 +745,6 @@ class Server(object):
         Description:  Set the Server's Binlog checksum attribute.
 
         Arguments:
-            None
 
         """
 
@@ -759,7 +755,6 @@ class Server(object):
             self.crc = data[var]
 
     def set_srv_gtid(self):
-        # 20161019 - Added method
 
         """Method:  set_srv_gtid
 
