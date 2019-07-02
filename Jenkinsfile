@@ -34,6 +34,7 @@ pipeline {
                 ./test/unit/mysql_class/GTIDSet_lt.py
                 ./test/unit/mysql_class/GTIDSet_ne.py
                 ./test/unit/mysql_class/MasterRep_init.py
+                ./test/unit/mysql_class/MasterRep_showslvhosts.py
                 ./test/unit/mysql_class/Position_cmp.py
                 ./test/unit/mysql_class/Rep_fetchdodb.py
                 ./test/unit/mysql_class/Rep_fetchigndb.py
