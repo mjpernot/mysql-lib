@@ -229,36 +229,40 @@ def compare_sets(lhs, rhs):
         if lcheck and rcheck:
             return lcheck, rcheck
 
-        def inner_compare(gtid_set):
-
-            """Method:  inner_compare
-
-            Description:  Checks to see if the UUID is in the GTID Set passed
-                to the method.
-
-            Arguments:
-                (output) -> True | False on whether UUID was detected.
-
-            """
-
-            # UUID not in lhs ==> right hand side has more
-            if uuid not in gtid_set.gtids:
-                return True
-
-            else:
-                for rng1, rng2 in zip(rngs, gtid_set.gtids[uuid]):
-                    if rng1 != rng2:
-                        return True
-
-            return False
-
-        if inner_compare(lhs):
+        if _inner_compare(lhs, uuid, rngs):
             rcheck = True
 
-        if inner_compare(rhs):
+        if _inner_compare(rhs, uuid, rngs):
             lcheck = True
 
     return lcheck, rcheck
+
+
+def _inner_compare(gtid_set, uuid, rngs):
+
+    """Method:  inner_compare
+
+    Description:  Checks to see if the UUID is in the GTID Set passed
+        to the method.
+
+    Arguments:
+        (input) gtid_set -> GTIDSet instance.
+        (input) uuid -> Universal Unqiue Identifier.
+        (input) rngs -> Set of ranges.
+        (output) -> True|False on whether UUID was detected.
+
+    """
+
+    # UUID not in lhs ==> right hand side has more
+    if uuid not in gtid_set.gtids:
+        return True
+
+    else:
+        for rng1, rng2 in zip(rngs, gtid_set.gtids[uuid]):
+            if rng1 != rng2:
+                return True
+
+    return False
 
 
 class GTIDSet(object):
