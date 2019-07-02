@@ -941,8 +941,10 @@ class Server(object):
 
         """
 
-        return {"log_bin": self.log_bin, "innodb_support_xa": self.innodb_xa,
-                "sync_binlog": self.sync_log, "binlog_format": self.log_format,
+        return {"log_bin": self.log_bin,
+                "innodb_support_xa": self.innodb_xa,
+                "sync_binlog": self.sync_log,
+                "binlog_format": self.log_format,
                 "innodb_flush_log_at_trx_commit": self.innodb_flush}
 
     def fetch_slv_rep_cfg(self):
