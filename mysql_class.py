@@ -834,7 +834,6 @@ class Server(object):
         Description:  Updates the Server's status attributes.
 
         Arguments:
-            None
 
         """
 
@@ -903,7 +902,6 @@ class Server(object):
         Description:  Updates the Master replication setting attributes.
 
         Arguments:
-            None
 
         """
 
@@ -924,7 +922,6 @@ class Server(object):
         Description:  Updates the Slave replication setting attributes.
 
         Arguments:
-            None
 
         """
 
@@ -946,7 +943,6 @@ class Server(object):
         Description:  Returns a dictionary of the Master replication settings.
 
         Arguments:
-            None
 
         """
 
@@ -963,7 +959,6 @@ class Server(object):
         Description:  Returns a dictionary of the Slave replication settings.
 
         Arguments:
-            None
 
         """
 
@@ -981,7 +976,6 @@ class Server(object):
         Description:  Updates the binary log attributes.
 
         Arguments:
-            None
 
         """
 
@@ -998,7 +992,6 @@ class Server(object):
         Description:  Flush the binary log and update the binary log stats.
 
         Arguments:
-            None
 
         """
 
@@ -1012,7 +1005,6 @@ class Server(object):
         Description:  Returns the binary log file name.
 
         Arguments:
-            None
 
         """
 
@@ -1451,7 +1443,6 @@ class MasterRep(Rep):
         Description:  Update the status of the master.
 
         Arguments:
-            None
 
         """
 
@@ -1472,7 +1463,6 @@ class SlaveRep(Rep):
     Super-Class:  Rep
 
     Sub-Classes:
-        None
 
     Methods:
         __init__
@@ -1624,7 +1614,6 @@ class SlaveRep(Rep):
             and updates appropriate slave replication variables.
 
         Arguments:
-            None
 
         """
 
@@ -1656,7 +1645,6 @@ class SlaveRep(Rep):
         Description:  Updates the slave state status variables.
 
         Arguments:
-            None
 
         """
 
@@ -1672,7 +1660,6 @@ class SlaveRep(Rep):
         Description:  Updates the slave status variables.
 
         Arguments:
-            None
 
         """
 
@@ -1747,7 +1734,6 @@ class SlaveRep(Rep):
         Description:  Update the GTIDSet class GTID positions.
 
         Arguments:
-            None
 
         """
 
@@ -1879,7 +1865,6 @@ class SlaveRep(Rep):
         Description:  Updates the slave's time lag variable.
 
         Arguments:
-            None
 
         """
 
