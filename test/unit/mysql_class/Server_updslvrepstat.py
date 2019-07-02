@@ -81,12 +81,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_sysvar.side_effect = [[{"Value": "log_bin"}],
-                                   [{"Value": "read_only"}],
-                                   [{"Value": "log_slave_updates"}],
-                                   [{"Value": "sync_master_info"}],
-                                   [{"Value": "sync_relay_log"}],
-                                   [{"Value": "sync_relay_log_info"}]]
+        mock_sysvar.side_effect = [{"log_bin": "ON"},
+                                   {"read_only": "YES"},
+                                   {"log_slave_updates": "YES"},
+                                   {"sync_master_info": "NO"},
+                                   {"sync_relay_log": "ON"},
+                                   {"sync_relay_log_info": "YES"}]
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
@@ -94,7 +94,7 @@ class UnitTest(unittest.TestCase):
         mysqldb.upd_slv_rep_stat()
 
         self.assertEqual((mysqldb.log_bin, mysqldb.sync_rly_info),
-                         ("log_bin", "sync_relay_log_info"))
+                         ("ON", "YES"))
 
 
 if __name__ == "__main__":
