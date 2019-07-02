@@ -10,6 +10,8 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.show_master_stat:  Modified to use mysql.connector library.
+- mysql_class.show_master_stat:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.flush_logs:  Modified to use mysql.connector library.
 - mysql_class.fetch_global_var:  Modified to use mysql.connector library.
 - mysql_class.fetch_global_var:  Removed res_set from the function argument list as it is no longer required.

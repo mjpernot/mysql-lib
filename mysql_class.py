@@ -98,21 +98,19 @@ def flush_logs(server):
     server.cmd_sql("flush logs")
 
 
-def show_master_stat(SERVER, res_set="all"):
+def show_master_stat(server):
 
     """Function:  show_master_stat
 
-    Description:  Return the output of the show master status command.
+    Description:  Return results of the show master status command.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Dictionary array of show master status command.
+        (input) server -> Server instance.
+        (output) Results of command in dictionary format.
 
     """
 
-    return SERVER.sql("show master status", res_set)
+    return server.col_sql("show master status")
 
 
 def show_slave_hosts(SERVER, res_set="all"):
