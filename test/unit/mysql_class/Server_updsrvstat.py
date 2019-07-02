@@ -100,14 +100,11 @@ class UnitTest(unittest.TestCase):
             {"Variable_name": "max_heap_table_size",
              "Value" : "13"},
             {"Variable_name": "tmp_table_size",
-             "Value" : "14"},
-            {"Variable_name": "Threads_connected",
-             "Value" : "15"},
-            {"Variable_name": "Uptime",
-             "Value" : "16"}]
+             "Value" : "14"}]
 
-    @mock.patch("mysql_class.Server.sql")
-    def test_value(self, mock_sql):
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.Server.col_sql")
+    def test_value(self, mock_sql, mock_var):
 
         """Function:  test_value
 
@@ -117,6 +114,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        mock_var.side_effect = [{"Threads_connected": "15"},
+                                {"Uptime": "16"}]
         mock_sql.return_value = self.show_status
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
@@ -126,7 +125,7 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual((mysqldb.buf_size, mysqldb.cur_conn, mysqldb.thr_mem,
                           mysqldb.tmp_tbl_size, mysqldb.prct_mem),
-                         (10000000, 10000000, 56, 14, 6033))
+                         (10000000, 15, 56, 14, 100))
 
 
 if __name__ == "__main__":
