@@ -62,14 +62,14 @@ class Server(object):
 
         pass
 
-    def sql(self, cmd):
+    def cmd_sql(self, cmd):
 
-        """Method:  sql
+        """Method:  cmd_sql
 
-        Description:  Stub holder for Server.sql method.
+        Description:  Stub holder for Server.cmd_sql method.
 
         Arguments:
-            (input) cmd -> Stub holder for argument.
+            (input) cmd -> SQL command.
 
         """
 
