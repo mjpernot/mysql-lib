@@ -359,8 +359,8 @@ class GTIDSet(object):
             the other.  The update of the GTID set is done in-place, so if you
             want to compute the union of two sets 'lhs' and 'rhs' you have to
             do something like:
-                result = copy.deepcopy(lhs)
-                result.union(rhs).
+                data = copy.deepcopy(lhs)
+                data.union(rhs).
 
         Arguments:
             (input) other -> Second GTID set.
@@ -478,10 +478,10 @@ class GTIDSet(object):
 
         """
 
-        result = copy.deepcopy(self)
-        result.union(other)
+        data = copy.deepcopy(self)
+        data.union(other)
 
-        return result
+        return data
 
 
 class Server(object):
@@ -1611,10 +1611,10 @@ class SlaveRep(Rep):
         """
 
         slave_stop(self)
-        results = show_slave_stat(self)[0]
+        data = show_slave_stat(self)[0]
 
-        self.io_state = results["Slave_IO_State"]
-        self.secs_behind = results["Seconds_Behind_Master"]
+        self.io_state = data["Slave_IO_State"]
+        self.secs_behind = data["Seconds_Behind_Master"]
 
     def start_slave(self):
 
@@ -1629,10 +1629,10 @@ class SlaveRep(Rep):
         """
 
         slave_start(self)
-        results = show_slave_stat(self)[0]
+        data = show_slave_stat(self)[0]
 
-        self.io_state = results["Slave_IO_State"]
-        self.secs_behind = results["Seconds_Behind_Master"]
+        self.io_state = data["Slave_IO_State"]
+        self.secs_behind = data["Seconds_Behind_Master"]
 
     def show_slv_state(self):
 
@@ -1660,10 +1660,10 @@ class SlaveRep(Rep):
 
         """
 
-        results = show_slave_stat(self)[0]
-        self.io_state = results["Slave_IO_State"]
-        self.slv_io = results["Slave_IO_Running"]
-        self.slv_sql = results["Slave_SQL_Running"]
+        data = show_slave_stat(self)[0]
+        self.io_state = data["Slave_IO_State"]
+        self.slv_io = data["Slave_IO_Running"]
+        self.slv_sql = data["Slave_SQL_Running"]
 
     def upd_slv_status(self):
 
@@ -1751,10 +1751,10 @@ class SlaveRep(Rep):
 
         """
 
-        results = show_slave_stat(self)[0]
-        self.retrieved_gtidset = GTIDSet(results.get("Retrieved_Gtid_Set",
-                                                     "0:0") or "0:0")
-        self.exe_gtidset = GTIDSet(results.get("Executed_Gtid_Set", "0:0") or
+        data = show_slave_stat(self)[0]
+        self.retrieved_gtidset = GTIDSet(data.get("Retrieved_Gtid_Set",
+                                                  "0:0") or "0:0")
+        self.exe_gtidset = GTIDSet(data.get("Executed_Gtid_Set", "0:0") or
                                    "0:0")
 
         # Handle MySQL 5.5 or 5.6 servers.
@@ -1883,8 +1883,8 @@ class SlaveRep(Rep):
 
         """
 
-        results = show_slave_stat(self)[0]
-        self.secs_behind = results["Seconds_Behind_Master"]
+        data = show_slave_stat(self)[0]
+        self.secs_behind = data["Seconds_Behind_Master"]
 
     def get_time(self):
 
