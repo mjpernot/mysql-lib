@@ -752,14 +752,10 @@ class Server(object):
 
         """
 
-        x = fetch_sys_var(self, "binlog_checksum")
+        val = fetch_sys_var(self, "binlog_checksum")
 
-        # If NULL then server does not support Checksum in binary log.
-        if x:
-            self.crc = x[0]["Value"]
-
-        else:
-            self.crc = None
+        if val:
+            self.crc = val["binlog_checksum"]
 
     def set_srv_gtid(self):
         # 20161019 - Added method

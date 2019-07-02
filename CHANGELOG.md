@@ -10,6 +10,8 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.Server.set_srv_binlog_crc:  Modified to use mysql.connector library.
+- mysql_class.Server.set_srv_binlog_crc:  Removed setting crc attr to none as its been done in __init__.
 - mysql_class.slave_stop:  Modified to use mysql.connector library.
 - mysql_class.slave_start:  Modified to use mysql.connector library.
 - mysql_class.show_slave_stat:  Modified to use mysql.connector library.
@@ -62,6 +64,8 @@ Breaking Change
 - mysql_libs.Crt_Cmd:  Function was previously deprecated.
 - mysql_libs.Create_Instance:  Function was previously deprecated.
 - mysql_libs.Fetch_Tbl_Dict:  Function was previously deprecated.
+- mysql_libs.Crt_Srv_Inst:  Function was previously deprecated.
+- mysql_libs.Create_Slv_Array:  Function was previously deprecated.
 - mysql_libs.Crt_Srv_Inst:  Function was previously deprecated.
 - mysql_libs.Create_Slv_Array:  Function was previously deprecated.
 - mysql_libs.Change_Master_To:  Function was previously deprecated.
@@ -541,5 +545,3 @@ Breaking Change
 ## [1.0.0] - 2015-11-06
 ### Added
 - commands.py:  Initial program creation.
-- server.py:  Initial program creation.
-
