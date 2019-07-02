@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.MasterRep.upd_mst_status:  Replaced log stats update with call to upd_log_stats method.
 - mysql_class.MasterRep.show_slv_hosts:  Modified to use mysql.connector library.
 - mysql_class.MasterRep.show_slv_hosts:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.MasterRep.__init__:  Modified to use mysql.connector library.

@@ -1450,13 +1450,9 @@ class MasterRep(Rep):
 
         """
 
-        results = show_master_stat(self)[0]
-        self.pos = results["Position"]
-        self.do_db = results["Binlog_Do_DB"]
-        self.file = results["File"]
-        self.ign_db = results["Binlog_Ignore_DB"]
-
-        self.exe_gtid = results.get("Executed_Gtid_Set", None)
+        self.upd_log_stats()
+        data = show_master_stat(self)[0]
+        self.exe_gtid = data.get("Executed_Gtid_Set", None)
 
 
 class SlaveRep(Rep):
