@@ -1280,20 +1280,20 @@ class Rep(Server):
 
         pass
 
-    def get_serv_id(self, res_set="all"):
+    def get_serv_id(self):
 
         """Method:  get_serv_id
 
         Description:  Calls the get_serv_id function with the class instance.
 
         Arguments:
-            (input) res_set -> 'row' - return a single row at a time or
-                               'all' - return a list of tuples.
-            (output) Return output of get_serv_id function.
+            (output) Return the server's ID.
 
         """
 
-        return fetch_sys_var(self, "server_id", res_set)[0]["Value"]
+        var = "server_id"
+
+        return fetch_sys_var(self, var)[var]
 
     def fetch_do_db(self):
 
