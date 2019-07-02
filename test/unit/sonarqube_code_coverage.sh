@@ -47,6 +47,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/Server_connect.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_disconnect.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_fetchlogs.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_flushlogs.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_vertsql.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_updlogstats.py
 
 echo ""
