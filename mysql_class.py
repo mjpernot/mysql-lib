@@ -522,6 +522,9 @@ class Server(object):
         connect
         disconnect
         sql
+        cmd_sql
+        col_sql
+        vert_sql
 
     """
 
@@ -1098,6 +1101,53 @@ class Server(object):
         """
 
         return self.conn.cmd_query(cmd)
+
+    def col_sql(self, cmd):
+
+        """Method:  col_sql
+
+        Description:  Execute a command sql with column definitions.  Takes the
+            column definitions from the sql command standard output and
+            combines them with the sql command data return to produce a list
+            of dictionaries key-values.
+
+        Arguments:
+            (input) cmd -> Command SQL.
+            (output) data -> Results of the sql executed in list format.
+
+        """
+
+        data = []
+        keys = [str(x[0]) for x in self.conn.cmd_query(cmd)["columns"]]
+
+        for y in self.conn.get_rows()[0]:
+            data.append(dict(zip(keys, [x for x in y])))
+
+        return data
+
+    def vert_sql(self, cmd, params=None):
+
+        """Method:  vert_sql
+
+        Description:  Execute a sql query with vertical definitions returns.
+            One column contains the column definition and the other column
+            contains the value.  Combines the two columns into a dictionary
+            format.
+
+        Arguments:
+            (input) cmd -> Command SQL.
+            (input) params -> Position arguments for the SQL command.
+            (output) data -> Results of the sql executed in list format.
+
+        """
+
+        data = {}
+
+        for x in self.sql(cmd):
+            data[x[0]] = x[1]
+
+        return data
+
 
 class Rep(Server):
 

@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
-## [4.0.0] - 2019-07-01
+## [4.0.0] - 2019-07-02
 Breaking Change
 
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
@@ -20,6 +20,8 @@ Breaking Change
 
 ### Added
 - mysql_class.Server.cmd_sql:  Method to run command sql.
+- mysql_class.Server.col_sql:  Method to run sql code with column definitions and return list of dictionaries.
+- mysql_class.Server.vert_sql:  Method to run sql code with vertical definitions and return in dictionary format.
 
 
 ## [3.2.1] - 2018-11-02
