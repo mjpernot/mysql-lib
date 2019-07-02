@@ -143,18 +143,18 @@ def show_slave_stat(server):
     return server.col_sql("show slave status")
 
 
-def slave_start(SERVER):
+def slave_start(server):
 
     """Function:  slave_start
 
-    Description:  Starts the slave thread in the database.
+    Description:  Starts the slave thread.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
 
     """
 
-    SERVER.sql("start slave")
+    server.cmd_sql("start slave")
 
 
 def slave_stop(SERVER):

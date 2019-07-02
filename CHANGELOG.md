@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.slave_start:  Modified to use mysql.connector library.
 - mysql_class.show_slave_stat:  Modified to use mysql.connector library.
 - mysql_class.show_slave_stat:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.show_slave_hosts:  Modified to use mysql.connector library.
