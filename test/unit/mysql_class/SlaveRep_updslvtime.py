@@ -84,9 +84,10 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                      self.sql_pass, self.machine,
-                                      defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
 
         mysqlrep.upd_slv_time()
         self.assertEqual((mysqlrep.secs_behind), ("10"))

@@ -82,9 +82,10 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
         mysqlrep.slv_sql = "Yes"
         mysqlrep.slv_io = "Yes"
 
@@ -100,10 +101,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
         mysqlrep.slv_sql = "Yes"
+        mysqlrep.slv_io = "No"
 
         self.assertFalse(mysqlrep.is_slave_up())
 
@@ -117,10 +120,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
         mysqlrep.slv_io = "Yes"
+        mysqlrep.slv_sql = "No"
 
         self.assertFalse(mysqlrep.is_slave_up())
 
@@ -134,9 +139,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+        mysqlrep.slv_io = "No"
+        mysqlrep.slv_sql = "No"
 
         self.assertFalse(mysqlrep.is_slave_up())
 

@@ -70,9 +70,9 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-        self.show_stat = [{"Slave_IO_State": "Up"},
-                          {"Slave_IO_Running": "Running"},
-                          {"Slave_SQL_Running": "SQL_Code"}]
+        self.show_stat = [{"Slave_IO_State": "Up",
+                           "Slave_IO_Running": "Running",
+                           "Slave_SQL_Running": "SQL_Code"}]
 
     @mock.patch("mysql_class.show_slave_stat")
     def test_value(self, mock_stat):
@@ -86,9 +86,10 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                      self.sql_pass, self.machine,
-                                      defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
 
         mysqlrep.upd_slv_state()
         self.assertEqual((mysqlrep.io_state, mysqlrep.slv_io,

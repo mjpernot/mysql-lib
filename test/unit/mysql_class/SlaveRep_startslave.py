@@ -70,7 +70,8 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-        self.show_stat = [{"io_state": "Up"}, {"secs_behind": 0}]
+        self.show_stat = [{"Slave_IO_State": "Up",
+                           "Seconds_Behind_Master": "0"}]
 
     @mock.patch("mysql_class.slave_start")
     @mock.patch("mysql_class.show_slave_stat")
@@ -86,13 +87,14 @@ class UnitTest(unittest.TestCase):
 
         mock_start.return_value = True
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                      self.sql_pass, self.machine,
-                                      defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
 
         mysqlrep.start_slave()
         self.assertEqual((mysqlrep.io_state, mysqlrep.secs_behind),
-                         ("Up", 0))
+                         ("Up", "0"))
 
 
 if __name__ == "__main__":
