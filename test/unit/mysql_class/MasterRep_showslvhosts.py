@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -69,7 +70,7 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-    @mock.patch("mysql_class.MasterRep.show_slave_hosts")
+    @mock.patch("mysql_class.show_slave_hosts")
     def test_default(self, mock_hosts):
 
         """Function:  test_default
