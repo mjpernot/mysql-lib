@@ -1703,14 +1703,6 @@ class SlaveRep(Rep):
         self.sql_msg = results["Last_SQL_Error"]
         self.ign_ids = results["Replicate_Ignore_Server_Ids"]
         self.mst_id = results["Master_Server_Id"]
-
-        self.run = fetch_global_var(self, "slave_running")[0]["Value"]
-        self.tmp_tbl = fetch_global_var(
-            self, "slave_open_temp_tables")[0]["Value"]
-        self.retry = fetch_global_var(
-            self, "slave_retried_transactions")[0]["Value"]
-        self.read_only = fetch_sys_var(self, "read_only")[0]["Value"]
-
         self.mst_uuid = results.get("Master_UUID", None)
         self.mst_info = results.get("Master_Info_File", None)
         self.sql_delay = results.get("SQL_Delay", None)
@@ -1722,11 +1714,16 @@ class SlaveRep(Rep):
         self.sql_err_time = results.get("Last_SQL_Error_Timestamp", None)
         self.ssl_crl = results.get("Master_SSL_Crl", None)
         self.ssl_crl_path = results.get("Master_SSL_Crlpath", None)
-
         self.retrieved_gtid = results.get("Retrieved_Gtid_Set", None)
         self.exe_gtid = results.get("Executed_Gtid_Set", None)
-
         self.auto_pos = results.get("Auto_Position", None)
+
+        self.run = fetch_global_var(self, "slave_running")["slave_running"]
+        self.tmp_tbl = fetch_global_var(self,
+            "slave_open_temp_tables")["slave_open_temp_tables"]
+        self.retry = fetch_global_var(self,
+            "slave_retried_transactions")["slave_retried_transactions"]
+        self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
         self.upd_gtid_pos()
 
