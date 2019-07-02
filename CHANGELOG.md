@@ -10,6 +10,8 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.MasterRep.__init__:  Modified to use mysql.connector library.
+- mysql_class.MasterRep.__init__:  Removed the connection to the replication server.  Moved to rep_conn() method.
 - mysql_class.Rep.get_serv_id:  Modified to use mysql.connector library.
 - mysql_class.Rep.get_serv_id:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.Server.upd_slv_rep_stat:  Modified to use mysql.connector library.

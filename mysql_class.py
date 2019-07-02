@@ -1376,17 +1376,11 @@ class MasterRep(Rep):
                                         machine, host, port, defaults_file,
                                         **kwargs)
 
-        # Use parent class connect.
-        super(MasterRep, self).connect()
-        super(MasterRep, self).set_srv_gtid()
-
-        results = show_master_stat(self)[0]
-        self.pos = results["Position"]
-        self.do_db = results["Binlog_Do_DB"]
-        self.file = results["File"]
-        self.ign_db = results["Binlog_Ignore_DB"]
-
-        self.exe_gtid = results.get("Executed_Gtid_Set", None)
+        self.pos = None
+        self.do_db = None
+        self.file = None
+        self.ign_db = None
+        self.exe_gtid = None
 
     def rep_conn(self):
 
