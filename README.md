@@ -183,6 +183,7 @@ test/unit/mysql_class/SlaveRep_stopslave.py
 test/unit/mysql_class/SlaveRep_updslvstate.py
 test/unit/mysql_class/SlaveRep_updslvtime.py
 test/unit/mysql_libs/analyze_tbl.py
+test/unit/mysql_libs/change_master_to.py
 ```
 
 ### All unit testing for mysql_class.py:

@@ -6,3 +6,4 @@
 
 echo "Unit test: mysql_libs"  
 test/unit/mysql_libs/analyze_tbl.py
+test/unit/mysql_libs/change_master_to.py
