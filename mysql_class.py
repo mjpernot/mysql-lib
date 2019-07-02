@@ -157,18 +157,18 @@ def slave_start(server):
     server.cmd_sql("start slave")
 
 
-def slave_stop(SERVER):
+def slave_stop(server):
 
     """Function:  slave_stop
 
-    Description:  Stops the slave thread in the database.
+    Description:  Stops the slave thread.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
 
     """
 
-    SERVER.sql("stop slave")
+    server.cmd_sql("stop slave")
 
 
 class Position(collections.namedtuple("Position", "file, pos")):
