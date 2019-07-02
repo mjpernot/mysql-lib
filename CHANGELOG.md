@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.fetch_sys_var:  Modified to use mysql.connector library.
 - mysql_class.Server.sql:  Modified to use mysql.connector library.
 - mysql_class.Server.sql:  Removed the check to see if the connection is active.
 - mysql_class.Server.sql:  Removed the database parameter from the function argument list as it is no longer required.

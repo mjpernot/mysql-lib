@@ -64,7 +64,7 @@ def fetch_global_var(SERVER, gbl_var, res_set="all"):
     return SERVER.sql(sql_cmd, res_set, gbl_var)
 
 
-def fetch_sys_var(SERVER, var, res_set="all", **kwargs):
+def fetch_sys_var(server, var, res_set="all", **kwargs):
 
     """Function:  fetch_sys_var
 
@@ -73,7 +73,7 @@ def fetch_sys_var(SERVER, var, res_set="all", **kwargs):
         run at the default level of Session.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
         (input) var -> System variable name.
         (input) res_set -> row or all - Returning result set.
             Default value: 'all' will cover most requirements.
@@ -85,7 +85,7 @@ def fetch_sys_var(SERVER, var, res_set="all", **kwargs):
 
     qry = "show " + kwargs.get("level", "") + " variables like %s"
 
-    return SERVER.sql(qry, res_set, var)
+    return server.sql(qry, res_set, (var,))
 
 
 def flush_logs(SERVER):
