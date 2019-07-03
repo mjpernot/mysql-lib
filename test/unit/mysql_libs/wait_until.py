@@ -93,7 +93,10 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_ids_not_match -> Test Slave and Master IDs do not match.
+        test_sql_non_gtid_good -> Test in SQL in non-GTID Mode w/ good status.
+        test_sql_gtid_good -> Test in SQL in GTID Mode with good status.
+        test_io_non_gtid_good -> Test in IO in non-GTID Mode with good status.
+        test_io_gtid_good -> Test in IO in GTID Mode with good status.
 
     """
 
@@ -109,19 +112,62 @@ class UnitTest(unittest.TestCase):
 
         self.Slave = SlaveRep()
 
-    def test_ids_not_match(self):
+    def test_sql_non_gtid_good(self):
 
-        """Function:  test_ids_not_match
+        """Function:  test_sql_non_gtid_good
 
-        Description:  Test Slave and Master IDs do not match.
+        Description:  Test in SQL in non-GTID Mode with good status.
 
         Arguments:
 
         """
 
-        slave = SlaveRep(11)
-        err_msg = "Error:  Slave's Master ID %s doesn't match Master ID %s." \
-                  % (slave.mst_id, master.server_id)
+        Slave.gtid_mode = None
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.wait_until(Slave, "SQL",
+                                                   log_file="mst_log",
+                                                   log_pos=12345, gtid=10))
+
+    def test_sql_gtid_good(self):
+
+        """Function:  test_sql_gtid_good
+
+        Description:  Test in SQL in GTID Mode with good status.
+
+        Arguments:
+
+        """
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.wait_until(Slave, "SQL", gtid=10))
+
+    def test_io_non_gtid_good(self):
+
+        """Function:  test_io_non_gtid_good
+
+        Description:  Test in IO in non-GTID Mode with good status.
+
+        Arguments:
+
+        """
+
+        Slave.gtid_mode = None
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.wait_until(Slave, "IO",
+                                                   log_file="mst_log",
+                                                   log_pos=12345, gtid=10))
+
+    def test_io_gtid_good(self):
+
+        """Function:  test_io_gtid_good
+
+        Description:  Test in IO in GTID Mode with good status.
+
+        Arguments:
+
+        """
 
         with gen_libs.no_std_out():
             self.assertFalse(mysql_libs.wait_until(Slave, "IO", gtid=10))
