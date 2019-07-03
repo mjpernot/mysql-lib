@@ -21,6 +21,11 @@ coverage run -a --source=mysql_libs test/unit/mysql_libs/purge_bin_logs.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/reset_master.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/reset_slave.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/select_wait_until.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/create_slv_array.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/crt_cmd.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/crt_srv_inst.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/fetch_slv.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/find_name.py
 
 echo ""
 echo "Producing code coverage report"
