@@ -78,6 +78,7 @@ pipeline {
                 ./test/unit/mysql_class/SlaveRep_updslvtime.py
                 ./test/unit/mysql_libs/analyze_tbl.py
                 ./test/unit/mysql_libs/change_master_to.py
+                ./test/unit/mysql_libs/checksum.py
                 deactivate
                 rm -rf test_env
                 """

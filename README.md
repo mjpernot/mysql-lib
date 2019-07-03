@@ -184,6 +184,7 @@ test/unit/mysql_class/SlaveRep_updslvstate.py
 test/unit/mysql_class/SlaveRep_updslvtime.py
 test/unit/mysql_libs/analyze_tbl.py
 test/unit/mysql_libs/change_master_to.py
+test/unit/mysql_libs/checksum.py
 ```
 
 ### All unit testing for mysql_class.py:
