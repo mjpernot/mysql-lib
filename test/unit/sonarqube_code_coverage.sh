@@ -86,6 +86,11 @@ coverage run -a --source=mysql_libs test/unit/mysql_libs/crt_cmd.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/crt_srv_inst.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/fetch_slv.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/find_name.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/is_cfg_valid.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/is_logs_synced.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/is_rep_delay.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/start_slave_until.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/switch_to_master.py
 
 echo ""
 echo "Producing code coverage report"

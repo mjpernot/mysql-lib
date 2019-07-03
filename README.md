@@ -200,6 +200,11 @@ test/unit/mysql_libs/crt_cmd.py
 test/unit/mysql_libs/crt_srv_inst.py
 test/unit/mysql_libs/fetch_slv.py
 test/unit/mysql_libs/find_name.py
+test/unit/mysql_libs/is_cfg_valid.py
+test/unit/mysql_libs/is_logs_synced.py
+test/unit/mysql_libs/is_rep_delay.py
+test/unit/mysql_libs/start_slave_until.py
+test/unit/mysql_libs/switch_to_master.py
 ```
 
 ### All unit testing for mysql_class.py:
