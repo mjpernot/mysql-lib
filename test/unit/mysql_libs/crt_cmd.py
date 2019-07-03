@@ -61,8 +61,8 @@ class Server(object):
 
         self.name = "name"
         self.sid = "sid"
-        self.user = "user"
-        self.pwd = "pwd"
+        self.sql_user = "user"
+        self.sql_pass = "pwd"
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
@@ -103,11 +103,11 @@ class UnitTest(unittest.TestCase):
                       "-u", self.Server.sql_user,
                       "-h", self.Server.host, "-P",
                       str(self.Server.port)]
-        self.prog1 = ["Program", "-u", self.Server.sql_user,
+        self.prog2 = ["Program", "-u", self.Server.sql_user,
                       "-p" + self.Server.sql_pass, "-h", self.Server.host,
                       "-P", str(self.Server.port)]
 
-    def test_no_extra_def_file(self, mock_cfg):
+    def test_no_extra_def_file(self):
 
         """Function:  test_no_extra_def_file
 
@@ -122,7 +122,7 @@ class UnitTest(unittest.TestCase):
         self.assertEqual(mysql_libs.crt_cmd(self.Server, "Program"),
                          self.prog2)
 
-    def test_extra_def_file(self, mock_cfg):
+    def test_extra_def_file(self):
 
         """Function:  test_extra_def_file
 

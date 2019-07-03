@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -60,7 +61,7 @@ class UnitTest(unittest.TestCase):
         """
 
         self.cfg_array = {"name": "name", "sid": "sid", "user": "user",
-                          "pwd": "pwd", "serv_os": "Linux",
+                          "passwd": "pwd", "serv_os": "Linux",
                           "host": "hostname", "port": 3306,
                           "cfg_file": "cfg_file"}
 

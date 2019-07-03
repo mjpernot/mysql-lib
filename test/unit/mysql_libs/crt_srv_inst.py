@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -98,7 +99,7 @@ class Cfg(object):
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
-        self.pwd = "pwd"
+        self.passwd = "pwd"
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
@@ -131,11 +132,14 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
         self.Cfg = Cfg()
+        self.Server = Server(self.Cfg.name, self.Cfg.sid, self.Cfg.user,
+                             self.Cfg.passwd, self.Cfg.serv_os, self.Cfg.host,
+                             self.Cfg.port, self.Cfg.cfg_file)
 
+    @mock.patch("mysql_libs.mysql_class.Server")
     @mock.patch("mysql_libs.gen_libs.load_module")
-    def test_crt_srv_inst(self, mock_cfg):
+    def test_crt_srv_inst(self, mock_cfg, mock_srv):
 
         """Function:  test_crt_srv_inst
 
@@ -146,9 +150,10 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_cfg.return_value = self.Cfg
+        mock_srv.return_value = self.Server
 
-        self.assertEqual(mysql_libs.crt_srv_inst("Cfgfile", "DirPath"),
-                         self.Server)
+        instance = mysql_libs.crt_srv_inst("Cfgfile", "DirPath")
+        self.assertEqual(type(instance), type(self.Server))
 
 
 if __name__ == "__main__":

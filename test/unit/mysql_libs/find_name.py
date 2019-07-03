@@ -118,7 +118,7 @@ class UnitTest(unittest.TestCase):
         """
 
         self.assertEqual(mysql_libs.find_name(self.slv_list, "Slave1"),
-                         Self.Slave1)
+                         self.Slave1)
 
 
 if __name__ == "__main__":
