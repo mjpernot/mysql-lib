@@ -115,8 +115,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.fetch_db_dict(self.Server, "Dbname",
-                                                 "Tblname"))
+        self.assertTrue(mysql_libs.fetch_db_dict(self.Server))
 
 
 if __name__ == "__main__":
