@@ -142,7 +142,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.chg_slv_state([self.Server], "stop"))
+        self.assertFalse(mysql_libs.chg_slv_state([self.Server], "stop"))
 
     def test_start_option(self):
 
@@ -154,7 +154,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.chg_slv_state([self.Server], "start"))
+        self.assertFalse(mysql_libs.chg_slv_state([self.Server], "start"))
 
     def test_else_option(self):
 
@@ -167,7 +167,7 @@ class UnitTest(unittest.TestCase):
         """
 
         with gen_libs.no_std_out():
-            self.assertTrue(mysql_libs.chg_slv_state([self.Server], "other"))
+            self.assertFalse(mysql_libs.chg_slv_state([self.Server], "other"))
 
 
 if __name__ == "__main__":

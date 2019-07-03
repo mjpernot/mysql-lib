@@ -62,7 +62,7 @@ class Server(object):
 
         pass
 
-    def sql(self, cmd, var):
+    def sql(self, cmd):
 
         """Method:  sql
 
@@ -70,7 +70,6 @@ class Server(object):
 
         Arguments:
             (input) cmd -> Query command.
-            (input) var -> Global variable name.
 
         """
 
@@ -115,8 +114,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.purge_bin_logs(self.Server, "TO",
-                                                  "Filename"))
+        self.assertFalse(mysql_libs.purge_bin_logs(self.Server, "TO",
+                                                   "Filename"))
 
 
 if __name__ == "__main__":
