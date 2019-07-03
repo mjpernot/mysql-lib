@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -100,7 +101,7 @@ class Cfg(object):
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
-        self.pwd = "pwd"
+        self.passwd = "pwd"
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
@@ -134,7 +135,6 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
         self.Cfg = Cfg()
 
     @mock.patch("mysql_libs.gen_libs.load_module")
