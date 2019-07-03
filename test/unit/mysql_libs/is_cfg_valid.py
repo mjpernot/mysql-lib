@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -123,9 +124,10 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_chk.return_value = (False, "Error Message")
+        err_msg = ['Error Message', 'Slave1:  Extra_Def_File is missing.']
 
         self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]),
-                         (False, "Error Message"))
+                         (False, err_msg))
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
     def test_cfg_valid(self, mock_chk):
@@ -140,7 +142,7 @@ class UnitTest(unittest.TestCase):
 
         mock_chk.return_value = (True, None)
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]), (True, None))
+        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]), (True, []))
 
 
 if __name__ == "__main__":

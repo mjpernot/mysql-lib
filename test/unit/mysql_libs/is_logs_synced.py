@@ -95,7 +95,7 @@ class SlaveRep(object):
         self.name = name
         self.gtid_mode = gtid_mode
         self.exe_gtid = exe_gtid
-        self.relay_mst_lost = relay_log
+        self.relay_mst_log = relay_log
         self.exec_mst_pos = mst_pos
 
 
