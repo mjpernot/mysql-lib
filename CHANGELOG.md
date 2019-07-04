@@ -4,12 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
-## [4.0.0] - 2019-07-02
+## [4.0.0] - 2019-07-04
 Breaking Change
 
 - Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
 
 ### Changed
+- mysql_class.SlaveRep.upd_gtid_pos:  Modified to use mysql.connector library.
 - mysql_class.compare_sets:  Changed argument call to _inner_compare to include uuid and rngs objects.
 - mysql_class.SlaveRep.upd_slv_status:  Modified to use mysql.connector library.
 - mysql_class.SlaveRep.__init__:  Modified to use mysql.connector library.
