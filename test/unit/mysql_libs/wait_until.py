@@ -61,7 +61,7 @@ class SlaveRep(object):
 
         self.gtid_mode = gtid_mode
         self.name = "Slave"
-        self.retrieved_id = 10
+        self.retrieved_gtid = 10
         self.mst_log = "mst_log"
         self.mst_read_pos = 12345
         self.exe_gtid = 12345
@@ -110,7 +110,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Slave = SlaveRep()
+        self.slave = SlaveRep()
 
     def test_sql_non_gtid_good(self):
 
@@ -122,12 +122,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        Slave.gtid_mode = None
+        self.slave.gtid_mode = None
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs.wait_until(Slave, "SQL",
-                                                   log_file="mst_log",
-                                                   log_pos=12345, gtid=10))
+            self.assertFalse(mysql_libs.wait_until(self.slave, "SQL",
+                                                   log_file="relay_mst_log",
+                                                   log_pos=12345, gtid=12345))
 
     def test_sql_gtid_good(self):
 
@@ -140,7 +140,8 @@ class UnitTest(unittest.TestCase):
         """
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs.wait_until(Slave, "SQL", gtid=10))
+            self.assertFalse(mysql_libs.wait_until(self.slave, "SQL",
+                                                   gtid=12345))
 
     def test_io_non_gtid_good(self):
 
@@ -152,10 +153,10 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        Slave.gtid_mode = None
+        self.slave.gtid_mode = None
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs.wait_until(Slave, "IO",
+            self.assertFalse(mysql_libs.wait_until(self.slave, "IO",
                                                    log_file="mst_log",
                                                    log_pos=12345, gtid=10))
 
@@ -170,7 +171,7 @@ class UnitTest(unittest.TestCase):
         """
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs.wait_until(Slave, "IO", gtid=10))
+            self.assertFalse(mysql_libs.wait_until(self.slave, "IO", gtid=10))
 
 
 if __name__ == "__main__":

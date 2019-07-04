@@ -115,6 +115,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_logs_to_synced -> Test with logs are to be synced.
         test_logs_not_synced -> Test with logs are not synced.
         test_logs_synced -> Test with logs are synced.
         test_ids_not_match -> Test Slave and Master IDs do not match.
@@ -131,7 +132,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Master = MasterRep()
+        self.master = MasterRep()
 
     @mock.patch("mysql_libs.sync_delay")
     @mock.patch("mysql_libs.is_logs_synced")
@@ -148,18 +149,18 @@ class UnitTest(unittest.TestCase):
         mock_delay.return_value = True
         mock_sync.side_effect = [False, True, False]
         slave = SlaveRep()
-        err_msg = "Error:  Server %s not in sync with master." % (Slave)
+        err_msg = "Error:  Server %s not in sync with master." % (slave)
 
-        self.assertEqual(mysql_libs.sync_rep_slv(master, slave),
+        self.assertEqual(mysql_libs.sync_rep_slv(self.master, slave),
                          (True, err_msg))
 
     @mock.patch("mysql_libs.sync_delay")
     @mock.patch("mysql_libs.is_logs_synced")
-    def test_logs_synced(self, mock_sync, mock_delay):
+    def test_logs_to_synced(self, mock_sync, mock_delay):
 
-        """Function:  test_logs_synced
+        """Function:  test_logs_to_synced
 
-        Description:  Test with logs are synced.
+        Description:  Test with logs are to be synced.
 
         Arguments:
 
@@ -169,7 +170,7 @@ class UnitTest(unittest.TestCase):
         mock_sync.side_effect = [False, True, True]
         slave = SlaveRep()
 
-        self.assertEqual(mysql_libs.sync_rep_slv(master, slave),
+        self.assertEqual(mysql_libs.sync_rep_slv(self.master, slave),
                          (False, None))
 
     @mock.patch("mysql_libs.is_logs_synced")
@@ -188,7 +189,7 @@ class UnitTest(unittest.TestCase):
         mock_sync.return_value = True
         slave = SlaveRep(slv_stat=True)
 
-        self.assertEqual(mysql_libs.sync_rep_slv(master, slave),
+        self.assertEqual(mysql_libs.sync_rep_slv(self.master, slave),
                          (False, None))
 
     def test_ids_not_match(self):
@@ -203,9 +204,9 @@ class UnitTest(unittest.TestCase):
 
         slave = SlaveRep(11)
         err_msg = "Error:  Slave's Master ID %s doesn't match Master ID %s." \
-                  % (slave.mst_id, master.server_id)
+                  % (slave.mst_id, self.master.server_id)
 
-        self.assertEqual(mysql_libs.sync_rep_slv(master, slave),
+        self.assertEqual(mysql_libs.sync_rep_slv(self.master, slave),
                          (True, err_msg))
 
 
