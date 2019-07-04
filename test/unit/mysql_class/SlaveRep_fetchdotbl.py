@@ -85,8 +85,9 @@ class UnitTest(unittest.TestCase):
                                         self.machine,
                                         defaults_file=self.defaults_file)
 
-        mysqlrep.do_tbl = "Tbl1,Tbl2,Tbl3"
-        self.assertEqual(mysqlrep.fetch_do_tbl(), ["Tbl1, Tbl2, Tbl3"])
+        mysqlrep.do_tbl = "db1.tbl1,db2.tbl2,db3.tbl3"
+        self.assertEqual(mysqlrep.fetch_do_tbl(),
+                         {'db1': ['tbl1'], 'db3': ['tbl3'], 'db2': ['tbl2']})
 
     def test_default(self):
 

@@ -84,9 +84,10 @@ class UnitTest(unittest.TestCase):
                                         self.sql_user, self.sql_pass,
                                         self.machine,
                                         defaults_file=self.defaults_file)
-        mysqlrep.do_dic = "Tbl1,Tbl2,Tbl3"
+        mysqlrep.ign_tbl = "db1.tbl1,db2.tbl2,db3.tbl3"
 
-        self.assertEqual(mysqlrep.fetch_ign_tbl(), ["Tbl1, Tbl2, Tbl3"])
+        self.assertEqual(mysqlrep.fetch_ign_tbl(),
+                         {'db1': ['tbl1'], 'db3': ['tbl3'], 'db2': ['tbl2']})
 
     def test_default(self):
 
