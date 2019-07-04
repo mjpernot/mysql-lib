@@ -119,7 +119,7 @@ class UnitTest(unittest.TestCase):
 
         mock_wait.return_value = -1
 
-        self.assertEqual(mysql_libs.switch_to_master(self.Slave, self.Master), 
+        self.assertEqual(mysql_libs.switch_to_master(self.Slave, self.Master),
                          -1)
 
     @mock.patch("mysql_libs.select_wait_until")
@@ -141,7 +141,7 @@ class UnitTest(unittest.TestCase):
         mock_start.return_value = True
         mock_wait.return_value = 0
 
-        self.assertEqual(mysql_libs.switch_to_master(self.Slave, self.Master), 
+        self.assertEqual(mysql_libs.switch_to_master(self.Slave, self.Master),
                          0)
 
 

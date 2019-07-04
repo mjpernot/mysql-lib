@@ -47,7 +47,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_connect_exception -> Test connection method exception. 
+        test_connect_exception -> Test connection method exception.
         test_connect -> Test connect method.
 
     """

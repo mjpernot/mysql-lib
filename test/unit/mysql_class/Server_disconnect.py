@@ -51,7 +51,6 @@ class Server(object):
 
     """
 
-
     def __init__(self):
 
         """Function:  __init__

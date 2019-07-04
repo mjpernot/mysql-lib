@@ -205,8 +205,8 @@ class UnitTest(unittest.TestCase):
         mock_until.return_value = (True, "Error Message")
         mock_wait.return_value = True
 
-        #with gen_libs.no_std_out():
-        self.assertFalse(mysql_libs.sync_delay(master, slave, "IO"))
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.sync_delay(master, slave, "IO"))
 
     @mock.patch("mysql_libs.wait_until")
     @mock.patch("mysql_libs.start_slave_until")

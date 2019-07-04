@@ -70,7 +70,6 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-
     def test_default(self):
 
         """Function:  test_default
