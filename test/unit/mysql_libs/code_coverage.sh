@@ -32,6 +32,8 @@ coverage run -a --source=mysql_libs test/unit/mysql_libs/is_rep_delay.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/start_slave_until.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/switch_to_master.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/sync_delay.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/sync_rep_slv.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/wait_until.py
 
 echo ""
 echo "Producing code coverage report"

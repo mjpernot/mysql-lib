@@ -29,4 +29,6 @@ test/unit/mysql_libs/is_rep_delay.py
 test/unit/mysql_libs/start_slave_until.py
 test/unit/mysql_libs/switch_to_master.py
 test/unit/mysql_libs/sync_delay.py
+test/unit/mysql_libs/sync_rep_slv.py
+test/unit/mysql_libs/wait_until.py
 
