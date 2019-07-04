@@ -18,7 +18,6 @@
         Position
         GTIDSet
         Server
-            Row
             Rep
                 MasterRep
                 SlaveRep
@@ -37,7 +36,6 @@ import collections
 # Local
 import lib.gen_libs as gen_libs
 import lib.machine as machine
-import lib.errors as errors
 import version
 
 __version__ = version.__version__
@@ -496,7 +494,7 @@ class Server(object):
     Super-Class:  object
 
     Sub-Classes:
-        Row
+        Rep
 
     Methods:
         __init__
@@ -521,114 +519,6 @@ class Server(object):
         chg_db
 
     """
-
-    class Row(object):
-
-        """Class:  Row
-
-        Description:  A row (iterator) is returned when executing a SQL
-            statement.  For statements that return a single row, the object
-            will treat it as a row as well.
-
-        Super-Class:  object
-
-        Sub-Classes:
-
-        Methods:
-            __init__
-            __iter__
-            next
-            __getitem__
-            __str__
-
-        """
-
-        def __init__(self, cursor):
-
-            """Method:  __init__
-
-            Description:  Initialization of an instance of the Row class.
-
-            Arguments:
-                (input) cursor -> Cursor handler passed from execute().
-
-            """
-
-            self.cursor = cursor
-            self.row = self.cursor.fetchone()
-
-        def __iter__(self):
-
-            """Method:  __iter__
-
-            Description:  Iterator for the returning result set.
-                Executed during a loop (e.g. for loop).
-
-            Arguments:
-                (output) Returns the instance handler.
-
-            """
-
-            return self
-
-        def next(self):
-
-            """Method:  next
-
-            Description:  Gets the next row or stops the iteration.
-                Called directly using server.Row.next(self) command.
-
-            Arguments:
-                (output) Returns the row.
-
-            """
-
-            row = self.row
-
-            if row is None:
-                raise StopIteration
-
-            else:
-                self.row = self.cursor.fetchone()
-                return row
-
-        def __getitem__(self, key):
-
-            """Method:  __getitem__
-
-            Description:  Returns the value to a dictionary key.
-                Is executed when an instance of a class is referenced as
-                an array (e.g. x[i] and x is a class).
-
-            Arguments:
-                (input) key -> Key to the dictionary tuple.
-                (output) Returns the value of the key in the dictionary.
-
-            """
-
-            if self.row is not None:
-                return self.row[key]
-
-            else:
-                raise errors.EmptyRowError
-
-        def __str__(self):
-
-            """Method:  __str__
-
-            Description:  Converts the value in the row to a string.
-                Executed when the str() function is called.
-
-            Arguments:
-                (output) Returns string representation of the values.
-
-            """
-
-            if len(self.row) == 1:
-                return str(self.row.values()[0])
-
-            else:
-                raise errors.EmptyRowError
 
     def __init__(self, name, server_id, sql_user, sql_pass, machine,
                  host="localhost", port=3306, defaults_file=None, **kwargs):

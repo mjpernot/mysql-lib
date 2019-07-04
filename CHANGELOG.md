@@ -7,7 +7,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ## [4.0.0] - 2019-07-04
 Breaking Change
 
-- Replaced the MySQLdb imported module with the mysql.connector module as the MySQLdb is no longer supported.
+- Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Changed
 - mysql_class.SlaveRep.upd_gtid_pos:  Modified to use mysql.connector library.
@@ -62,6 +62,7 @@ Breaking Change
 - mysql_class.Server.vert_sql:  Method to run sql code with vertical definitions and return in dictionary format.
 
 ### Removed
+- mysql_class.Server.Row:  Removed the class it's no longer required.  The "mysql.connector" module has it's own Row iterator.
 - mysql_class.compare_sets.inner_compare:  Remove inner function, was replaced by _inner_compare.
 
 
