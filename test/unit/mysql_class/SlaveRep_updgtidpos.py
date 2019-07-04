@@ -87,7 +87,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_stat.return_value = self.show_stat
-        mock_var.return_value = "35588520:333220-333227"
+        mock_var.return_value = {"GTID_PURGED": "35588520:333220-333227"}
         mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
                                         self.sql_user, self.sql_pass,
                                         self.machine,
@@ -95,8 +95,9 @@ class UnitTest(unittest.TestCase):
         mysqlrep.gtid_mode = True
 
         mysqlrep.upd_gtid_pos()
-        self.assertEqual((mysqlrep.retrieved_gtidset,
-                          mysqlrep.exe_gtidset, mysqlrep.purged_gtidset),
+        self.assertEqual((str(mysqlrep.retrieved_gtidset),
+                          str(mysqlrep.exe_gtidset),
+                          str(mysqlrep.purged_gtidset)),
                          ("35588520:333217-740055", "35588520:333217-740045",
                           "35588520:333220-333227"))
 
@@ -118,10 +119,11 @@ class UnitTest(unittest.TestCase):
                                         defaults_file=self.defaults_file)
 
         mysqlrep.upd_gtid_pos()
-        self.assertEqual((mysqlrep.retrieved_gtidset,
-                          mysqlrep.exe_gtidset, mysqlrep.purged_gtidset),
+        self.assertEqual((str(mysqlrep.retrieved_gtidset),
+                          str(mysqlrep.exe_gtidset),
+                          str(mysqlrep.purged_gtidset)),
                          ("35588520:333217-740055", "35588520:333217-740045",
-                          None))
+                          "None"))
 
 
 if __name__ == "__main__":
