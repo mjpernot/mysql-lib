@@ -154,7 +154,7 @@ def check_tbl(server, db, tbl, res_set="all", **kwargs):
     return server.sql(sql_cmd, res_set)
 
 
-def chg_slv_state(SLAVE, opt):
+def chg_slv_state(slaves, opt):
 
     """Function:  chg_slv_state
 
@@ -162,19 +162,19 @@ def chg_slv_state(SLAVE, opt):
         instances.
 
     Arguments:
-        (input) SLAVE -> Array of slave instances.
+        (input) slaves -> Array of slave instances.
         (input) opt -> stop or start - Stops or starts the slaves.
 
     """
 
     if opt == "stop":
-        for x in SLAVE:
+        for x in slaves:
 
             x.stop_slave()
             x.upd_slv_status()
 
     elif opt == "start":
-        for x in SLAVE:
+        for x in slaves:
 
             x.start_slave()
             x.upd_slv_status()
@@ -183,7 +183,7 @@ def chg_slv_state(SLAVE, opt):
         gen_libs.prt_msg("Error", "No option selected to stop/start rep.")
 
 
-def create_instance(cfg_file, dir_path, CLASS):
+def create_instance(cfg_file, dir_path, cls_name):
 
     """Function:  create_instance
 
@@ -193,16 +193,16 @@ def create_instance(cfg_file, dir_path, CLASS):
     Arguments:
         (input) cfg_file -> Configuration file name.
         (input) dir_path -> Directory path.
-        (input) CLASS -> Reference to a Class type.
+        (input) cls_name -> Reference to a Class type.
 
     """
 
     cfg = gen_libs.load_module(cfg_file, dir_path)
 
-    return CLASS(cfg.name, cfg.sid, cfg.user, cfg.passwd,
-                 getattr(machine, cfg.serv_os)(), cfg.host, cfg.port,
-                 cfg.cfg_file,
-                 extra_def_file=cfg.__dict__.get("extra_def_file", None))
+    return cls_name(cfg.name, cfg.sid, cfg.user, cfg.passwd,
+                    getattr(machine, cfg.serv_os)(), cfg.host, cfg.port,
+                    cfg.cfg_file,
+                    extra_def_file=cfg.__dict__.get("extra_def_file", None))
 
 
 def create_slv_array(cfg_array):
@@ -213,23 +213,23 @@ def create_slv_array(cfg_array):
 
     Arguments:
         (input) cfg_array -> Array of configurations.
-        (output) SLAVE -> Array of slave instances.
+        (output) slaves -> Array of slave instances.
 
     """
 
-    SLAVE = []
+    slaves = []
 
     for slv in cfg_array:
 
-        SLV_INST = mysql_class.SlaveRep(slv["name"], slv["sid"], slv["user"],
+        slv_inst = mysql_class.SlaveRep(slv["name"], slv["sid"], slv["user"],
                                         slv["passwd"],
                                         getattr(machine, slv["serv_os"])(),
                                         slv["host"], int(slv["port"]),
                                         slv["cfg_file"])
 
-        SLAVE.append(SLV_INST)
+        slaves.append(slv_inst)
 
-    return SLAVE
+    return slaves
 
 
 def crt_cmd(server, prog_name):
@@ -313,7 +313,7 @@ def fetch_logs(server, res_set="all"):
     return server.sql("show binary logs", res_set)
 
 
-def fetch_slv(SLAVES, **kwargs):
+def fetch_slv(slaves, **kwargs):
 
     """Function:  fetch_slv
 
@@ -335,7 +335,7 @@ def fetch_slv(SLAVES, **kwargs):
     slv = None
 
     # Locate slave in slave array.
-    slv = find_name(SLAVES, kwargs.get("slv_mv"))
+    slv = find_name(slaves, kwargs.get("slv_mv"))
 
     if not slv:
         err_flag = True
