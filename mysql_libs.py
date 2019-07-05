@@ -33,8 +33,8 @@
         sync_delay
         sync_rep_slv
         wait_until
-        _io_chk
-        _sql_chk
+        _io_wait_chk
+        _sql_wait_chk
 
 """
 
@@ -778,15 +778,15 @@ def wait_until(SLV, opt, log_file=None, log_pos=None, **kwargs):
     SLV.upd_slv_status()
 
     if opt == "IO":
-        _io_chk(SLV, gtid, log_file, log_pos)
+        _io_wait_chk(SLV, gtid, log_file, log_pos)
 
     else:
-        _sql_chk(SLV, gtid, log_file, log_pos)
+        _sql_wait_chk(SLV, gtid, log_file, log_pos)
 
 
-def _io_chk(SLV, gtid, log_file, log_pos, **kwargs):
+def _io_wait_chk(SLV, gtid, log_file, log_pos, **kwargs):
 
-    """Function:  _io_chk
+    """Function:  _io_wait_chk
 
     Description:  Checks the slave's IO thread to to see if the server has
         reached the master's log file and position (non-GTID enabled) or the
@@ -820,9 +820,9 @@ def _io_chk(SLV, gtid, log_file, log_pos, **kwargs):
         SLV.upd_slv_status()
 
 
-def _sql_chk(SLV, gtid, log_file, log_pos, **kwargs):
+def _sql_wait_chk(SLV, gtid, log_file, log_pos, **kwargs):
 
-    """Function:  _sql_chk
+    """Function:  _sql_wait_chk
 
     Description:  Checks the slave's SQL thread to to see if the server has
         reached the master's log file and position (non-GTID enabled) or the
