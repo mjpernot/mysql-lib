@@ -34,6 +34,7 @@
         sync_rep_slv
         wait_until
         _io_chk
+        _sql_chk
 
 """
 
@@ -760,10 +761,8 @@ def wait_until(SLV, opt, log_file=None, log_pos=None, **kwargs):
 
     """Function:  wait_until
 
-    Description:  Waits until the slave's thread reaches the master's log file
-        and position or the Executed GTID depending on whether the server is
-        GTID enabled.  Infinite loop until this completes or interrupted by the
-        user.
+    Description:  Determines whether to run an IO or SQL check in the Slave
+        database server.
 
     Arguments:
         (input) SLV -> Slave class instance.
@@ -782,23 +781,7 @@ def wait_until(SLV, opt, log_file=None, log_pos=None, **kwargs):
         _io_chk(SLV, gtid, log_file, log_pos)
 
     else:
-        while True:
-            if SLV.gtid_mode:
-                print("Slave:  {0}\tGTID: {1}".format(SLV.name, SLV.exe_gtid))
-
-                if SLV.exe_gtid == gtid:
-                    return
-
-            else:
-                print("Slave: {0}\tcurrent file: {1}, current position: {2}".
-                      format(SLV.name, SLV.relay_mst_log, SLV.exec_mst_pos))
-
-                if SLV.relay_mst_log == log_file \
-                        and SLV.exec_mst_pos == log_pos:
-                    return
-
-            time.sleep(3)
-            SLV.upd_slv_status()
+        _sql_chk(SLV, gtid, log_file, log_pos)
 
 
 def _io_chk(SLV, gtid, log_file, log_pos, **kwargs):
@@ -831,6 +814,41 @@ def _io_chk(SLV, gtid, log_file, log_pos, **kwargs):
                   format(SLV.name, SLV.mst_log, SLV.mst_read_pos))
 
             if SLV.mst_log == log_file and SLV.mst_read_pos == log_pos:
+                return
+
+        time.sleep(3)
+        SLV.upd_slv_status()
+
+
+def _sql_chk(SLV, gtid, log_file, log_pos, **kwargs):
+
+    """Function:  _sql_chk
+
+    Description:  Checks the slave's SQL thread to to see if the server has
+        reached the master's log file and position (non-GTID enabled) or the
+        GTID position (GTID enabled).  Loops until the process completes or
+        manual interruption.
+
+    Arguments:
+        (input) SLV -> Slave class instance.
+        (input) gtid -> GTID position.
+        (input) log_file -> Master's binary log file name.
+        (input) log_pos -> Master's binary log position.
+
+    """
+
+    while True:
+        if SLV.gtid_mode:
+            print("Slave:  {0}\tGTID: {1}".format(SLV.name, SLV.exe_gtid))
+
+            if SLV.exe_gtid == gtid:
+                return
+
+        else:
+            print("Slave: {0}\tcurrent file: {1}, current position: {2}".
+                  format(SLV.name, SLV.relay_mst_log, SLV.exec_mst_pos))
+
+            if SLV.relay_mst_log == log_file and SLV.exec_mst_pos == log_pos:
                 return
 
         time.sleep(3)
