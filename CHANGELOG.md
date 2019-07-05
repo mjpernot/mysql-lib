@@ -10,11 +10,11 @@ Breaking Change
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Changed
-- mysql_libs.is_rep_delay:  Replaced code with calls to _io_rep_chk and _sql_rep_chk to reduce factor complexity.
-- mysql_libs.sync_delay:  Replaced code with call _io_delay_chk to reduce factor complexity.
-- mysql_libs.wait_until:  Replaced code with calls to _io_wait_chk and _sql_wait_chk to reduce factor complexity.
+- mysql_libs.is_rep_delay:  Replaced code with calls to \_io_rep_chk and \_sql_rep_chk to reduce factor complexity.
+- mysql_libs.sync_delay:  Replaced code with call \_io_delay_chk to reduce factor complexity.
+- mysql_libs.wait_until:  Replaced code with calls to \_io_wait_chk and \_sql_wait_chk to reduce factor complexity.
 - mysql_class.SlaveRep.upd_gtid_pos:  Modified to use mysql.connector library.
-- mysql_class.compare_sets:  Changed argument call to _inner_compare to include uuid and rngs objects.
+- mysql_class.compare_sets:  Changed argument call to \_inner_compare to include uuid and rngs objects.
 - mysql_class.SlaveRep.upd_slv_status:  Modified to use mysql.connector library.
 - mysql_class.SlaveRep.\_\_init\_\_:  Modified to use mysql.connector library.
 - mysql_class.SlaveRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to rep_conn() method.
@@ -54,12 +54,12 @@ Breaking Change
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 
 ### Added
-- mysql_libs._sql_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
-- mysql_libs._io_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
-- mysql_libs._io_delay_chk:  Create private function for sync_delay() to reduce factor complexity.
-- mysql_libs._sql_wait_chk:  Create private function for wait_until() to reduce factor complexity.
-- mysql_libs._io_wait_chk:  Created private function for wait_until() to reduce factor complexity.
-- mysql_class._inner_compare:  Created private function for compare_sets() to reduce factor complexity.
+- mysql_libs.\_sql_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
+- mysql_libs.\_io_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
+- mysql_libs.\_io_delay_chk:  Create private function for sync_delay() to reduce factor complexity.
+- mysql_libs.\_sql_wait_chk:  Create private function for wait_until() to reduce factor complexity.
+- mysql_libs.\_io_wait_chk:  Created private function for wait_until() to reduce factor complexity.
+- mysql_class.\_inner_compare:  Created private function for compare_sets() to reduce factor complexity.
 - mysql_class.SlaveRep.rep_conn:  Setups a connection to a replication server.
 - mysql_class.MasterRep.rep_conn:  Setups a connection to a replication server.
 - mysql_class.Server.is_connected:  Checks to see if the connection is still active.
@@ -71,7 +71,7 @@ Breaking Change
 
 ### Removed
 - mysql_class.Server.Row:  Removed the class it's no longer required.  The "mysql.connector" module has it's own Row iterator.
-- mysql_class.compare_sets.inner_compare:  Remove inner function, was replaced by _inner_compare.
+- mysql_class.compare_sets.inner_compare:  Remove inner function, was replaced by \_inner_compare.
 
 
 ## [3.2.1] - 2018-11-02
