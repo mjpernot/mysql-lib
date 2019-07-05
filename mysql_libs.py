@@ -76,7 +76,7 @@ def analyze_tbl(server, db, tbl, res_set="all", **kwargs):
     return server.sql(sql_cmd, res_set)
 
 
-def change_master_to(mst, slv):
+def change_master_to(mst, slv, **kwargs):
 
     """Function:  change_master_to
 
@@ -111,7 +111,7 @@ def change_master_to(mst, slv):
     print("Changed Slave: {0} to new Master: {1}".format(slv.name, mst.name))
 
 
-def checksum(server, db, tbl, res_set="all"):
+def checksum(server, db, tbl, res_set="all", **kwargs):
 
     """Function:  checksum
 
@@ -154,7 +154,7 @@ def check_tbl(server, db, tbl, res_set="all", **kwargs):
     return server.sql(sql_cmd, res_set)
 
 
-def chg_slv_state(slaves, opt):
+def chg_slv_state(slaves, opt, **kwargs):
 
     """Function:  chg_slv_state
 
@@ -183,7 +183,7 @@ def chg_slv_state(slaves, opt):
         gen_libs.prt_msg("Error", "No option selected to stop/start rep.")
 
 
-def create_instance(cfg_file, dir_path, cls_name):
+def create_instance(cfg_file, dir_path, cls_name, **kwargs):
 
     """Function:  create_instance
 
@@ -205,7 +205,7 @@ def create_instance(cfg_file, dir_path, cls_name):
                     extra_def_file=cfg.__dict__.get("extra_def_file", None))
 
 
-def create_slv_array(cfg_array):
+def create_slv_array(cfg_array, **kwargs):
 
     """Function:  create_slv_array
 
@@ -232,7 +232,7 @@ def create_slv_array(cfg_array):
     return slaves
 
 
-def crt_cmd(server, prog_name):
+def crt_cmd(server, prog_name, **kwargs):
 
     """Function:  crt_cmd
 
@@ -259,7 +259,7 @@ def crt_cmd(server, prog_name):
                 server.host, "-P", str(server.port)]
 
 
-def crt_srv_inst(cfg, path):
+def crt_srv_inst(cfg, path, **kwargs):
 
     """Function:  crt_srv_inst
 
@@ -279,7 +279,7 @@ def crt_srv_inst(cfg, path):
                               db.cfg_file)
 
 
-def fetch_db_dict(server, res_set="all"):
+def fetch_db_dict(server, res_set="all", **kwargs):
 
     """Function:  fetch_db_dict
 
@@ -296,7 +296,7 @@ def fetch_db_dict(server, res_set="all"):
     return server.sql("show databases", res_set)
 
 
-def fetch_logs(server, res_set="all"):
+def fetch_logs(server, res_set="all", **kwargs):
 
     """Function:  fetch_logs
 
@@ -344,7 +344,7 @@ def fetch_slv(slaves, **kwargs):
     return slv, err_flag, err_msg
 
 
-def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", res_set="all"):
+def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", res_set="all", **kwargs):
 
     """Function:  fetch_tbl_dict
 
@@ -367,7 +367,7 @@ def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", res_set="all"):
     return server.sql(sql_qry, res_set, (tbl_type, db))
 
 
-def find_name(slv, server_name):
+def find_name(slv, server_name, **kwargs):
 
     """Function:  find_name
 
@@ -421,7 +421,7 @@ def is_cfg_valid(servers, **kwargs):
     return status, status_msg
 
 
-def is_logs_synced(mst, slv):
+def is_logs_synced(mst, slv, **kwargs):
 
     """Function:  is_logs_synced
 
@@ -449,7 +449,7 @@ def is_logs_synced(mst, slv):
     return is_synced
 
 
-def is_rep_delay(mst, slv, opt):
+def is_rep_delay(mst, slv, opt, **kwargs):
 
     """Function:  is_rep_delay
 
@@ -550,7 +550,7 @@ def optimize_tbl(server, db, tbl, res_set="all", **kwargs):
     return server.sql(sql_cmd, res_set)
 
 
-def purge_bin_logs(server, prg_type, cutoff):
+def purge_bin_logs(server, prg_type, cutoff, **kwargs):
 
     """Function:  purge_bin_logs
 
@@ -569,7 +569,7 @@ def purge_bin_logs(server, prg_type, cutoff):
     server.sql(sql_cmd)
 
 
-def reset_master(server):
+def reset_master(server, **kwargs):
 
     """Function:  reset_master
 
@@ -583,7 +583,7 @@ def reset_master(server):
     server.sql("reset master")
 
 
-def reset_slave(server):
+def reset_slave(server, **kwargs):
 
     """Function:  reset_slave
 
@@ -597,7 +597,7 @@ def reset_slave(server):
     server.sql("reset slave all")
 
 
-def select_wait_until(server, gtid_pos, timeout=0, res_set="row"):
+def select_wait_until(server, gtid_pos, timeout=0, res_set="row", **kwargs):
 
     """Function:  select_wait_until
 
@@ -670,7 +670,7 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
     return err_flag, err_msg
 
 
-def switch_to_master(mst, slv, timeout=0):
+def switch_to_master(mst, slv, timeout=0, **kwargs):
 
     """Function:  switch_to_master
 
@@ -701,7 +701,7 @@ def switch_to_master(mst, slv, timeout=0):
     return status_flag
 
 
-def sync_delay(mst, slv, opt):
+def sync_delay(mst, slv, opt, **kwargs):
 
     """Function:  sync_delay
 
