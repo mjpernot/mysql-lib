@@ -4,12 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
-## [4.0.0] - 2019-07-04
+## [4.0.0] - 2019-07-05
 Breaking Change
 
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Changed
+- mysql_libs.wait_until:  Replaced code with calls to _io_wait_chk and _sql_wait_chk to reduce factor complexity.
 - mysql_class.SlaveRep.upd_gtid_pos:  Modified to use mysql.connector library.
 - mysql_class.compare_sets:  Changed argument call to _inner_compare to include uuid and rngs objects.
 - mysql_class.SlaveRep.upd_slv_status:  Modified to use mysql.connector library.
@@ -51,7 +52,9 @@ Breaking Change
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 
 ### Added
-- mysql_class._inner_compare:  Created private function compare_sets() to reduce complexity rating.
+- mysql_libs._sql_wait_chk:  Create private function for wait_until() to reduce factor complexity.
+- mysql_libs._io_wait_chk:  Created private function for wait_until() to reduce factor complexity.
+- mysql_class._inner_compare:  Created private function for compare_sets() to reduce factor complexity.
 - mysql_class.SlaveRep.rep_conn:  Setups a connection to a replication server.
 - mysql_class.MasterRep.rep_conn:  Setups a connection to a replication server.
 - mysql_class.Server.is_connected:  Checks to see if the connection is still active.
