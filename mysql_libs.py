@@ -71,9 +71,9 @@ def analyze_tbl(server, db, tbl, res_set="all", **kwargs):
     """
 
     # Must have back ticks around names if they have special characters.
-    sql_cmd = "analyze table `" + db + "`.`" + tbl + "`"
+    cmd = "analyze table `" + db + "`.`" + tbl + "`"
 
-    return server.sql(sql_cmd, res_set)
+    return server.sql(cmd, res_set)
 
 
 def change_master_to(mst, slv, **kwargs):
@@ -128,9 +128,9 @@ def checksum(server, db, tbl, res_set="all", **kwargs):
     """
 
     # Must have back ticks around names if they have special characters.
-    sql_cmd = "checksum table `" + db + "`.`" + tbl + "`"
+    cmd = "checksum table `" + db + "`.`" + tbl + "`"
 
-    return server.sql(sql_cmd, res_set)
+    return server.sql(cmd, res_set)
 
 
 def check_tbl(server, db, tbl, res_set="all", **kwargs):
@@ -149,9 +149,9 @@ def check_tbl(server, db, tbl, res_set="all", **kwargs):
     """
 
     # Must have back ticks around names if they have special characters.
-    sql_cmd = "check table `" + db + "`.`" + tbl + "`"
+    cmd = "check table `" + db + "`.`" + tbl + "`"
 
-    return server.sql(sql_cmd, res_set)
+    return server.sql(cmd, res_set)
 
 
 def chg_slv_state(slaves, opt, **kwargs):
@@ -361,10 +361,10 @@ def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", res_set="all", **kwargs):
 
     """
 
-    sql_qry = """select table_name from information_schema.tables where
+    qry = """select table_name from information_schema.tables where
         table_type = %s and table_schema = %s"""
 
-    return server.sql(sql_qry, res_set, (tbl_type, db))
+    return server.sql(qry, res_set, (tbl_type, db))
 
 
 def find_name(slv, server_name, **kwargs):
@@ -545,9 +545,9 @@ def optimize_tbl(server, db, tbl, res_set="all", **kwargs):
     """
 
     # Must have back ticks around names if they have special characters.
-    sql_cmd = "optimize table `" + db + "`.`" + tbl + "`"
+    cmd = "optimize table `" + db + "`.`" + tbl + "`"
 
-    return server.sql(sql_cmd, res_set)
+    return server.sql(cmd, res_set)
 
 
 def purge_bin_logs(server, prg_type, cutoff, **kwargs):
@@ -565,8 +565,8 @@ def purge_bin_logs(server, prg_type, cutoff, **kwargs):
 
     """
 
-    sql_cmd = "purge binary logs " + prg_type + " '" + cutoff + "'"
-    server.sql(sql_cmd)
+    cmd = "purge binary logs " + prg_type + " '" + cutoff + "'"
+    server.sql(cmd)
 
 
 def reset_master(server, **kwargs):
