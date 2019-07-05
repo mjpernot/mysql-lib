@@ -23,6 +23,8 @@
         is_cfg_valid
         is_logs_synced
         is_rep_delay
+        _io_rep_chk
+        _sql_rep_chk
         optimize_tbl
         purge_bin_logs
         reset_master
@@ -468,15 +470,10 @@ def is_rep_delay(MST, SLV, opt):
         is_delay = _io_rep_chk(MST, SLV)
 
     else:
-        if MST.gtid_mode and SLV.gtid_mode:
-            if MST.exe_gtid != SLV.exe_gtid:
-                is_delay = True
-
-        else:
-            if MST.file != SLV.relay_mst_log or MST.pos != SLV.exec_mst_pos:
-                is_delay = True
+        is_delay = _sql_rep_chk(MST, SLV)
 
     return is_delay
+
 
 def _io_rep_chk(MST, SLV, is_delayed=False, **kwargs):
 
@@ -500,6 +497,33 @@ def _io_rep_chk(MST, SLV, is_delayed=False, **kwargs):
 
     else:
         if MST.file != SLV.mst_log or MST.pos != SLV.mst_read_pos:
+            is_delayed = True
+
+    return is_delayed
+
+
+def _sql_rep_chk(MST, SLV, is_delayed=False, **kwargs):
+
+    """Function:  _sql_rep_chk
+
+    Description:  Does an SQL thread check in the replication system.  Will
+        determine whether to use GTIDs or the file and log positions
+        based on the GTID settings in master and slave.
+
+    Arguments:
+        (input) MST -> Master class instance.
+        (input) SLV -> Slave class instance.
+        (input) is_delayed -> True|False if delay detected.
+        (output) is_delayed -> True|False if delay detected.
+
+    """
+
+    if MST.gtid_mode and SLV.gtid_mode:
+        if MST.exe_gtid != SLV.exe_gtid:
+            is_delayed = True
+
+    else:
+        if MST.file != SLV.relay_mst_log or MST.pos != SLV.exec_mst_pos:
             is_delayed = True
 
     return is_delayed
