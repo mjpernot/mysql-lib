@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Changed
+- mysql_libs.sync_delay:  Replaced code with call _io_delay_chk to reduce factor complexity.
 - mysql_libs.wait_until:  Replaced code with calls to _io_wait_chk and _sql_wait_chk to reduce factor complexity.
 - mysql_class.SlaveRep.upd_gtid_pos:  Modified to use mysql.connector library.
 - mysql_class.compare_sets:  Changed argument call to _inner_compare to include uuid and rngs objects.
@@ -52,6 +53,7 @@ Breaking Change
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 
 ### Added
+- mysql_libs._io_delay_chk:  Create private function for sync_delay() to reduce factor complexity.
 - mysql_libs._sql_wait_chk:  Create private function for wait_until() to reduce factor complexity.
 - mysql_libs._io_wait_chk:  Created private function for wait_until() to reduce factor complexity.
 - mysql_class._inner_compare:  Created private function for compare_sets() to reduce factor complexity.
