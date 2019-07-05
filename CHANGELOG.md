@@ -14,7 +14,7 @@ Breaking Change
 - mysql_class.compare_sets:  Changed argument call to _inner_compare to include uuid and rngs objects.
 - mysql_class.SlaveRep.upd_slv_status:  Modified to use mysql.connector library.
 - mysql_class.SlaveRep.\_\_init\_\_:  Modified to use mysql.connector library.
-- mysql_class.SlaveRep.__init__:  Removed the connection to the replication server.  Moved to rep_conn() method.
+- mysql_class.SlaveRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to rep_conn() method.
 - mysql_class.MasterRep.upd_mst_status:  Replaced log stats update with call to upd_log_stats method.
 - mysql_class.MasterRep.show_slv_hosts:  Modified to use mysql.connector library.
 - mysql_class.MasterRep.show_slv_hosts:  Removed res_set from the function argument list as it is no longer required.
