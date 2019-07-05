@@ -55,25 +55,24 @@ import version
 __version__ = version.__version__
 
 
-def analyze_tbl(server, db, tbl, res_set="all", **kwargs):
+def analyze_tbl(server, db, tbl, **kwargs):
 
     """Function:  analyze_tbl
 
-    Description:  Runs a analyze table command against a table.
+    Description:  Runs an analyze table command.
 
     Arguments:
-        (input) server -> Server instance.
+        (input) server -> MySQL Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (input) res_set -> row|all - Returning result set format.
         (output) Return check table results.
 
     """
 
-    # Must have back ticks around names if they have special characters.
+    # Must have back ticks around names in case they have special characters.
     cmd = "analyze table `" + db + "`.`" + tbl + "`"
 
-    return server.sql(cmd, res_set)
+    return server.col_sql(cmd)
 
 
 def change_master_to(mst, slv, **kwargs):
