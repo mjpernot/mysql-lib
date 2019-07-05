@@ -169,13 +169,11 @@ def chg_slv_state(slaves, opt, **kwargs):
 
     if opt == "stop":
         for x in slaves:
-
             x.stop_slave()
             x.upd_slv_status()
 
     elif opt == "start":
         for x in slaves:
-
             x.start_slave()
             x.upd_slv_status()
 
@@ -220,7 +218,6 @@ def create_slv_array(cfg_array, **kwargs):
     slaves = []
 
     for slv in cfg_array:
-
         slv_inst = mysql_class.SlaveRep(slv["name"], slv["sid"], slv["user"],
                                         slv["passwd"],
                                         getattr(machine, slv["serv_os"])(),
@@ -406,14 +403,12 @@ def is_cfg_valid(servers, **kwargs):
     status_msg = []
 
     for svr in servers:
-
         status, err_msg = gen_libs.chk_crt_file(svr.extra_def_file)
 
         if not status:
             status_msg.append("%s" % (err_msg))
 
         if svr.extra_def_file and not status:
-
             status_msg.append("%s:  %s is missing." % (svr.name,
                                                        svr.extra_def_file))
             status = False
@@ -652,19 +647,18 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
         start_slave_until = start_slv + \
             """master_log_file=%s, master_log_pos=%s"""
         master_pos_wait = """select master_pos_wait(%s, %s)"""
-
         slv.sql(start_slave_until, "", (log_file, log_pos))
         slv.sql(master_pos_wait, "", (log_file, log_pos))
 
     # GTID MySQL.
     elif slv.gtid_mode and gtid:
         start_slave_until = start_slv + """sql_""" + stop_pos + """_gtids=%s"""
-
         slv.sql(start_slave_until, "", (gtid))
 
     else:
         err_flag = True
         err_msg = "One of the arguments is missing."
+
         return err_flag, err_msg
 
     return err_flag, err_msg
@@ -717,24 +711,23 @@ def sync_delay(mst, slv, opt, **kwargs):
 
     if is_rep_delay(mst, slv, opt):
 
-        # IO check.
         if opt == "IO":
             _io_delay_chk(mst, slv)
 
-        print("Master: {0}\tFile: {1}, Position: {2}".
-              format(mst.name, mst.file, mst.pos))
+        print("Master: {0}\tFile: {1}, Position: {2}".format(mst.name,
+                                                             mst.file,
+                                                             mst.pos))
 
         if mst.gtid_mode:
             print("\tGTID: {0}".format(mst.exe_gtid))
 
-        # Wait until position is reached for GTID or non-GTID.
+        # Wait until position has reached for GTID or non-GTID.
         if mst.gtid_mode and slv.gtid_mode:
             wait_until(slv, opt, gtid=mst.exe_gtid)
 
         else:
             wait_until(slv, opt, mst.file, mst.pos)
 
-        # IO check.
         if opt == "IO":
             slv.stop_slave()
 
@@ -755,7 +748,7 @@ def _io_delay_chk(mst, slv, **kwargs):
     # Start slave until requested position for GTID or non-GTID.
     if mst.gtid_mode and slv.gtid_mode:
 
-        # By default using the "sql_after_gtid" option.
+        # Using the "sql_after_gtid" option.
         err_flag, err_msg = start_slave_until(slv, gtid=mst.exe_gtid,
                                               stop_pos="after")
 
@@ -788,7 +781,6 @@ def sync_rep_slv(mst, slv, **kwargs):
     err_flag = False
     err_msg = None
 
-    # Slave isn't under master.
     if slv.mst_id != mst.server_id:
         err_flag = True
         err_msg = "Error:  Slave's Master ID %s doesn't match Master ID %s." \
@@ -799,7 +791,6 @@ def sync_rep_slv(mst, slv, **kwargs):
     if slv.is_slv_running():
         chg_slv_state([slv], "stop")
 
-    # Master and slave are not synced.
     if not is_logs_synced(mst, slv):
 
         for opt in option:
