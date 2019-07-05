@@ -33,6 +33,7 @@
         sync_delay
         sync_rep_slv
         wait_until
+        _io_chk
 
 """
 
@@ -775,30 +776,13 @@ def wait_until(SLV, opt, log_file=None, log_pos=None, **kwargs):
     """
 
     gtid = kwargs.get("gtid", None)
+    SLV.upd_slv_status()
 
-    while True:
-        time.sleep(3)
-        SLV.upd_slv_status()
+    if opt == "IO":
+        _io_chk(SLV, gtid, log_file, log_pos)
 
-        # IO thread check.
-        if opt == "IO":
-
-            if SLV.gtid_mode:
-                print("Slave:  {0}\t Retrieved GTID: {1}".
-                      format(SLV.name, SLV.retrieved_gtid))
-
-                if SLV.retrieved_gtid == gtid:
-                    return
-
-            else:
-                print("Slave:  {0}\tFile: {1}, Position: {2}".
-                      format(SLV.name, SLV.mst_log, SLV.mst_read_pos))
-
-                if SLV.mst_log == log_file and SLV.mst_read_pos == log_pos:
-                    return
-
-        # Assume SQL thread check.
-        else:
+    else:
+        while True:
             if SLV.gtid_mode:
                 print("Slave:  {0}\tGTID: {1}".format(SLV.name, SLV.exe_gtid))
 
@@ -812,3 +796,42 @@ def wait_until(SLV, opt, log_file=None, log_pos=None, **kwargs):
                 if SLV.relay_mst_log == log_file \
                         and SLV.exec_mst_pos == log_pos:
                     return
+
+            time.sleep(3)
+            SLV.upd_slv_status()
+
+
+def _io_chk(SLV, gtid, log_file, log_pos, **kwargs):
+
+    """Function:  _io_chk
+
+    Description:  Checks the slave's IO thread to to see if the server has
+        reached the master's log file and position (non-GTID enabled) or the
+        GTID position (GTID enabled).  Loops until the process completes or
+        manual interruption.
+
+    Arguments:
+        (input) SLV -> Slave class instance.
+        (input) gtid -> GTID position.
+        (input) log_file -> Master's binary log file name.
+        (input) log_pos -> Master's binary log position.
+
+    """
+
+    while True:
+        if SLV.gtid_mode:
+            print("Slave:  {0}\t Retrieved GTID: {1}".
+                  format(SLV.name, SLV.retrieved_gtid))
+
+            if SLV.retrieved_gtid == gtid:
+                return
+
+        else:
+            print("Slave:  {0}\tFile: {1}, Position: {2}".
+                  format(SLV.name, SLV.mst_log, SLV.mst_read_pos))
+
+            if SLV.mst_log == log_file and SLV.mst_read_pos == log_pos:
+                return
+
+        time.sleep(3)
+        SLV.upd_slv_status()
