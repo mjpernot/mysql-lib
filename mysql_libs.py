@@ -31,6 +31,7 @@
         start_slave_until
         switch_to_master
         sync_delay
+        _io_delay_chk
         sync_rep_slv
         wait_until
         _io_wait_chk
@@ -666,8 +667,7 @@ def sync_delay(MST, SLV, opt):
     """Function:  sync_delay
 
     Description:  Checks to see if there is an IO or SQL delay between the
-        master and the slave.  Calls functions to sync up between the master
-        and slave.
+        master and the slave.
 
     Arguments:
         (input) MST -> Master class instance.
@@ -680,21 +680,7 @@ def sync_delay(MST, SLV, opt):
 
         # IO check.
         if opt == "IO":
-
-            # Start slave until requested position for GTID or non-GTID.
-            if MST.gtid_mode and SLV.gtid_mode:
-                # By default using the "sql_after_gtid" option.
-                err_flag, err_msg = start_slave_until(SLV, gtid=MST.exe_gtid,
-                                                      stop_pos="after")
-
-                if err_flag:
-                    print("Error: {0}" % (err_msg))
-
-            else:
-                err_flag, err_msg = start_slave_until(SLV, MST.file, MST.pos)
-
-                if err_flag:
-                    print("Error: {0}" % (err_msg))
+            _io_delay_chk(MST, SLV)
 
         print("Master: {0}\tFile: {1}, Position: {2}".
               format(MST.name, MST.file, MST.pos))
@@ -712,6 +698,36 @@ def sync_delay(MST, SLV, opt):
         # IO check.
         if opt == "IO":
             SLV.stop_slave()
+
+
+def _io_delay_chk(MST, SLV, **kwargs):
+
+    """Function:  _io_delay_chk
+
+    Description:  Checks to see if there is an IO delay between the master and
+        slave.  Calls function to sync up between the master and slave.
+
+    Arguments:
+        (input) MST -> Master class instance.
+        (input) SLV -> Slave class instance.
+
+    """
+
+    # Start slave until requested position for GTID or non-GTID.
+    if MST.gtid_mode and SLV.gtid_mode:
+
+        # By default using the "sql_after_gtid" option.
+        err_flag, err_msg = start_slave_until(SLV, gtid=MST.exe_gtid,
+                                              stop_pos="after")
+
+        if err_flag:
+            print("Error: {0}" % (err_msg))
+
+    else:
+        err_flag, err_msg = start_slave_until(SLV, MST.file, MST.pos)
+
+        if err_flag:
+            print("Error: {0}" % (err_msg))
 
 
 def sync_rep_slv(MST, SLV, **kwargs):
