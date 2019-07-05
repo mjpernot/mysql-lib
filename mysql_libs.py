@@ -452,32 +452,21 @@ def is_rep_delay(MST, SLV, opt):
     """Function:  is_rep_delay
 
     Description:  Checks to see if there is a delay in the replication system.
-        There is an IO and SQL check, determined by arguments.  Will
-        determine whether to use GTIDs or the file and log positions
-        based on the GTID settings in Master and Slave.
+        It will either do a IO or SQL thread check.
 
     Arguments:
         (input) MST -> Master class instance.
         (input) SLV -> Slave class instance.
-        (input) opt -> IO or SQL - Determines which thread to check.
+        (input) opt -> IO|SQL - Determines which thread to check.
         (output) Return True if delay detected, False if no delay.
 
     """
 
     is_delay = False
 
-    #  IO thread check.
     if opt == "IO":
+        is_delay = _io_rep_chk(MST, SLV)
 
-        if MST.gtid_mode and SLV.gtid_mode:
-            if MST.exe_gtid != SLV.retrieved_gtid:
-                is_delay = True
-
-        else:
-            if MST.file != SLV.mst_log or MST.pos != SLV.mst_read_pos:
-                is_delay = True
-
-    # Assume SQL thread check.
     else:
         if MST.gtid_mode and SLV.gtid_mode:
             if MST.exe_gtid != SLV.exe_gtid:
@@ -488,6 +477,32 @@ def is_rep_delay(MST, SLV, opt):
                 is_delay = True
 
     return is_delay
+
+def _io_rep_chk(MST, SLV, is_delayed=False, **kwargs):
+
+    """Function:  _io_rep_chk
+
+    Description:  Does an IO thread check in the replication system.  Will
+        determine whether to use GTIDs or the file and log positions
+        based on the GTID settings in master and slave.
+
+    Arguments:
+        (input) MST -> Master class instance.
+        (input) SLV -> Slave class instance.
+        (input) is_delayed -> True|False if delay detected.
+        (output) is_delayed -> True|False if delay detected.
+
+    """
+
+    if MST.gtid_mode and SLV.gtid_mode:
+        if MST.exe_gtid != SLV.retrieved_gtid:
+            is_delayed = True
+
+    else:
+        if MST.file != SLV.mst_log or MST.pos != SLV.mst_read_pos:
+            is_delayed = True
+
+    return is_delayed
 
 
 def optimize_tbl(SERVER, db, tbl, res_set="all", **kwargs):
