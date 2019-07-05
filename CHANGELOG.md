@@ -18,8 +18,8 @@ Breaking Change
 - mysql_class.MasterRep.upd_mst_status:  Replaced log stats update with call to upd_log_stats method.
 - mysql_class.MasterRep.show_slv_hosts:  Modified to use mysql.connector library.
 - mysql_class.MasterRep.show_slv_hosts:  Removed res_set from the function argument list as it is no longer required.
-- mysql_class.MasterRep.__init__:  Modified to use mysql.connector library.
-- mysql_class.MasterRep.__init__:  Removed the connection to the replication server.  Moved to rep_conn() method.
+- mysql_class.MasterRep.\_\_init\_\_:  Modified to use mysql.connector library.
+- mysql_class.MasterRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to rep_conn() method.
 - mysql_class.Rep.get_serv_id:  Modified to use mysql.connector library.
 - mysql_class.Rep.get_serv_id:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.Server.upd_slv_rep_stat:  Modified to use mysql.connector library.
@@ -28,7 +28,7 @@ Breaking Change
 - mysql_class.Server.upd_srv_perf:  Modified to use mysql.connector library.
 - mysql_class.Server.set_srv_gtid:  Modified to use mysql.connector library.
 - mysql_class.Server.set_srv_binlog_crc:  Modified to use mysql.connector library.
-- mysql_class.Server.set_srv_binlog_crc:  Removed setting crc attr to none as its been done in __init__.
+- mysql_class.Server.set_srv_binlog_crc:  Removed setting crc attr to none as its been done in \_\_init\_\_.
 - mysql_class.slave_stop:  Modified to use mysql.connector library.
 - mysql_class.slave_start:  Modified to use mysql.connector library.
 - mysql_class.show_slave_stat:  Modified to use mysql.connector library.
@@ -255,7 +255,7 @@ Breaking Change
 - commands.py:  Convert program to use local libraries from ./lib directory.
 - server.py:  Change single quotes to double quotes.
 - server.py:  Convert program to use local libraries from ./lib directory.
-- server.GTIDSet.__init__:  Replace gen_libs.normalize with gen_libs.Normalize.
+- server.GTIDSet.\_\_init\_\_:  Replace gen_libs.normalize with gen_libs.Normalize.
 - server.GTIDSet.union:  Replace gen_libs.normalize with gen_libs.Normalize.
 
 ### Removed
@@ -272,7 +272,7 @@ Breaking Change
 ### Changed
 - commands.Fetch_Sys_Var:  Added ability to set level at which the command will run at (e.g. Global | Session).
 - server.py:  Deprecate retrieved_gtid and exe_gtid attributes as they are being replaced by retrieved_gtidset and exe_gtidset attributes.
-- server.Slave_Rep.__init__:  To call upd_gtid_pos method.
+- server.Slave_Rep.\_\_init\_\_:  To call upd_gtid_pos method.
 - server.Slave_Rep.upd_slv_status:  To call upd_gtid_pos method.
 
 ### Deprecated
@@ -300,10 +300,10 @@ Breaking Change
 - commands.Chg_Slv_State:  Added error exception handling if no option passed.
 - server.Server.upd_log_stats:  Changed to use Show_Master_Stat function.
 - server.Rep.get_serv_id:  Changed to use Fetch_Sys_Var function.
-- server.Master_Rep.__init__:  Changed to use Show_Master_Stat function.
+- server.Master_Rep.\_\_init\_\_:  Changed to use Show_Master_Stat function.
 - server.Master_Rep.upd_mst_status:  Changed to use Show_Master_Stat function.
 - server.Master_Rep.show_slv_hosts:  Changed to use Show_Slave_Hosts function.
-- server.Slave_Rep.__init__:  Changed to use Show_Slave_Stat function and changed to use Fetch_Global_Var function.
+- server.Slave_Rep.\_\_init\_\_:  Changed to use Show_Slave_Stat function and changed to use Fetch_Global_Var function.
 - server.Slave_Rep.stop_slave:  Changed to use Stop_Slave function.
 - server.Slave_Rep.start_slave:  Changed to use Start_Slave function.
 - server.Slave_Rep.upd_slv_state:  Changed to use Show_Slave_Stat function.
@@ -350,9 +350,9 @@ Breaking Change
 ### Changed
 - commands.py:  MySQL 5.6 (GTID enabled) when using replication, will require the use of the auto position option within the change master command.
 - commands.Change_Master_To:  To determine which options to use depending on GTID mode state.
-- server.Master_Rep.__init__:  Added attribute for the Executed GTID Set information, also updated the GTID mode attribute from the Super class.
+- server.Master_Rep.\_\_init\_\_:  Added attribute for the Executed GTID Set information, also updated the GTID mode attribute from the Super class.
 - server.Master_Rep.upd_mst_status:  Update the Executed GTID Set attribute.
-- server.Slave_Rep.__init__:  Added attributes for MySQL 5.6.
+- server.Slave_Rep.\_\_init\_\_:  Added attributes for MySQL 5.6.
 - server.Slave_Rep.upd_slv_status:  Update the attributes for MySQL 5.6.
 - server.Slave_Rep.get_err_stat:  Added IO and SQL error times to output.
 
@@ -363,7 +363,7 @@ Breaking Change
 - server.Server.set_srv_binlog_crc method.
 
 ### Changed
-- server.Server.__init__:  Added attribute for the Servers binary log checksum mode.
+- server.Server.\_\_init\_\_:  Added attribute for the Servers binary log checksum mode.
 
 
 ## [1.15.0] - 2016-10-19
@@ -372,15 +372,15 @@ Breaking Change
 - server.Server.set_srv_gtid method.
 
 ### Changed
-- server.Server.__init__:  Added attribute for the Servers GTID mode.
+- server.Server.\_\_init\_\_:  Added attribute for the Servers GTID mode.
 
 
 ## [1.14.0] - 2016-10-12
 ### Changed
 - server.py:  Below changes made due to changes made in v1.13.0.
-- server.Rep.__init__:  Added **kwargs to argument list.  Added **kwargs to super class call.
-- server.Master_Rep.__init__:  Added **kwargs to argument list.  Added **kwargs to super class call.
-- server.Slave_Rep.__init__:  Added **kwargs to argument list.  Added **kwargs to super class call.
+- server.Rep.\_\_init\_\_:  Added **kwargs to argument list.  Added **kwargs to super class call.
+- server.Master_Rep.\_\_init\_\_:  Added **kwargs to argument list.  Added **kwargs to super class call.
+- server.Slave_Rep.\_\_init\_\_:  Added **kwargs to argument list.  Added **kwargs to super class call.
 
 
 ## [1.13.0] - 2016-09-27
@@ -390,7 +390,7 @@ Breaking Change
 - commands.Create_Slv_Array:  Changed port to an integer.  This is to allow the use of different ports to MySQL database other than port 3306.
 - server.py:  MySQL 5.6 now gives warning if password is passed on the command line.  To suppress this warning, will require the use of the --defaults-extra-file option.
 - commands.py:  MySQL 5.6 now gives warning if password is passed on the command line.  To suppress this warning, will require the use of the --defaults-extra-file option.
-- server.Server.__init__:  Added **kwargs to argument list.  Set extra_def_file for the defaults-extra-file option.
+- server.Server.\_\_init\_\_:  Added **kwargs to argument list.  Set extra_def_file for the defaults-extra-file option.
 
 ### Deprecated
 - commands.Create_Cfg_Array function.
@@ -411,7 +411,7 @@ Breaking Change
 - server.Server.upd_srv_perf method.
 
 ### Changed
-- server.Server.__init__:  Added attributes for the Servers performance statistics settings.
+- server.Server.\_\_init\_\_:  Added attributes for the Servers performance statistics settings.
 
 
 ## [1.10.0] - 2016-04-15
@@ -422,7 +422,7 @@ Breaking Change
 - server.Server.upd_srv_stat method.
 
 ### Changed
-- server.Server.__init__:  Added attributes for the Servers memory and other status configuration settings.
+- server.Server.\_\_init\_\_:  Added attributes for the Servers memory and other status configuration settings.
 
 ### Fixed
 - commands.Fetch_Global_Var:  Corrected error in order of arguments.
@@ -432,7 +432,7 @@ Breaking Change
 ## [1.9.0] - 2016-03-16
 ### Changed
 - server.Server.connect:  Added exception handler to deal with a down or non-reponding server.
-- server.Slave_Rep.__init__:  Added 'if' to prevent attributes being updated if there is no connection to the database.
+- server.Slave_Rep.\_\_init\_\_:  Added 'if' to prevent attributes being updated if there is no connection to the database.
 
 
 ## [1.8.0] - 2015-12-29
@@ -455,7 +455,7 @@ Breaking Change
 - server.Server.fetch_slv_rep_cfg method.
 
 ### Changed
-- server.Server.__init__:  Added 10 new attributes.
+- server.Server.\_\_init\_\_:  Added 10 new attributes.
 
 ### Deprecated
 - commands.stop_slave function.
@@ -494,7 +494,7 @@ Breaking Change
 
 ### Changed
 - commands.py:  Updated documentation on library dependencies versions.
-- server.Server.__init__:  Added 4 new attributes.
+- server.Server.\_\_init\_\_:  Added 4 new attributes.
 
 ### Deprecated
 - commands.flush_logs function.
@@ -535,7 +535,7 @@ Breaking Change
 
 ### Changed
 - commands.Create_Slv_Array:  Added classes server and machine.
-- server.Slave_Rep.__init__:  Added attr:  read_only.
+- server.Slave_Rep.\_\_init\_\_:  Added attr:  read_only.
 - server.Slave_Rep.upd_slv_status:  Added attr: read_only.
 
 ### Fixed
@@ -555,7 +555,7 @@ Breaking Change
 - server.Slave_Rep.get_others method.
 
 ### Changed
-- server.Slave_Rep.__init__:  Added 3 new attributes.
+- server.Slave_Rep.\_\_init\_\_:  Added 3 new attributes.
 - server.Slave_Rep.upd_slv_status:  Added 3 new attributes.
 - server.py:  Modified documentation as it was missing some class and library dependencies.
 
