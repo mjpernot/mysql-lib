@@ -564,7 +564,7 @@ def reset_master(server, **kwargs):
 
     """
 
-    server.sql("reset master")
+    server.cmd_sql("reset master")
 
 
 def reset_slave(server, **kwargs):
