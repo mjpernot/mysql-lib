@@ -359,7 +359,7 @@ def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
     return server.sql(qry, {"tbl_type": tbl_type, "db": db})
 
 
-def find_name(slv, server_name, **kwargs):
+def find_name(slaves, name, **kwargs):
 
     """Function:  find_name
 
@@ -367,16 +367,16 @@ def find_name(slv, server_name, **kwargs):
         instances.
 
     Arguments:
-        (input) slv -> List of slave instances.
-        (input) server_name -> Name of server being searched for.
+        (input) slaves -> List of slave instances.
+        (input) name -> Name of server being searched for.
         (output) Slave instance or None.
 
     """
-    slv = list(slv)
+    slaves = list(slaves)
 
-    for x in slv:
-        if server_name == x.name:
-            return x
+    for slv in slaves:
+        if name == slv.name:
+            return slv
 
     return None
 

@@ -10,7 +10,6 @@ Breaking Change
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Fixed:
-- mysql_libs.crt_srv_inst:  Fixed problem with mutable default arguments issue.
 - mysql_libs.is_cfg_valid:  Fixed problem with mutable default arguments issue.
 - mysql_libs.find_name:  Fixed problem with mutable default arguments issue.
 - mysql_libs.fetch_slv:  Fixed problem with mutable default arguments issue.
@@ -18,6 +17,8 @@ Breaking Change
 - mysql_libs.chg_slv_state:  Fixed problem with mutable default arguments issue.
 
 ### Changed
+- mysql_libs.find_name:  Changed variable name for readability purposes.
+- mysql_libs.crt_srv_inst:  Changed variable name for readability purposes.
 - mysql_libs.chg_slv_state:  Changed variable name for readability purposes.
 - mysql_libs.switch_to_master:  Modified to use mysql.connector library.
 - mysql_libs.start_slave_until:  Modified to use mysql.connector library.
