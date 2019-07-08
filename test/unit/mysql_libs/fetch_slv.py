@@ -96,7 +96,6 @@ class UnitTest(unittest.TestCase):
         self.slv_list.append(self.Slave1)
         self.slv_list.append(self.Slave2)
 
-    #@unittest.skip("Bug:  slv is not defined anywhere in the function")
     @mock.patch("mysql_libs.find_name")
     def test_slave_not_found(self, mock_find):
 
