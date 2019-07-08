@@ -544,13 +544,13 @@ def purge_bin_logs(server, prg_type, cutoff, **kwargs):
         (input) server -> Server instance.
         (input) prg_type -> Purge type:  BEFORE or TO.
         (input) cutoff -> Depends on the prg_type.
-            => BEFORE -> cutoff will be a date and time.
-            => TO     -> cutoff will be a binary log file name.
+                => BEFORE -> cutoff will be a date and time.
+                => TO     -> cutoff will be a binary log file name.
 
     """
 
     cmd = "purge binary logs " + prg_type + " '" + cutoff + "'"
-    server.sql(cmd)
+    server.cmd_sql(cmd)
 
 
 def reset_master(server, **kwargs):
