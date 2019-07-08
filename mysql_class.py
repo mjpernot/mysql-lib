@@ -1248,7 +1248,6 @@ class MasterRep(Rep):
         rep_conn
         show_slv_hosts
         get_log_info
-        get_name
         upd_mst_status
 
     """
@@ -1326,19 +1325,6 @@ class MasterRep(Rep):
         """
 
         return self.file, self.pos
-
-    def get_name(self):
-
-        """Method:  get_name
-
-        Description:  Return the master's server name as listed in config file.
-
-        Arguments:
-            (output) name -> Server Name.
-
-        """
-
-        return self.name
 
     def upd_mst_status(self):
 
