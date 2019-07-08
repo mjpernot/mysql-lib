@@ -130,7 +130,7 @@ def checksum(server, db, tbl, **kwargs):
     return server.col_sql(cmd)
 
 
-def check_tbl(server, db, tbl, res_set="all", **kwargs):
+def check_tbl(server, db, tbl, **kwargs):
 
     """Function:  check_tbl
 
@@ -140,15 +140,14 @@ def check_tbl(server, db, tbl, res_set="all", **kwargs):
         (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (input) res_set -> row|all - Returning result set format.
         (output) Return check table results.
 
     """
 
-    # Must have back ticks around names if they have special characters.
+    # Must have back ticks around names in case they have special characters.
     cmd = "check table `" + db + "`.`" + tbl + "`"
 
-    return server.sql(cmd, res_set)
+    return server.col_sql(cmd)
 
 
 def chg_slv_state(slaves, opt, **kwargs):
