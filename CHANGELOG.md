@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Fixed:
+- mysql_libs.fetch_slv:  Fixed print problem when no slave is found in the list.
 - mysql_libs.is_cfg_valid:  Fixed problem with mutable default arguments issue.
 - mysql_libs.find_name:  Fixed problem with mutable default arguments issue.
 - mysql_libs.fetch_slv:  Fixed problem with mutable default arguments issue.

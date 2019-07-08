@@ -333,7 +333,7 @@ def fetch_slv(slaves, **kwargs):
 
     if not slv:
         err_flag = True
-        err_msg = "Error:  Slave %s was not found in slave array." % (slv)
+        err_msg = "Error:  No slave was found in the slave list."
 
     return slv, err_flag, err_msg
 
