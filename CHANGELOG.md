@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Changed
+- mysql_libs.check_tbl:  Modified to use mysql.connector library.
 - mysql_libs.checksum:  Modified to use mysql.connector library.
 - mysql_libs.change_master_to:  Modified to use mysql.connector library.
 - mysql_libs.analyze_tbl:  Modified to use mysql.connector library.
