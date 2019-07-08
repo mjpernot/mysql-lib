@@ -17,6 +17,7 @@ Breaking Change
 - mysql_libs.chg_slv_state:  Fixed problem with mutable default arguments issue.
 
 ### Changed
+- mysql_libs.chg_slv_state:  Changed variable name for readability purposes.
 - mysql_libs.switch_to_master:  Modified to use mysql.connector library.
 - mysql_libs.start_slave_until:  Modified to use mysql.connector library.
 - mysql_libs.select_wait_until:  Modified to use mysql.connector library.

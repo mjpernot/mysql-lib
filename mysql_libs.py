@@ -166,14 +166,14 @@ def chg_slv_state(slaves, opt, **kwargs):
     slaves = list(slaves)
 
     if opt == "stop":
-        for x in slaves:
-            x.stop_slave()
-            x.upd_slv_status()
+        for slv in slaves:
+            slv.stop_slave()
+            slv.upd_slv_status()
 
     elif opt == "start":
-        for x in slaves:
-            x.start_slave()
-            x.upd_slv_status()
+        for slv in slaves:
+            slv.start_slave()
+            slv.upd_slv_status()
 
     else:
         gen_libs.prt_msg("Error", "No option selected to stop/start rep.")
