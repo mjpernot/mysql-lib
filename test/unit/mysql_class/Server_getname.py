@@ -83,7 +83,7 @@ class UnitTest(unittest.TestCase):
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)
 
-        self.assertEqual((mysqlrep.get_name()), (None))
+        self.assertEqual(mysqlrep.get_name(), self.name)
 
 
 if __name__ == "__main__":
