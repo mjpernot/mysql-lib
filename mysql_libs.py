@@ -62,10 +62,10 @@ def analyze_tbl(server, db, tbl, **kwargs):
     Description:  Runs an analyze table command.
 
     Arguments:
-        (input) server -> MySQL Server instance.
+        (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (output) Return check table results.
+        (output) Results of analyze table command.
 
     """
 
@@ -84,8 +84,8 @@ def change_master_to(mst, slv, **kwargs):
         the auto position option if GTID is enabled.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
 
     """
 
@@ -120,7 +120,7 @@ def checksum(server, db, tbl, **kwargs):
         (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (output) Return check sum value.
+        (output) Results of checksum table command.
 
     """
 
@@ -140,7 +140,7 @@ def check_tbl(server, db, tbl, **kwargs):
         (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (output) Return check table results.
+        (output) Results of check table command.
 
     """
 
@@ -158,8 +158,8 @@ def chg_slv_state(slaves, opt, **kwargs):
         instances.
 
     Arguments:
-        (input) slaves -> Array of slave instances.
-        (input) opt -> stop or start - Stops or starts the slaves.
+        (input) slaves -> List of slave instances.
+        (input) opt -> stop|start - Stops or starts the slave(s).
 
     """
 
@@ -190,6 +190,7 @@ def create_instance(cfg_file, dir_path, cls_name, **kwargs):
         (input) cfg_file -> Configuration file name.
         (input) dir_path -> Directory path.
         (input) cls_name -> Reference to a Class type.
+        (output) Instance of the class name passed.
 
     """
 
@@ -208,8 +209,8 @@ def create_slv_array(cfg_array, **kwargs):
     Description:  Creates an array of instances from a configuration array.
 
     Arguments:
-        (input) cfg_array -> Array of configurations.
-        (output) slaves -> Array of slave instances.
+        (input) cfg_array -> List of configurations.
+        (output) slaves -> List of slave replication instances.
 
     """
 
@@ -238,9 +239,9 @@ def crt_cmd(server, prog_name, **kwargs):
         on a different port than 3306.
 
     Arguments:
-        (input) server -> Database server instance.
+        (input) server -> Server instance.
         (input) prog_name -> Name of Mysql binary program.
-        (output) -> List array containing the program command.
+        (output) -> List containing a program command with arguments.
 
     """
 
@@ -264,7 +265,7 @@ def crt_srv_inst(cfg, path, **kwargs):
     Arguments:
         (input) cfg -> Configuration file.
         (input) path -> Directory path to the configuration file.
-        (output) -> Instance of the Server class.
+        (output) -> Server instance.
 
     """
 
@@ -282,7 +283,7 @@ def fetch_db_dict(server, **kwargs):
     Description:  Return a dictionary of all databases.
 
     Arguments:
-        (input) server -> Database server instance.
+        (input) server -> Server instance.
         (output) -> Dictionary of database names.
 
     """
@@ -298,7 +299,7 @@ def fetch_logs(server, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (output) Dictionary of names of binary logs.
+        (output) Dictionary of binary log names.
 
     """
 
@@ -313,10 +314,10 @@ def fetch_slv(slaves, **kwargs):
         error code and message if not found.
 
     Arguments:
-        (input) SLAVE -> Slave instance array.
+        (input) slave -> List of slave instances.
         (input) **kwargs:
             slv_mv -> Name of slave to be moved to new master.
-        (output) slv -> Class instance of slave.
+        (output) slv -> Slave instance.
         (output) err_flag -> True|False - if an error has occurred.
         (output) err_msg -> Error message.
 
@@ -345,7 +346,7 @@ def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
         table type of BASE TABLE.
 
     Arguments:
-        (input) server -> Server class instance.
+        (input) server -> Server instance.
         (input) db -> Name of database.
         (input) tbl_type -> Type of table in the database.
         (output) List of tables in database.
@@ -366,9 +367,9 @@ def find_name(slv, server_name, **kwargs):
         instances.
 
     Arguments:
-        (input) slv -> Slave class instance(s).
+        (input) slv -> List of slave instances.
         (input) server_name -> Name of server being searched for.
-        (output) Return the server's instance or None.
+        (output) Slave instance or None.
 
     """
     slv = list(slv)
@@ -388,7 +389,7 @@ def is_cfg_valid(servers, **kwargs):
         server instances.
 
     Arguments:
-        (input) servers -> List of class server instances.
+        (input) servers -> List of server instances.
         (output) status_msg -> Message stating what is not valid.
         (output) status -> True|False - Any of the configuration files invalid.
 
@@ -420,8 +421,8 @@ def is_logs_synced(mst, slv, **kwargs):
         position match that the Slave's Relay log file name and log position.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (output) True or False -> True is return if logs are in sync.
 
     """
@@ -448,10 +449,10 @@ def is_rep_delay(mst, slv, opt, **kwargs):
         It will either do a IO or SQL thread check.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (input) opt -> IO|SQL - Determines which thread to check.
-        (output) Return True if delay detected, False if no delay.
+        (output) Return True|False if delay detected.
 
     """
 
@@ -475,8 +476,8 @@ def _io_rep_chk(mst, slv, is_delayed=False, **kwargs):
         based on the GTID settings in master and slave.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (input) is_delayed -> True|False if delay detected.
         (output) is_delayed -> True|False if delay detected.
 
@@ -502,8 +503,8 @@ def _sql_rep_chk(mst, slv, is_delayed=False, **kwargs):
         based on the GTID settings in master and slave.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (input) is_delayed -> True|False if delay detected.
         (output) is_delayed -> True|False if delay detected.
 
@@ -577,7 +578,7 @@ def reset_slave(server, **kwargs):
 
     """Function:  reset_slave
 
-    Description:  Clear replication configuration on the slave.
+    Description:  Clear replication configuration in a slave.
 
     Arguments:
         (input) server -> Server instance.
@@ -619,7 +620,7 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
         includes the 'before' and 'after' option for the GTID syntax.
 
     Arguments:
-        (input) slv -> Slave class instance.
+        (input) slv -> Slave instance.
         (input) log_file -> Binary log file name.
         (input) log_pos -> Binary log position.
         (input) **kwargs:
@@ -669,8 +670,8 @@ def switch_to_master(mst, slv, timeout=0, **kwargs):
         Slave to the new Master.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (input) timeout -> Number of seconds to wait for return.
             NOTE:  0 (zero) Wait indefinitely.
         (output) -1, 0, >0 - Return status of command.
@@ -701,9 +702,9 @@ def sync_delay(mst, slv, opt, **kwargs):
         master and the slave.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
-        (input) opt -> IO or SQL - Determines which thread to check.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
+        (input) opt -> IO|SQL - Which type of thread to check.
 
     """
 
@@ -738,8 +739,8 @@ def _io_delay_chk(mst, slv, **kwargs):
         slave.  Calls function to sync up between the master and slave.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
 
     """
 
@@ -768,8 +769,8 @@ def sync_rep_slv(mst, slv, **kwargs):
         sync is not completed.
 
     Arguments:
-        (input) mst -> Master class instance.
-        (input) slv -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (output) err_flag -> True|False - if an error has occurred.
         (output) err_msg -> Error message.
 
@@ -809,8 +810,8 @@ def wait_until(slv, opt, log_file=None, log_pos=None, **kwargs):
         database server.
 
     Arguments:
-        (input) slv -> Slave class instance.
-        (input) opt -> IO or SQL - Determines which thread to check.
+        (input) slv -> Slave instance.
+        (input) opt -> IO|SQL - Which type of thread to check.
         (input) log_file -> Master binary log file name.
         (input) log_pos -> Master binary log position.
         (input) **kwargs:
@@ -838,7 +839,7 @@ def _io_wait_chk(slv, gtid, log_file, log_pos, **kwargs):
         manual interruption.
 
     Arguments:
-        (input) slv -> Slave class instance.
+        (input) slv -> Slave instance.
         (input) gtid -> GTID position.
         (input) log_file -> Master's binary log file name.
         (input) log_pos -> Master's binary log position.
@@ -874,7 +875,7 @@ def _sql_wait_chk(slv, gtid, log_file, log_pos, **kwargs):
         manual interruption.
 
     Arguments:
-        (input) slv -> Slave class instance.
+        (input) slv -> Slave instance.
         (input) gtid -> GTID position.
         (input) log_file -> Master's binary log file name.
         (input) log_pos -> Master's binary log position.
