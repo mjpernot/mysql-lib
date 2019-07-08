@@ -517,6 +517,7 @@ class Server(object):
         is_connected
         reconnect
         chg_db
+        get_name
 
     """
 
@@ -1063,6 +1064,19 @@ class Server(object):
 
         if db:
             self.conn.database = db
+
+    def get_name(self):
+
+        """Method:  get_name
+
+        Description:  Return the server's name.
+
+        Arguments:
+            (output) name -> Server Name.
+
+        """
+
+        return self.name
 
 
 class Rep(Server):
