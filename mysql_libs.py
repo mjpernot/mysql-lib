@@ -231,7 +231,7 @@ def crt_cmd(server, prog_name, **kwargs):
 
     Description:  Create a basic MySQL program command line setup.  The basic
         setup will include program name, user, passwd, host, and port.
-        The port is required to be set if Mysql instance is operating
+        The port is required to be set if MySQL instance is operating
         on a different port than 3306.
 
     Arguments:
@@ -242,12 +242,12 @@ def crt_cmd(server, prog_name, **kwargs):
     """
 
     if server.extra_def_file:
-        # Include defaults extra file option in command, but no password.
+        # Include defaults extra file option in command, but no pwd.
         return [prog_name, "--defaults-extra-file=" + server.extra_def_file,
                 "-u", server.sql_user, "-h", server.host, "-P",
                 str(server.port)]
     else:
-        # Command with password.
+        # Command with pwd.
         return [prog_name, "-u", server.sql_user, "-p" + server.sql_pass, "-h",
                 server.host, "-P", str(server.port)]
 
@@ -272,21 +272,19 @@ def crt_srv_inst(cfg, path, **kwargs):
                               db.cfg_file)
 
 
-def fetch_db_dict(server, res_set="all", **kwargs):
+def fetch_db_dict(server, **kwargs):
 
     """Function:  fetch_db_dict
 
-    Description:  Return an dictionary array of all databases.
+    Description:  Return a dictionary of all databases.
 
     Arguments:
         (input) server -> Database server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) -> Dictionary array of database names.
+        (output) -> Dictionary of database names.
 
     """
 
-    return server.sql("show databases", res_set)
+    return server.col_sql("show databases")
 
 
 def fetch_logs(server, res_set="all", **kwargs):
