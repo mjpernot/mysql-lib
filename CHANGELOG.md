@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Changed
+- mysql_libs.start_slave_until:  Modified to use mysql.connector library.
 - mysql_libs.select_wait_until:  Modified to use mysql.connector library.
 - mysql_libs.reset_slave:  Modified to use mysql.connector library.
 - mysql_libs.reset_master:  Modified to use mysql.connector library.
