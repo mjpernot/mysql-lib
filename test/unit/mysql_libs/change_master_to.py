@@ -46,7 +46,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        cmd_sql -> Stub holder for Server.cmd_sql method.
 
     """
 
@@ -70,16 +70,14 @@ class Server(object):
         self.pos = "file-position"
         self.name = "server-name"
 
-    def sql(self, res_set, cmd, var):
+    def cmd_sql(self, cmd):
 
-        """Method:  sql
+        """Method:  cmd_sql
 
-        Description:  Stub holder for Server.sql method.
+        Description:  Stub holder for Server.cmd_sql method.
 
         Arguments:
             (input) cmd -> Query command.
-            (input) res_set -> Result returning format.
-            (input) params -> Param set.
 
         """
 
