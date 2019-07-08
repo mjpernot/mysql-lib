@@ -213,6 +213,7 @@ def create_slv_array(cfg_array, **kwargs):
 
     """
 
+    cfg_array = list(cfg_array)
     slaves = []
 
     for slv in cfg_array:
