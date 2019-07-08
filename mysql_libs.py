@@ -394,6 +394,7 @@ def is_cfg_valid(servers, **kwargs):
 
     """
 
+    servers = list(servers)
     status = True
     status_msg = []
 
