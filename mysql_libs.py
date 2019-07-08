@@ -514,7 +514,7 @@ def _sql_rep_chk(mst, slv, is_delayed=False, **kwargs):
     return is_delayed
 
 
-def optimize_tbl(server, db, tbl, res_set="all", **kwargs):
+def optimize_tbl(server, db, tbl, **kwargs):
 
     """Function:  optimize_tbl
 
@@ -524,15 +524,14 @@ def optimize_tbl(server, db, tbl, res_set="all", **kwargs):
         (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (input) res_set -> row|all - Returning result set format.
         (output) Return check table results.
 
     """
 
-    # Must have back ticks around names if they have special characters.
+    # Must have back ticks around names in case they have special characters.
     cmd = "optimize table `" + db + "`.`" + tbl + "`"
 
-    return server.sql(cmd, res_set)
+    return server.col_sql(cmd)
 
 
 def purge_bin_logs(server, prg_type, cutoff, **kwargs):
