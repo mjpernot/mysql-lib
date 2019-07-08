@@ -110,7 +110,7 @@ def change_master_to(mst, slv, **kwargs):
     print("Changed Slave: {0} to new Master: {1}".format(slv.name, mst.name))
 
 
-def checksum(server, db, tbl, res_set="all", **kwargs):
+def checksum(server, db, tbl, **kwargs):
 
     """Function:  checksum
 
@@ -120,16 +120,14 @@ def checksum(server, db, tbl, res_set="all", **kwargs):
         (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
         (output) Return check sum value.
 
     """
 
-    # Must have back ticks around names if they have special characters.
+    # Must have back ticks around names in case they have special characters.
     cmd = "checksum table `" + db + "`.`" + tbl + "`"
 
-    return server.sql(cmd, res_set)
+    return server.col_sql(cmd)
 
 
 def check_tbl(server, db, tbl, res_set="all", **kwargs):
