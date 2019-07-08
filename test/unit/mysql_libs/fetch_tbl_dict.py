@@ -62,7 +62,7 @@ class Server(object):
 
         pass
 
-    def sql(self, cmd, res_set, var):
+    def sql(self, cmd, var):
 
         """Method:  sql
 
@@ -70,7 +70,6 @@ class Server(object):
 
         Arguments:
             (input) cmd -> Query command.
-            (input) res_set -> Return set type.
             (input) var -> Global variable name.
 
         """
