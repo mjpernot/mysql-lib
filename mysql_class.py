@@ -1637,9 +1637,6 @@ class SlaveRep(Rep):
             self.purged_gtidset = GTIDSet(fetch_sys_var(
                 self, "GTID_PURGED", level="global")["GTID_PURGED"] or "0:0")
 
-        else:
-            self.purged_gtidset = None
-
     def is_slave_up(self):
 
         """Method:  is_slave_up
