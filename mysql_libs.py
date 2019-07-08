@@ -287,21 +287,19 @@ def fetch_db_dict(server, **kwargs):
     return server.col_sql("show databases")
 
 
-def fetch_logs(server, res_set="all", **kwargs):
+def fetch_logs(server, **kwargs):
 
     """Function:  fetch_logs
 
-    Description:  Return the output of the show binary logs command.
+    Description:  Return a list of the server's binary logs.
 
     Arguments:
         (input) server -> Server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Return names of the binary logs.
+        (output) Dictionary of names of binary logs.
 
     """
 
-    return server.sql("show binary logs", res_set)
+    return server.cmd_sql("show binary logs")
 
 
 def fetch_slv(slaves, **kwargs):
