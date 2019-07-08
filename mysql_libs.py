@@ -581,7 +581,7 @@ def reset_slave(server, **kwargs):
     server.cmd_sql("reset slave all")
 
 
-def select_wait_until(server, gtid_pos, timeout=0, res_set="row", **kwargs):
+def select_wait_until(server, gtid_pos, timeout=0, **kwargs):
 
     """Function:  select_wait_until
 
@@ -593,7 +593,6 @@ def select_wait_until(server, gtid_pos, timeout=0, res_set="row", **kwargs):
         (input) gtid_pos -> GTID Position.
         (input) timeout -> Number of seconds before exiting command.
             Warning:  If set to 0 (zero), will wait indefinitely.
-        (input) res_set -> row or all - Returning result set.
         (output) -1, 0, >0 - Return status of command.
             -1: Timeout reached and did not reach GTID position.
             0:  Already at GTID position, no transactions processed.
@@ -601,8 +600,8 @@ def select_wait_until(server, gtid_pos, timeout=0, res_set="row", **kwargs):
 
     """
 
-    return server.sql("select wait_until_sql_thread_after_gtids(%s, %s)",
-                      res_set, (gtid_pos, timeout))
+    return server.cmd_sql("select wait_until_sql_thread_after_gtids(%s, %s)" \
+                          % (gtid_pos, timeout))
 
 
 def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
