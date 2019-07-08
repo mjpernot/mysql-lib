@@ -4,12 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
-## [4.0.0] - 2019-07-05
+## [4.0.0] - 2019-07-08
 Breaking Change
 
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Changed
+- mysql_libs.change_master_to:  Modified to use mysql.connector library.
 - mysql_libs.analyze_tbl:  Modified to use mysql.connector library.
 - mysql_libs.is_rep_delay:  Replaced code with calls to \_io_rep_chk and \_sql_rep_chk to reduce factor complexity.
 - mysql_libs.sync_delay:  Replaced code with call \_io_delay_chk to reduce factor complexity.
