@@ -633,15 +633,18 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
     # Non-GTID MySQL.
     if log_file and log_pos:
         start_slave_until = start_slv + \
-            """master_log_file=%s, master_log_pos=%s"""
-        master_pos_wait = """select master_pos_wait(%s, %s)"""
-        slv.sql(start_slave_until, "", (log_file, log_pos))
-        slv.sql(master_pos_wait, "", (log_file, log_pos))
+            """master_log_file='%s', master_log_pos='%s'""" \
+            % (log_file, log_pos)
+        master_pos_wait = """select master_pos_wait('%s', '%s')""" \
+            % (log_file, log_pos)
+        slv.cmd_sql(start_slave_until)
+        slv.cmd_sql(master_pos_wait)
 
     # GTID MySQL.
     elif slv.gtid_mode and gtid:
-        start_slave_until = start_slv + """sql_""" + stop_pos + """_gtids=%s"""
-        slv.sql(start_slave_until, "", (gtid))
+        start_slave_until = start_slv + """sql_""" + stop_pos + \
+            """_gtids='%s'""" % (gtid)
+        slv.cmd_sql(start_slave_until)
 
     else:
         err_flag = True
