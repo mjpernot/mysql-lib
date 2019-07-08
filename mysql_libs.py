@@ -578,7 +578,7 @@ def reset_slave(server, **kwargs):
 
     """
 
-    server.sql("reset slave all")
+    server.cmd_sql("reset slave all")
 
 
 def select_wait_until(server, gtid_pos, timeout=0, res_set="row", **kwargs):
