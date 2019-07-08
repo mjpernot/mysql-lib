@@ -752,13 +752,13 @@ def _io_delay_chk(mst, slv, **kwargs):
                                               stop_pos="after")
 
         if err_flag:
-            print("Error: {0}" % (err_msg))
+            print("Error: %s" % (err_msg))
 
     else:
         err_flag, err_msg = start_slave_until(slv, mst.file, mst.pos)
 
         if err_flag:
-            print("Error: {0}" % (err_msg))
+            print("Error: %s" % (err_msg))
 
 
 def sync_rep_slv(mst, slv, **kwargs):
