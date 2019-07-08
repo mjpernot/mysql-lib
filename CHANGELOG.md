@@ -97,6 +97,7 @@ Breaking Change
 - mysql_class.Server.vert_sql:  Method to run sql code with vertical definitions and return in dictionary format.
 
 ### Removed
+- mysql_class.SlaveRep.get_name:  Replaced by the mysql_class.Server.get_name method.
 - mysql_class.MasterRep.get_name:  Replaced by the mysql_class.Server.get_name method.
 - mysql_class.Server.Row:  Removed the class it's no longer required.  The "mysql.connector" module has it's own Row iterator.
 - mysql_class.compare_sets.inner_compare:  Remove inner function, was replaced by \_inner_compare.

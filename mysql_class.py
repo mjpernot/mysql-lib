@@ -1366,7 +1366,6 @@ class SlaveRep(Rep):
         is_slave_up
         is_slv_running
         get_log_info
-        get_name
         get_thr_stat
         get_err_stat
         is_slv_error
@@ -1685,19 +1684,6 @@ class SlaveRep(Rep):
 
         return self.mst_log, self.relay_mst_log, self.mst_read_pos, \
             self.exec_mst_pos
-
-    def get_name(self):
-
-        """Method:  get_name
-
-        Description:  Return the slave's server name.
-
-        Arguments:
-            (output) name -> Server Name.
-
-        """
-
-        return self.name
 
     def get_thr_stat(self):
 
