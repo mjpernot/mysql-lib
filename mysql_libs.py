@@ -371,6 +371,7 @@ def find_name(slv, server_name, **kwargs):
         (output) Return the server's instance or None.
 
     """
+    slv = list(slv)
 
     for x in slv:
         if server_name == x.name:

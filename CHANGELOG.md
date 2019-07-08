@@ -10,6 +10,7 @@ Breaking Change
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
 ### Fixed:
+- mysql_libs.find_name:  Fixed problem with mutable default arguments issue.
 - mysql_libs.fetch_slv:  Fixed problem with mutable default arguments issue.
 - mysql_libs.create_slv_array:  Fixed problem with mutable default arguments issue.
 - mysql_libs.chg_slv_state:  Fixed problem with mutable default arguments issue.
