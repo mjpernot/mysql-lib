@@ -163,6 +163,8 @@ def chg_slv_state(slaves, opt, **kwargs):
 
     """
 
+    slaves = list(slaves)
+
     if opt == "stop":
         for x in slaves:
             x.stop_slave()

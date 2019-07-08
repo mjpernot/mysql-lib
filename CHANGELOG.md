@@ -9,6 +9,9 @@ Breaking Change
 
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
+### Fixed:
+- mysql_libs.chg_slv_state:  Fixed problem with mutable default arguments issue.
+
 ### Changed
 - mysql_libs.switch_to_master:  Modified to use mysql.connector library.
 - mysql_libs.start_slave_until:  Modified to use mysql.connector library.
