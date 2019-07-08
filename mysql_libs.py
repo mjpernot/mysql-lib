@@ -666,7 +666,7 @@ def switch_to_master(mst, slv, timeout=0, **kwargs):
         (input) mst -> Master class instance.
         (input) slv -> Slave class instance.
         (input) timeout -> Number of seconds to wait for return.
-            NOTE:  0 (zero) means wait indefinitely.
+            NOTE:  0 (zero) Wait indefinitely.
         (output) -1, 0, >0 - Return status of command.
             -1: Timeout reached and did not reach GTID position.
             0:  Already at GTID position, no transactions processed.
@@ -676,7 +676,8 @@ def switch_to_master(mst, slv, timeout=0, **kwargs):
 
     # Wait for relay log to empty.
     slv.upd_gtid_pos()
-    status_flag = select_wait_until(slv, slv.retrieved_gtidset, timeout)
+    status_flag = next(iter(select_wait_until(slv, slv.retrieved_gtidset,
+                                              timeout).values()))
 
     if status_flag >= 0:
         mysql_class.slave_stop(slv)
