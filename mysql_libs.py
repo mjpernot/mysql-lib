@@ -322,6 +322,7 @@ def fetch_slv(slaves, **kwargs):
 
     """
 
+    slaves = list(slaves)
     err_flag = False
     err_msg = None
     slv = None
