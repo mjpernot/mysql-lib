@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
-## [4.0.0] - 2019-07-08
+## [4.0.0] - 2019-07-09
 Breaking Change
 
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
@@ -98,6 +98,7 @@ Breaking Change
 - mysql_class.Server.vert_sql:  Method to run sql code with vertical definitions and return in dictionary format.
 
 ### Removed
+- mysql_class.Server.\_\_init\_\_:  Removed reference to innodb_additional_mem_pool_size.  Deprecated in MySQL 5.6.3 and removed in MySQL 5.7.4.
 - mysql_class.SlaveRep.get_name:  Replaced by the mysql_class.Server.get_name method.
 - mysql_class.MasterRep.get_name:  Replaced by the mysql_class.Server.get_name method.
 - mysql_class.Server.Row:  Removed the class it's no longer required.  The "mysql.connector" module has it's own Row iterator.

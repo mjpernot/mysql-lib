@@ -582,7 +582,6 @@ class Server(object):
         # Memory & status configuration
         self.buf_size = None
         self.indb_buf = None
-        self.indb_add_pool = None
         self.indb_log_buf = None
         self.qry_cache = None
         self.read_buf = None
