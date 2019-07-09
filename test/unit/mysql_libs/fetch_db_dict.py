@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  analyze_tbl.py
+"""Program:  fetch_db_dict.py
 
-    Description:  Unit testing of analyze_tbl in mysql_libs.py.
+    Description:  Unit testing of fetch_db_dict in mysql_libs.py.
 
     Usage:
-        test/unit/mysql_libs/analyze_tbl.py
+        test/unit/mysql_libs/fetch_db_dict.py
 
     Arguments:
 
@@ -45,7 +45,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        col_sql -> Stub holder for mysql_class.Server.col_sql method.
 
     """
 
@@ -66,7 +66,7 @@ class Server(object):
 
         """Method:  col_sql
 
-        Description:  Stub holder for Server.col_sql method.
+        Description:  Stub holder for mysql_class.Server.col_sql method.
 
         Arguments:
             (input) cmd -> Query command.
@@ -88,7 +88,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_analyze_tbl -> Test analyze_tbl function.
+        test_fetch_db_dict -> Test fetch_db_dict function.
 
     """
 
@@ -104,18 +104,17 @@ class UnitTest(unittest.TestCase):
 
         self.Server = Server()
 
-    def test_analyze_tbl(self):
+    def test_fetch_db_dict(self):
 
-        """Function:  test_analyze_tbl
+        """Function:  test_fetch_db_dict
 
-        Description:  Test analyze_tbl function.
+        Description:  Test fetch_db_dict function.
 
         Arguments:
 
         """
 
-        self.assertTrue(mysql_libs.analyze_tbl(self.Server, "Db_name",
-                                               "Tbl_name"))
+        self.assertTrue(mysql_libs.fetch_db_dict(self.Server))
 
 
 if __name__ == "__main__":

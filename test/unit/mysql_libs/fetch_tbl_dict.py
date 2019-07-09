@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  analyze_tbl.py
+"""Program:  fetch_tbl_dict.py
 
-    Description:  Unit testing of analyze_tbl in mysql_libs.py.
+    Description:  Unit testing of fetch_tbl_dict in mysql_libs.py.
 
     Usage:
-        test/unit/mysql_libs/analyze_tbl.py
+        test/unit/mysql_libs/fetch_tbl_dict.py
 
     Arguments:
 
@@ -45,7 +45,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        sql -> Stub holder for mysql_class.Server.sql method.
 
     """
 
@@ -62,14 +62,15 @@ class Server(object):
 
         pass
 
-    def col_sql(self, cmd):
+    def sql(self, cmd, var):
 
-        """Method:  col_sql
+        """Method:  sql
 
-        Description:  Stub holder for Server.col_sql method.
+        Description:  Stub holder for mysql_class.Server.sql method.
 
         Arguments:
             (input) cmd -> Query command.
+            (input) var -> Global variable name.
 
         """
 
@@ -88,7 +89,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_analyze_tbl -> Test analyze_tbl function.
+        test_fetch_tbl_dict -> Test fetch_tbl_dict function.
 
     """
 
@@ -104,18 +105,17 @@ class UnitTest(unittest.TestCase):
 
         self.Server = Server()
 
-    def test_analyze_tbl(self):
+    def test_fetch_tbl_dict(self):
 
-        """Function:  test_analyze_tbl
+        """Function:  test_fetch_tbl_dict
 
-        Description:  Test analyze_tbl function.
+        Description:  Test fetch_tbl_dict function.
 
         Arguments:
 
         """
 
-        self.assertTrue(mysql_libs.analyze_tbl(self.Server, "Db_name",
-                                               "Tbl_name"))
+        self.assertTrue(mysql_libs.fetch_tbl_dict(self.Server, "Dbname"))
 
 
 if __name__ == "__main__":

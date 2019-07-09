@@ -18,7 +18,6 @@
         Position
         GTIDSet
         Server
-            Row
             Rep
                 MasterRep
                 SlaveRep
@@ -37,7 +36,6 @@ import collections
 # Local
 import lib.gen_libs as gen_libs
 import lib.machine as machine
-import lib.errors as errors
 import version
 
 __version__ = version.__version__
@@ -496,7 +494,7 @@ class Server(object):
     Super-Class:  object
 
     Sub-Classes:
-        Row
+        Rep
 
     Methods:
         __init__
@@ -519,116 +517,9 @@ class Server(object):
         is_connected
         reconnect
         chg_db
+        get_name
 
     """
-
-    class Row(object):
-
-        """Class:  Row
-
-        Description:  A row (iterator) is returned when executing a SQL
-            statement.  For statements that return a single row, the object
-            will treat it as a row as well.
-
-        Super-Class:  object
-
-        Sub-Classes:
-
-        Methods:
-            __init__
-            __iter__
-            next
-            __getitem__
-            __str__
-
-        """
-
-        def __init__(self, cursor):
-
-            """Method:  __init__
-
-            Description:  Initialization of an instance of the Row class.
-
-            Arguments:
-                (input) cursor -> Cursor handler passed from execute().
-
-            """
-
-            self.cursor = cursor
-            self.row = self.cursor.fetchone()
-
-        def __iter__(self):
-
-            """Method:  __iter__
-
-            Description:  Iterator for the returning result set.
-                Executed during a loop (e.g. for loop).
-
-            Arguments:
-                (output) Returns the instance handler.
-
-            """
-
-            return self
-
-        def next(self):
-
-            """Method:  next
-
-            Description:  Gets the next row or stops the iteration.
-                Called directly using server.Row.next(self) command.
-
-            Arguments:
-                (output) Returns the row.
-
-            """
-
-            row = self.row
-
-            if row is None:
-                raise StopIteration
-
-            else:
-                self.row = self.cursor.fetchone()
-                return row
-
-        def __getitem__(self, key):
-
-            """Method:  __getitem__
-
-            Description:  Returns the value to a dictionary key.
-                Is executed when an instance of a class is referenced as
-                an array (e.g. x[i] and x is a class).
-
-            Arguments:
-                (input) key -> Key to the dictionary tuple.
-                (output) Returns the value of the key in the dictionary.
-
-            """
-
-            if self.row is not None:
-                return self.row[key]
-
-            else:
-                raise errors.EmptyRowError
-
-        def __str__(self):
-
-            """Method:  __str__
-
-            Description:  Converts the value in the row to a string.
-                Executed when the str() function is called.
-
-            Arguments:
-                (output) Returns string representation of the values.
-
-            """
-
-            if len(self.row) == 1:
-                return str(self.row.values()[0])
-
-            else:
-                raise errors.EmptyRowError
 
     def __init__(self, name, server_id, sql_user, sql_pass, machine,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
@@ -691,7 +582,6 @@ class Server(object):
         # Memory & status configuration
         self.buf_size = None
         self.indb_buf = None
-        self.indb_add_pool = None
         self.indb_log_buf = None
         self.qry_cache = None
         self.read_buf = None
@@ -844,7 +734,6 @@ class Server(object):
 
         self.buf_size = int(data["key_buffer_size"])
         self.indb_buf = int(data["innodb_buffer_pool_size"])
-        self.indb_add_pool = int(data["innodb_additional_mem_pool_size"])
         self.indb_log_buf = int(data["innodb_log_buffer_size"])
         self.qry_cache = int(data["query_cache_size"])
         self.read_buf = int(data["read_buffer_size"])
@@ -866,8 +755,8 @@ class Server(object):
         self.days_up = int(float(self.uptime) / 3600 / 24)
 
         # Base memory for database (in bytes).
-        self.base_mem = self.buf_size + self.indb_buf + self.indb_add_pool \
-            + self.indb_log_buf + self.qry_cache
+        self.base_mem = self.buf_size + self.indb_buf + self.indb_log_buf \
+            + self.qry_cache
 
         # Memory per thread connection (in bytes).
         self.thr_mem = self.read_buf + self.read_rnd_buf + self.sort_buf \
@@ -1174,6 +1063,19 @@ class Server(object):
         if db:
             self.conn.database = db
 
+    def get_name(self):
+
+        """Method:  get_name
+
+        Description:  Return the server's name.
+
+        Arguments:
+            (output) name -> Server Name.
+
+        """
+
+        return self.name
+
 
 class Rep(Server):
 
@@ -1341,10 +1243,9 @@ class MasterRep(Rep):
 
     Methods:
         __init__
-        rep_conn
+        connect
         show_slv_hosts
         get_log_info
-        get_name
         upd_mst_status
 
     """
@@ -1380,9 +1281,9 @@ class MasterRep(Rep):
         self.ign_db = None
         self.exe_gtid = None
 
-    def rep_conn(self):
+    def connect(self):
 
-        """Method:  rep_conn
+        """Method:  connect
 
         Description:  Setups a connection to a replication server and updates
             the replication attributes.
@@ -1423,19 +1324,6 @@ class MasterRep(Rep):
 
         return self.file, self.pos
 
-    def get_name(self):
-
-        """Method:  get_name
-
-        Description:  Return the master's server name as listed in config file.
-
-        Arguments:
-            (output) name -> Server Name.
-
-        """
-
-        return self.name
-
     def upd_mst_status(self):
 
         """Method:  upd_mst_status
@@ -1466,7 +1354,7 @@ class SlaveRep(Rep):
 
     Methods:
         __init__
-        rep_conn
+        connect
         stop_slave
         start_slave
         show_slv_state
@@ -1476,7 +1364,6 @@ class SlaveRep(Rep):
         is_slave_up
         is_slv_running
         get_log_info
-        get_name
         get_thr_stat
         get_err_stat
         is_slv_error
@@ -1572,9 +1459,9 @@ class SlaveRep(Rep):
         self.read_only = None
         self.purged_gtidset = None
 
-    def rep_conn(self):
+    def connect(self):
 
-        """Method:  rep_conn
+        """Method:  connect
 
         Description:  Setups a connection to a replication server and updates
             the slave replication attributes.
@@ -1746,10 +1633,7 @@ class SlaveRep(Rep):
         # Handle MySQL 5.5 or 5.6 servers.
         if self.gtid_mode:
             self.purged_gtidset = GTIDSet(fetch_sys_var(
-                self, "GTID_PURGED", level="global")[0]["Value"] or "0:0")
-
-        else:
-            self.purged_gtidset = None
+                self, "GTID_PURGED", level="global")["GTID_PURGED"] or "0:0")
 
     def is_slave_up(self):
 
@@ -1795,19 +1679,6 @@ class SlaveRep(Rep):
 
         return self.mst_log, self.relay_mst_log, self.mst_read_pos, \
             self.exec_mst_pos
-
-    def get_name(self):
-
-        """Method:  get_name
-
-        Description:  Return the slave's server name.
-
-        Arguments:
-            (output) name -> Server Name.
-
-        """
-
-        return self.name
 
     def get_thr_stat(self):
 

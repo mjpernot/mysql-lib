@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  analyze_tbl.py
+"""Program:  start_slave_until.py
 
-    Description:  Unit testing of analyze_tbl in mysql_libs.py.
+    Description:  Unit testing of start_slave_until in mysql_libs.py.
 
     Usage:
-        test/unit/mysql_libs/analyze_tbl.py
+        test/unit/mysql_libs/start_slave_until.py
 
     Arguments:
 
@@ -45,7 +45,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        cmd_sql -> Stub holder for mysql_class.Server.cmd_sql method.
 
     """
 
@@ -60,13 +60,13 @@ class Server(object):
 
         """
 
-        pass
+        self.gtid_mode = "Yes"
 
-    def col_sql(self, cmd):
+    def cmd_sql(self, cmd):
 
-        """Method:  col_sql
+        """Method:  cmd_sql
 
-        Description:  Stub holder for Server.col_sql method.
+        Description:  Stub holder for mysql_class.Server.cmd_sql method.
 
         Arguments:
             (input) cmd -> Query command.
@@ -88,7 +88,9 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_analyze_tbl -> Test analyze_tbl function.
+        test_fail -> Test failure option.
+        test_gtid -> Test with gtid mode.
+        test_non_gtid -> Test with non-gtid mode.
 
     """
 
@@ -104,18 +106,44 @@ class UnitTest(unittest.TestCase):
 
         self.Server = Server()
 
-    def test_analyze_tbl(self):
+    def test_fail(self):
 
-        """Function:  test_analyze_tbl
+        """Function:  test_fail
 
-        Description:  Test analyze_tbl function.
+        Description:  Test failure option.
 
         Arguments:
 
         """
 
-        self.assertTrue(mysql_libs.analyze_tbl(self.Server, "Db_name",
-                                               "Tbl_name"))
+        self.assertEqual(mysql_libs.start_slave_until(self.Server),
+                         (True, "One of the arguments is missing."))
+
+    def test_gtid(self):
+
+        """Function:  test_gtid
+
+        Description:  Test with gtid mode.
+
+        Arguments:
+
+        """
+
+        self.assertEqual(mysql_libs.start_slave_until(self.Server,
+                         gtid=12345, stop_pos="before"), (False, None))
+
+    def test_non_gtid(self):
+
+        """Function:  test_non_gtid
+
+        Description:  Test with non-gtid mode.
+
+        Arguments:
+
+        """
+
+        self.assertEqual(mysql_libs.start_slave_until(self.Server,
+                         log_file="Filename", log_pos=12345), (False, None))
 
 
 if __name__ == "__main__":

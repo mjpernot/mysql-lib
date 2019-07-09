@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  analyze_tbl.py
+"""Program:  find_name.py
 
-    Description:  Unit testing of analyze_tbl in mysql_libs.py.
+    Description:  Unit testing of find_name in mysql_libs.py.
 
     Usage:
-        test/unit/mysql_libs/analyze_tbl.py
+        test/unit/mysql_libs/find_name.py
 
     Arguments:
 
@@ -45,11 +45,10 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
 
     """
 
-    def __init__(self):
+    def __init__(self, name):
 
         """Method:  __init__
 
@@ -60,20 +59,7 @@ class Server(object):
 
         """
 
-        pass
-
-    def col_sql(self, cmd):
-
-        """Method:  col_sql
-
-        Description:  Stub holder for Server.col_sql method.
-
-        Arguments:
-            (input) cmd -> Query command.
-
-        """
-
-        return True
+        self.name = name
 
 
 class UnitTest(unittest.TestCase):
@@ -88,7 +74,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_analyze_tbl -> Test analyze_tbl function.
+        test_slave_not_found -> Test with slave not found.
+        test_slave_found -> Test with slave found.
 
     """
 
@@ -102,20 +89,36 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.Slave1 = Server("Slave1")
+        self.Slave2 = Server("Slave2")
+        self.slv_list = []
+        self.slv_list.append(self.Slave1)
+        self.slv_list.append(self.Slave2)
 
-    def test_analyze_tbl(self):
+    def test_slave_not_found(self):
 
-        """Function:  test_analyze_tbl
+        """Function:  test_slave_not_found
 
-        Description:  Test analyze_tbl function.
+        Description:  Test with slave not found.
 
         Arguments:
 
         """
 
-        self.assertTrue(mysql_libs.analyze_tbl(self.Server, "Db_name",
-                                               "Tbl_name"))
+        self.assertEqual(mysql_libs.find_name(self.slv_list, "Slave3"), None)
+
+    def test_slave_found(self):
+
+        """Function:  test_slave_found
+
+        Description:  Test with slave found.
+
+        Arguments:
+
+        """
+
+        self.assertEqual(mysql_libs.find_name(self.slv_list, "Slave1"),
+                         self.Slave1)
 
 
 if __name__ == "__main__":

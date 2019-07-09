@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  analyze_tbl.py
+"""Program:  checksum.py
 
-    Description:  Unit testing of analyze_tbl in mysql_libs.py.
+    Description:  Unit testing of checksum in mysql_libs.py.
 
     Usage:
-        test/unit/mysql_libs/analyze_tbl.py
+        test/unit/mysql_libs/checksum.py
 
     Arguments:
 
@@ -45,7 +45,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        col_sql -> Stub holder for mysql_class.Server.col_sql method.
 
     """
 
@@ -66,7 +66,7 @@ class Server(object):
 
         """Method:  col_sql
 
-        Description:  Stub holder for Server.col_sql method.
+        Description:  Stub holder for mysql_class.Server.col_sql method.
 
         Arguments:
             (input) cmd -> Query command.
@@ -88,7 +88,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_analyze_tbl -> Test analyze_tbl function.
+        test_checksum -> Test checksum function.
 
     """
 
@@ -104,18 +104,17 @@ class UnitTest(unittest.TestCase):
 
         self.Server = Server()
 
-    def test_analyze_tbl(self):
+    def test_checksum(self):
 
-        """Function:  test_analyze_tbl
+        """Function:  test_checksum
 
-        Description:  Test analyze_tbl function.
+        Description:  Test checksum function.
 
         Arguments:
 
         """
 
-        self.assertTrue(mysql_libs.analyze_tbl(self.Server, "Db_name",
-                                               "Tbl_name"))
+        self.assertTrue(mysql_libs.checksum(self.Server, "Dbname", "Tblname"))
 
 
 if __name__ == "__main__":

@@ -46,7 +46,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        cmd_sql -> Stub holder for Server.cmd_sql method.
 
     """
 
@@ -70,16 +70,14 @@ class Server(object):
         self.pos = "file-position"
         self.name = "server-name"
 
-    def sql(self, res_set, cmd, var):
+    def cmd_sql(self, cmd):
 
-        """Method:  sql
+        """Method:  cmd_sql
 
-        Description:  Stub holder for Server.sql method.
+        Description:  Stub holder for Server.cmd_sql method.
 
         Arguments:
             (input) cmd -> Query command.
-            (input) res_set -> Result returning format.
-            (input) params -> Param set.
 
         """
 
@@ -98,7 +96,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_change_master_to -> Test change_master_to function.
+        test_change_master_to_non_gtid -> Test in gtid_mode off.
+        test_change_master_to_gtid -> Test in gtid_mode on.
 
     """
 
@@ -115,11 +114,27 @@ class UnitTest(unittest.TestCase):
         self.Master = Server()
         self.Slave = Server()
 
-    def test_change_master_to(self):
+    def test_change_master_to_non_gtid(self):
 
-        """Function:  test_change_master_to
+        """Function:  test_change_master_to_non_gtid
 
-        Description:  Test change_master_to function.
+        Description:  Test in gtid_mode off.
+
+        Arguments:
+
+        """
+
+        self.Master.gtid_mode = None
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.change_master_to(self.Master,
+                                                         self.Slave))
+
+    def test_change_master_to_gtid(self):
+
+        """Function:  test_change_master_to_gtid
+
+        Description:  Test in gtid_mode on.
 
         Arguments:
 

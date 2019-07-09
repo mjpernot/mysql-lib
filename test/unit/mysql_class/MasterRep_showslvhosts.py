@@ -82,11 +82,12 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_hosts.return_value = True
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.MasterRep(self.name, self.server_id,
+                                         self.sql_user, self.sql_pass,
+                                         self.machine,
+                                         defaults_file=self.defaults_file)
 
-        self.assertFalse(mysqlrep.show_slv_hosts())
+        self.assertTrue(mysqlrep.show_slv_hosts())
 
 
 if __name__ == "__main__":

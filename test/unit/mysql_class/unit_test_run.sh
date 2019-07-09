@@ -48,9 +48,12 @@ test/unit/mysql_class/Server_connect.py
 test/unit/mysql_class/Server_disconnect.py
 test/unit/mysql_class/Server_fetchlogs.py
 test/unit/mysql_class/Server_flushlogs.py
+test/unit/mysql_class/Server_getname.py
 test/unit/mysql_class/Server_vertsql.py
 test/unit/mysql_class/Server_updlogstats.py
 test/unit/mysql_class/SlaveRep_init.py
+test/unit/mysql_class/SlaveRep_fetchdotbl.py
+test/unit/mysql_class/SlaveRep_fetchigntbl.py
 test/unit/mysql_class/SlaveRep_updslvstatus.py
 test/unit/mysql_class/SlaveRep_geterrstat.py
 test/unit/mysql_class/SlaveRep_getloginfo.py
@@ -65,4 +68,5 @@ test/unit/mysql_class/SlaveRep_startslave.py
 test/unit/mysql_class/SlaveRep_stopslave.py
 test/unit/mysql_class/SlaveRep_updslvstate.py
 test/unit/mysql_class/SlaveRep_updslvtime.py
+test/unit/mysql_class/SlaveRep_updgtidpos.py
 

@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  analyze_tbl.py
+"""Program:  purge_bin_logs.py
 
-    Description:  Unit testing of analyze_tbl in mysql_libs.py.
+    Description:  Unit testing of purge_bin_logs in mysql_libs.py.
 
     Usage:
-        test/unit/mysql_libs/analyze_tbl.py
+        test/unit/mysql_libs/purge_bin_logs.py
 
     Arguments:
 
@@ -45,7 +45,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        cmd_sql -> Stub holder for mysql_class.Server.cmd_sql method.
 
     """
 
@@ -62,11 +62,11 @@ class Server(object):
 
         pass
 
-    def col_sql(self, cmd):
+    def cmd_sql(self, cmd):
 
-        """Method:  col_sql
+        """Method:  cmd_sql
 
-        Description:  Stub holder for Server.col_sql method.
+        Description:  Stub holder for mysql_class.Server.cmd_sql method.
 
         Arguments:
             (input) cmd -> Query command.
@@ -88,7 +88,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_analyze_tbl -> Test analyze_tbl function.
+        test_purge_bin_logs -> Test purge_bin_logs function.
 
     """
 
@@ -104,18 +104,18 @@ class UnitTest(unittest.TestCase):
 
         self.Server = Server()
 
-    def test_analyze_tbl(self):
+    def test_purge_bin_logs(self):
 
-        """Function:  test_analyze_tbl
+        """Function:  test_purge_bin_logs
 
-        Description:  Test analyze_tbl function.
+        Description:  Test purge_bin_logs function.
 
         Arguments:
 
         """
 
-        self.assertTrue(mysql_libs.analyze_tbl(self.Server, "Db_name",
-                                               "Tbl_name"))
+        self.assertFalse(mysql_libs.purge_bin_logs(self.Server, "TO",
+                                                   "Filename"))
 
 
 if __name__ == "__main__":
