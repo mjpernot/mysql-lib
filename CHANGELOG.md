@@ -50,7 +50,7 @@ Breaking Change
 - mysql_class.MasterRep.show_slv_hosts:  Modified to use mysql.connector library.
 - mysql_class.MasterRep.show_slv_hosts:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.MasterRep.\_\_init\_\_:  Modified to use mysql.connector library.
-- mysql_class.MasterRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to rep_conn() method.
+- mysql_class.MasterRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to MasterRep.connect() method.
 - mysql_class.Rep.get_serv_id:  Modified to use mysql.connector library.
 - mysql_class.Rep.get_serv_id:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.Server.upd_slv_rep_stat:  Modified to use mysql.connector library.
@@ -90,7 +90,7 @@ Breaking Change
 - mysql_libs.\_io_wait_chk:  Created private function for wait_until() to reduce factor complexity.
 - mysql_class.\_inner_compare:  Created private function for compare_sets() to reduce factor complexity.
 - mysql_class.SlaveRep.rep_conn:  Setups a connection to a replication server.
-- mysql_class.MasterRep.rep_conn:  Setups a connection to a replication server.
+- mysql_class.MasterRep.connect:  Setups a connection to a replication server.
 - mysql_class.Server.is_connected:  Checks to see if the connection is still active.
 - mysql_class.Server.reconnect:  Reconnects to database if connect is non-active.
 - mysql_class.Server.chg_db:  Change to another database.

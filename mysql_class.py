@@ -1243,7 +1243,7 @@ class MasterRep(Rep):
 
     Methods:
         __init__
-        rep_conn
+        connect
         show_slv_hosts
         get_log_info
         upd_mst_status
@@ -1281,9 +1281,9 @@ class MasterRep(Rep):
         self.ign_db = None
         self.exe_gtid = None
 
-    def rep_conn(self):
+    def connect(self):
 
-        """Method:  rep_conn
+        """Method:  connect
 
         Description:  Setups a connection to a replication server and updates
             the replication attributes.
