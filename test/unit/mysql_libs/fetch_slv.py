@@ -96,7 +96,6 @@ class UnitTest(unittest.TestCase):
         self.slv_list.append(self.Slave1)
         self.slv_list.append(self.Slave2)
 
-    @unittest.skip("Bug:  slv is not defined anywhere in the function")
     @mock.patch("mysql_libs.find_name")
     def test_slave_not_found(self, mock_find):
 
@@ -109,7 +108,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_find.return_value = None
-        err_msg = "Error:  Slave %s was not found in slave array." % ("Slave3")
+        err_msg = "Error:  No slave was found in the slave list."
 
         self.assertEqual(mysql_libs.fetch_slv(self.slv_list, slv_mv="Slave3"),
                          (None, True, err_msg))

@@ -4,12 +4,39 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
-## [4.0.0] - 2019-07-05
+## [4.0.0] - 2019-07-09
 Breaking Change
 
 - Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
 
+### Fixed:
+- mysql_libs.sync_delay:  Fixed print syntax command problem.
+- mysql_libs.fetch_slv:  Fixed print problem when no slave is found in the list.
+- mysql_libs.is_cfg_valid:  Fixed problem with mutable default arguments issue.
+- mysql_libs.find_name:  Fixed problem with mutable default arguments issue.
+- mysql_libs.fetch_slv:  Fixed problem with mutable default arguments issue.
+- mysql_libs.create_slv_array:  Fixed problem with mutable default arguments issue.
+- mysql_libs.chg_slv_state:  Fixed problem with mutable default arguments issue.
+
 ### Changed
+- mysql_class.Server.upd_srv_stat:  Removed indb_add_pool attribute update.
+- mysql_class.SlaveRep.upd_gtid_pos:  Removed setting purged_gtidset to none, not required.
+- mysql_libs.find_name:  Changed variable name for readability purposes.
+- mysql_libs.crt_srv_inst:  Changed variable name for readability purposes.
+- mysql_libs.chg_slv_state:  Changed variable name for readability purposes.
+- mysql_libs.switch_to_master:  Modified to use mysql.connector library.
+- mysql_libs.start_slave_until:  Modified to use mysql.connector library.
+- mysql_libs.select_wait_until:  Modified to use mysql.connector library.
+- mysql_libs.reset_slave:  Modified to use mysql.connector library.
+- mysql_libs.reset_master:  Modified to use mysql.connector library.
+- mysql_libs.purge_bin_logs:  Modified to use mysql.connector library.
+- mysql_libs.optimize_tbl:  Modified to use mysql.connector library.
+- mysql_libs.fetch_tbl_dict:  Modified to use mysql.connector library.
+- mysql_libs.fetch_logs:  Modified to use mysql.connector library.
+- mysql_libs.fetch_db_dict:  Modified to use mysql.connector library.
+- mysql_libs.check_tbl:  Modified to use mysql.connector library.
+- mysql_libs.checksum:  Modified to use mysql.connector library.
+- mysql_libs.change_master_to:  Modified to use mysql.connector library.
 - mysql_libs.analyze_tbl:  Modified to use mysql.connector library.
 - mysql_libs.is_rep_delay:  Replaced code with calls to \_io_rep_chk and \_sql_rep_chk to reduce factor complexity.
 - mysql_libs.sync_delay:  Replaced code with call \_io_delay_chk to reduce factor complexity.
@@ -18,12 +45,12 @@ Breaking Change
 - mysql_class.compare_sets:  Changed argument call to \_inner_compare to include uuid and rngs objects.
 - mysql_class.SlaveRep.upd_slv_status:  Modified to use mysql.connector library.
 - mysql_class.SlaveRep.\_\_init\_\_:  Modified to use mysql.connector library.
-- mysql_class.SlaveRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to rep_conn() method.
+- mysql_class.SlaveRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to SlaveRep.connect() method.
 - mysql_class.MasterRep.upd_mst_status:  Replaced log stats update with call to upd_log_stats method.
 - mysql_class.MasterRep.show_slv_hosts:  Modified to use mysql.connector library.
 - mysql_class.MasterRep.show_slv_hosts:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.MasterRep.\_\_init\_\_:  Modified to use mysql.connector library.
-- mysql_class.MasterRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to rep_conn() method.
+- mysql_class.MasterRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to MasterRep.connect() method.
 - mysql_class.Rep.get_serv_id:  Modified to use mysql.connector library.
 - mysql_class.Rep.get_serv_id:  Removed res_set from the function argument list as it is no longer required.
 - mysql_class.Server.upd_slv_rep_stat:  Modified to use mysql.connector library.
@@ -55,14 +82,15 @@ Breaking Change
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 
 ### Added
+- mysql_class.Server.get_name:  Return the server's name.  Replacing the get_name methods in MasterRep and SlaveRep classes.
 - mysql_libs.\_sql_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
 - mysql_libs.\_io_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
 - mysql_libs.\_io_delay_chk:  Create private function for sync_delay() to reduce factor complexity.
 - mysql_libs.\_sql_wait_chk:  Create private function for wait_until() to reduce factor complexity.
 - mysql_libs.\_io_wait_chk:  Created private function for wait_until() to reduce factor complexity.
 - mysql_class.\_inner_compare:  Created private function for compare_sets() to reduce factor complexity.
-- mysql_class.SlaveRep.rep_conn:  Setups a connection to a replication server.
-- mysql_class.MasterRep.rep_conn:  Setups a connection to a replication server.
+- mysql_class.SlaveRep.connect:  Setups a connection to a replication server.
+- mysql_class.MasterRep.connect:  Setups a connection to a replication server.
 - mysql_class.Server.is_connected:  Checks to see if the connection is still active.
 - mysql_class.Server.reconnect:  Reconnects to database if connect is non-active.
 - mysql_class.Server.chg_db:  Change to another database.
@@ -71,6 +99,9 @@ Breaking Change
 - mysql_class.Server.vert_sql:  Method to run sql code with vertical definitions and return in dictionary format.
 
 ### Removed
+- mysql_class.Server.\_\_init\_\_:  Removed reference to innodb_additional_mem_pool_size.  Deprecated in MySQL 5.6.3 and removed in MySQL 5.7.4.
+- mysql_class.SlaveRep.get_name:  Replaced by the mysql_class.Server.get_name method.
+- mysql_class.MasterRep.get_name:  Replaced by the mysql_class.Server.get_name method.
 - mysql_class.Server.Row:  Removed the class it's no longer required.  The "mysql.connector" module has it's own Row iterator.
 - mysql_class.compare_sets.inner_compare:  Remove inner function, was replaced by \_inner_compare.
 

@@ -140,7 +140,6 @@ class UnitTest(unittest.TestCase):
 
         pass
 
-    @unittest.skip("Bug:  Print command is failing to convert arguments")
     @mock.patch("mysql_libs.wait_until")
     @mock.patch("mysql_libs.start_slave_until")
     @mock.patch("mysql_libs.is_rep_delay")
@@ -185,7 +184,6 @@ class UnitTest(unittest.TestCase):
         with gen_libs.no_std_out():
             self.assertFalse(mysql_libs.sync_delay(master, slave, "IO"))
 
-    @unittest.skip("Bug:  Print command is failing to convert arguments")
     @mock.patch("mysql_libs.wait_until")
     @mock.patch("mysql_libs.start_slave_until")
     @mock.patch("mysql_libs.is_rep_delay")
