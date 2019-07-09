@@ -4,6 +4,108 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [4.0.0] - 2019-07-09
+Breaking Change
+
+- Replaced the "MySQLdb" imported module with the "mysql.connector" module as the "MySQLdb" is no longer supported.
+
+### Fixed:
+- mysql_libs.sync_delay:  Fixed print syntax command problem.
+- mysql_libs.fetch_slv:  Fixed print problem when no slave is found in the list.
+- mysql_libs.is_cfg_valid:  Fixed problem with mutable default arguments issue.
+- mysql_libs.find_name:  Fixed problem with mutable default arguments issue.
+- mysql_libs.fetch_slv:  Fixed problem with mutable default arguments issue.
+- mysql_libs.create_slv_array:  Fixed problem with mutable default arguments issue.
+- mysql_libs.chg_slv_state:  Fixed problem with mutable default arguments issue.
+
+### Changed
+- mysql_class.Server.upd_srv_stat:  Removed indb_add_pool attribute update.
+- mysql_class.SlaveRep.upd_gtid_pos:  Removed setting purged_gtidset to none, not required.
+- mysql_libs.find_name:  Changed variable name for readability purposes.
+- mysql_libs.crt_srv_inst:  Changed variable name for readability purposes.
+- mysql_libs.chg_slv_state:  Changed variable name for readability purposes.
+- mysql_libs.switch_to_master:  Modified to use mysql.connector library.
+- mysql_libs.start_slave_until:  Modified to use mysql.connector library.
+- mysql_libs.select_wait_until:  Modified to use mysql.connector library.
+- mysql_libs.reset_slave:  Modified to use mysql.connector library.
+- mysql_libs.reset_master:  Modified to use mysql.connector library.
+- mysql_libs.purge_bin_logs:  Modified to use mysql.connector library.
+- mysql_libs.optimize_tbl:  Modified to use mysql.connector library.
+- mysql_libs.fetch_tbl_dict:  Modified to use mysql.connector library.
+- mysql_libs.fetch_logs:  Modified to use mysql.connector library.
+- mysql_libs.fetch_db_dict:  Modified to use mysql.connector library.
+- mysql_libs.check_tbl:  Modified to use mysql.connector library.
+- mysql_libs.checksum:  Modified to use mysql.connector library.
+- mysql_libs.change_master_to:  Modified to use mysql.connector library.
+- mysql_libs.analyze_tbl:  Modified to use mysql.connector library.
+- mysql_libs.is_rep_delay:  Replaced code with calls to \_io_rep_chk and \_sql_rep_chk to reduce factor complexity.
+- mysql_libs.sync_delay:  Replaced code with call \_io_delay_chk to reduce factor complexity.
+- mysql_libs.wait_until:  Replaced code with calls to \_io_wait_chk and \_sql_wait_chk to reduce factor complexity.
+- mysql_class.SlaveRep.upd_gtid_pos:  Modified to use mysql.connector library.
+- mysql_class.compare_sets:  Changed argument call to \_inner_compare to include uuid and rngs objects.
+- mysql_class.SlaveRep.upd_slv_status:  Modified to use mysql.connector library.
+- mysql_class.SlaveRep.\_\_init\_\_:  Modified to use mysql.connector library.
+- mysql_class.SlaveRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to SlaveRep.connect() method.
+- mysql_class.MasterRep.upd_mst_status:  Replaced log stats update with call to upd_log_stats method.
+- mysql_class.MasterRep.show_slv_hosts:  Modified to use mysql.connector library.
+- mysql_class.MasterRep.show_slv_hosts:  Removed res_set from the function argument list as it is no longer required.
+- mysql_class.MasterRep.\_\_init\_\_:  Modified to use mysql.connector library.
+- mysql_class.MasterRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to MasterRep.connect() method.
+- mysql_class.Rep.get_serv_id:  Modified to use mysql.connector library.
+- mysql_class.Rep.get_serv_id:  Removed res_set from the function argument list as it is no longer required.
+- mysql_class.Server.upd_slv_rep_stat:  Modified to use mysql.connector library.
+- mysql_class.Server.upd_mst_rep_stat:  Modified to use mysql.connector library.
+- mysql_class.Server.upd_srv_stat:  Modified to use mysql.connector library.
+- mysql_class.Server.upd_srv_perf:  Modified to use mysql.connector library.
+- mysql_class.Server.set_srv_gtid:  Modified to use mysql.connector library.
+- mysql_class.Server.set_srv_binlog_crc:  Modified to use mysql.connector library.
+- mysql_class.Server.set_srv_binlog_crc:  Removed setting crc attr to none as its been done in \_\_init\_\_.
+- mysql_class.slave_stop:  Modified to use mysql.connector library.
+- mysql_class.slave_start:  Modified to use mysql.connector library.
+- mysql_class.show_slave_stat:  Modified to use mysql.connector library.
+- mysql_class.show_slave_stat:  Removed res_set from the function argument list as it is no longer required.
+- mysql_class.show_slave_hosts:  Modified to use mysql.connector library.
+- mysql_class.show_slave_hosts:  Removed res_set from the function argument list as it is no longer required.
+- mysql_class.show_master_stat:  Modified to use mysql.connector library.
+- mysql_class.show_master_stat:  Removed res_set from the function argument list as it is no longer required.
+- mysql_class.flush_logs:  Modified to use mysql.connector library.
+- mysql_class.fetch_global_var:  Modified to use mysql.connector library.
+- mysql_class.fetch_global_var:  Removed res_set from the function argument list as it is no longer required.
+- mysql_class.fetch_sys_var:  Modified to use mysql.connector library.
+- mysql_class.fetch_sys_var: Removed res_set from the function argument list as it is no longer required.
+- mysql_class.Server.sql:  Modified to use mysql.connector library.
+- mysql_class.Server.sql:  Removed the check to see if the connection is active.
+- mysql_class.Server.sql:  Removed the database parameter from the function argument list as it is no longer required.
+- mysql_class.Server.disconnect:  Modified to use mysql.connector library.
+- mysql_class.Server.disconnect:  Removed returning the connection handler to the calling function.
+- mysql_class.Server.connect:  Modified to use mysql.connector library.
+- mysql_class.Server.connect:  Moved change database to within the connection string.
+
+### Added
+- mysql_class.Server.get_name:  Return the server's name.  Replacing the get_name methods in MasterRep and SlaveRep classes.
+- mysql_libs.\_sql_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
+- mysql_libs.\_io_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
+- mysql_libs.\_io_delay_chk:  Create private function for sync_delay() to reduce factor complexity.
+- mysql_libs.\_sql_wait_chk:  Create private function for wait_until() to reduce factor complexity.
+- mysql_libs.\_io_wait_chk:  Created private function for wait_until() to reduce factor complexity.
+- mysql_class.\_inner_compare:  Created private function for compare_sets() to reduce factor complexity.
+- mysql_class.SlaveRep.connect:  Setups a connection to a replication server.
+- mysql_class.MasterRep.connect:  Setups a connection to a replication server.
+- mysql_class.Server.is_connected:  Checks to see if the connection is still active.
+- mysql_class.Server.reconnect:  Reconnects to database if connect is non-active.
+- mysql_class.Server.chg_db:  Change to another database.
+- mysql_class.Server.cmd_sql:  Method to run command sql.
+- mysql_class.Server.col_sql:  Method to run sql code with column definitions and return list of dictionaries.
+- mysql_class.Server.vert_sql:  Method to run sql code with vertical definitions and return in dictionary format.
+
+### Removed
+- mysql_class.Server.\_\_init\_\_:  Removed reference to innodb_additional_mem_pool_size.  Deprecated in MySQL 5.6.3 and removed in MySQL 5.7.4.
+- mysql_class.SlaveRep.get_name:  Replaced by the mysql_class.Server.get_name method.
+- mysql_class.MasterRep.get_name:  Replaced by the mysql_class.Server.get_name method.
+- mysql_class.Server.Row:  Removed the class it's no longer required.  The "mysql.connector" module has it's own Row iterator.
+- mysql_class.compare_sets.inner_compare:  Remove inner function, was replaced by \_inner_compare.
+
+
 ## [3.2.1] - 2018-11-02
 ### Changed
 - Documentation updates.
@@ -29,6 +131,8 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_libs.Crt_Cmd:  Function was previously deprecated.
 - mysql_libs.Create_Instance:  Function was previously deprecated.
 - mysql_libs.Fetch_Tbl_Dict:  Function was previously deprecated.
+- mysql_libs.Crt_Srv_Inst:  Function was previously deprecated.
+- mysql_libs.Create_Slv_Array:  Function was previously deprecated.
 - mysql_libs.Crt_Srv_Inst:  Function was previously deprecated.
 - mysql_libs.Create_Slv_Array:  Function was previously deprecated.
 - mysql_libs.Change_Master_To:  Function was previously deprecated.
@@ -191,7 +295,7 @@ Breaking Change
 - commands.py:  Convert program to use local libraries from ./lib directory.
 - server.py:  Change single quotes to double quotes.
 - server.py:  Convert program to use local libraries from ./lib directory.
-- server.GTIDSet.__init__:  Replace gen_libs.normalize with gen_libs.Normalize.
+- server.GTIDSet.\_\_init\_\_:  Replace gen_libs.normalize with gen_libs.Normalize.
 - server.GTIDSet.union:  Replace gen_libs.normalize with gen_libs.Normalize.
 
 ### Removed
@@ -208,7 +312,7 @@ Breaking Change
 ### Changed
 - commands.Fetch_Sys_Var:  Added ability to set level at which the command will run at (e.g. Global | Session).
 - server.py:  Deprecate retrieved_gtid and exe_gtid attributes as they are being replaced by retrieved_gtidset and exe_gtidset attributes.
-- server.Slave_Rep.__init__:  To call upd_gtid_pos method.
+- server.Slave_Rep.\_\_init\_\_:  To call upd_gtid_pos method.
 - server.Slave_Rep.upd_slv_status:  To call upd_gtid_pos method.
 
 ### Deprecated
@@ -236,10 +340,10 @@ Breaking Change
 - commands.Chg_Slv_State:  Added error exception handling if no option passed.
 - server.Server.upd_log_stats:  Changed to use Show_Master_Stat function.
 - server.Rep.get_serv_id:  Changed to use Fetch_Sys_Var function.
-- server.Master_Rep.__init__:  Changed to use Show_Master_Stat function.
+- server.Master_Rep.\_\_init\_\_:  Changed to use Show_Master_Stat function.
 - server.Master_Rep.upd_mst_status:  Changed to use Show_Master_Stat function.
 - server.Master_Rep.show_slv_hosts:  Changed to use Show_Slave_Hosts function.
-- server.Slave_Rep.__init__:  Changed to use Show_Slave_Stat function and changed to use Fetch_Global_Var function.
+- server.Slave_Rep.\_\_init\_\_:  Changed to use Show_Slave_Stat function and changed to use Fetch_Global_Var function.
 - server.Slave_Rep.stop_slave:  Changed to use Stop_Slave function.
 - server.Slave_Rep.start_slave:  Changed to use Start_Slave function.
 - server.Slave_Rep.upd_slv_state:  Changed to use Show_Slave_Stat function.
@@ -286,9 +390,9 @@ Breaking Change
 ### Changed
 - commands.py:  MySQL 5.6 (GTID enabled) when using replication, will require the use of the auto position option within the change master command.
 - commands.Change_Master_To:  To determine which options to use depending on GTID mode state.
-- server.Master_Rep.__init__:  Added attribute for the Executed GTID Set information, also updated the GTID mode attribute from the Super class.
+- server.Master_Rep.\_\_init\_\_:  Added attribute for the Executed GTID Set information, also updated the GTID mode attribute from the Super class.
 - server.Master_Rep.upd_mst_status:  Update the Executed GTID Set attribute.
-- server.Slave_Rep.__init__:  Added attributes for MySQL 5.6.
+- server.Slave_Rep.\_\_init\_\_:  Added attributes for MySQL 5.6.
 - server.Slave_Rep.upd_slv_status:  Update the attributes for MySQL 5.6.
 - server.Slave_Rep.get_err_stat:  Added IO and SQL error times to output.
 
@@ -299,7 +403,7 @@ Breaking Change
 - server.Server.set_srv_binlog_crc method.
 
 ### Changed
-- server.Server.__init__:  Added attribute for the Servers binary log checksum mode.
+- server.Server.\_\_init\_\_:  Added attribute for the Servers binary log checksum mode.
 
 
 ## [1.15.0] - 2016-10-19
@@ -308,15 +412,15 @@ Breaking Change
 - server.Server.set_srv_gtid method.
 
 ### Changed
-- server.Server.__init__:  Added attribute for the Servers GTID mode.
+- server.Server.\_\_init\_\_:  Added attribute for the Servers GTID mode.
 
 
 ## [1.14.0] - 2016-10-12
 ### Changed
 - server.py:  Below changes made due to changes made in v1.13.0.
-- server.Rep.__init__:  Added **kwargs to argument list.  Added **kwargs to super class call.
-- server.Master_Rep.__init__:  Added **kwargs to argument list.  Added **kwargs to super class call.
-- server.Slave_Rep.__init__:  Added **kwargs to argument list.  Added **kwargs to super class call.
+- server.Rep.\_\_init\_\_:  Added **kwargs to argument list.  Added **kwargs to super class call.
+- server.Master_Rep.\_\_init\_\_:  Added **kwargs to argument list.  Added **kwargs to super class call.
+- server.Slave_Rep.\_\_init\_\_:  Added **kwargs to argument list.  Added **kwargs to super class call.
 
 
 ## [1.13.0] - 2016-09-27
@@ -326,7 +430,7 @@ Breaking Change
 - commands.Create_Slv_Array:  Changed port to an integer.  This is to allow the use of different ports to MySQL database other than port 3306.
 - server.py:  MySQL 5.6 now gives warning if password is passed on the command line.  To suppress this warning, will require the use of the --defaults-extra-file option.
 - commands.py:  MySQL 5.6 now gives warning if password is passed on the command line.  To suppress this warning, will require the use of the --defaults-extra-file option.
-- server.Server.__init__:  Added **kwargs to argument list.  Set extra_def_file for the defaults-extra-file option.
+- server.Server.\_\_init\_\_:  Added **kwargs to argument list.  Set extra_def_file for the defaults-extra-file option.
 
 ### Deprecated
 - commands.Create_Cfg_Array function.
@@ -347,7 +451,7 @@ Breaking Change
 - server.Server.upd_srv_perf method.
 
 ### Changed
-- server.Server.__init__:  Added attributes for the Servers performance statistics settings.
+- server.Server.\_\_init\_\_:  Added attributes for the Servers performance statistics settings.
 
 
 ## [1.10.0] - 2016-04-15
@@ -358,7 +462,7 @@ Breaking Change
 - server.Server.upd_srv_stat method.
 
 ### Changed
-- server.Server.__init__:  Added attributes for the Servers memory and other status configuration settings.
+- server.Server.\_\_init\_\_:  Added attributes for the Servers memory and other status configuration settings.
 
 ### Fixed
 - commands.Fetch_Global_Var:  Corrected error in order of arguments.
@@ -368,7 +472,7 @@ Breaking Change
 ## [1.9.0] - 2016-03-16
 ### Changed
 - server.Server.connect:  Added exception handler to deal with a down or non-reponding server.
-- server.Slave_Rep.__init__:  Added 'if' to prevent attributes being updated if there is no connection to the database.
+- server.Slave_Rep.\_\_init\_\_:  Added 'if' to prevent attributes being updated if there is no connection to the database.
 
 
 ## [1.8.0] - 2015-12-29
@@ -391,7 +495,7 @@ Breaking Change
 - server.Server.fetch_slv_rep_cfg method.
 
 ### Changed
-- server.Server.__init__:  Added 10 new attributes.
+- server.Server.\_\_init\_\_:  Added 10 new attributes.
 
 ### Deprecated
 - commands.stop_slave function.
@@ -430,7 +534,7 @@ Breaking Change
 
 ### Changed
 - commands.py:  Updated documentation on library dependencies versions.
-- server.Server.__init__:  Added 4 new attributes.
+- server.Server.\_\_init\_\_:  Added 4 new attributes.
 
 ### Deprecated
 - commands.flush_logs function.
@@ -471,7 +575,7 @@ Breaking Change
 
 ### Changed
 - commands.Create_Slv_Array:  Added classes server and machine.
-- server.Slave_Rep.__init__:  Added attr:  read_only.
+- server.Slave_Rep.\_\_init\_\_:  Added attr:  read_only.
 - server.Slave_Rep.upd_slv_status:  Added attr: read_only.
 
 ### Fixed
@@ -491,7 +595,7 @@ Breaking Change
 - server.Slave_Rep.get_others method.
 
 ### Changed
-- server.Slave_Rep.__init__:  Added 3 new attributes.
+- server.Slave_Rep.\_\_init\_\_:  Added 3 new attributes.
 - server.Slave_Rep.upd_slv_status:  Added 3 new attributes.
 - server.py:  Modified documentation as it was missing some class and library dependencies.
 
@@ -508,5 +612,3 @@ Breaking Change
 ## [1.0.0] - 2015-11-06
 ### Added
 - commands.py:  Initial program creation.
-- server.py:  Initial program creation.
-
