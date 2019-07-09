@@ -94,7 +94,6 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(mysqlrep.is_slv_running())
 
-    @unittest.skip("Bug:  Fails test when 2 of 3 cases are True.")
     def test_slv_two_true(self):
 
         """Function:  test_slv_two_true
@@ -113,7 +112,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.slv_io = "Yes"
         mysqlrep.run = "No"
 
-        self.assertTrue(mysqlrep.is_slv_running())
+        self.assertFalse(mysqlrep.is_slv_running())
 
     def test_slv_run_true(self):
 
