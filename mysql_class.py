@@ -734,7 +734,6 @@ class Server(object):
 
         self.buf_size = int(data["key_buffer_size"])
         self.indb_buf = int(data["innodb_buffer_pool_size"])
-        self.indb_add_pool = int(data["innodb_additional_mem_pool_size"])
         self.indb_log_buf = int(data["innodb_log_buffer_size"])
         self.qry_cache = int(data["query_cache_size"])
         self.read_buf = int(data["read_buffer_size"])
@@ -756,8 +755,8 @@ class Server(object):
         self.days_up = int(float(self.uptime) / 3600 / 24)
 
         # Base memory for database (in bytes).
-        self.base_mem = self.buf_size + self.indb_buf + self.indb_add_pool \
-            + self.indb_log_buf + self.qry_cache
+        self.base_mem = self.buf_size + self.indb_buf + self.indb_log_buf \
+            + self.qry_cache
 
         # Memory per thread connection (in bytes).
         self.thr_mem = self.read_buf + self.read_rnd_buf + self.sort_buf \

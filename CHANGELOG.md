@@ -19,6 +19,7 @@ Breaking Change
 - mysql_libs.chg_slv_state:  Fixed problem with mutable default arguments issue.
 
 ### Changed
+- mysql_class.Server.upd_srv_stat:  Removed indb_add_pool attribute update.
 - mysql_class.SlaveRep.upd_gtid_pos:  Removed setting purged_gtidset to none, not required.
 - mysql_libs.find_name:  Changed variable name for readability purposes.
 - mysql_libs.crt_srv_inst:  Changed variable name for readability purposes.
