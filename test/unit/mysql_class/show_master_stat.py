@@ -62,15 +62,14 @@ class Server(object):
 
         pass
 
-    def sql(self, cmd, res_set):
+    def col_sql(self, cmd):
 
-        """Method:  sql
+        """Method:  col_sql
 
-        Description:  Stub holder for Server.sql method.
+        Description:  Stub holder for Server.col_sql method.
 
         Arguments:
             (input) cmd -> Stub holder for argument.
-            (input) res_set -> row|all - Single row or all rows returned.
 
         """
 

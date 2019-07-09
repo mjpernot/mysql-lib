@@ -18,7 +18,6 @@
         Position
         GTIDSet
         Server
-            Row
             Rep
                 MasterRep
                 SlaveRep
@@ -37,148 +36,136 @@ import collections
 # Local
 import lib.gen_libs as gen_libs
 import lib.machine as machine
-import lib.errors as errors
 import version
 
-# Version
 __version__ = version.__version__
 
 
-def fetch_global_var(SERVER, gbl_var, res_set="all"):
+def fetch_global_var(server, var):
 
     """Function:  fetch_global_var
 
     Description:  Returns the value for a global variable.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) gbl_var -> Global variable name.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Return value of global variable.
+        (input) server -> Server instance.
+        (input) var -> Global variable name.
+        (output) Variable returned in dictionary format (e.g. {name: value}).
 
     """
 
-    sql_cmd = "show global status like %s"
+    cmd = "show global status like %s"
 
-    return SERVER.sql(sql_cmd, res_set, gbl_var)
+    return server.vert_sql(cmd, (var,))
 
 
-def fetch_sys_var(SERVER, var, res_set="all", **kwargs):
+def fetch_sys_var(server, var, **kwargs):
 
     """Function:  fetch_sys_var
 
-    Description:  Returns the value for a system variable.  Have the option to
-        run at a specified level (Global | Session).  If not selected, will
-        run at the default level of Session.
+    Description:  Returns the value for a variable.  Can set the level at
+        which to return the variable from:  global|session.
+        NOTE:  Will use 'session' level by default.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) var -> System variable name.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
+        (input) server -> Server instance.
+        (input) var -> Variable name.
         (Input) **kwargs:
-            level - Global|Session - level at which command will run.
-        (output) Return value of system variable.
+            level - global|session - level at which command will run.
+        (output) Variable returned in dictionary format (e.g. {name: value}).
 
     """
 
-    qry = "show " + kwargs.get("level", "") + " variables like %s"
+    cmd = "show " + kwargs.get("level", "session") + " variables like %s"
 
-    return SERVER.sql(qry, res_set, var)
+    return server.vert_sql(cmd, (var,))
 
 
-def flush_logs(SERVER):
+def flush_logs(server):
 
     """Function:  flush_logs
 
-    Description:  Run the flush logs command.
+    Description:  Run the MySQL 'flush logs' command.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
 
     """
 
-    SERVER.sql("flush logs")
+    server.cmd_sql("flush logs")
 
 
-def show_master_stat(SERVER, res_set="all"):
+def show_master_stat(server):
 
     """Function:  show_master_stat
 
-    Description:  Return the output of the show master status command.
+    Description:  Return results of the 'show master status' command.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Dictionary array of show master status command.
+        (input) server -> Server instance.
+        (output) Results of command in dictionary format.
 
     """
 
-    return SERVER.sql("show master status", res_set)
+    return server.col_sql("show master status")
 
 
-def show_slave_hosts(SERVER, res_set="all"):
+def show_slave_hosts(server):
 
     """Function:  show_slave_hosts
 
-    Description:  Return the output of the show slave hosts command.
+    Description:  Return the output of the 'show slave hosts' command.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Return slave host IDs.
+        (input) server -> Server instance.
+        (output) Results of command in dictionary format.
 
     """
 
-    return SERVER.sql("show slave hosts", res_set)
+    return server.col_sql("show slave hosts")
 
 
-def show_slave_stat(SERVER, res_set="all"):
+def show_slave_stat(server):
 
     """Function:  show_slave_stat
 
-    Description:  Return the output of the show slave status command.
+    Description:  Return the output of the 'show slave status' command.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Dictionary array of show slave status command.
+        (input) server -> Server instance.
+        (output) Results of command in dictionary format.
 
     """
 
-    return SERVER.sql("show slave status", res_set)
+    return server.col_sql("show slave status")
 
 
-def slave_start(SERVER):
+def slave_start(server):
 
     """Function:  slave_start
 
-    Description:  Starts the slave thread in the database.
+    Description:  Starts the slave thread.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
 
     """
 
-    SERVER.sql("start slave")
+    server.cmd_sql("start slave")
 
 
-def slave_stop(SERVER):
+def slave_stop(server):
 
     """Function:  slave_stop
 
-    Description:  Stops the slave thread in the database.
+    Description:  Stops the slave thread.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
 
     """
 
-    SERVER.sql("stop slave")
+    server.cmd_sql("stop slave")
 
 
 class Position(collections.namedtuple("Position", "file, pos")):
@@ -191,7 +178,6 @@ class Position(collections.namedtuple("Position", "file, pos")):
     Super-Class:  collections.namedtuple
 
     Sub-Classes:
-        None
 
     Methods:
         __cmp__
@@ -241,36 +227,40 @@ def compare_sets(lhs, rhs):
         if lcheck and rcheck:
             return lcheck, rcheck
 
-        def inner_compare(gtid_set):
-
-            """Method:  inner_compare
-
-            Description:  Checks to see if the UUID is in the GTID Set passed
-                to the method.
-
-            Arguments:
-                (output) -> True | False on whether UUID was detected.
-
-            """
-
-            # UUID not in lhs ==> right hand side has more
-            if uuid not in gtid_set.gtids:
-                return True
-
-            else:
-                for rng1, rng2 in zip(rngs, gtid_set.gtids[uuid]):
-                    if rng1 != rng2:
-                        return True
-
-            return False
-
-        if inner_compare(lhs):
+        if _inner_compare(lhs, uuid, rngs):
             rcheck = True
 
-        if inner_compare(rhs):
+        if _inner_compare(rhs, uuid, rngs):
             lcheck = True
 
     return lcheck, rcheck
+
+
+def _inner_compare(gtid_set, uuid, rngs):
+
+    """Method:  inner_compare
+
+    Description:  Checks to see if the UUID is in the GTID Set passed
+        to the method.
+
+    Arguments:
+        (input) gtid_set -> GTIDSet instance.
+        (input) uuid -> Universal Unqiue Identifier.
+        (input) rngs -> Set of ranges.
+        (output) -> True|False on whether UUID was detected.
+
+    """
+
+    # UUID not in lhs ==> right hand side has more
+    if uuid not in gtid_set.gtids:
+        return True
+
+    else:
+        for rng1, rng2 in zip(rngs, gtid_set.gtids[uuid]):
+            if rng1 != rng2:
+                return True
+
+    return False
 
 
 class GTIDSet(object):
@@ -286,7 +276,6 @@ class GTIDSet(object):
     Super-Class:  object
 
     Sub-Classes:
-        None
 
     Methods:
         __init__
@@ -368,8 +357,8 @@ class GTIDSet(object):
             the other.  The update of the GTID set is done in-place, so if you
             want to compute the union of two sets 'lhs' and 'rhs' you have to
             do something like:
-                result = copy.deepcopy(lhs)
-                result.union(rhs).
+                data = copy.deepcopy(lhs)
+                data.union(rhs).
 
         Arguments:
             (input) other -> Second GTID set.
@@ -487,10 +476,10 @@ class GTIDSet(object):
 
         """
 
-        result = copy.deepcopy(self)
-        result.union(other)
+        data = copy.deepcopy(self)
+        data.union(other)
 
-        return result
+        return data
 
 
 class Server(object):
@@ -505,7 +494,7 @@ class Server(object):
     Super-Class:  object
 
     Sub-Classes:
-        Row
+        Rep
 
     Methods:
         __init__
@@ -522,117 +511,15 @@ class Server(object):
         connect
         disconnect
         sql
+        cmd_sql
+        col_sql
+        vert_sql
+        is_connected
+        reconnect
+        chg_db
+        get_name
 
     """
-
-    class Row(object):
-
-        """Class:  Row
-
-        Description:  A row (iterator) is returned when executing a SQL
-            statement.  For statements that return a single row, the object
-            will treat it as a row as well.
-
-        Super-Class:  object
-
-        Sub-Classes:
-            None
-
-        Methods:
-            __init__
-            __iter__
-            next
-            __getitem__
-            __str__
-
-        """
-
-        def __init__(self, cursor):
-
-            """Method:  __init__
-
-            Description:  Initialization of an instance of the Row class.
-
-            Arguments:
-                (input) cursor -> Cursor handler passed from execute().
-
-            """
-
-            self.cursor = cursor
-            self.row = self.cursor.fetchone()
-
-        def __iter__(self):
-
-            """Method:  __iter__
-
-            Description:  Iterator for the returning result set.
-                Executed during a loop (e.g. for loop).
-
-            Arguments:
-                (output) Returns the instance handler.
-
-            """
-
-            return self
-
-        def next(self):
-
-            """Method:  next
-
-            Description:  Gets the next row or stops the iteration.
-                Called directly using server.Row.next(self) command.
-
-            Arguments:
-                (output) Returns the row.
-
-            """
-
-            row = self.row
-
-            if row is None:
-                raise StopIteration
-
-            else:
-                self.row = self.cursor.fetchone()
-                return row
-
-        def __getitem__(self, key):
-
-            """Method:  __getitem__
-
-            Description:  Returns the value to a dictionary key.
-                Is executed when an instance of a class is referenced as
-                an array (e.g. x[i] and x is a class).
-
-            Arguments:
-                (input) key -> Key to the dictionary tuple.
-                (output) Returns the value of the key in the dictionary.
-
-            """
-
-            if self.row is not None:
-                return self.row[key]
-
-            else:
-                raise errors.EmptyRowError
-
-        def __str__(self):
-
-            """Method:  __str__
-
-            Description:  Converts the value in the row to a string.
-                Executed when the str() function is called.
-
-            Arguments:
-                (output) Returns string representation of the values.
-
-            """
-
-            if len(self.row) == 1:
-                return str(self.row.values()[0])
-
-            else:
-                raise errors.EmptyRowError
 
     def __init__(self, name, server_id, sql_user, sql_pass, machine,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
@@ -695,7 +582,6 @@ class Server(object):
         # Memory & status configuration
         self.buf_size = None
         self.indb_buf = None
-        self.indb_add_pool = None
         self.indb_log_buf = None
         self.qry_cache = None
         self.read_buf = None
@@ -755,35 +641,29 @@ class Server(object):
         Description:  Set the Server's Binlog checksum attribute.
 
         Arguments:
-            None
 
         """
 
-        x = fetch_sys_var(self, "binlog_checksum")
+        var = "binlog_checksum"
+        data = fetch_sys_var(self, var)
 
-        # If NULL then server does not support Checksum in binary log.
-        if x:
-            self.crc = x[0]["Value"]
-
-        else:
-            self.crc = None
+        if data:
+            self.crc = data[var]
 
     def set_srv_gtid(self):
-        # 20161019 - Added method
 
         """Method:  set_srv_gtid
 
         Description:  Set the Server's GTID mode attribute.
 
         Arguments:
-            None
 
         """
 
-        x = fetch_sys_var(self, "gtid_mode")
+        var = "gtid_mode"
+        data = fetch_sys_var(self, var)
 
-        # If "OFF" or NULL then server is not GTID enabled.
-        if x and x[0]["Value"] == "ON":
+        if data and data[var] == "ON":
             self.gtid_mode = True
 
         else:
@@ -796,14 +676,12 @@ class Server(object):
         Description:  Updates the Server's performance attributes.
 
         Arguments:
-            None
 
         """
 
         data = {}
 
-        # Loop on data and convert from tuple to dictionary.
-        for x in self.sql("show status", "all"):
+        for x in self.col_sql("show status"):
             data.update({x["Variable_name"]: x["Value"]})
 
         self.indb_buf_free = int(data["Innodb_buffer_pool_pages_free"])
@@ -846,42 +724,39 @@ class Server(object):
         Description:  Updates the Server's status attributes.
 
         Arguments:
-            None
 
         """
 
-        results = {}
+        data = {}
 
-        # Loop on data and convert from tuple to dictionary.
-        for x in self.sql("show global variables", "all"):
-            results.update({x["Variable_name"]: x["Value"]})
+        for x in self.col_sql("show global variables"):
+            data.update({x["Variable_name"]: x["Value"]})
 
-        self.buf_size = int(results["key_buffer_size"])
-        self.indb_buf = int(results["innodb_buffer_pool_size"])
-        self.indb_add_pool = int(results["innodb_additional_mem_pool_size"])
-        self.indb_log_buf = int(results["innodb_log_buffer_size"])
-        self.qry_cache = int(results["query_cache_size"])
-        self.read_buf = int(results["read_buffer_size"])
-        self.read_rnd_buf = int(results["read_rnd_buffer_size"])
-        self.sort_buf = int(results["sort_buffer_size"])
-        self.join_buf = int(results["join_buffer_size"])
-        self.thrd_stack = int(results["thread_stack"])
-        self.max_pkt = int(results["max_allowed_packet"])
-        self.net_buf = int(results["net_buffer_length"])
-        self.max_conn = int(results["max_connections"])
-        self.max_heap_tbl = int(results["max_heap_table_size"])
-        self.tmp_tbl = int(results["tmp_table_size"])
-        self.cur_conn = int(fetch_global_var(self,
-                                             "Threads_connected")[0]["Value"])
-        self.uptime = int(fetch_global_var(self, "Uptime")[0]["Value"])
+        self.buf_size = int(data["key_buffer_size"])
+        self.indb_buf = int(data["innodb_buffer_pool_size"])
+        self.indb_log_buf = int(data["innodb_log_buffer_size"])
+        self.qry_cache = int(data["query_cache_size"])
+        self.read_buf = int(data["read_buffer_size"])
+        self.read_rnd_buf = int(data["read_rnd_buffer_size"])
+        self.sort_buf = int(data["sort_buffer_size"])
+        self.join_buf = int(data["join_buffer_size"])
+        self.thrd_stack = int(data["thread_stack"])
+        self.max_pkt = int(data["max_allowed_packet"])
+        self.net_buf = int(data["net_buffer_length"])
+        self.max_conn = int(data["max_connections"])
+        self.max_heap_tbl = int(data["max_heap_table_size"])
+        self.tmp_tbl = int(data["tmp_table_size"])
+        self.cur_conn = int(fetch_global_var(
+            self, "Threads_connected")["Threads_connected"])
+        self.uptime = int(fetch_global_var(self, "Uptime")["Uptime"])
 
         # Data derived from above status values.
         # Days up since last recycle.
         self.days_up = int(float(self.uptime) / 3600 / 24)
 
         # Base memory for database (in bytes).
-        self.base_mem = self.buf_size + self.indb_buf + self.indb_add_pool \
-            + self.indb_log_buf + self.qry_cache
+        self.base_mem = self.buf_size + self.indb_buf + self.indb_log_buf \
+            + self.qry_cache
 
         # Memory per thread connection (in bytes).
         self.thr_mem = self.read_buf + self.read_rnd_buf + self.sort_buf \
@@ -916,16 +791,18 @@ class Server(object):
         Description:  Updates the Master replication setting attributes.
 
         Arguments:
-            None
 
         """
 
-        self.log_bin = fetch_sys_var(self, "log_bin")[0]["Value"]
-        self.sync_log = fetch_sys_var(self, "sync_binlog")[0]["Value"]
+        self.log_bin = fetch_sys_var(self, "log_bin")["log_bin"]
+        self.sync_log = fetch_sys_var(self, "sync_binlog")["sync_binlog"]
         self.innodb_flush = fetch_sys_var(
-            self, "innodb_flush_log_at_trx_commit")[0]["Value"]
-        self.innodb_xa = fetch_sys_var(self, "innodb_support_xa")[0]["Value"]
-        self.log_format = fetch_sys_var(self, "binlog_format")[0]["Value"]
+            self,
+            "innodb_flush_log_at_trx_commit")["innodb_flush_log_at_trx_commit"]
+        self.innodb_xa = fetch_sys_var(
+            self,
+            "innodb_support_xa")["innodb_support_xa"]
+        self.log_format = fetch_sys_var(self, "binlog_format")["binlog_format"]
 
     def upd_slv_rep_stat(self):
 
@@ -934,17 +811,19 @@ class Server(object):
         Description:  Updates the Slave replication setting attributes.
 
         Arguments:
-            None
 
         """
 
-        self.log_bin = fetch_sys_var(self, "log_bin")[0]["Value"]
-        self.read_only = fetch_sys_var(self, "read_only")[0]["Value"]
-        self.log_slv_upd = fetch_sys_var(self, "log_slave_updates")[0]["Value"]
-        self.sync_mst = fetch_sys_var(self, "sync_master_info")[0]["Value"]
-        self.sync_relay = fetch_sys_var(self, "sync_relay_log")[0]["Value"]
-        self.sync_rly_info = fetch_sys_var(self,
-                                           "sync_relay_log_info")[0]["Value"]
+        self.log_bin = fetch_sys_var(self, "log_bin")["log_bin"]
+        self.read_only = fetch_sys_var(self, "read_only")["read_only"]
+        self.log_slv_upd = fetch_sys_var(
+            self, "log_slave_updates")["log_slave_updates"]
+        self.sync_mst = fetch_sys_var(
+            self, "sync_master_info")["sync_master_info"]
+        self.sync_relay = fetch_sys_var(
+            self, "sync_relay_log")["sync_relay_log"]
+        self.sync_rly_info = fetch_sys_var(
+            self, "sync_relay_log_info")["sync_relay_log_info"]
 
     def fetch_mst_rep_cfg(self):
 
@@ -953,12 +832,13 @@ class Server(object):
         Description:  Returns a dictionary of the Master replication settings.
 
         Arguments:
-            None
 
         """
 
-        return {"log_bin": self.log_bin, "innodb_support_xa": self.innodb_xa,
-                "sync_binlog": self.sync_log, "binlog_format": self.log_format,
+        return {"log_bin": self.log_bin,
+                "innodb_support_xa": self.innodb_xa,
+                "sync_binlog": self.sync_log,
+                "binlog_format": self.log_format,
                 "innodb_flush_log_at_trx_commit": self.innodb_flush}
 
     def fetch_slv_rep_cfg(self):
@@ -968,12 +848,13 @@ class Server(object):
         Description:  Returns a dictionary of the Slave replication settings.
 
         Arguments:
-            None
 
         """
 
-        return {"log_bin": self.log_bin, "sync_relay_log": self.sync_relay,
-                "read_only": self.read_only, "sync_master_info": self.sync_mst,
+        return {"log_bin": self.log_bin,
+                "sync_relay_log": self.sync_relay,
+                "read_only": self.read_only,
+                "sync_master_info": self.sync_mst,
                 "log_slave_updates": self.log_slv_upd,
                 "sync_relay_log_info": self.sync_rly_info}
 
@@ -984,15 +865,14 @@ class Server(object):
         Description:  Updates the binary log attributes.
 
         Arguments:
-            None
 
         """
 
-        results = show_master_stat(self)[0]
-        self.pos = results["Position"]
-        self.do_db = results["Binlog_Do_DB"]
-        self.file = results["File"]
-        self.ign_db = results["Binlog_Ignore_DB"]
+        data = show_master_stat(self)[0]
+        self.pos = data["Position"]
+        self.do_db = data["Binlog_Do_DB"]
+        self.file = data["File"]
+        self.ign_db = data["Binlog_Ignore_DB"]
 
     def flush_logs(self):
 
@@ -1001,7 +881,6 @@ class Server(object):
         Description:  Flush the binary log and update the binary log stats.
 
         Arguments:
-            None
 
         """
 
@@ -1015,7 +894,6 @@ class Server(object):
         Description:  Returns the binary log file name.
 
         Arguments:
-            None
 
         """
 
@@ -1041,10 +919,8 @@ class Server(object):
                 self.conn = mysql.connector.connect(host=self.host,
                                                     user=self.sql_user,
                                                     passwd=self.sql_pass,
-                                                    port=self.port)
-
-                if database:
-                    self.conn.database = database
+                                                    port=self.port,
+                                                    database=database)
 
             except mysql.connector.Error, err:
                 print("Couldn't connect to database.  MySQL error %d: %s" %
@@ -1054,50 +930,151 @@ class Server(object):
 
         """Method:  disconnect
 
-        Description:  Disconnects from a database.
+        Description:  Disconnects from a database connection.
 
         Arguments:
-            (output) Returns a Null for the connection handler.
 
         """
 
-        self.conn = None
+        self.conn.disconnect()
 
-        return self
-
-    def sql(self, command, res_set="row", params=None, database=""):
+    def sql(self, cmd, res_set="row", params=None):
 
         """Method:  sql
 
-        Description:  Execute a SQL command in the database, calls either the
-            Row class to iterate through the results or returns as a
-            single result set.  Will setup a connection to the
-            database if not already connected.
+        Description:  Execute a SQL command in a cursor.  Returns the results
+            as either a cursor row iteration or single result set.
 
         Arguments:
-            (input) command -> SQL command.
-            (input) res_set -> row or all - determines the result set.
+            (input) cmd -> SQL command.
+            (input) res_set -> row|all - determines the result set.
             (input) params -> Position arguments for the SQL command.
-            (input) database -> Database name.
-            (output) Returns one of two items depending on res_set:
-                An instance of the Row class or the full result set.
+            (output) Returns cursor row iteration or single result set of data.
 
         """
 
-        if not self.conn:
-            self.connect(database)
+        cur = self.conn.cursor()
+        cur.execute(cmd, params=params)
 
-        # Setup cursor and execute SQL.
-        with self.conn:
-            cur = self.conn.cursor(MySQLdb.cursors.DictCursor)
-            cur.execute(command, params)
-
-        # Return results as instance of the Row class or full results set.
         if res_set == "row":
-            return Server.Row(cur)
+            return cur
 
         else:
             return cur.fetchall()
+
+    def cmd_sql(self, cmd):
+
+        """Method:  cmd_sql
+
+        Description:  Execute a command sql and return the status results of
+            the command executed.
+
+        Arguments:
+            (input) cmd -> Command SQL.
+            (output) Results of the command executed in dictionary format.
+
+        """
+
+        return self.conn.cmd_query(cmd)
+
+    def col_sql(self, cmd):
+
+        """Method:  col_sql
+
+        Description:  Execute a command sql with column definitions.  Takes the
+            column definitions from the sql command standard output and
+            combines them with the sql command data return to produce a list
+            of dictionaries key-values.
+
+        Arguments:
+            (input) cmd -> Command SQL.
+            (output) data -> Results of the sql executed in list format.
+
+        """
+
+        data = []
+        keys = [str(x[0]) for x in self.conn.cmd_query(cmd)["columns"]]
+
+        for y in self.conn.get_rows()[0]:
+            data.append(dict(zip(keys, [x for x in y])))
+
+        return data
+
+    def vert_sql(self, cmd, params=None):
+
+        """Method:  vert_sql
+
+        Description:  Execute a sql query with vertical definitions returns.
+            One column contains the column definition and the other column
+            contains the value.  Combines the two columns into a dictionary
+            format.
+
+        Arguments:
+            (input) cmd -> Command SQL.
+            (input) params -> Position arguments for the SQL command.
+            (output) data -> Results of the sql executed in list format.
+
+        """
+
+        data = {}
+
+        for x in self.sql(cmd, params=params):
+            data[x[0]] = x[1]
+
+        return data
+
+    def is_connected(self):
+
+        """Method:  is_connected
+
+        Description:  Checks to see if the connection is still active.
+
+        Arguments:
+            (output) -> Returns True|False on whether connection is active.
+
+        """
+
+        return self.conn.is_connected()
+
+    def reconnect(self):
+
+        """Method:  reconnect
+
+        Description:  Reconnects to database if connect is non-active.
+
+        Arguments:
+
+        """
+
+        if not self.is_connected():
+            self.conn.reconnect()
+
+    def chg_db(self, db=None):
+
+        """Method:  chg_db
+
+        Description:  Change to another database.
+
+        Arguments:
+            (input) db -> Name of database.
+
+        """
+
+        if db:
+            self.conn.database = db
+
+    def get_name(self):
+
+        """Method:  get_name
+
+        Description:  Return the server's name.
+
+        Arguments:
+            (output) name -> Server Name.
+
+        """
+
+        return self.name
 
 
 class Rep(Server):
@@ -1158,7 +1135,6 @@ class Rep(Server):
         Description:  Place holder for the show_slv_hosts method in subclass.
 
         Arguments:
-            None
 
         """
 
@@ -1171,7 +1147,6 @@ class Rep(Server):
         Description:  Place holder for the stop_slave method in subclass.
 
         Arguments:
-            None
 
         """
 
@@ -1184,7 +1159,6 @@ class Rep(Server):
         Description:  Place holder for the start_slave method in subclass.
 
         Arguments:
-            None
 
         """
 
@@ -1197,26 +1171,25 @@ class Rep(Server):
         Description:  Place holder for the show_slv_state method in subclass.
 
         Arguments:
-            None
 
         """
 
         pass
 
-    def get_serv_id(self, res_set="all"):
+    def get_serv_id(self):
 
         """Method:  get_serv_id
 
         Description:  Calls the get_serv_id function with the class instance.
 
         Arguments:
-            (input) res_set -> 'row' - return a single row at a time or
-                               'all' - return a list of tuples.
-            (output) Return output of get_serv_id function.
+            (output) Return the server's ID.
 
         """
 
-        return fetch_sys_var(self, "server_id", res_set)[0]["Value"]
+        var = "server_id"
+
+        return fetch_sys_var(self, var)[var]
 
     def fetch_do_db(self):
 
@@ -1267,13 +1240,12 @@ class MasterRep(Rep):
     Super-Class:  Rep
 
     Sub-Classes:
-        None
 
     Methods:
         __init__
+        connect
         show_slv_hosts
         get_log_info
-        get_name
         upd_mst_status
 
     """
@@ -1303,32 +1275,40 @@ class MasterRep(Rep):
                                         machine, host, port, defaults_file,
                                         **kwargs)
 
-        # Use parent class connect.
-        super(MasterRep, self).connect()
-        super(MasterRep, self).set_srv_gtid()
+        self.pos = None
+        self.do_db = None
+        self.file = None
+        self.ign_db = None
+        self.exe_gtid = None
 
-        results = show_master_stat(self)[0]
-        self.pos = results["Position"]
-        self.do_db = results["Binlog_Do_DB"]
-        self.file = results["File"]
-        self.ign_db = results["Binlog_Ignore_DB"]
+    def connect(self):
 
-        self.exe_gtid = results.get("Executed_Gtid_Set", None)
+        """Method:  connect
 
-    def show_slv_hosts(self, res_set="all"):
-
-        """Method:  show_slv_hosts
-
-        Description:  Calls the show_slv_hosts function with class instance.
+        Description:  Setups a connection to a replication server and updates
+            the replication attributes.
 
         Arguments:
-            (input) res_set -> 'row' - return a single row at a time or
-                               'all' - return a list of tuples.
-            (output) Return output of show_slv_hosts function.
 
         """
 
-        return show_slave_hosts(self, res_set)
+        super(MasterRep, self).connect()
+        super(MasterRep, self).set_srv_gtid()
+
+        self.upd_mst_status()
+
+    def show_slv_hosts(self):
+
+        """Method:  show_slv_hosts
+
+        Description:  Gets a list of the slave hosts attached to the server.
+
+        Arguments:
+            (output) Return output of show_slave_hosts function.
+
+        """
+
+        return show_slave_hosts(self)
 
     def get_log_info(self):
 
@@ -1344,19 +1324,6 @@ class MasterRep(Rep):
 
         return self.file, self.pos
 
-    def get_name(self):
-
-        """Method:  get_name
-
-        Description:  Return the master's server name as listed in config file.
-
-        Arguments:
-            (output) name -> Server Name.
-
-        """
-
-        return self.name
-
     def upd_mst_status(self):
 
         """Method:  upd_mst_status
@@ -1364,17 +1331,12 @@ class MasterRep(Rep):
         Description:  Update the status of the master.
 
         Arguments:
-            None
 
         """
 
-        results = show_master_stat(self)[0]
-        self.pos = results["Position"]
-        self.do_db = results["Binlog_Do_DB"]
-        self.file = results["File"]
-        self.ign_db = results["Binlog_Ignore_DB"]
-
-        self.exe_gtid = results.get("Executed_Gtid_Set", None)
+        self.upd_log_stats()
+        data = show_master_stat(self)[0]
+        self.exe_gtid = data.get("Executed_Gtid_Set", None)
 
 
 class SlaveRep(Rep):
@@ -1389,10 +1351,10 @@ class SlaveRep(Rep):
     Super-Class:  Rep
 
     Sub-Classes:
-        None
 
     Methods:
         __init__
+        connect
         stop_slave
         start_slave
         show_slv_state
@@ -1402,7 +1364,6 @@ class SlaveRep(Rep):
         is_slave_up
         is_slv_running
         get_log_info
-        get_name
         get_thr_stat
         get_err_stat
         is_slv_error
@@ -1439,79 +1400,80 @@ class SlaveRep(Rep):
                                        machine, host, port, defaults_file,
                                        **kwargs)
 
-        # Use parent class connect.
-        super(SlaveRep, self).connect()
+        self.io_state = None
+        self.mst_host = None
+        self.mst_port = None
+        self.retry = None
+        self.mst_log = None
+        self.mst_read_pos = None
+        self.relay_log = None
+        self.relay_pos = None
+        self.relay_mst_log = None
+        self.slv_io = None
+        self.slv_sql = None
+        self.do_db = None
+        self.ign_db = None
+        self.do_tbl = None
+        self.ign_tbl = None
+        self.wild_do_tbl = None
+        self.wild_ign_tbl = None
+        self.last_err = None
+        self.err_msg = None
+        self.skip_ctr = None
+        self.exec_mst_pos = None
+        self.log_space = None
+        self.until_cond = None
+        self.until_log = None
+        self.until_pos = None
+        self.ssl_allow = None
+        self.ssl_file = None
+        self.ssl_path = None
+        self.ssl_cert = None
+        self.ssl_cipher = None
+        self.ssl_key = None
+        self.secs_behind = None
+        self.ssl_verify = None
+        self.io_err = None
+        self.io_msg = None
+        self.sql_err = None
+        self.sql_msg = None
+        self.ign_ids = None
+        self.mst_id = None
+        self.mst_uuid = None
+        self.mst_info = None
+        self.sql_delay = None
+        self.sql_remain = None
+        self.slv_sql_state = None
+        self.mst_retry = None
+        self.mst_bind = None
+        self.io_err_time = None
+        self.sql_err_time = None
+        self.ssl_crl = None
+        self.ssl_crl_path = None
+        self.retrieved_gtid = None
+        self.exe_gtid = None
+        self.auto_pos = None
+        self.run = None
+        self.tmp_tbl = None
+        self.retry = None
+        self.read_only = None
+        self.purged_gtidset = None
 
+    def connect(self):
+
+        """Method:  connect
+
+        Description:  Setups a connection to a replication server and updates
+            the slave replication attributes.
+
+        Arguments:
+
+        """
+
+        super(SlaveRep, self).connect()
         super(SlaveRep, self).set_srv_gtid()
 
-        # Do not update an unreachable server.
-        if self.conn:
-            results = show_slave_stat(self)[0]
-            self.io_state = results["Slave_IO_State"]
-            self.mst_host = results["Master_Host"]
-            self.mst_port = results["Master_Port"]
-            self.retry = results["Connect_Retry"]
-            self.mst_log = results["Master_Log_File"]
-            self.mst_read_pos = results["Read_Master_Log_Pos"]
-            self.relay_log = results["Relay_Log_File"]
-            self.relay_pos = results["Relay_Log_Pos"]
-            self.relay_mst_log = results["Relay_Master_Log_File"]
-            self.slv_io = results["Slave_IO_Running"]
-            self.slv_sql = results["Slave_SQL_Running"]
-            self.do_db = results["Replicate_Do_DB"]
-            self.ign_db = results["Replicate_Ignore_DB"]
-            self.do_tbl = results["Replicate_Do_Table"]
-            self.ign_tbl = results["Replicate_Ignore_Table"]
-            self.wild_do_tbl = results["Replicate_Wild_Do_Table"]
-            self.wild_ign_tbl = results["Replicate_Wild_Ignore_Table"]
-            self.last_err = results["Last_Errno"]
-            self.err_msg = results["Last_Error"]
-            self.skip_ctr = results["Skip_Counter"]
-            self.exec_mst_pos = results["Exec_Master_Log_Pos"]
-            self.log_space = results["Relay_Log_Space"]
-            self.until_cond = results["Until_Condition"]
-            self.until_log = results["Until_Log_File"]
-            self.until_pos = results["Until_Log_Pos"]
-            self.ssl_allow = results["Master_SSL_Allowed"]
-            self.ssl_file = results["Master_SSL_CA_File"]
-            self.ssl_path = results["Master_SSL_CA_Path"]
-            self.ssl_cert = results["Master_SSL_Cert"]
-            self.ssl_cipher = results["Master_SSL_Cipher"]
-            self.ssl_key = results["Master_SSL_Key"]
-            self.secs_behind = results["Seconds_Behind_Master"]
-            self.ssl_verify = results["Master_SSL_Verify_Server_Cert"]
-            self.io_err = results["Last_IO_Errno"]
-            self.io_msg = results["Last_IO_Error"]
-            self.sql_err = results["Last_SQL_Errno"]
-            self.sql_msg = results["Last_SQL_Error"]
-            self.ign_ids = results["Replicate_Ignore_Server_Ids"]
-            self.mst_id = results["Master_Server_Id"]
-
-            self.run = fetch_global_var(self, "slave_running")[0]["Value"]
-            self.tmp_tbl = fetch_global_var(
-                self, "slave_open_temp_tables")[0]["Value"]
-            self.retry = fetch_global_var(
-                self, "slave_retried_transactions")[0]["Value"]
-            self.read_only = fetch_sys_var(self, "read_only")[0]["Value"]
-
-            self.mst_uuid = results.get("Master_UUID", None)
-            self.mst_info = results.get("Master_Info_File", None)
-            self.sql_delay = results.get("SQL_Delay", None)
-            self.sql_remain = results.get("SQL_Remaining_Delay", None)
-            self.slv_sql_state = results.get("Slave_SQL_Running_State", None)
-            self.mst_retry = results.get("Master_Retry_Count", None)
-            self.mst_bind = results.get("Master_Bind", None)
-            self.io_err_time = results.get("Last_IO_Error_Timestamp", None)
-            self.sql_err_time = results.get("Last_SQL_Error_Timestamp", None)
-            self.ssl_crl = results.get("Master_SSL_Crl", None)
-            self.ssl_crl_path = results.get("Master_SSL_Crlpath", None)
-
-            self.retrieved_gtid = results.get("Retrieved_Gtid_Set", None)
-            self.exe_gtid = results.get("Executed_Gtid_Set", None)
-
-            self.auto_pos = results.get("Auto_Position", None)
-
-            self.upd_gtid_pos()
+        self.upd_slv_status()
 
     def stop_slave(self):
 
@@ -1526,10 +1488,10 @@ class SlaveRep(Rep):
         """
 
         slave_stop(self)
-        results = show_slave_stat(self)[0]
+        data = show_slave_stat(self)[0]
 
-        self.io_state = results["Slave_IO_State"]
-        self.secs_behind = results["Seconds_Behind_Master"]
+        self.io_state = data["Slave_IO_State"]
+        self.secs_behind = data["Seconds_Behind_Master"]
 
     def start_slave(self):
 
@@ -1539,15 +1501,14 @@ class SlaveRep(Rep):
             and updates appropriate slave replication variables.
 
         Arguments:
-            None
 
         """
 
         slave_start(self)
-        results = show_slave_stat(self)[0]
+        data = show_slave_stat(self)[0]
 
-        self.io_state = results["Slave_IO_State"]
-        self.secs_behind = results["Seconds_Behind_Master"]
+        self.io_state = data["Slave_IO_State"]
+        self.secs_behind = data["Seconds_Behind_Master"]
 
     def show_slv_state(self):
 
@@ -1571,14 +1532,13 @@ class SlaveRep(Rep):
         Description:  Updates the slave state status variables.
 
         Arguments:
-            None
 
         """
 
-        results = show_slave_stat(self)[0]
-        self.io_state = results["Slave_IO_State"]
-        self.slv_io = results["Slave_IO_Running"]
-        self.slv_sql = results["Slave_SQL_Running"]
+        data = show_slave_stat(self)[0]
+        self.io_state = data["Slave_IO_State"]
+        self.slv_io = data["Slave_IO_Running"]
+        self.slv_sql = data["Slave_SQL_Running"]
 
     def upd_slv_status(self):
 
@@ -1587,74 +1547,70 @@ class SlaveRep(Rep):
         Description:  Updates the slave status variables.
 
         Arguments:
-            None
 
         """
 
-        results = show_slave_stat(self)[0]
-        self.io_state = results["Slave_IO_State"]
-        self.mst_host = results["Master_Host"]
-        self.mst_port = results["Master_Port"]
-        self.retry = results["Connect_Retry"]
-        self.mst_log = results["Master_Log_File"]
-        self.mst_read_pos = results["Read_Master_Log_Pos"]
-        self.relay_log = results["Relay_Log_File"]
-        self.relay_pos = results["Relay_Log_Pos"]
-        self.relay_mst_log = results["Relay_Master_Log_File"]
-        self.slv_io = results["Slave_IO_Running"]
-        self.slv_sql = results["Slave_SQL_Running"]
-        self.do_db = results["Replicate_Do_DB"]
-        self.ign_db = results["Replicate_Ignore_DB"]
-        self.do_tbl = results["Replicate_Do_Table"]
-        self.ign_tbl = results["Replicate_Ignore_Table"]
-        self.wild_do_tbl = results["Replicate_Wild_Do_Table"]
-        self.wild_ign_tbl = results["Replicate_Wild_Ignore_Table"]
-        self.last_err = results["Last_Errno"]
-        self.err_msg = results["Last_Error"]
-        self.skip_ctr = results["Skip_Counter"]
-        self.exec_mst_pos = results["Exec_Master_Log_Pos"]
-        self.log_space = results["Relay_Log_Space"]
-        self.until_cond = results["Until_Condition"]
-        self.until_log = results["Until_Log_File"]
-        self.until_pos = results["Until_Log_Pos"]
-        self.ssl_allow = results["Master_SSL_Allowed"]
-        self.ssl_file = results["Master_SSL_CA_File"]
-        self.ssl_path = results["Master_SSL_CA_Path"]
-        self.ssl_cert = results["Master_SSL_Cert"]
-        self.ssl_cipher = results["Master_SSL_Cipher"]
-        self.ssl_key = results["Master_SSL_Key"]
-        self.secs_behind = results["Seconds_Behind_Master"]
-        self.ssl_verify = results["Master_SSL_Verify_Server_Cert"]
-        self.io_err = results["Last_IO_Errno"]
-        self.io_msg = results["Last_IO_Error"]
-        self.sql_err = results["Last_SQL_Errno"]
-        self.sql_msg = results["Last_SQL_Error"]
-        self.ign_ids = results["Replicate_Ignore_Server_Ids"]
-        self.mst_id = results["Master_Server_Id"]
+        data = show_slave_stat(self)[0]
+        self.io_state = data["Slave_IO_State"]
+        self.mst_host = data["Master_Host"]
+        self.mst_port = data["Master_Port"]
+        self.retry = data["Connect_Retry"]
+        self.mst_log = data["Master_Log_File"]
+        self.mst_read_pos = data["Read_Master_Log_Pos"]
+        self.relay_log = data["Relay_Log_File"]
+        self.relay_pos = data["Relay_Log_Pos"]
+        self.relay_mst_log = data["Relay_Master_Log_File"]
+        self.slv_io = data["Slave_IO_Running"]
+        self.slv_sql = data["Slave_SQL_Running"]
+        self.do_db = data["Replicate_Do_DB"]
+        self.ign_db = data["Replicate_Ignore_DB"]
+        self.do_tbl = data["Replicate_Do_Table"]
+        self.ign_tbl = data["Replicate_Ignore_Table"]
+        self.wild_do_tbl = data["Replicate_Wild_Do_Table"]
+        self.wild_ign_tbl = data["Replicate_Wild_Ignore_Table"]
+        self.last_err = data["Last_Errno"]
+        self.err_msg = data["Last_Error"]
+        self.skip_ctr = data["Skip_Counter"]
+        self.exec_mst_pos = data["Exec_Master_Log_Pos"]
+        self.log_space = data["Relay_Log_Space"]
+        self.until_cond = data["Until_Condition"]
+        self.until_log = data["Until_Log_File"]
+        self.until_pos = data["Until_Log_Pos"]
+        self.ssl_allow = data["Master_SSL_Allowed"]
+        self.ssl_file = data["Master_SSL_CA_File"]
+        self.ssl_path = data["Master_SSL_CA_Path"]
+        self.ssl_cert = data["Master_SSL_Cert"]
+        self.ssl_cipher = data["Master_SSL_Cipher"]
+        self.ssl_key = data["Master_SSL_Key"]
+        self.secs_behind = data["Seconds_Behind_Master"]
+        self.ssl_verify = data["Master_SSL_Verify_Server_Cert"]
+        self.io_err = data["Last_IO_Errno"]
+        self.io_msg = data["Last_IO_Error"]
+        self.sql_err = data["Last_SQL_Errno"]
+        self.sql_msg = data["Last_SQL_Error"]
+        self.ign_ids = data["Replicate_Ignore_Server_Ids"]
+        self.mst_id = data["Master_Server_Id"]
+        self.mst_uuid = data.get("Master_UUID", None)
+        self.mst_info = data.get("Master_Info_File", None)
+        self.sql_delay = data.get("SQL_Delay", None)
+        self.sql_remain = data.get("SQL_Remaining_Delay", None)
+        self.slv_sql_state = data.get("Slave_SQL_Running_State", None)
+        self.mst_retry = data.get("Master_Retry_Count", None)
+        self.mst_bind = data.get("Master_Bind", None)
+        self.io_err_time = data.get("Last_IO_Error_Timestamp", None)
+        self.sql_err_time = data.get("Last_SQL_Error_Timestamp", None)
+        self.ssl_crl = data.get("Master_SSL_Crl", None)
+        self.ssl_crl_path = data.get("Master_SSL_Crlpath", None)
+        self.retrieved_gtid = data.get("Retrieved_Gtid_Set", None)
+        self.exe_gtid = data.get("Executed_Gtid_Set", None)
+        self.auto_pos = data.get("Auto_Position", None)
 
-        self.run = fetch_global_var(self, "slave_running")[0]["Value"]
+        self.run = fetch_global_var(self, "slave_running")["slave_running"]
         self.tmp_tbl = fetch_global_var(
-            self, "slave_open_temp_tables")[0]["Value"]
+            self, "slave_open_temp_tables")["slave_open_temp_tables"]
         self.retry = fetch_global_var(
-            self, "slave_retried_transactions")[0]["Value"]
-        self.read_only = fetch_sys_var(self, "read_only")[0]["Value"]
-
-        self.mst_uuid = results.get("Master_UUID", None)
-        self.mst_info = results.get("Master_Info_File", None)
-        self.sql_delay = results.get("SQL_Delay", None)
-        self.sql_remain = results.get("SQL_Remaining_Delay", None)
-        self.slv_sql_state = results.get("Slave_SQL_Running_State", None)
-        self.mst_retry = results.get("Master_Retry_Count", None)
-        self.mst_bind = results.get("Master_Bind", None)
-        self.io_err_time = results.get("Last_IO_Error_Timestamp", None)
-        self.sql_err_time = results.get("Last_SQL_Error_Timestamp", None)
-        self.ssl_crl = results.get("Master_SSL_Crl", None)
-        self.ssl_crl_path = results.get("Master_SSL_Crlpath", None)
-
-        self.retrieved_gtid = results.get("Retrieved_Gtid_Set", None)
-        self.exe_gtid = results.get("Executed_Gtid_Set", None)
-
-        self.auto_pos = results.get("Auto_Position", None)
+            self, "slave_retried_transactions")["slave_retried_transactions"]
+        self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
         self.upd_gtid_pos()
 
@@ -1665,23 +1621,19 @@ class SlaveRep(Rep):
         Description:  Update the GTIDSet class GTID positions.
 
         Arguments:
-            None
 
         """
 
-        results = show_slave_stat(self)[0]
-        self.retrieved_gtidset = GTIDSet(results.get("Retrieved_Gtid_Set",
-                                                     "0:0") or "0:0")
-        self.exe_gtidset = GTIDSet(results.get("Executed_Gtid_Set", "0:0") or
+        data = show_slave_stat(self)[0]
+        self.retrieved_gtidset = GTIDSet(data.get("Retrieved_Gtid_Set",
+                                                  "0:0") or "0:0")
+        self.exe_gtidset = GTIDSet(data.get("Executed_Gtid_Set", "0:0") or
                                    "0:0")
 
         # Handle MySQL 5.5 or 5.6 servers.
         if self.gtid_mode:
             self.purged_gtidset = GTIDSet(fetch_sys_var(
-                self, "GTID_PURGED", level="global")[0]["Value"] or "0:0")
-
-        else:
-            self.purged_gtidset = None
+                self, "GTID_PURGED", level="global")["GTID_PURGED"] or "0:0")
 
     def is_slave_up(self):
 
@@ -1727,19 +1679,6 @@ class SlaveRep(Rep):
 
         return self.mst_log, self.relay_mst_log, self.mst_read_pos, \
             self.exec_mst_pos
-
-    def get_name(self):
-
-        """Method:  get_name
-
-        Description:  Return the slave's server name.
-
-        Arguments:
-            (output) name -> Server Name.
-
-        """
-
-        return self.name
 
     def get_thr_stat(self):
 
@@ -1797,12 +1736,11 @@ class SlaveRep(Rep):
         Description:  Updates the slave's time lag variable.
 
         Arguments:
-            None
 
         """
 
-        results = show_slave_stat(self)[0]
-        self.secs_behind = results["Seconds_Behind_Master"]
+        data = show_slave_stat(self)[0]
+        self.secs_behind = data["Seconds_Behind_Master"]
 
     def get_time(self):
 
