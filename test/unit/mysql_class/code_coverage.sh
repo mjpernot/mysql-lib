@@ -43,6 +43,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/Server_setsrvbinlogcr
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_setsrvgtid.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_fetchmstrepcfg.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_fetchslvrepcfg.py
+coverage run -a --source=mysql_class test/unit/mysql_class/Server_getname.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_updmstrepstat.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_updslvrepstat.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_updsrvperf.py

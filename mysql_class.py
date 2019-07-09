@@ -517,6 +517,7 @@ class Server(object):
         is_connected
         reconnect
         chg_db
+        get_name
 
     """
 
@@ -581,7 +582,6 @@ class Server(object):
         # Memory & status configuration
         self.buf_size = None
         self.indb_buf = None
-        self.indb_add_pool = None
         self.indb_log_buf = None
         self.qry_cache = None
         self.read_buf = None
@@ -734,7 +734,6 @@ class Server(object):
 
         self.buf_size = int(data["key_buffer_size"])
         self.indb_buf = int(data["innodb_buffer_pool_size"])
-        self.indb_add_pool = int(data["innodb_additional_mem_pool_size"])
         self.indb_log_buf = int(data["innodb_log_buffer_size"])
         self.qry_cache = int(data["query_cache_size"])
         self.read_buf = int(data["read_buffer_size"])
@@ -756,8 +755,8 @@ class Server(object):
         self.days_up = int(float(self.uptime) / 3600 / 24)
 
         # Base memory for database (in bytes).
-        self.base_mem = self.buf_size + self.indb_buf + self.indb_add_pool \
-            + self.indb_log_buf + self.qry_cache
+        self.base_mem = self.buf_size + self.indb_buf + self.indb_log_buf \
+            + self.qry_cache
 
         # Memory per thread connection (in bytes).
         self.thr_mem = self.read_buf + self.read_rnd_buf + self.sort_buf \
@@ -1064,6 +1063,19 @@ class Server(object):
         if db:
             self.conn.database = db
 
+    def get_name(self):
+
+        """Method:  get_name
+
+        Description:  Return the server's name.
+
+        Arguments:
+            (output) name -> Server Name.
+
+        """
+
+        return self.name
+
 
 class Rep(Server):
 
@@ -1231,10 +1243,9 @@ class MasterRep(Rep):
 
     Methods:
         __init__
-        rep_conn
+        connect
         show_slv_hosts
         get_log_info
-        get_name
         upd_mst_status
 
     """
@@ -1270,9 +1281,9 @@ class MasterRep(Rep):
         self.ign_db = None
         self.exe_gtid = None
 
-    def rep_conn(self):
+    def connect(self):
 
-        """Method:  rep_conn
+        """Method:  connect
 
         Description:  Setups a connection to a replication server and updates
             the replication attributes.
@@ -1313,19 +1324,6 @@ class MasterRep(Rep):
 
         return self.file, self.pos
 
-    def get_name(self):
-
-        """Method:  get_name
-
-        Description:  Return the master's server name as listed in config file.
-
-        Arguments:
-            (output) name -> Server Name.
-
-        """
-
-        return self.name
-
     def upd_mst_status(self):
 
         """Method:  upd_mst_status
@@ -1356,7 +1354,7 @@ class SlaveRep(Rep):
 
     Methods:
         __init__
-        rep_conn
+        connect
         stop_slave
         start_slave
         show_slv_state
@@ -1366,7 +1364,6 @@ class SlaveRep(Rep):
         is_slave_up
         is_slv_running
         get_log_info
-        get_name
         get_thr_stat
         get_err_stat
         is_slv_error
@@ -1462,9 +1459,9 @@ class SlaveRep(Rep):
         self.read_only = None
         self.purged_gtidset = None
 
-    def rep_conn(self):
+    def connect(self):
 
-        """Method:  rep_conn
+        """Method:  connect
 
         Description:  Setups a connection to a replication server and updates
             the slave replication attributes.
@@ -1638,9 +1635,6 @@ class SlaveRep(Rep):
             self.purged_gtidset = GTIDSet(fetch_sys_var(
                 self, "GTID_PURGED", level="global")["GTID_PURGED"] or "0:0")
 
-        else:
-            self.purged_gtidset = None
-
     def is_slave_up(self):
 
         """Method:  is_slave_up
@@ -1685,19 +1679,6 @@ class SlaveRep(Rep):
 
         return self.mst_log, self.relay_mst_log, self.mst_read_pos, \
             self.exec_mst_pos
-
-    def get_name(self):
-
-        """Method:  get_name
-
-        Description:  Return the slave's server name.
-
-        Arguments:
-            (output) name -> Server Name.
-
-        """
-
-        return self.name
 
     def get_thr_stat(self):
 

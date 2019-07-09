@@ -45,7 +45,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        sql -> Stub holder for mysql_class.Server.sql method.
+        cmd_sql -> Stub holder for mysql_class.Server.cmd_sql method.
 
     """
 
@@ -62,16 +62,14 @@ class Server(object):
 
         self.gtid_mode = "Yes"
 
-    def sql(self, cmd, res_set, var):
+    def cmd_sql(self, cmd):
 
-        """Method:  sql
+        """Method:  cmd_sql
 
-        Description:  Stub holder for mysql_class.Server.sql method.
+        Description:  Stub holder for mysql_class.Server.cmd_sql method.
 
         Arguments:
             (input) cmd -> Query command.
-            (input) res_set -> Return set type.
-            (input) var -> Global variable name.
 
         """
 

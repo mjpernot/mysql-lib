@@ -79,11 +79,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.Server(self.name, self.server_id, self.sql_user,
+                                      self.sql_pass, self.machine,
+                                      defaults_file=self.defaults_file)
 
-        self.assertEqual((mysqlrep.get_name()), (None))
+        self.assertEqual(mysqlrep.get_name(), self.name)
 
 
 if __name__ == "__main__":

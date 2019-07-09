@@ -23,6 +23,8 @@
         is_cfg_valid
         is_logs_synced
         is_rep_delay
+        _io_rep_chk
+        _sql_rep_chk
         optimize_tbl
         purge_bin_logs
         reset_master
@@ -31,8 +33,11 @@
         start_slave_until
         switch_to_master
         sync_delay
+        _io_delay_chk
         sync_rep_slv
         wait_until
+        _io_wait_chk
+        _sql_wait_chk
 
 """
 
@@ -50,28 +55,27 @@ import version
 __version__ = version.__version__
 
 
-def analyze_tbl(SERVER, db, tbl, res_set="all", **kwargs):
+def analyze_tbl(server, db, tbl, **kwargs):
 
     """Function:  analyze_tbl
 
-    Description:  Runs a analyze table command against a table.
+    Description:  Runs an analyze table command.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (input) res_set -> row|all - Returning result set format.
-        (output) Return check table results.
+        (output) Results of analyze table command.
 
     """
 
-    # Must have back ticks around names if they have special characters.
-    sql_cmd = "analyze table `" + db + "`.`" + tbl + "`"
+    # Must have back ticks around names in case they have special characters.
+    cmd = "analyze table `" + db + "`.`" + tbl + "`"
 
-    return SERVER.sql(sql_cmd, res_set)
+    return server.col_sql(cmd)
 
 
-def change_master_to(MST, SLV):
+def change_master_to(mst, slv, **kwargs):
 
     """Function:  change_master_to
 
@@ -80,76 +84,73 @@ def change_master_to(MST, SLV):
         the auto position option if GTID is enabled.
 
     Arguments:
-        (input) MST -> Master class instance.
-        (input) SLV -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
 
     """
 
-    chg_master_to = """change master to master_host=%s, master_port=%s,
-        master_user=%s, master_password=%s"""
+    chg_master_to = """change master to master_host='%s', master_port=%s,
+        master_user='%s', master_password='%s'"""
 
     # GTID mode is enabled, use the auto position option.
-    if MST.gtid_mode:
+    if mst.gtid_mode:
         chg_master_to = chg_master_to + """, master_auto_position=1"""
 
-        SLV.sql(chg_master_to, "", (MST.host, int(MST.port), MST.sql_user,
-                                    MST.sql_pass))
+        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.sql_user,
+                                     mst.sql_pass))
 
-    # Assume GTID mode is disabled, use file and position options.
+    # GTID mode is disabled, use file and position options.
     else:
         chg_master_to = chg_master_to + \
-            """, master_log_file=%s, master_log_pos=%s"""
+            """, master_log_file='%s', master_log_pos='%s'"""
 
-        SLV.sql(chg_master_to, "", (MST.host, int(MST.port), MST.sql_user,
-                                    MST.sql_pass, MST.file, MST.pos))
+        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.sql_user,
+                                     mst.sql_pass, mst.file, mst.pos))
 
-    print("Changed Slave: {0} to new Master: {1}".format(SLV.name, MST.name))
+    print("Changed Slave: {0} to new Master: {1}".format(slv.name, mst.name))
 
 
-def checksum(SERVER, db, tbl, res_set="all"):
+def checksum(server, db, tbl, **kwargs):
 
     """Function:  checksum
 
     Description:  Runs a checksum against a table.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Return check sum value.
+        (output) Results of checksum table command.
 
     """
 
-    # Must have back ticks around names if they have special characters.
-    sql_cmd = "checksum table `" + db + "`.`" + tbl + "`"
+    # Must have back ticks around names in case they have special characters.
+    cmd = "checksum table `" + db + "`.`" + tbl + "`"
 
-    return SERVER.sql(sql_cmd, res_set)
+    return server.col_sql(cmd)
 
 
-def check_tbl(SERVER, db, tbl, res_set="all", **kwargs):
+def check_tbl(server, db, tbl, **kwargs):
 
     """Function:  check_tbl
 
     Description:  Runs a check table command against a table.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (input) res_set -> row|all - Returning result set format.
-        (output) Return check table results.
+        (output) Results of check table command.
 
     """
 
-    # Must have back ticks around names if they have special characters.
-    sql_cmd = "check table `" + db + "`.`" + tbl + "`"
+    # Must have back ticks around names in case they have special characters.
+    cmd = "check table `" + db + "`.`" + tbl + "`"
 
-    return SERVER.sql(sql_cmd, res_set)
+    return server.col_sql(cmd)
 
 
-def chg_slv_state(SLAVE, opt):
+def chg_slv_state(slaves, opt, **kwargs):
 
     """Function:  chg_slv_state
 
@@ -157,28 +158,28 @@ def chg_slv_state(SLAVE, opt):
         instances.
 
     Arguments:
-        (input) SLAVE -> Array of slave instances.
-        (input) opt -> stop or start - Stops or starts the slaves.
+        (input) slaves -> List of slave instances.
+        (input) opt -> stop|start - Stops or starts the slave(s).
 
     """
 
-    if opt == "stop":
-        for x in SLAVE:
+    slaves = list(slaves)
 
-            x.stop_slave()
-            x.upd_slv_status()
+    if opt == "stop":
+        for slv in slaves:
+            slv.stop_slave()
+            slv.upd_slv_status()
 
     elif opt == "start":
-        for x in SLAVE:
-
-            x.start_slave()
-            x.upd_slv_status()
+        for slv in slaves:
+            slv.start_slave()
+            slv.upd_slv_status()
 
     else:
         gen_libs.prt_msg("Error", "No option selected to stop/start rep.")
 
 
-def create_instance(cfg_file, dir_path, CLASS):
+def create_instance(cfg_file, dir_path, cls_name, **kwargs):
 
     """Function:  create_instance
 
@@ -188,73 +189,74 @@ def create_instance(cfg_file, dir_path, CLASS):
     Arguments:
         (input) cfg_file -> Configuration file name.
         (input) dir_path -> Directory path.
-        (input) CLASS -> Reference to a Class type.
+        (input) cls_name -> Reference to a Class type.
+        (output) Instance of the class name passed.
 
     """
 
     cfg = gen_libs.load_module(cfg_file, dir_path)
 
-    return CLASS(cfg.name, cfg.sid, cfg.user, cfg.passwd,
-                 getattr(machine, cfg.serv_os)(), cfg.host, cfg.port,
-                 cfg.cfg_file,
-                 extra_def_file=cfg.__dict__.get("extra_def_file", None))
+    return cls_name(cfg.name, cfg.sid, cfg.user, cfg.passwd,
+                    getattr(machine, cfg.serv_os)(), cfg.host, cfg.port,
+                    cfg.cfg_file,
+                    extra_def_file=cfg.__dict__.get("extra_def_file", None))
 
 
-def create_slv_array(cfg_array):
+def create_slv_array(cfg_array, **kwargs):
 
     """Function:  create_slv_array
 
     Description:  Creates an array of instances from a configuration array.
 
     Arguments:
-        (input) cfg_array -> Array of configurations.
-        (output) SLAVE -> Array of slave instances.
+        (input) cfg_array -> List of configurations.
+        (output) slaves -> List of slave replication instances.
 
     """
 
-    SLAVE = []
+    cfg_array = list(cfg_array)
+    slaves = []
 
     for slv in cfg_array:
-
-        SLV_INST = mysql_class.SlaveRep(slv["name"], slv["sid"], slv["user"],
+        slv_inst = mysql_class.SlaveRep(slv["name"], slv["sid"], slv["user"],
                                         slv["passwd"],
                                         getattr(machine, slv["serv_os"])(),
                                         slv["host"], int(slv["port"]),
                                         slv["cfg_file"])
 
-        SLAVE.append(SLV_INST)
+        slaves.append(slv_inst)
 
-    return SLAVE
+    return slaves
 
 
-def crt_cmd(SERVER, prog_name):
+def crt_cmd(server, prog_name, **kwargs):
 
     """Function:  crt_cmd
 
     Description:  Create a basic MySQL program command line setup.  The basic
         setup will include program name, user, passwd, host, and port.
-        The port is required to be set if Mysql instance is operating
+        The port is required to be set if MySQL instance is operating
         on a different port than 3306.
 
     Arguments:
-        (input) SERVER -> Database server instance.
+        (input) server -> Server instance.
         (input) prog_name -> Name of Mysql binary program.
-        (output) -> List array containing the program command.
+        (output) -> List containing a program command with arguments.
 
     """
 
-    if SERVER.extra_def_file:
-        # Include defaults extra file option in command, but no password.
-        return [prog_name, "--defaults-extra-file=" + SERVER.extra_def_file,
-                "-u", SERVER.sql_user, "-h", SERVER.host, "-P",
-                str(SERVER.port)]
+    if server.extra_def_file:
+        # Include defaults extra file option in command, but no pwd.
+        return [prog_name, "--defaults-extra-file=" + server.extra_def_file,
+                "-u", server.sql_user, "-h", server.host, "-P",
+                str(server.port)]
     else:
-        # Command with password.
-        return [prog_name, "-u", SERVER.sql_user, "-p" + SERVER.sql_pass, "-h",
-                SERVER.host, "-P", str(SERVER.port)]
+        # Command with pwd.
+        return [prog_name, "-u", server.sql_user, "-p" + server.sql_pass, "-h",
+                server.host, "-P", str(server.port)]
 
 
-def crt_srv_inst(cfg, path):
+def crt_srv_inst(cfg, path, **kwargs):
 
     """Function:  crt_srv_inst
 
@@ -263,52 +265,48 @@ def crt_srv_inst(cfg, path):
     Arguments:
         (input) cfg -> Configuration file.
         (input) path -> Directory path to the configuration file.
-        (output) -> Instance of the Server class.
+        (output) -> Server instance.
 
     """
 
-    db = gen_libs.load_module(cfg, path)
+    svr = gen_libs.load_module(cfg, path)
 
-    return mysql_class.Server(db.name, db.sid, db.user, db.passwd,
-                              getattr(machine, db.serv_os)(), db.host, db.port,
-                              db.cfg_file)
+    return mysql_class.Server(svr.name, svr.sid, svr.user, svr.passwd,
+                              getattr(machine, svr.serv_os)(), svr.host,
+                              svr.port, svr.cfg_file)
 
 
-def fetch_db_dict(SERVER, res_set="all"):
+def fetch_db_dict(server, **kwargs):
 
     """Function:  fetch_db_dict
 
-    Description:  Return an dictionary array of all databases.
+    Description:  Return a dictionary of all databases.
 
     Arguments:
-        (input) SERVER -> Database server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) -> Dictionary array of database names.
+        (input) server -> Server instance.
+        (output) -> Dictionary of database names.
 
     """
 
-    return SERVER.sql("show databases", res_set)
+    return server.col_sql("show databases")
 
 
-def fetch_logs(SERVER, res_set="all"):
+def fetch_logs(server, **kwargs):
 
     """Function:  fetch_logs
 
-    Description:  Return the output of the show binary logs command.
+    Description:  Return a list of the server's binary logs.
 
     Arguments:
-        (input) SERVER -> Server instance.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
-        (output) Return names of the binary logs.
+        (input) server -> Server instance.
+        (output) Dictionary of binary log names.
 
     """
 
-    return SERVER.sql("show binary logs", res_set)
+    return server.cmd_sql("show binary logs")
 
 
-def fetch_slv(SLAVES, **kwargs):
+def fetch_slv(slaves, **kwargs):
 
     """Function:  fetch_slv
 
@@ -316,30 +314,31 @@ def fetch_slv(SLAVES, **kwargs):
         error code and message if not found.
 
     Arguments:
-        (input) SLAVE -> Slave instance array.
+        (input) slave -> List of slave instances.
         (input) **kwargs:
             slv_mv -> Name of slave to be moved to new master.
-        (output) SLV -> Class instance of slave.
+        (output) slv -> Slave instance.
         (output) err_flag -> True|False - if an error has occurred.
         (output) err_msg -> Error message.
 
     """
 
+    slaves = list(slaves)
     err_flag = False
     err_msg = None
-    SLV = None
+    slv = None
 
     # Locate slave in slave array.
-    SLV = find_name(SLAVES, kwargs.get("slv_mv"))
+    slv = find_name(slaves, kwargs.get("slv_mv"))
 
-    if not SLV:
+    if not slv:
         err_flag = True
-        err_msg = "Error:  Slave %s was not found in slave array." % (slv)
+        err_msg = "Error:  No slave was found in the slave list."
 
-    return SLV, err_flag, err_msg
+    return slv, err_flag, err_msg
 
 
-def fetch_tbl_dict(SERVER, db, tbl_type="BASE TABLE", res_set="all"):
+def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
 
     """Function:  fetch_tbl_dict
 
@@ -347,22 +346,20 @@ def fetch_tbl_dict(SERVER, db, tbl_type="BASE TABLE", res_set="all"):
         table type of BASE TABLE.
 
     Arguments:
-        (input) SERVER -> Server class instance.
+        (input) server -> Server instance.
         (input) db -> Name of database.
         (input) tbl_type -> Type of table in the database.
-        (input) res_set -> row or all - Returning result set.
-            Default value: 'all' will cover most requirements.
         (output) List of tables in database.
 
     """
 
-    sql_qry = """select table_name from information_schema.tables where
-        table_type = %s and table_schema = %s"""
+    qry = """select table_name from information_schema.tables where
+        table_type = %(tbl_type)s and table_schema = %(db)s"""
 
-    return SERVER.sql(sql_qry, res_set, (tbl_type, db))
+    return server.sql(qry, {"tbl_type": tbl_type, "db": db})
 
 
-def find_name(SLV, server_name):
+def find_name(slaves, name, **kwargs):
 
     """Function:  find_name
 
@@ -370,20 +367,21 @@ def find_name(SLV, server_name):
         instances.
 
     Arguments:
-        (input) SLV -> Slave class instance(s).
-        (input) server_name -> Name of server being searched for.
-        (output) Return the server's instance or None.
+        (input) slaves -> List of slave instances.
+        (input) name -> Name of server being searched for.
+        (output) Slave instance or None.
 
     """
+    slaves = list(slaves)
 
-    for x in SLV:
-        if server_name == x.name:
-            return x
+    for slv in slaves:
+        if name == slv.name:
+            return slv
 
     return None
 
 
-def is_cfg_valid(SERVERS, **kwargs):
+def is_cfg_valid(servers, **kwargs):
 
     """Function:  is_cfg_valid
 
@@ -391,32 +389,31 @@ def is_cfg_valid(SERVERS, **kwargs):
         server instances.
 
     Arguments:
-        (input) SERVERS -> List of class server instances.
+        (input) servers -> List of server instances.
         (output) status_msg -> Message stating what is not valid.
         (output) status -> True|False - Any of the configuration files invalid.
 
     """
 
+    servers = list(servers)
     status = True
     status_msg = []
 
-    for SVR in SERVERS:
-
-        status, err_msg = gen_libs.chk_crt_file(SVR.extra_def_file)
+    for svr in servers:
+        status, err_msg = gen_libs.chk_crt_file(svr.extra_def_file)
 
         if not status:
             status_msg.append("%s" % (err_msg))
 
-        if SVR.extra_def_file and not status:
-
-            status_msg.append("%s:  %s is missing." % (SVR.name,
-                                                       SVR.extra_def_file))
+        if svr.extra_def_file and not status:
+            status_msg.append("%s:  %s is missing." % (svr.name,
+                                                       svr.extra_def_file))
             status = False
 
     return status, status_msg
 
 
-def is_logs_synced(MST, SLV):
+def is_logs_synced(mst, slv, **kwargs):
 
     """Function:  is_logs_synced
 
@@ -424,138 +421,174 @@ def is_logs_synced(MST, SLV):
         position match that the Slave's Relay log file name and log position.
 
     Arguments:
-        (input) MST -> Master class instance.
-        (input) SLV -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (output) True or False -> True is return if logs are in sync.
 
     """
 
     is_synced = True
 
-    if MST.gtid_mode and SLV.gtid_mode:
-        if MST.exe_gtid != SLV.exe_gtid:
+    if mst.gtid_mode and slv.gtid_mode:
+        if mst.exe_gtid != slv.exe_gtid:
             is_synced = False
 
     # Non-GTID server.
     else:
-        if MST.file != SLV.relay_mst_log or MST.pos != SLV.exec_mst_pos:
+        if mst.file != slv.relay_mst_log or mst.pos != slv.exec_mst_pos:
             is_synced = False
 
     return is_synced
 
 
-def is_rep_delay(MST, SLV, opt):
+def is_rep_delay(mst, slv, opt, **kwargs):
 
     """Function:  is_rep_delay
 
     Description:  Checks to see if there is a delay in the replication system.
-        There is an IO and SQL check, determined by arguments.  Will
-        determine whether to use GTIDs or the file and log positions
-        based on the GTID settings in Master and Slave.
+        It will either do a IO or SQL thread check.
 
     Arguments:
-        (input) MST -> Master class instance.
-        (input) SLV -> Slave class instance.
-        (input) opt -> IO or SQL - Determines which thread to check.
-        (output) Return True if delay detected, False if no delay.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
+        (input) opt -> IO|SQL - Determines which thread to check.
+        (output) Return True|False if delay detected.
 
     """
 
     is_delay = False
 
-    #  IO thread check.
     if opt == "IO":
+        is_delay = _io_rep_chk(mst, slv)
 
-        if MST.gtid_mode and SLV.gtid_mode:
-            if MST.exe_gtid != SLV.retrieved_gtid:
-                is_delay = True
-
-        else:
-            if MST.file != SLV.mst_log or MST.pos != SLV.mst_read_pos:
-                is_delay = True
-
-    # Assume SQL thread check.
     else:
-        if MST.gtid_mode and SLV.gtid_mode:
-            if MST.exe_gtid != SLV.exe_gtid:
-                is_delay = True
-
-        else:
-            if MST.file != SLV.relay_mst_log or MST.pos != SLV.exec_mst_pos:
-                is_delay = True
+        is_delay = _sql_rep_chk(mst, slv)
 
     return is_delay
 
 
-def optimize_tbl(SERVER, db, tbl, res_set="all", **kwargs):
+def _io_rep_chk(mst, slv, is_delayed=False, **kwargs):
+
+    """Function:  _io_rep_chk
+
+    Description:  Does an IO thread check in the replication system.  Will
+        determine whether to use GTIDs or the file and log positions
+        based on the GTID settings in master and slave.
+
+    Arguments:
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
+        (input) is_delayed -> True|False if delay detected.
+        (output) is_delayed -> True|False if delay detected.
+
+    """
+
+    if mst.gtid_mode and slv.gtid_mode:
+        if mst.exe_gtid != slv.retrieved_gtid:
+            is_delayed = True
+
+    else:
+        if mst.file != slv.mst_log or mst.pos != slv.mst_read_pos:
+            is_delayed = True
+
+    return is_delayed
+
+
+def _sql_rep_chk(mst, slv, is_delayed=False, **kwargs):
+
+    """Function:  _sql_rep_chk
+
+    Description:  Does an SQL thread check in the replication system.  Will
+        determine whether to use GTIDs or the file and log positions
+        based on the GTID settings in master and slave.
+
+    Arguments:
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
+        (input) is_delayed -> True|False if delay detected.
+        (output) is_delayed -> True|False if delay detected.
+
+    """
+
+    if mst.gtid_mode and slv.gtid_mode:
+        if mst.exe_gtid != slv.exe_gtid:
+            is_delayed = True
+
+    else:
+        if mst.file != slv.relay_mst_log or mst.pos != slv.exec_mst_pos:
+            is_delayed = True
+
+    return is_delayed
+
+
+def optimize_tbl(server, db, tbl, **kwargs):
 
     """Function:  optimize_tbl
 
     Description:  Runs a check table command against a table.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
         (input) db -> Database name.
         (input) tbl -> Table name.
-        (input) res_set -> row|all - Returning result set format.
         (output) Return check table results.
 
     """
 
-    # Must have back ticks around names if they have special characters.
-    sql_cmd = "optimize table `" + db + "`.`" + tbl + "`"
+    # Must have back ticks around names in case they have special characters.
+    cmd = "optimize table `" + db + "`.`" + tbl + "`"
 
-    return SERVER.sql(sql_cmd, res_set)
+    return server.col_sql(cmd)
 
 
-def purge_bin_logs(SERVER, prg_type, cutoff):
+def purge_bin_logs(server, prg_type, cutoff, **kwargs):
 
     """Function:  purge_bin_logs
 
     Description:  Runs the purge binary logs command.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
         (input) prg_type -> Purge type:  BEFORE or TO.
         (input) cutoff -> Depends on the prg_type.
-            => BEFORE -> cutoff will be a date and time.
-            => TO     -> cutoff will be a binary log file name.
+                => BEFORE -> cutoff will be a date and time.
+                => TO     -> cutoff will be a binary log file name.
 
     """
 
-    sql_cmd = "purge binary logs " + prg_type + " '" + cutoff + "'"
-    SERVER.sql(sql_cmd)
+    cmd = "purge binary logs " + prg_type + " '" + cutoff + "'"
+    server.cmd_sql(cmd)
 
 
-def reset_master(SERVER):
+def reset_master(server, **kwargs):
 
     """Function:  reset_master
 
     Description:  Run reset master command.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
 
     """
 
-    SERVER.sql("reset master")
+    server.cmd_sql("reset master")
 
 
-def reset_slave(SERVER):
+def reset_slave(server, **kwargs):
 
     """Function:  reset_slave
 
-    Description:  Clear replication configuration on the slave.
+    Description:  Clear replication configuration in a slave.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
 
     """
 
-    SERVER.sql("reset slave all")
+    server.cmd_sql("reset slave all")
 
 
-def select_wait_until(SERVER, gtid_pos, timeout=0, res_set="row"):
+def select_wait_until(server, gtid_pos, timeout=0, **kwargs):
 
     """Function:  select_wait_until
 
@@ -563,11 +596,10 @@ def select_wait_until(SERVER, gtid_pos, timeout=0, res_set="row"):
         is reached, which ever comes first.
 
     Arguments:
-        (input) SERVER -> Server instance.
+        (input) server -> Server instance.
         (input) gtid_pos -> GTID Position.
         (input) timeout -> Number of seconds before exiting command.
             Warning:  If set to 0 (zero), will wait indefinitely.
-        (input) res_set -> row or all - Returning result set.
         (output) -1, 0, >0 - Return status of command.
             -1: Timeout reached and did not reach GTID position.
             0:  Already at GTID position, no transactions processed.
@@ -575,11 +607,11 @@ def select_wait_until(SERVER, gtid_pos, timeout=0, res_set="row"):
 
     """
 
-    return SERVER.sql("select wait_until_sql_thread_after_gtids(%s, %s)",
-                      res_set, (gtid_pos, timeout))
+    return server.cmd_sql("select wait_until_sql_thread_after_gtids(%s, %s)" \
+                          % (gtid_pos, timeout))
 
 
-def start_slave_until(SLV, log_file=None, log_pos=None, **kwargs):
+def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
 
     """Function:  start_slave_until
 
@@ -588,7 +620,7 @@ def start_slave_until(SLV, log_file=None, log_pos=None, **kwargs):
         includes the 'before' and 'after' option for the GTID syntax.
 
     Arguments:
-        (input) SLV -> Slave class instance.
+        (input) slv -> Slave instance.
         (input) log_file -> Binary log file name.
         (input) log_pos -> Binary log position.
         (input) **kwargs:
@@ -608,27 +640,29 @@ def start_slave_until(SLV, log_file=None, log_pos=None, **kwargs):
     # Non-GTID MySQL.
     if log_file and log_pos:
         start_slave_until = start_slv + \
-            """master_log_file=%s, master_log_pos=%s"""
-        master_pos_wait = """select master_pos_wait(%s, %s)"""
-
-        SLV.sql(start_slave_until, "", (log_file, log_pos))
-        SLV.sql(master_pos_wait, "", (log_file, log_pos))
+            """master_log_file='%s', master_log_pos='%s'""" \
+            % (log_file, log_pos)
+        master_pos_wait = """select master_pos_wait('%s', '%s')""" \
+            % (log_file, log_pos)
+        slv.cmd_sql(start_slave_until)
+        slv.cmd_sql(master_pos_wait)
 
     # GTID MySQL.
-    elif SLV.gtid_mode and gtid:
-        start_slave_until = start_slv + """sql_""" + stop_pos + """_gtids=%s"""
-
-        SLV.sql(start_slave_until, "", (gtid))
+    elif slv.gtid_mode and gtid:
+        start_slave_until = start_slv + """sql_""" + stop_pos + \
+            """_gtids='%s'""" % (gtid)
+        slv.cmd_sql(start_slave_until)
 
     else:
         err_flag = True
         err_msg = "One of the arguments is missing."
+
         return err_flag, err_msg
 
     return err_flag, err_msg
 
 
-def switch_to_master(MST, SLV, timeout=0):
+def switch_to_master(mst, slv, timeout=0, **kwargs):
 
     """Function:  switch_to_master
 
@@ -636,10 +670,10 @@ def switch_to_master(MST, SLV, timeout=0):
         Slave to the new Master.
 
     Arguments:
-        (input) MST -> Master class instance.
-        (input) SLV -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (input) timeout -> Number of seconds to wait for return.
-            NOTE:  0 (zero) means wait indefinitely.
+            NOTE:  0 (zero) Wait indefinitely.
         (output) -1, 0, >0 - Return status of command.
             -1: Timeout reached and did not reach GTID position.
             0:  Already at GTID position, no transactions processed.
@@ -648,71 +682,86 @@ def switch_to_master(MST, SLV, timeout=0):
     """
 
     # Wait for relay log to empty.
-    SLV.upd_gtid_pos()
-    status_flag = select_wait_until(SLV, SLV.retrieved_gtidset, timeout)
+    slv.upd_gtid_pos()
+    status_flag = next(iter(select_wait_until(slv, slv.retrieved_gtidset,
+                                              timeout).values()))
 
     if status_flag >= 0:
-        mysql_class.slave_stop(SLV)
-        change_master_to(MST, SLV)
-        mysql_class.slave_start(SLV)
+        mysql_class.slave_stop(slv)
+        change_master_to(mst, slv)
+        mysql_class.slave_start(slv)
 
     return status_flag
 
 
-def sync_delay(MST, SLV, opt):
+def sync_delay(mst, slv, opt, **kwargs):
 
     """Function:  sync_delay
 
     Description:  Checks to see if there is an IO or SQL delay between the
-        master and the slave.  Calls functions to sync up between the master
-        and slave.
+        master and the slave.
 
     Arguments:
-        (input) MST -> Master class instance.
-        (input) SLV -> Slave class instance.
-        (input) opt -> IO or SQL - Determines which thread to check.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
+        (input) opt -> IO|SQL - Which type of thread to check.
 
     """
 
-    if is_rep_delay(MST, SLV, opt):
+    if is_rep_delay(mst, slv, opt):
 
-        # IO check.
         if opt == "IO":
+            _io_delay_chk(mst, slv)
 
-            # Start slave until requested position for GTID or non-GTID.
-            if MST.gtid_mode and SLV.gtid_mode:
-                # By default using the "sql_after_gtid" option.
-                err_flag, err_msg = start_slave_until(SLV, gtid=MST.exe_gtid,
-                                                      stop_pos="after")
+        print("Master: {0}\tFile: {1}, Position: {2}".format(mst.name,
+                                                             mst.file,
+                                                             mst.pos))
 
-                if err_flag:
-                    print("Error: {0}" % (err_msg))
+        if mst.gtid_mode:
+            print("\tGTID: {0}".format(mst.exe_gtid))
 
-            else:
-                err_flag, err_msg = start_slave_until(SLV, MST.file, MST.pos)
-
-                if err_flag:
-                    print("Error: {0}" % (err_msg))
-
-        print("Master: {0}\tFile: {1}, Position: {2}".
-              format(MST.name, MST.file, MST.pos))
-
-        if MST.gtid_mode:
-            print("\tGTID: {0}".format(MST.exe_gtid))
-
-        # Wait until position is reached for GTID or non-GTID.
-        if MST.gtid_mode and SLV.gtid_mode:
-            wait_until(SLV, opt, gtid=MST.exe_gtid)
+        # Wait until position has reached for GTID or non-GTID.
+        if mst.gtid_mode and slv.gtid_mode:
+            wait_until(slv, opt, gtid=mst.exe_gtid)
 
         else:
-            wait_until(SLV, opt, MST.file, MST.pos)
+            wait_until(slv, opt, mst.file, mst.pos)
 
-        # IO check.
         if opt == "IO":
-            SLV.stop_slave()
+            slv.stop_slave()
 
 
-def sync_rep_slv(MST, SLV, **kwargs):
+def _io_delay_chk(mst, slv, **kwargs):
+
+    """Function:  _io_delay_chk
+
+    Description:  Checks to see if there is an IO delay between the master and
+        slave.  Calls function to sync up between the master and slave.
+
+    Arguments:
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
+
+    """
+
+    # Start slave until requested position for GTID or non-GTID.
+    if mst.gtid_mode and slv.gtid_mode:
+
+        # Using the "sql_after_gtid" option.
+        err_flag, err_msg = start_slave_until(slv, gtid=mst.exe_gtid,
+                                              stop_pos="after")
+
+        if err_flag:
+            print("Error: %s" % (err_msg))
+
+    else:
+        err_flag, err_msg = start_slave_until(slv, mst.file, mst.pos)
+
+        if err_flag:
+            print("Error: %s" % (err_msg))
+
+
+def sync_rep_slv(mst, slv, **kwargs):
 
     """Function:  sync_rep_slv
 
@@ -720,8 +769,8 @@ def sync_rep_slv(MST, SLV, **kwargs):
         sync is not completed.
 
     Arguments:
-        (input) MST -> Master class instance.
-        (input) SLV -> Slave class instance.
+        (input) mst -> Master instance.
+        (input) slv -> Slave instance.
         (output) err_flag -> True|False - if an error has occurred.
         (output) err_msg -> Error message.
 
@@ -731,42 +780,38 @@ def sync_rep_slv(MST, SLV, **kwargs):
     err_flag = False
     err_msg = None
 
-    # Slave isn't under master.
-    if SLV.mst_id != MST.server_id:
+    if slv.mst_id != mst.server_id:
         err_flag = True
         err_msg = "Error:  Slave's Master ID %s doesn't match Master ID %s." \
-                  % (SLV.mst_id, MST.server_id)
+                  % (slv.mst_id, mst.server_id)
 
         return err_flag, err_msg
 
-    if SLV.is_slv_running():
-        chg_slv_state([SLV], "stop")
+    if slv.is_slv_running():
+        chg_slv_state([slv], "stop")
 
-    # Master and slave are not synced.
-    if not is_logs_synced(MST, SLV):
+    if not is_logs_synced(mst, slv):
 
         for opt in option:
-            sync_delay(MST, SLV, opt)
+            sync_delay(mst, slv, opt)
 
-            if not is_logs_synced(MST, SLV):
+            if not is_logs_synced(mst, slv):
                 err_flag = True
-                err_msg = "Error:  Server %s not in sync with master." % (SLV)
+                err_msg = "Error:  Server %s not in sync with master." % (slv)
 
     return err_flag, err_msg
 
 
-def wait_until(SLV, opt, log_file=None, log_pos=None, **kwargs):
+def wait_until(slv, opt, log_file=None, log_pos=None, **kwargs):
 
     """Function:  wait_until
 
-    Description:  Waits until the slave's thread reaches the master's log file
-        and position or the Executed GTID depending on whether the server is
-        GTID enabled.  Infinite loop until this completes or interrupted by the
-        user.
+    Description:  Determines whether to run an IO or SQL check in the Slave
+        database server.
 
     Arguments:
-        (input) SLV -> Slave class instance.
-        (input) opt -> IO or SQL - Determines which thread to check.
+        (input) slv -> Slave instance.
+        (input) opt -> IO|SQL - Which type of thread to check.
         (input) log_file -> Master binary log file name.
         (input) log_pos -> Master binary log position.
         (input) **kwargs:
@@ -775,40 +820,81 @@ def wait_until(SLV, opt, log_file=None, log_pos=None, **kwargs):
     """
 
     gtid = kwargs.get("gtid", None)
+    slv.upd_slv_status()
+
+    if opt == "IO":
+        _io_wait_chk(slv, gtid, log_file, log_pos)
+
+    else:
+        _sql_wait_chk(slv, gtid, log_file, log_pos)
+
+
+def _io_wait_chk(slv, gtid, log_file, log_pos, **kwargs):
+
+    """Function:  _io_wait_chk
+
+    Description:  Checks the slave's IO thread to to see if the server has
+        reached the master's log file and position (non-GTID enabled) or the
+        GTID position (GTID enabled).  Loops until the process completes or
+        manual interruption.
+
+    Arguments:
+        (input) slv -> Slave instance.
+        (input) gtid -> GTID position.
+        (input) log_file -> Master's binary log file name.
+        (input) log_pos -> Master's binary log position.
+
+    """
 
     while True:
-        time.sleep(3)
-        SLV.upd_slv_status()
+        if slv.gtid_mode:
+            print("Slave:  {0}\t Retrieved GTID: {1}".
+                  format(slv.name, slv.retrieved_gtid))
 
-        # IO thread check.
-        if opt == "IO":
+            if slv.retrieved_gtid == gtid:
+                return
 
-            if SLV.gtid_mode:
-                print("Slave:  {0}\t Retrieved GTID: {1}".
-                      format(SLV.name, SLV.retrieved_gtid))
-
-                if SLV.retrieved_gtid == gtid:
-                    return
-
-            else:
-                print("Slave:  {0}\tFile: {1}, Position: {2}".
-                      format(SLV.name, SLV.mst_log, SLV.mst_read_pos))
-
-                if SLV.mst_log == log_file and SLV.mst_read_pos == log_pos:
-                    return
-
-        # Assume SQL thread check.
         else:
-            if SLV.gtid_mode:
-                print("Slave:  {0}\tGTID: {1}".format(SLV.name, SLV.exe_gtid))
+            print("Slave:  {0}\tFile: {1}, Position: {2}".
+                  format(slv.name, slv.mst_log, slv.mst_read_pos))
 
-                if SLV.exe_gtid == gtid:
-                    return
+            if slv.mst_log == log_file and slv.mst_read_pos == log_pos:
+                return
 
-            else:
-                print("Slave: {0}\tcurrent file: {1}, current position: {2}".
-                      format(SLV.name, SLV.relay_mst_log, SLV.exec_mst_pos))
+        time.sleep(3)
+        slv.upd_slv_status()
 
-                if SLV.relay_mst_log == log_file \
-                        and SLV.exec_mst_pos == log_pos:
-                    return
+
+def _sql_wait_chk(slv, gtid, log_file, log_pos, **kwargs):
+
+    """Function:  _sql_wait_chk
+
+    Description:  Checks the slave's SQL thread to to see if the server has
+        reached the master's log file and position (non-GTID enabled) or the
+        GTID position (GTID enabled).  Loops until the process completes or
+        manual interruption.
+
+    Arguments:
+        (input) slv -> Slave instance.
+        (input) gtid -> GTID position.
+        (input) log_file -> Master's binary log file name.
+        (input) log_pos -> Master's binary log position.
+
+    """
+
+    while True:
+        if slv.gtid_mode:
+            print("Slave:  {0}\tGTID: {1}".format(slv.name, slv.exe_gtid))
+
+            if slv.exe_gtid == gtid:
+                return
+
+        else:
+            print("Slave: {0}\tcurrent file: {1}, current position: {2}".
+                  format(slv.name, slv.relay_mst_log, slv.exec_mst_pos))
+
+            if slv.relay_mst_log == log_file and slv.exec_mst_pos == log_pos:
+                return
+
+        time.sleep(3)
+        slv.upd_slv_status()
