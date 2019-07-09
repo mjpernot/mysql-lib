@@ -1354,7 +1354,7 @@ class SlaveRep(Rep):
 
     Methods:
         __init__
-        rep_conn
+        connect
         stop_slave
         start_slave
         show_slv_state
@@ -1459,9 +1459,9 @@ class SlaveRep(Rep):
         self.read_only = None
         self.purged_gtidset = None
 
-    def rep_conn(self):
+    def connect(self):
 
-        """Method:  rep_conn
+        """Method:  connect
 
         Description:  Setups a connection to a replication server and updates
             the slave replication attributes.

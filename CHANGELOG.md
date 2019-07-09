@@ -45,7 +45,7 @@ Breaking Change
 - mysql_class.compare_sets:  Changed argument call to \_inner_compare to include uuid and rngs objects.
 - mysql_class.SlaveRep.upd_slv_status:  Modified to use mysql.connector library.
 - mysql_class.SlaveRep.\_\_init\_\_:  Modified to use mysql.connector library.
-- mysql_class.SlaveRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to rep_conn() method.
+- mysql_class.SlaveRep.\_\_init\_\_:  Removed the connection to the replication server.  Moved to SlaveRep.connect() method.
 - mysql_class.MasterRep.upd_mst_status:  Replaced log stats update with call to upd_log_stats method.
 - mysql_class.MasterRep.show_slv_hosts:  Modified to use mysql.connector library.
 - mysql_class.MasterRep.show_slv_hosts:  Removed res_set from the function argument list as it is no longer required.
@@ -89,7 +89,7 @@ Breaking Change
 - mysql_libs.\_sql_wait_chk:  Create private function for wait_until() to reduce factor complexity.
 - mysql_libs.\_io_wait_chk:  Created private function for wait_until() to reduce factor complexity.
 - mysql_class.\_inner_compare:  Created private function for compare_sets() to reduce factor complexity.
-- mysql_class.SlaveRep.rep_conn:  Setups a connection to a replication server.
+- mysql_class.SlaveRep.connect:  Setups a connection to a replication server.
 - mysql_class.MasterRep.connect:  Setups a connection to a replication server.
 - mysql_class.Server.is_connected:  Checks to see if the connection is still active.
 - mysql_class.Server.reconnect:  Reconnects to database if connect is non-active.
