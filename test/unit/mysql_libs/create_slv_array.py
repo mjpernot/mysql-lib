@@ -34,6 +34,47 @@ import version
 __version__ = version.__version__
 
 
+class SlaveRep(object):
+
+    """Class:  SlaveRep
+
+    Description:  Class stub holder for mysql_class.SlaveRep class.
+
+    Super-Class:
+
+    Sub-Classes:
+
+    Methods:
+        __init__ -> Class initialization.
+        connect ->  Stub holder for mysql_class.SlaveRep.connect method. 
+
+    """
+
+    def __init__(self):
+
+        """Method:  __init__
+
+        Description:  Class initialization.
+
+        Arguments:
+
+        """
+
+        self.conn = True
+
+    def connect(self):
+
+        """Method:  upd_slv_status
+
+        Description:  Stub holder for mysql_class.SlaveRep.connect method.
+
+        Arguments:
+
+        """
+
+        return True
+
+
 class UnitTest(unittest.TestCase):
 
     """Class:  UnitTest
@@ -46,6 +87,9 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_add_down_conn_false -> Test with add_down and conn set to false.
+        test_add_down_false -> Test with add_down option set to false.
+        test_add_down_true -> Test with add_down option set to true.
         test_create_slv_array -> Test create_slv_array function.
 
     """
@@ -60,10 +104,60 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        self.slave = SlaveRep()
         self.cfg_array = {"name": "name", "sid": "sid", "user": "user",
                           "passwd": "pwd", "serv_os": "Linux",
                           "host": "hostname", "port": 3306,
                           "cfg_file": "cfg_file"}
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_add_down_conn_false(self, mock_rep):
+
+        """Function:  test_add_down_conn_false
+
+        Description:  Test with add_down and conn set to false.
+
+        Arguments:
+
+        """
+
+        self.slave.conn = False
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array], add_down=False)
+
+        self.assertEqual(len(slaves), 0)
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_add_down_false(self, mock_rep):
+
+        """Function:  test_add_down_false
+
+        Description:  Test with add_down option set to false.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array], add_down=False)
+
+        self.assertEqual(len(slaves), 1)
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_add_down_true(self, mock_rep):
+
+        """Function:  test_add_down_true
+
+        Description:  Test with add_down option set to true.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array])
+
+        self.assertEqual(len(slaves), 1)
 
     @mock.patch("mysql_libs.mysql_class.SlaveRep")
     def test_create_slv_array(self, mock_rep):
@@ -76,10 +170,10 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_rep.return_value = "Rep_Instance"
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array])
 
-        self.assertEqual(mysql_libs.create_slv_array([self.cfg_array]),
-                         ["Rep_Instance"])
+        self.assertEqual(len(slaves), 1)
 
 
 if __name__ == "__main__":
