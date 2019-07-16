@@ -354,9 +354,9 @@ def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
     """
 
     qry = """select table_name from information_schema.tables where
-        table_type = %(tbl_type)s and table_schema = %(db)s"""
+        table_type = '%s' and table_schema = '%s'""" % (tbl_type, db)
 
-    return server.sql(qry, {"tbl_type": tbl_type, "db": db})
+    return server.col_sql(qry)
 
 
 def find_name(slaves, name, **kwargs):

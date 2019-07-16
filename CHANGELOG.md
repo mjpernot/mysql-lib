@@ -7,6 +7,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ## [4.0.1] - 2019-07-16
 ### Fixed
 - mysql_libs.create_slv_array:  Added connect call for each slave in array.
+- mysql_libs.fetch_tbl_dict:  Changed sql() call to col_sql to produce correct format.
 
 
 ## [4.0.0] - 2019-07-09
