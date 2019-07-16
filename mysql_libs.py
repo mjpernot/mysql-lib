@@ -223,7 +223,7 @@ def create_slv_array(cfg_array, **kwargs):
                                         getattr(machine, slv["serv_os"])(),
                                         slv["host"], int(slv["port"]),
                                         slv["cfg_file"])
-
+        slv_inst.connect()
         slaves.append(slv_inst)
 
     return slaves
