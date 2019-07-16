@@ -122,8 +122,6 @@ class UnitTest(unittest.TestCase):
         slaves = mysql_libs.create_slv_array([self.cfg_array])
 
         self.assertEqual(len(slaves), 1)
-#        self.assertEqual(mysql_libs.create_slv_array([self.cfg_array]),
-#                         ["Rep_Instance"])
 
 
 if __name__ == "__main__":
