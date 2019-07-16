@@ -24,7 +24,6 @@
 
   * Local class/library dependencies within the program structure.
     - lib/machine
-    - lib/errors
     - lib/gen_libs
 
 
