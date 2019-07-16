@@ -202,7 +202,7 @@ def create_instance(cfg_file, dir_path, cls_name, **kwargs):
                     extra_def_file=cfg.__dict__.get("extra_def_file", None))
 
 
-def create_slv_array(cfg_array, **kwargs):
+def create_slv_array(cfg_array, add_down=True, **kwargs):
 
     """Function:  create_slv_array
 
@@ -210,6 +210,7 @@ def create_slv_array(cfg_array, **kwargs):
 
     Arguments:
         (input) cfg_array -> List of configurations.
+        (input) add_down -> True|False - Add any down slaves to the array.
         (output) slaves -> List of slave replication instances.
 
     """
@@ -224,7 +225,10 @@ def create_slv_array(cfg_array, **kwargs):
                                         slv["host"], int(slv["port"]),
                                         slv["cfg_file"])
         slv_inst.connect()
-        slaves.append(slv_inst)
+
+        if add_down or slv_inst.conn:
+            slaves.append(slv_inst)
+            
 
     return slaves
 
