@@ -60,7 +60,7 @@ class SlaveRep(object):
 
         """
 
-        pass
+        self.conn = True
 
     def connect(self):
 
@@ -87,6 +87,9 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_add_down_conn_false -> Test with add_down and conn set to false.
+        test_add_down_false -> Test with add_down option set to false.
+        test_add_down_true -> Test with add_down option set to true.
         test_create_slv_array -> Test create_slv_array function.
 
     """
@@ -106,6 +109,55 @@ class UnitTest(unittest.TestCase):
                           "passwd": "pwd", "serv_os": "Linux",
                           "host": "hostname", "port": 3306,
                           "cfg_file": "cfg_file"}
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_add_down_conn_false(self, mock_rep):
+
+        """Function:  test_add_down_conn_false
+
+        Description:  Test with add_down and conn set to false.
+
+        Arguments:
+
+        """
+
+        self.slave.conn = False
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array], add_down=False)
+
+        self.assertEqual(len(slaves), 0)
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_add_down_false(self, mock_rep):
+
+        """Function:  test_add_down_false
+
+        Description:  Test with add_down option set to false.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array], add_down=False)
+
+        self.assertEqual(len(slaves), 1)
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_add_down_true(self, mock_rep):
+
+        """Function:  test_add_down_true
+
+        Description:  Test with add_down option set to true.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array])
+
+        self.assertEqual(len(slaves), 1)
 
     @mock.patch("mysql_libs.mysql_class.SlaveRep")
     def test_create_slv_array(self, mock_rep):
