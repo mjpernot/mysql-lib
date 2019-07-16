@@ -34,6 +34,47 @@ import version
 __version__ = version.__version__
 
 
+class SlaveRep(object):
+
+    """Class:  SlaveRep
+
+    Description:  Class stub holder for mysql_class.SlaveRep class.
+
+    Super-Class:
+
+    Sub-Classes:
+
+    Methods:
+        __init__ -> Class initialization.
+        connect ->  Stub holder for mysql_class.SlaveRep.connect method. 
+
+    """
+
+    def __init__(self):
+
+        """Method:  __init__
+
+        Description:  Class initialization.
+
+        Arguments:
+
+        """
+
+        pass
+
+    def connect(self):
+
+        """Method:  upd_slv_status
+
+        Description:  Stub holder for mysql_class.SlaveRep.connect method.
+
+        Arguments:
+
+        """
+
+        return True
+
+
 class UnitTest(unittest.TestCase):
 
     """Class:  UnitTest
@@ -60,6 +101,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        self.slave = SlaveRep()
         self.cfg_array = {"name": "name", "sid": "sid", "user": "user",
                           "passwd": "pwd", "serv_os": "Linux",
                           "host": "hostname", "port": 3306,
@@ -76,10 +118,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_rep.return_value = "Rep_Instance"
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array])
 
-        self.assertEqual(mysql_libs.create_slv_array([self.cfg_array]),
-                         ["Rep_Instance"])
+        self.assertEqual(len(slaves), 1)
+#        self.assertEqual(mysql_libs.create_slv_array([self.cfg_array]),
+#                         ["Rep_Instance"])
 
 
 if __name__ == "__main__":
