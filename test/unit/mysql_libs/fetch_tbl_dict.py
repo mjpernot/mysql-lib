@@ -62,15 +62,14 @@ class Server(object):
 
         pass
 
-    def sql(self, cmd, var):
+    def col_sql(self, qry):
 
-        """Method:  sql
+        """Method:  col_sql
 
-        Description:  Stub holder for mysql_class.Server.sql method.
+        Description:  Stub holder for mysql_class.Server.col_sql method.
 
         Arguments:
-            (input) cmd -> Query command.
-            (input) var -> Global variable name.
+            (input) qry -> Query command.
 
         """
 

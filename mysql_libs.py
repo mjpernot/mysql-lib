@@ -202,7 +202,7 @@ def create_instance(cfg_file, dir_path, cls_name, **kwargs):
                     extra_def_file=cfg.__dict__.get("extra_def_file", None))
 
 
-def create_slv_array(cfg_array, **kwargs):
+def create_slv_array(cfg_array, add_down=True, **kwargs):
 
     """Function:  create_slv_array
 
@@ -210,6 +210,7 @@ def create_slv_array(cfg_array, **kwargs):
 
     Arguments:
         (input) cfg_array -> List of configurations.
+        (input) add_down -> True|False - Add any down slaves to the array.
         (output) slaves -> List of slave replication instances.
 
     """
@@ -223,8 +224,11 @@ def create_slv_array(cfg_array, **kwargs):
                                         getattr(machine, slv["serv_os"])(),
                                         slv["host"], int(slv["port"]),
                                         slv["cfg_file"])
+        slv_inst.connect()
 
-        slaves.append(slv_inst)
+        if add_down or slv_inst.conn:
+            slaves.append(slv_inst)
+            
 
     return slaves
 
@@ -354,9 +358,9 @@ def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
     """
 
     qry = """select table_name from information_schema.tables where
-        table_type = %(tbl_type)s and table_schema = %(db)s"""
+        table_type = '%s' and table_schema = '%s'""" % (tbl_type, db)
 
-    return server.sql(qry, {"tbl_type": tbl_type, "db": db})
+    return server.col_sql(qry)
 
 
 def find_name(slaves, name, **kwargs):
@@ -607,7 +611,7 @@ def select_wait_until(server, gtid_pos, timeout=0, **kwargs):
 
     """
 
-    return server.cmd_sql("select wait_until_sql_thread_after_gtids(%s, %s)" \
+    return server.cmd_sql("select wait_until_sql_thread_after_gtids(%s, %s)"
                           % (gtid_pos, timeout))
 
 
