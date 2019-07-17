@@ -1458,6 +1458,8 @@ class SlaveRep(Rep):
         self.retry = None
         self.read_only = None
         self.purged_gtidset = None
+        self.retrieved_gtidset = None
+        self.exe_gtidset = None
 
     def connect(self):
 
