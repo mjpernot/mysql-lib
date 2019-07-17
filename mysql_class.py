@@ -1635,7 +1635,7 @@ class SlaveRep(Rep):
         # Handle MySQL 5.5 or 5.6 servers.
         if self.gtid_mode:
             self.purged_gtidset = GTIDSet(fetch_sys_var(
-                self, "GTID_PURGED", level="global")["GTID_PURGED"] or "0:0")
+                self, "GTID_PURGED", level="global")["gtid_purged"] or "0:0")
 
     def is_slave_up(self):
 
