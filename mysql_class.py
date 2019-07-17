@@ -1607,11 +1607,11 @@ class SlaveRep(Rep):
         self.exe_gtid = data.get("Executed_Gtid_Set", None)
         self.auto_pos = data.get("Auto_Position", None)
 
-        self.run = fetch_global_var(self, "slave_running")["slave_running"]
+        self.run = fetch_global_var(self, "slave_running")["Slave_running"]
         self.tmp_tbl = fetch_global_var(
-            self, "slave_open_temp_tables")["slave_open_temp_tables"]
+            self, "slave_open_temp_tables")["Slave_open_temp_tables"]
         self.retry = fetch_global_var(
-            self, "slave_retried_transactions")["slave_retried_transactions"]
+            self, "slave_retried_transactions")["Slave_retried_transactions"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
         self.upd_gtid_pos()
