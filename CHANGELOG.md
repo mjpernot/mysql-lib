@@ -6,6 +6,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [4.0.2] - 2019-07-17
 ### Fixed
+- mysql_class.Server.is_connected:  Added check to ensure self.conn has been initialized before checking connection.
 - mysql_class.SlaveRep.upd_slv_status:  Correctly referenced several global variables using the fetch_global_var call.
 - mysql_class.SlaveRep.upd_gtid_pos:  Correctly referenced the system variable gtid_purged from fetch_sys_var call.
 - mysql_class.SlaveRep.\_\_init\_\_:  Added retrieved_gtidset and exe_gtidset attributes, which were not initialized properly.
