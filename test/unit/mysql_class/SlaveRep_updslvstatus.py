@@ -140,9 +140,9 @@ class UnitTest(unittest.TestCase):
 
         mock_gtid.return_value = True
         mock_var.return_value = {"read_only": "ON"}
-        mock_global.side_effect = [{"slave_running": "Value"},
-                                   {"slave_open_temp_tables": "Value"},
-                                   {"slave_retried_transactions": "Value"}]
+        mock_global.side_effect = [{"Slave_running": "Value"},
+                                   {"Slave_open_temp_tables": "Value"},
+                                   {"Slave_retried_transactions": "Value"}]
         mock_stat.return_value = self.show_stat
 
         mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,

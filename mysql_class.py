@@ -1034,7 +1034,11 @@ class Server(object):
 
         """
 
-        return self.conn.is_connected()
+        if self.conn:
+            return self.conn.is_connected()
+
+        else:
+            return False
 
     def reconnect(self):
 
@@ -1458,6 +1462,8 @@ class SlaveRep(Rep):
         self.retry = None
         self.read_only = None
         self.purged_gtidset = None
+        self.retrieved_gtidset = None
+        self.exe_gtidset = None
 
     def connect(self):
 
@@ -1605,11 +1611,11 @@ class SlaveRep(Rep):
         self.exe_gtid = data.get("Executed_Gtid_Set", None)
         self.auto_pos = data.get("Auto_Position", None)
 
-        self.run = fetch_global_var(self, "slave_running")["slave_running"]
+        self.run = fetch_global_var(self, "slave_running")["Slave_running"]
         self.tmp_tbl = fetch_global_var(
-            self, "slave_open_temp_tables")["slave_open_temp_tables"]
+            self, "slave_open_temp_tables")["Slave_open_temp_tables"]
         self.retry = fetch_global_var(
-            self, "slave_retried_transactions")["slave_retried_transactions"]
+            self, "slave_retried_transactions")["Slave_retried_transactions"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
         self.upd_gtid_pos()
@@ -1633,7 +1639,7 @@ class SlaveRep(Rep):
         # Handle MySQL 5.5 or 5.6 servers.
         if self.gtid_mode:
             self.purged_gtidset = GTIDSet(fetch_sys_var(
-                self, "GTID_PURGED", level="global")["GTID_PURGED"] or "0:0")
+                self, "GTID_PURGED", level="global")["gtid_purged"] or "0:0")
 
     def is_slave_up(self):
 
