@@ -228,7 +228,6 @@ def create_slv_array(cfg_array, add_down=True, **kwargs):
 
         if add_down or slv_inst.conn:
             slaves.append(slv_inst)
-            
 
     return slaves
 

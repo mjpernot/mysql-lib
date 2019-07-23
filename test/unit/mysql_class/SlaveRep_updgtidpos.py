@@ -87,7 +87,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_stat.return_value = self.show_stat
-        mock_var.return_value = {"GTID_PURGED": "35588520:333220-333227"}
+        mock_var.return_value = {"gtid_purged": "35588520:333220-333227"}
         mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
                                         self.sql_user, self.sql_pass,
                                         self.machine,
