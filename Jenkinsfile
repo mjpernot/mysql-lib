@@ -138,7 +138,7 @@ pipeline {
                                 "pattern": "./*.py",
                                 "recursive": false,
                                 "excludePatterns": [],
-                                "target": "generic-local/highpoint/mysql-lib/"
+                                "target": "pypi-proj-local/highpoint/mysql-lib/"
                             }
                         ]
                     }"""
