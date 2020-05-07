@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [4.0.3] - 2020-05-07
+
+
 ## [4.0.2] - 2019-07-17
 ### Fixed
 - mysql_class.Server.is_connected:  Added check to ensure self.conn has been initialized before checking connection.
