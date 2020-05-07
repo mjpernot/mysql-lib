@@ -45,6 +45,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_not_gtidset -> Test GTIDSet.union method with non-GTIDSet.
         test_gtidset_union -> Test GTIDSet.union method.
 
     """
@@ -62,6 +63,21 @@ class UnitTest(unittest.TestCase):
         self.gtidset1 = "35588520:333217-740055"
         self.gtidset2 = "35588520:1-740055,76012896:1-502108"
         self.results = {"35588520": [(1, 740055)], "76012896": [(1, 502108)]}
+
+    def test_not_gtidset(self):
+
+        """Function:  test_not_gtidset
+
+        Description:  Test GTIDSet.union method with non-GTIDSet.
+
+        Arguments:
+
+        """
+
+        gtid1 = mysql_class.GTIDSet(self.gtidset1)
+        gtid1.union(self.gtidset2)
+
+        self.assertEqual(gtid1.gtids, self.results)
 
     def test_gtidset_union(self):
 
