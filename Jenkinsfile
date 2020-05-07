@@ -52,6 +52,7 @@ pipeline {
                 ./test/unit/mysql_class/Server_fetchmstrepcfg.py
                 ./test/unit/mysql_class/Server_fetchslvrepcfg.py
                 ./test/unit/mysql_class/Server_getname.py
+                ./test/unit/mysql_class/Server_is_connected.py
                 ./test/unit/mysql_class/Server_updmstrepstat.py
                 ./test/unit/mysql_class/Server_updslvrepstat.py
                 ./test/unit/mysql_class/Server_updsrvperf.py
