@@ -40,10 +40,6 @@ class Server(object):
 
     Description:  Class stub holder for Server class.
 
-    Super-Class:  None
-
-    Sub-Classes:  None
-
     Methods:
         __init__ -> Class initialization.
         stop_slave -> Stub holder for mysql_class.Rep.stop_slave method.
@@ -59,7 +55,6 @@ class Server(object):
         Description:  Class initialization.
 
         Arguments:
-            None
 
         """
 
@@ -107,10 +102,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:
 
     Methods:
         setUp -> Initialize testing environment.
