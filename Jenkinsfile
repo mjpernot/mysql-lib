@@ -80,6 +80,7 @@ pipeline {
                 ./test/unit/mysql_class/SlaveRep_updslvstate.py
                 ./test/unit/mysql_class/SlaveRep_updslvtime.py
                 ./test/unit/mysql_class/SlaveRep_updgtidpos.py
+                ./test/unit/mysql_libs/_sql_wait_chk.py
                 ./test/unit/mysql_libs/analyze_tbl.py
                 ./test/unit/mysql_libs/change_master_to.py
                 ./test/unit/mysql_libs/checksum.py
