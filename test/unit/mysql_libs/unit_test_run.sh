@@ -5,6 +5,7 @@
 #   is located at.
 
 echo "Unit test: mysql_libs"  
+test/unit/mysql_libs/_io_wait_chk.py
 test/unit/mysql_libs/_sql_wait_chk.py
 test/unit/mysql_libs/analyze_tbl.py
 test/unit/mysql_libs/change_master_to.py
