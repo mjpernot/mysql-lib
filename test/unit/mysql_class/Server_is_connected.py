@@ -35,47 +35,6 @@ import version
 __version__ = version.__version__
 
 
-class Server(object):
-
-    """Class:  Server
-
-    Description:  Class which is a representation of a Server class.
-
-    Super-Class:  object
-
-    Sub-Classes:
-
-    Methods:
-        __init__ -> Initialize environment.
-        is_connected -> Test of is_connected method.
-
-    """
-
-    def __init__(self):
-
-        """Function:  __init__
-
-        Description:  Initialize environment.
-
-        Arguments:
-
-        """
-
-        pass
-
-    def is_connected(self):
-
-        """Function:  is_connected
-
-        Description:  Test of is_connected method.
-
-        Arguments:
-
-        """
-
-        return True
-
-
 class UnitTest(unittest.TestCase):
 
     """Class:  UnitTest
@@ -88,7 +47,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_is_connected_true -> Test is_connected is True.
+        test_is_connected_false -> Test is_connected is False.
 
     """
 
@@ -102,21 +61,33 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.conn = Server()
+        self.name = "Mysql_Server"
+        self.server_id = 10
+        self.sql_user = "mysql_user"
+        self.sql_pass = "my_pwd"
+        self.machine = "Linux"
+        self.host = "host_server"
+        self.port = 3307
+        self.defaults_file = "def_cfg_file"
+        self.extra_def_file = "extra_cfg_file"
 
-    def test_is_connected_true(self):
 
-        """Function:  test_is_connected_true
+    def test_is_connected_false(self):
 
-        Description:  Test is_connected is True.
+        """Function:  test_is_connected_false
+
+        Description:  Test is_connected is False.
 
         Arguments:
 
         """
 
-        mysqldb = self.conn
+        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
+                                     self.sql_pass, self.machine,
+                                     defaults_file=self.defaults_file)
 
-        self.assertTrue(mysqldb.is_connected())
+
+        self.assertFalse(mysqldb.is_connected())
 
 
 if __name__ == "__main__":
