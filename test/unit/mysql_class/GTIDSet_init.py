@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -45,6 +46,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_gtidset_basestring -> Test with basestring parameter.
         test_gtidset_init -> Test GTIDSet.__init__ method.
 
     """
@@ -61,6 +63,21 @@ class UnitTest(unittest.TestCase):
 
         self.gtidset = "35588520:333217-740055"
         self.results = {"35588520": [(333217, 740055)]}
+
+    @mock.patch("mysql_class.isinstance", mock.Mock(return_value=False))
+    def test_gtidset_basestring(self):
+
+        """Function:  test_gtidset_basestring
+
+        Description:  Test with basestring parameter.
+
+        Arguments:
+
+        """
+
+        gtid = mysql_class.GTIDSet(self.gtidset)
+
+        self.assertEqual(gtid.gtids, self.results)
 
     def test_gtidset_init(self):
 
