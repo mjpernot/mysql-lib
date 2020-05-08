@@ -57,6 +57,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        self.gtidset1 = "35588520:333217-740055"
+        self.gtidset2 = "35588520:333217-740045"
         self.name = "Mysql_Server"
         self.server_id = 10
         self.sql_user = "mysql_user"
@@ -67,8 +69,8 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-        self.show_stat = [{"Retrieved_Gtid_Set": "35588520:333217-740055",
-                           "Executed_Gtid_Set": "35588520:333217-740045"}]
+        self.show_stat = [{"Retrieved_Gtid_Set": self.gtidset1,
+                           "Executed_Gtid_Set": self.gtidset2}]
 
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -94,7 +96,7 @@ class UnitTest(unittest.TestCase):
         self.assertEqual((str(mysqlrep.retrieved_gtidset),
                           str(mysqlrep.exe_gtidset),
                           str(mysqlrep.purged_gtidset)),
-                         ("35588520:333217-740055", "35588520:333217-740045",
+                         (self.gtidset1, self.gtidset2,
                           "35588520:333220-333227"))
 
     @mock.patch("mysql_class.show_slave_stat")
@@ -118,7 +120,7 @@ class UnitTest(unittest.TestCase):
         self.assertEqual((str(mysqlrep.retrieved_gtidset),
                           str(mysqlrep.exe_gtidset),
                           str(mysqlrep.purged_gtidset)),
-                         ("35588520:333217-740055", "35588520:333217-740045",
+                         (self.gtidset1, self.gtidset2,
                           "None"))
 
 
