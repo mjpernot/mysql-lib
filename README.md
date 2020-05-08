@@ -61,7 +61,7 @@ vim {Other_Python_Project}/README.md
 Add the following lines under the "Install supporting classes and libraries" section.
 ```
    pip install -r requirements-mysql-lib.txt --target mysql_lib --trusted-host pypi.appdev.proj.coe.ic.gov
-   pip install -r requirements-python-lib.txt --target git_lib/lib --trusted-host pypi.appdev.proj.coe.ic.gov
+   pip install -r requirements-python-lib.txt --target mysql_lib/lib --trusted-host pypi.appdev.proj.coe.ic.gov
 ```
 
 ##### Add the general Mysql-Lib requirements to the other program's requirements.txt file.  Remove any duplicates.
