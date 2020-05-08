@@ -85,6 +85,7 @@ class UnitTest(unittest.TestCase):
 
         self.Slave1 = Server("Slave1", "Extra_Def_File")
         self.Slave2 = Server("Slave2")
+        self.err_msg = "Error Message"
 
     @unittest.skip("Bug:  gen_libs.chk_crt_file fails if None is passed.")
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
@@ -98,10 +99,10 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_chk.return_value = (False, "Error Message")
+        mock_chk.return_value = (False, self.err_msg)
 
         self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]),
-                         (False, "Error Message"))
+                         (False, self.err_msg))
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
     def test_chk_fails(self, mock_chk):
@@ -114,7 +115,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_chk.return_value = (False, "Error Message")
+        mock_chk.return_value = (False, self.err_msg)
         err_msg = ['Error Message', 'Slave1:  Extra_Def_File is missing.']
 
         self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]),
