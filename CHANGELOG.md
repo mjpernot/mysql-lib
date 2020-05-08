@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_libs.fetch_logs:  Returning correct data set results from query.
 
 ### Changed
+- mysql_libs.fetch_slv:  Refactored function to be more generic for general use.
 - Documentation updates.
 
 

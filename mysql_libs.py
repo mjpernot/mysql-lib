@@ -309,7 +309,7 @@ def fetch_logs(server, **kwargs):
     return server.col_sql("show binary logs")
 
 
-def fetch_slv(slaves, **kwargs):
+def fetch_slv(slaves, slv_name, **kwargs):
 
     """Function:  fetch_slv
 
@@ -317,12 +317,11 @@ def fetch_slv(slaves, **kwargs):
         error code and message if not found.
 
     Arguments:
-        (input) slave -> List of slave instances.
-        (input) **kwargs:
-            slv_mv -> Name of slave to be moved to new master.
-        (output) slv -> Slave instance.
+        (input) slaves -> List of slave instances.
+        (input) slv_name -> Name of slave to search for.
+        (output) slv -> None|Slave instance found.
         (output) err_flag -> True|False - if an error has occurred.
-        (output) err_msg -> Error message.
+        (output) err_msg -> None|Error message.
 
     """
 
@@ -332,11 +331,12 @@ def fetch_slv(slaves, **kwargs):
     slv = None
 
     # Locate slave in slave array.
-    slv = find_name(slaves, kwargs.get("slv_mv"))
+    slv = find_name(slaves, slv_name)
 
     if not slv:
         err_flag = True
-        err_msg = "Error:  No slave was found in the slave list."
+        err_msg = "Error:  Slave %s was not found in slave array." \
+                  % (slv_name)
 
     return slv, err_flag, err_msg
 
