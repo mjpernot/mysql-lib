@@ -89,7 +89,7 @@ class Cfg(object):
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
-        self.passwd = "pswd"
+        self.passwd = None
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
