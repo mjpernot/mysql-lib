@@ -936,6 +936,7 @@ class Server(object):
             (input) cmd -> SQL command.
             (input) res_set -> row|all - determines the result set.
             (input) params -> Position arguments for the SQL command.
+                NOTE:  Arguments must be in a list or tuple.
             (output) Returns cursor row iteration or single result set of data.
 
         """
@@ -999,6 +1000,7 @@ class Server(object):
         Arguments:
             (input) cmd -> Command SQL.
             (input) params -> Position arguments for the SQL command.
+                NOTE:  Arguments must be in a list or tuple.
             (output) data -> Results of the sql executed in list format.
 
         """
