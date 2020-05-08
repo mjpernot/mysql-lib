@@ -249,12 +249,12 @@ def crt_cmd(server, prog_name, **kwargs):
     """
 
     if server.extra_def_file:
-        # Include defaults extra file option in command, but no pswd.
+        # Include defaults extra file option in command, but no auth.
         return [prog_name, "--defaults-extra-file=" + server.extra_def_file,
                 "-u", server.sql_user, "-h", server.host, "-P",
                 str(server.port)]
     else:
-        # Command with pswd.
+        # Command with auth.
         return [prog_name, "-u", server.sql_user, "-p" + server.sql_pass, "-h",
                 server.host, "-P", str(server.port)]
 
