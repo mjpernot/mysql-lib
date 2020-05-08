@@ -39,11 +39,7 @@ class Server(object):
 
     """Class:  Server
 
-    Description:  Class which is a representation of a Server class.
-
-    Super-Class:  object
-
-    Sub-Classes:
+    Description:  Class stub holder for Server class.
 
     Methods:
         __init__ -> Initialize environment.
@@ -81,10 +77,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:
 
     Methods:
         setUp -> Initialize testing environment.

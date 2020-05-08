@@ -9,13 +9,13 @@ pipeline {
         stage('Test') {
             steps {
                 dir ('lib') {
-                    git branch: "master", credentialsId: "2cfb403c-be21-4fac-94d7-c8cd5c531feb", url: "https://gitlab.dicelab.net/JAC-IDM/python-lib.git"
+                    git branch: "master", credentialsId: "2cfb403c-be21-4fac-94d7-c8cd5c531feb", url: "https://gitlab.code.dicelab.net/JAC-IDM/python-lib.git"
                 }
                 sh """
                 virtualenv test_env
                 source test_env/bin/activate
-                pip2 install mock --user
-                pip2 install mysql-connector-python --user
+                pip2 install mock==2.0.0 --user
+                pip2 install mysql-connector-python==8.0.16 --user
                 ./test/unit/mysql_class/fetch_global_var.py
                 ./test/unit/mysql_class/fetch_sys_var.py
                 ./test/unit/mysql_class/flush_logs.py
@@ -52,6 +52,7 @@ pipeline {
                 ./test/unit/mysql_class/Server_fetchmstrepcfg.py
                 ./test/unit/mysql_class/Server_fetchslvrepcfg.py
                 ./test/unit/mysql_class/Server_getname.py
+                ./test/unit/mysql_class/Server_is_connected.py
                 ./test/unit/mysql_class/Server_updmstrepstat.py
                 ./test/unit/mysql_class/Server_updslvrepstat.py
                 ./test/unit/mysql_class/Server_updsrvperf.py
@@ -80,6 +81,8 @@ pipeline {
                 ./test/unit/mysql_class/SlaveRep_updslvstate.py
                 ./test/unit/mysql_class/SlaveRep_updslvtime.py
                 ./test/unit/mysql_class/SlaveRep_updgtidpos.py
+                ./test/unit/mysql_libs/_io_wait_chk.py
+                ./test/unit/mysql_libs/_sql_wait_chk.py
                 ./test/unit/mysql_libs/analyze_tbl.py
                 ./test/unit/mysql_libs/change_master_to.py
                 ./test/unit/mysql_libs/checksum.py
@@ -135,7 +138,7 @@ pipeline {
                                 "pattern": "./*.py",
                                 "recursive": false,
                                 "excludePatterns": [],
-                                "target": "generic-local/highpoint/mysql-lib/"
+                                "target": "pypi-proj-local/highpoint/mysql-lib/"
                             }
                         ]
                     }"""

@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  MasterRep_updmststatus.py
+"""Program:  Server_is_connected.py
 
-    Description:  Unit testing of MasterRep.upd_mst_status in mysql_class.py.
+    Description:  Unit testing of Server.is_connected in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/MasterRep_updmststatus.py
+        test/unit/mysql_class/Server_is_connected.py
 
     Arguments:
 
@@ -28,6 +28,7 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
+import lib.gen_libs as gen_libs
 import mysql_class
 import version
 
@@ -42,7 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_value -> Test with values returned.
+        test_is_connected_false -> Test is_connected is False.
 
     """
 
@@ -66,29 +67,23 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-        self.show_stat = [{"Executed_Gtid_Set": "23678"}]
 
-    @mock.patch("mysql_class.Server.upd_log_stats")
-    @mock.patch("mysql_class.show_master_stat")
-    def test_value(self, mock_stat, mock_log):
+    def test_is_connected_false(self):
 
-        """Function:  test_value
+        """Function:  test_is_connected_false
 
-        Description:  Test with values returned.
+        Description:  Test is_connected is False.
 
         Arguments:
 
         """
 
-        mock_log.return_value = True
-        mock_stat.return_value = self.show_stat
-        mysqldb = mysql_class.MasterRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
+        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
+                                     self.sql_pass, self.machine,
+                                     defaults_file=self.defaults_file)
 
-        mysqldb.upd_mst_status()
-        self.assertEqual((mysqldb.exe_gtid), ("23678"))
+
+        self.assertFalse(mysqldb.is_connected())
 
 
 if __name__ == "__main__":

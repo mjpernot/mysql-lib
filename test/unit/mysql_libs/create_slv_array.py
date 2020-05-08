@@ -40,10 +40,6 @@ class SlaveRep(object):
 
     Description:  Class stub holder for mysql_class.SlaveRep class.
 
-    Super-Class:
-
-    Sub-Classes:
-
     Methods:
         __init__ -> Class initialization.
         connect ->  Stub holder for mysql_class.SlaveRep.connect method. 
@@ -81,10 +77,6 @@ class UnitTest(unittest.TestCase):
 
     Description:  Class which is a representation of a unit testing.
 
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:
-
     Methods:
         setUp -> Initialize testing environment.
         test_add_down_conn_false -> Test with add_down and conn set to false.
@@ -106,7 +98,7 @@ class UnitTest(unittest.TestCase):
 
         self.slave = SlaveRep()
         self.cfg_array = {"name": "name", "sid": "sid", "user": "user",
-                          "passwd": "pwd", "serv_os": "Linux",
+                          "passwd": None, "serv_os": "Linux",
                           "host": "hostname", "port": 3306,
                           "cfg_file": "cfg_file"}
 

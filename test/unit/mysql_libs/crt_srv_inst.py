@@ -40,30 +40,25 @@ class Server(object):
 
     Description:  Class stub holder for Server class.
 
-    Super-Class:  None
-
-    Sub-Classes:  None
-
     Methods:
         __init__ -> Class initialization.
 
     """
 
-    def __init__(self, name, sid, user, pwd, serv_os, host, port, cfg_file):
+    def __init__(self, name, sid, user, pswd, serv_os, host, port, cfg_file):
 
         """Method:  __init__
 
         Description:  Class initialization.
 
         Arguments:
-            None
 
         """
 
         self.name = name
         self.sid = sid
         self.user = user
-        self.pwd = pwd
+        self.pswd = pswd
         self.serv_os = serv_os
         self.host = host
         self.port = port
@@ -75,10 +70,6 @@ class Cfg(object):
     """Class:  Cfg
 
     Description:  Stub holder for configuration file.
-
-    Super-Class:  None
-
-    Sub-Classes:  None
 
     Methods:
         __init__ -> Class initialization.
@@ -92,14 +83,13 @@ class Cfg(object):
         Description:  Class initialization.
 
         Arguments:
-            None
 
         """
 
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
-        self.passwd = "pwd"
+        self.passwd = None
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
@@ -111,10 +101,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:
 
     Methods:
         setUp -> Initialize testing environment.

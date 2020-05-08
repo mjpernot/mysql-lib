@@ -8,6 +8,8 @@ coverage erase
 
 echo ""
 echo "Running unit test modules in conjunction with coverage"
+coverage run -a --source=mysql_libs test/unit/mysql_libs/_io_wait_chk.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/_sql_wait_chk.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/analyze_tbl.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/change_master_to.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/checksum.py
