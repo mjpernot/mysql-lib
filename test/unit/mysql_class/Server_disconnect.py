@@ -39,7 +39,7 @@ class Server(object):
 
     """Class:  Server
 
-    Sub-Classes:
+    Description:  Class stub holder for Server class.
 
     Methods:
         __init__ -> Initialize environment.
