@@ -306,7 +306,7 @@ def fetch_logs(server, **kwargs):
 
     """
 
-    return server.cmd_sql("show binary logs")
+    return server.col_sql("show binary logs")
 
 
 def fetch_slv(slaves, **kwargs):
