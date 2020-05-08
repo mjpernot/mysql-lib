@@ -56,11 +56,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.file1 = "mysql-bin.01111"
+        self.fname = "mysql-bin.01111"
+        self.file1 = self.fname
         self.pos1 = 23489
-        self.file2 = "mysql-bin.01111"
+        self.file2 = self.fname
         self.pos2 = 23482
-        self.file3 = "mysql-bin.01111"
+        self.file3 = self.fname
         self.pos3 = 23489
 
     def test_positions_not_equal(self):
