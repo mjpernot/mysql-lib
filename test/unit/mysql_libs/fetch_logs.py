@@ -41,7 +41,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        cmd_sql -> Stub holder for mysql_class.Server.cmd_sql method.
+        col_sql -> col_sql method.
 
     """
 
@@ -55,18 +55,20 @@ class Server(object):
 
         """
 
-        pass
+        self.cmd = None
 
-    def cmd_sql(self, cmd):
+    def col_sql(self, cmd):
 
-        """Method:  cmd_sql
+        """Method:  col_sql
 
-        Description:  Stub holder for mysql_class.Server.cmd_sql method.
+        Description:  col_sql method.
 
         Arguments:
             (input) cmd -> Query command.
 
         """
+
+        self.cmd = cmd
 
         return True
 
