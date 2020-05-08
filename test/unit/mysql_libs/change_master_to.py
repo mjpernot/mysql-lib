@@ -40,10 +40,6 @@ class Server(object):
 
     Description:  Class stub holder for Server class.
 
-    Super-Class:  None
-
-    Sub-Classes:  None
-
     Methods:
         __init__ -> Class initialization.
         cmd_sql -> Stub holder for Server.cmd_sql method.
@@ -57,7 +53,6 @@ class Server(object):
         Description:  Class initialization.
 
         Arguments:
-            None
 
         """
 
@@ -65,7 +60,7 @@ class Server(object):
         self.host = "hostname"
         self.port = 3306
         self.sql_user = "sqluser"
-        self.sql_pass = "sqluserpwd"
+        self.sql_pass = "sqluserpswd"
         self.file = "binlog-filename"
         self.pos = "file-position"
         self.name = "server-name"
@@ -89,10 +84,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:
 
     Methods:
         setUp -> Initialize testing environment.

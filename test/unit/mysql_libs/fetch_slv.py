@@ -40,10 +40,6 @@ class Server(object):
 
     Description:  Class stub holder for Server class.
 
-    Super-Class:  None
-
-    Sub-Classes:  None
-
     Methods:
         __init__ -> Class initialization.
 
@@ -56,7 +52,6 @@ class Server(object):
         Description:  Class initialization.
 
         Arguments:
-            None
 
         """
 
@@ -68,10 +63,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:
 
     Methods:
         setUp -> Initialize testing environment.
@@ -95,6 +86,9 @@ class UnitTest(unittest.TestCase):
         self.slv_list = []
         self.slv_list.append(self.Slave1)
         self.slv_list.append(self.Slave2)
+        self.slave = "Slave3"
+        self.err_msg = \
+            "Error:  Slave %s was not found in slave array." % (self.slave)
 
     @mock.patch("mysql_libs.find_name")
     def test_slave_not_found(self, mock_find):
@@ -108,10 +102,9 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_find.return_value = None
-        err_msg = "Error:  No slave was found in the slave list."
 
-        self.assertEqual(mysql_libs.fetch_slv(self.slv_list, slv_mv="Slave3"),
-                         (None, True, err_msg))
+        self.assertEqual(mysql_libs.fetch_slv(self.slv_list, self.slave),
+                         (None, True, self.err_msg))
 
     @mock.patch("mysql_libs.find_name")
     def test_slave_found(self, mock_find):
@@ -125,9 +118,8 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_find.return_value = "Slave1"
+        slv, err_flag, err_msg = mysql_libs.fetch_slv(self.slv_list, "Slave1")
 
-        slv, err_flag, err_msg = mysql_libs.fetch_slv(self.slv_list,
-                                                      slv_mv="Slave1")
         self.assertEqual((err_flag, err_msg), (False, None))
 
 

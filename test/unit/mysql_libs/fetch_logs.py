@@ -39,13 +39,9 @@ class Server(object):
 
     Description:  Class stub holder for Server class.
 
-    Super-Class:  None
-
-    Sub-Classes:  None
-
     Methods:
         __init__ -> Class initialization.
-        cmd_sql -> Stub holder for mysql_class.Server.cmd_sql method.
+        col_sql -> col_sql method.
 
     """
 
@@ -56,22 +52,23 @@ class Server(object):
         Description:  Class initialization.
 
         Arguments:
-            None
 
         """
 
-        pass
+        self.cmd = None
 
-    def cmd_sql(self, cmd):
+    def col_sql(self, cmd):
 
-        """Method:  cmd_sql
+        """Method:  col_sql
 
-        Description:  Stub holder for mysql_class.Server.cmd_sql method.
+        Description:  col_sql method.
 
         Arguments:
             (input) cmd -> Query command.
 
         """
+
+        self.cmd = cmd
 
         return True
 
@@ -81,10 +78,6 @@ class UnitTest(unittest.TestCase):
     """Class:  UnitTest
 
     Description:  Class which is a representation of a unit testing.
-
-    Super-Class:  unittest.TestCase
-
-    Sub-Classes:
 
     Methods:
         setUp -> Initialize testing environment.

@@ -175,10 +175,6 @@ class Position(collections.namedtuple("Position", "file, pos")):
     Description:  Class which holds a binary log position for a specific
         server.
 
-    Super-Class:  collections.namedtuple
-
-    Sub-Classes:
-
     Methods:
         __cmp__
 
@@ -272,10 +268,6 @@ class GTIDSet(object):
         GTIDs.  The basic methods and attributes include comparing two
         GTIDs using the rich comparsion operator methods, combine
         GTID sets and converting GTIDs to strings.
-
-    Super-Class:  object
-
-    Sub-Classes:
 
     Methods:
         __init__
@@ -490,11 +482,6 @@ class Server(object):
         object is used as a proxy for operating with the server.  The
         basic methods and attributes include connecting to the server
         and executing SQL statements.
-
-    Super-Class:  object
-
-    Sub-Classes:
-        Rep
 
     Methods:
         __init__
@@ -949,6 +936,7 @@ class Server(object):
             (input) cmd -> SQL command.
             (input) res_set -> row|all - determines the result set.
             (input) params -> Position arguments for the SQL command.
+                NOTE:  Arguments must be in a list or tuple.
             (output) Returns cursor row iteration or single result set of data.
 
         """
@@ -1012,6 +1000,7 @@ class Server(object):
         Arguments:
             (input) cmd -> Command SQL.
             (input) params -> Position arguments for the SQL command.
+                NOTE:  Arguments must be in a list or tuple.
             (output) data -> Results of the sql executed in list format.
 
         """
@@ -1089,12 +1078,6 @@ class Rep(Server):
         server.   A replication server object is used as a proxy for operating
         within a MySQL server.  The basic methods and attributes include
         general replication methods.
-
-    Super-Class:  Server
-
-    Sub-Classes:
-        MasterRep
-        SlaveRep
 
     Methods:
         __init__
@@ -1241,10 +1224,6 @@ class MasterRep(Rep):
         for operating within a replication MySQL server.  The basic
         methods and attributes include getting slave hosts method.
 
-    Super-Class:  Rep
-
-    Sub-Classes:
-
     Methods:
         __init__
         connect
@@ -1351,10 +1330,6 @@ class SlaveRep(Rep):
         server.  A slave replication server object is used as a proxy
         for operating within a replication MySQL server.  The basic
         methods and attributes include stopping and starting slave methods.
-
-    Super-Class:  Rep
-
-    Sub-Classes:
 
     Methods:
         __init__
