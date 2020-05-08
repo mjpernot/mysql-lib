@@ -45,7 +45,7 @@ class Server(object):
 
     """
 
-    def __init__(self, name, sid, user, pwd, serv_os, host, port, cfg_file):
+    def __init__(self, name, sid, user, pswd, serv_os, host, port, cfg_file):
 
         """Method:  __init__
 
@@ -58,7 +58,7 @@ class Server(object):
         self.name = name
         self.sid = sid
         self.user = user
-        self.pwd = pwd
+        self.pswd = pswd
         self.serv_os = serv_os
         self.host = host
         self.port = port
@@ -89,7 +89,7 @@ class Cfg(object):
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
-        self.passwd = "pwd"
+        self.passwd = "pswd"
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306

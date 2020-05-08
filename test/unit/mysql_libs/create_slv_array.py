@@ -98,7 +98,7 @@ class UnitTest(unittest.TestCase):
 
         self.slave = SlaveRep()
         self.cfg_array = {"name": "name", "sid": "sid", "user": "user",
-                          "passwd": "pwd", "serv_os": "Linux",
+                          "passwd": "pswd", "serv_os": "Linux",
                           "host": "hostname", "port": 3306,
                           "cfg_file": "cfg_file"}
 

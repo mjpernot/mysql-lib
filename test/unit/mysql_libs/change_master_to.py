@@ -60,7 +60,7 @@ class Server(object):
         self.host = "hostname"
         self.port = 3306
         self.sql_user = "sqluser"
-        self.sql_pass = "sqluserpwd"
+        self.sql_pass = "sqluserpswd"
         self.file = "binlog-filename"
         self.pos = "file-position"
         self.name = "server-name"
