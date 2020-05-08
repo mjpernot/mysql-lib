@@ -39,10 +39,6 @@ class Server(object):
 
     """Class:  Server
 
-    Description:  Class which is a representation of a Server class.
-
-    Super-Class:  object
-
     Sub-Classes:
 
     Methods:
