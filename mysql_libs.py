@@ -219,11 +219,10 @@ def create_slv_array(cfg_array, add_down=True, **kwargs):
     slaves = []
 
     for slv in cfg_array:
-        slv_inst = mysql_class.SlaveRep(slv["name"], slv["sid"], slv["user"],
-                                        slv["passwd"],
-                                        getattr(machine, slv["serv_os"])(),
-                                        slv["host"], int(slv["port"]),
-                                        slv["cfg_file"])
+        slv_inst = mysql_class.SlaveRep(
+            slv["name"], slv["sid"], slv["user"], slv["passwd"],
+            machine=getattr(machine, slv["serv_os"])(), host=slv["host"],
+            port=int(slv["port"]), defaults_file=slv["cfg_file"])
         slv_inst.connect()
 
         if add_down or slv_inst.conn:

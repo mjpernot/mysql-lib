@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Changed the "change_master_to" command to use the replication user instead of the system user.
 
 ### Changed
+- mysql_libs.create_slv_array:  Set keyword args in mysql_class.SlaveRep call.
 - mysql_libs.change_master_to:  Replaced sql_user and sql_pass with rep_user and rep_pswd respectively.
 - mysql_class.MasterRep.\_\_init\_\_:  Added rep_user and rep_pswd to the class' attributes.
 - mysql_class.MasterRep.\_\_init\_\_:  Set a number of positional args to keyword args.
