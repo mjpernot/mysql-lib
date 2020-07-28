@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ### Changed
 - mysql_class.MasterRep.\_\_init\_\_:  Added rep_user and rep_pswd to the class' attributes.
+- mysql_class.MasterRep.\_\_init\_\_:  Set a number of positional args to keyword args.
 
 
 ## [4.0.3] - 2020-05-07

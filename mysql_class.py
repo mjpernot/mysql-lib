@@ -1233,7 +1233,7 @@ class MasterRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine,
+    def __init__(self, name, server_id, sql_user, sql_pass, machine=machine,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
 
         """Method:  __init__
@@ -1257,8 +1257,8 @@ class MasterRep(Rep):
         """
 
         super(MasterRep, self).__init__(
-            name, server_id, sql_user, sql_pass, machine, host, port,
-            defaults_file, **kwargs)
+            name, server_id, sql_user, sql_pass, machine=machine, host=host,
+            port=port, defaults_file=defaults_file, **kwargs)
 
         self.pos = None
         self.do_db = None
