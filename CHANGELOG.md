@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.0.0] - 2020-07-28
+- Breaking change.
+
+### Changed
+- mysql_class.MasterRep.\_\_init\_\_:  Added rep_user and rep_pswd to the class' attributes.
+
+
 ## [4.0.3] - 2020-05-07
 ### Fixed
 - mysql_libs.fetch_logs:  Returning correct data set results from query.

@@ -1251,18 +1251,22 @@ class MasterRep(Rep):
             (input) defaults_file -> Location of my.cnf file.
             (input) **kwargs:
                 extra_def_file -> Location of extra defaults file.
+                rep_user -> Replication user name.
+                rep_pswd -> Replication user password.
 
         """
 
-        super(MasterRep, self).__init__(name, server_id, sql_user, sql_pass,
-                                        machine, host, port, defaults_file,
-                                        **kwargs)
+        super(MasterRep, self).__init__(
+            name, server_id, sql_user, sql_pass, machine, host, port,
+            defaults_file, **kwargs)
 
         self.pos = None
         self.do_db = None
         self.file = None
         self.ign_db = None
         self.exe_gtid = None
+        self.rep_user = kwargs.get("rep_user", None)
+        self.rep_pswd = kwargs.get("rep_pswd", None)
 
     def connect(self):
 
