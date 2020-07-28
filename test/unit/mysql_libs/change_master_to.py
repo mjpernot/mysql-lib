@@ -64,6 +64,8 @@ class Server(object):
         self.file = "binlog-filename"
         self.pos = "file-position"
         self.name = "server-name"
+        self.rep_user = "rep_user"
+        self.rep_pswd = "rep_pswd"
 
     def cmd_sql(self, cmd):
 
