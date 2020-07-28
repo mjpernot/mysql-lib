@@ -96,16 +96,16 @@ def change_master_to(mst, slv, **kwargs):
     if mst.gtid_mode:
         chg_master_to = chg_master_to + """, master_auto_position=1"""
 
-        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.sql_user,
-                                     mst.sql_pass))
+        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
+                                     mst.rep_pswd))
 
     # GTID mode is disabled, use file and position options.
     else:
         chg_master_to = chg_master_to + \
             """, master_log_file='%s', master_log_pos='%s'"""
 
-        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.sql_user,
-                                     mst.sql_pass, mst.file, mst.pos))
+        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
+                                     mst.rep_pswd, mst.file, mst.pos))
 
     print("Changed Slave: {0} to new Master: {1}".format(slv.name, mst.name))
 
