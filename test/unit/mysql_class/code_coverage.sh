@@ -55,6 +55,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/Server_fetchlogs.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_flushlogs.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_vertsql.py
 coverage run -a --source=mysql_class test/unit/mysql_class/Server_updlogstats.py
+coverage run -a --source=mysql_class test/unit/mysql_class/slaverep_connect.py
 coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_init.py
 coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_fetchdotbl.py
 coverage run -a --source=mysql_class test/unit/mysql_class/SlaveRep_fetchigntbl.py
