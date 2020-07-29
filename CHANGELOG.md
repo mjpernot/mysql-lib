@@ -9,7 +9,8 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Changed the "change_master_to" command to use the replication user instead of the system user.
 
 ### Fixed
-- mysql_class.Slave:Rep.connect:  Only updates attributes if a connection is successful.
+- mysql_class.MasterRep.connect:  Only updates attributes if a connection is successful.
+- mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
 
 ### Changed
 - mysql_class.Rep.\_\_init\_\_:  Set a number of positional args to keyword args.

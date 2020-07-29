@@ -1281,9 +1281,10 @@ class MasterRep(Rep):
         """
 
         super(MasterRep, self).connect()
-        super(MasterRep, self).set_srv_gtid()
 
-        self.upd_mst_status()
+        if self.conn:
+            super(MasterRep, self).set_srv_gtid()
+            self.upd_mst_status()
 
     def show_slv_hosts(self):
 
@@ -1460,7 +1461,6 @@ class SlaveRep(Rep):
 
         if self.conn:
             super(SlaveRep, self).set_srv_gtid()
-
             self.upd_slv_status()
 
     def stop_slave(self):
