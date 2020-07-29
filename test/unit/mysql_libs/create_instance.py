@@ -45,8 +45,8 @@ class Server(object):
 
     """
 
-    def __init__(self, name, sid, user, pswd, serv_os, host, port, cfg_file,
-                 extra_def_file=None):
+    def __init__(self, name, sid, user, pswd, machine, host, port,
+                 defaults_file, extra_def_file=None):
 
         """Method:  __init__
 
@@ -60,10 +60,10 @@ class Server(object):
         self.sid = sid
         self.user = user
         self.pswd = pswd
-        self.serv_os = serv_os
+        self.serv_os = machine
         self.host = host
         self.port = port
-        self.cfg_file = cfg_file
+        self.cfg_file = defaults_file
         self.extra_def_file = extra_def_file
 
 
