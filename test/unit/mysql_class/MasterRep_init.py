@@ -81,7 +81,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep = mysql_class.MasterRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
             machine=self.machine, defaults_file=self.defaults_file,
-            rep_user=self.rep_user, rep_pswd = self.rep_pswd)
+            rep_user=self.rep_user, rep_pswd=self.rep_pswd)
 
         self.assertEqual(
             (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
