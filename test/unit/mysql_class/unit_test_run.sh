@@ -37,6 +37,7 @@ test/unit/mysql_class/Rep_showslvhosts.py
 test/unit/mysql_class/Rep_showslvstate.py
 test/unit/mysql_class/Rep_startslave.py
 test/unit/mysql_class/Rep_stopslave.py
+test/unit/mysql_class/server_chg_db.py
 test/unit/mysql_class/Server_init.py
 test/unit/mysql_class/server_reconnect.py
 test/unit/mysql_class/Server_setsrvbinlogcrc.py
