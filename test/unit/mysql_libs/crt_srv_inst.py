@@ -45,7 +45,7 @@ class Server(object):
 
     """
 
-    def __init__(self, name, sid, user, pswd, serv_os, host, port, cfg_file):
+    def __init__(self, name, sid, user, pswd, **kwargs):
 
         """Method:  __init__
 
@@ -59,10 +59,10 @@ class Server(object):
         self.sid = sid
         self.user = user
         self.pswd = pswd
-        self.serv_os = serv_os
-        self.host = host
-        self.port = port
-        self.cfg_file = cfg_file
+        self.serv_os = kwargs.get("machine")
+        self.host = kwargs.get("host")
+        self.port = kwargs.get("port")
+        self.cfg_file = kwargs.get("cfg_file")
 
 
 class Cfg(object):
@@ -119,9 +119,10 @@ class UnitTest(unittest.TestCase):
         """
 
         self.Cfg = Cfg()
-        self.Server = Server(self.Cfg.name, self.Cfg.sid, self.Cfg.user,
-                             self.Cfg.passwd, self.Cfg.serv_os, self.Cfg.host,
-                             self.Cfg.port, self.Cfg.cfg_file)
+        self.Server = Server(
+            self.Cfg.name, self.Cfg.sid, self.Cfg.user, self.Cfg.passwd,
+            machine=self.Cfg.serv_os, host=self.Cfg.host, port=self.Cfg.port,
+            defaults_file=self.Cfg.cfg_file)
 
     @mock.patch("mysql_libs.mysql_class.Server")
     @mock.patch("mysql_libs.gen_libs.load_module")
