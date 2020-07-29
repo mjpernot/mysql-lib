@@ -274,9 +274,10 @@ def crt_srv_inst(cfg, path, **kwargs):
 
     svr = gen_libs.load_module(cfg, path)
 
-    return mysql_class.Server(svr.name, svr.sid, svr.user, svr.passwd,
-                              getattr(machine, svr.serv_os)(), svr.host,
-                              svr.port, svr.cfg_file)
+    return mysql_class.Server(
+        svr.name, svr.sid, svr.user, svr.passwd,
+        machine=getattr(machine, svr.serv_os)(), host=svr.host, port=svr.port,
+        defaults_file=svr.cfg_file)
 
 
 def fetch_db_dict(server, **kwargs):
