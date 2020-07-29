@@ -1457,9 +1457,11 @@ class SlaveRep(Rep):
         """
 
         super(SlaveRep, self).connect()
-        super(SlaveRep, self).set_srv_gtid()
 
-        self.upd_slv_status()
+        if self.conn:
+            super(SlaveRep, self).set_srv_gtid()
+
+            self.upd_slv_status()
 
     def stop_slave(self):
 
