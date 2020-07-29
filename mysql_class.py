@@ -1091,7 +1091,7 @@ class Rep(Server):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine,
+    def __init__(self, name, server_id, sql_user, sql_pass, machine=machine,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
 
         """Method:  __init__
@@ -1112,8 +1112,9 @@ class Rep(Server):
 
         """
 
-        super(Rep, self).__init__(name, server_id, sql_user, sql_pass, machine,
-                                  host, port, defaults_file, **kwargs)
+        super(Rep, self).__init__(
+            name, server_id, sql_user, sql_pass, machine=machine, host=host,
+            port=port, defaults_file=defaults_file, **kwargs)
 
     def show_slv_hosts(self):
 

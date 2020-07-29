@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Changed the "change_master_to" command to use the replication user instead of the system user.
 
 ### Changed
+- mysql_class.Rep.\_\_init\_\_:  Set a number of positional args to keyword args.
 - mysql_class.SlaveRep.\_\_init\_\_:  Set a number of positional args to keyword args.
 - mysql_libs.crt_srv_inst:  Set keyword args in mysql_class.Server call.
 - mysql_libs.create_instance:  Set keyword args in generic mysql_class class call.
