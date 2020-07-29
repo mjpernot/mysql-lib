@@ -45,8 +45,7 @@ class Server(object):
 
     """
 
-    def __init__(self, name, sid, user, pswd, machine, host, port,
-                 defaults_file, extra_def_file=None):
+    def __init__(self, name, sid, user, pswd, **kwargs):
 
         """Method:  __init__
 
@@ -60,11 +59,11 @@ class Server(object):
         self.sid = sid
         self.user = user
         self.pswd = pswd
-        self.serv_os = machine
-        self.host = host
-        self.port = port
-        self.cfg_file = defaults_file
-        self.extra_def_file = extra_def_file
+        self.serv_os = kwargs.get("machine")
+        self.host = kwargs.get("host")
+        self.port = kwargs.get("port")
+        self.cfg_file = kwargs.get("defaults_file")
+        self.extra_def_file = kwargs.get("extra_def_file", None)
 
 
 class Cfg(object):
@@ -132,8 +131,8 @@ class UnitTest(unittest.TestCase):
         self.cfg_file = "cfg_file"
         self.extra_def_file = "extra_def_file"
         self.server = Server(
-            self.name, self.sid, self.user, self.passwd, self.serv_os,
-            self.host, self.port, self.cfg_file)
+            self.name, self.sid, self.user, self.passwd, machine=self.serv_os,
+            host=self.host, port=self.port, defaults_file=self.cfg_file)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_create_instance(self, mock_cfg):
