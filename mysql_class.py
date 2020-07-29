@@ -1358,7 +1358,7 @@ class SlaveRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine,
+    def __init__(self, name, server_id, sql_user, sql_pass, machine=machine,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
 
         """Method:  __init__
@@ -1379,9 +1379,9 @@ class SlaveRep(Rep):
 
         """
 
-        super(SlaveRep, self).__init__(name, server_id, sql_user, sql_pass,
-                                       machine, host, port, defaults_file,
-                                       **kwargs)
+        super(SlaveRep, self).__init__(
+            name, server_id, sql_user, sql_pass, machine=machine, host=host,
+            port=port, defaults_file=defaults_file, **kwargs)
 
         self.io_state = None
         self.mst_host = None
