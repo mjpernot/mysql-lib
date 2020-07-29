@@ -42,7 +42,7 @@ class SlaveRep(object):
 
     Methods:
         __init__ -> Class initialization.
-        connect ->  Stub holder for mysql_class.SlaveRep.connect method. 
+        connect ->  Stub holder for mysql_class.SlaveRep.connect method.
 
     """
 
