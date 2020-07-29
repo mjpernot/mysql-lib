@@ -67,7 +67,6 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-
     def test_is_connected_false(self):
 
         """Function:  test_is_connected_false
@@ -81,7 +80,6 @@ class UnitTest(unittest.TestCase):
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
-
 
         self.assertFalse(mysqldb.is_connected())
 
