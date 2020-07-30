@@ -55,7 +55,7 @@ class Server(object):
 
         """
 
-        pass
+        self.cmd = None
 
     def col_sql(self, cmd):
 
@@ -67,6 +67,8 @@ class Server(object):
             (input) cmd -> Query command.
 
         """
+
+        self.cmd = cmd
 
         return True
 
