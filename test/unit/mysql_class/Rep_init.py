@@ -28,6 +28,7 @@ else:
 # Local
 sys.path.append(os.getcwd())
 import mysql_class
+import lib.machine as machine
 import version
 
 __version__ = version.__version__
@@ -59,7 +60,7 @@ class UnitTest(unittest.TestCase):
         self.server_id = 10
         self.sql_user = "mysql_user"
         self.sql_pass = "my_pwd"
-        self.machine = "Linux"
+        self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
@@ -75,15 +76,16 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.Rep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, defaults_file=self.defaults_file)
 
-        self.assertEqual((mysqlrep.name, mysqlrep.server_id,
-                          mysqlrep.sql_user, mysqlrep.sql_pass,
-                          mysqlrep.machine, mysqlrep.host, mysqlrep.port),
-                         (self.name, self.server_id, self.sql_user,
-                          self.sql_pass, self.machine, "localhost", 3306))
+        self.assertEqual(
+            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
+             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
+             mysqlrep.port),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", 3306))
 
 
 if __name__ == "__main__":
