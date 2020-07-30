@@ -66,6 +66,7 @@ class Server(object):
         self.name = "server-name"
         self.rep_user = "rep_user"
         self.rep_pswd = "rep_pswd"
+        self.cmd = None
 
     def cmd_sql(self, cmd):
 
@@ -77,6 +78,8 @@ class Server(object):
             (input) cmd -> Query command.
 
         """
+
+        self.cmd = cmd
 
         return True
 
