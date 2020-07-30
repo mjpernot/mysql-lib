@@ -508,7 +508,7 @@ class Server(object):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine,
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
 
         """Method:  __init__
@@ -520,7 +520,7 @@ class Server(object):
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
-            (input) machine -> Operating system.
+            (input) os_type -> Machine operating system type class instance.
             (input) host -> 'localhost' or host name or IP.
             (input) port -> '3306' or port for MySQL.
             (input) defaults_file -> Location of my.cnf file.
@@ -530,13 +530,13 @@ class Server(object):
         """
 
         if not defaults_file:
-            defaults_file = machine.defaults_file
+            defaults_file = os_type.defaults_file
 
         self.name = name
         self.server_id = server_id
         self.sql_user = sql_user
         self.sql_pass = sql_pass
-        self.machine = machine
+        self.machine = os_type
         self.host = host
         self.port = port
         self.defaults_file = defaults_file
@@ -1091,7 +1091,7 @@ class Rep(Server):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine=machine,
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
 
         """Method:  __init__
@@ -1103,7 +1103,7 @@ class Rep(Server):
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
-            (input) machine -> Operating system.
+            (input) os_type -> Machine operating system type class instance.
             (input) host -> 'localhost' or host name or IP.
             (input) port -> '3306' or port for MySQL.
             (input) defaults_file -> Location of my.cnf file.
@@ -1113,7 +1113,7 @@ class Rep(Server):
         """
 
         super(Rep, self).__init__(
-            name, server_id, sql_user, sql_pass, machine=machine, host=host,
+            name, server_id, sql_user, sql_pass, os_type=os_type, host=host,
             port=port, defaults_file=defaults_file, **kwargs)
 
     def show_slv_hosts(self):
@@ -1234,7 +1234,7 @@ class MasterRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine=machine,
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
 
         """Method:  __init__
@@ -1246,7 +1246,7 @@ class MasterRep(Rep):
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
-            (input) machine -> Operating system.
+            (input) os_type -> Machine operating system type class instance.
             (input) host -> 'localhost' or host name or IP.
             (input) port -> '3306' or port for MySQL.
             (input) defaults_file -> Location of my.cnf file.
@@ -1258,7 +1258,7 @@ class MasterRep(Rep):
         """
 
         super(MasterRep, self).__init__(
-            name, server_id, sql_user, sql_pass, machine=machine, host=host,
+            name, server_id, sql_user, sql_pass, os_type=os_type, host=host,
             port=port, defaults_file=defaults_file, **kwargs)
 
         self.pos = None
@@ -1360,7 +1360,7 @@ class SlaveRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine=machine,
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type,
                  host="localhost", port=3306, defaults_file=None, **kwargs):
 
         """Method:  __init__
@@ -1372,7 +1372,7 @@ class SlaveRep(Rep):
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
-            (input) machine -> Operating system.
+            (input) os_type -> Machine operating system type class instance.
             (input) host -> 'localhost' or host name or IP.
             (input) port -> '3306' or port for MySQL.
             (input) defaults_file -> Location of my.cnf file.
@@ -1382,7 +1382,7 @@ class SlaveRep(Rep):
         """
 
         super(SlaveRep, self).__init__(
-            name, server_id, sql_user, sql_pass, machine=machine, host=host,
+            name, server_id, sql_user, sql_pass, os_type=os_type, host=host,
             port=port, defaults_file=defaults_file, **kwargs)
 
         self.io_state = None

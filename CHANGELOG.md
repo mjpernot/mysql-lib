@@ -9,6 +9,10 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Changed the "change_master_to" command to use the replication user instead of the system user.
 
 ### Fixed
+- mysql_class.Server.\_\_init\_\_:  Naming conflict between library module and argument.
+- mysql_class.Rep.\_\_init\_\_:  Naming conflict between library module and argument.
+- mysql_class.MasterRep.\_\_init\_\_:  Naming conflict between library module and argument.
+- mysql_class.SlaveRep.\_\_init\_\_:  Naming conflict between library module and argument.
 - mysql_class.MasterRep.connect:  Only updates attributes if a connection is successful.
 - mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
 
