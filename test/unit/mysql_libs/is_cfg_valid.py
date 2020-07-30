@@ -86,8 +86,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Slave1 = Server("Slave1", "Extra_Def_File")
-        self.Slave2 = Server("Slave2")
+        self.slave1 = Server("Slave1", "Extra_Def_File")
+        self.slave2 = Server("Slave2")
         self.err_msg = "Error Message"
         self.err_msg2 = \
             ["Error Message", "Slave1:  Extra_Def_File is missing."]
@@ -109,7 +109,7 @@ class UnitTest(unittest.TestCase):
 
         mock_chk.return_value = (False, self.err_msg)
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1, self.Slave2]),
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1, self.slave2]),
                          (False, self.results2))
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
@@ -125,7 +125,7 @@ class UnitTest(unittest.TestCase):
 
         mock_chk.return_value = (True, None)
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1, self.Slave2]),
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1, self.slave2]),
                          (False, self.results))
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
@@ -141,7 +141,7 @@ class UnitTest(unittest.TestCase):
 
         mock_chk.return_value = (True, None)
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1, self.Slave1]),
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1, self.slave1]),
                          (True, []))
 
     def test_no_extra_file(self):
@@ -154,7 +154,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave2]),
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave2]),
                          (False, self.results))
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
@@ -170,7 +170,7 @@ class UnitTest(unittest.TestCase):
 
         mock_chk.return_value = (False, self.err_msg)
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]),
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1]),
                          (False, self.err_msg2))
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
@@ -186,7 +186,7 @@ class UnitTest(unittest.TestCase):
 
         mock_chk.return_value = (True, None)
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]), (True, []))
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1]), (True, []))
 
 
 if __name__ == "__main__":
