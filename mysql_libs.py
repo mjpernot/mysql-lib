@@ -404,15 +404,20 @@ def is_cfg_valid(servers, **kwargs):
     status_msg = []
 
     for svr in servers:
-        status, err_msg = gen_libs.chk_crt_file(svr.extra_def_file)
+        if svr.extra_def_file:
+            status, err_msg = gen_libs.chk_crt_file(svr.extra_def_file)
 
-        if not status:
-            status_msg.append("%s" % (err_msg))
+            if not status:
+                status_msg.append("%s" % (err_msg))
 
-        if svr.extra_def_file and not status:
-            status_msg.append("%s:  %s is missing." % (svr.name,
-                                                       svr.extra_def_file))
+            if svr.extra_def_file and not status:
+                status_msg.append("%s:  %s is missing." % (svr.name,
+                                                           svr.extra_def_file))
+                status = False
+
+        else:
             status = False
+            status_msg.append("%s:  extra_def_file is not set." % (svr.name))
 
     return status, status_msg
 
