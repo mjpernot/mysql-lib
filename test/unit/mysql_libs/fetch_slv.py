@@ -81,11 +81,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Slave1 = Server("Slave1")
-        self.Slave2 = Server("Slave2")
+        self.slave1 = Server("Slave1")
+        self.slave2 = Server("Slave2")
         self.slv_list = []
-        self.slv_list.append(self.Slave1)
-        self.slv_list.append(self.Slave2)
+        self.slv_list.append(self.slave1)
+        self.slv_list.append(self.slave2)
         self.slave = "Slave3"
         self.err_msg = \
             "Error:  Slave %s was not found in slave array." % (self.slave)
@@ -118,7 +118,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_find.return_value = "Slave1"
-        slv, err_flag, err_msg = mysql_libs.fetch_slv(self.slv_list, "Slave1")
+        _, err_flag, err_msg = mysql_libs.fetch_slv(self.slv_list, "Slave1")
 
         self.assertEqual((err_flag, err_msg), (False, None))
 
