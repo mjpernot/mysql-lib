@@ -198,7 +198,7 @@ def create_instance(cfg_file, dir_path, cls_name, **kwargs):
 
     return cls_name(
         cfg.name, cfg.sid, cfg.user, cfg.passwd,
-        machine=getattr(machine, cfg.serv_os)(), host=cfg.host, port=cfg.port,
+        os_type=getattr(machine, cfg.serv_os)(), host=cfg.host, port=cfg.port,
         defaults_file=cfg.cfg_file,
         extra_def_file=cfg.__dict__.get("extra_def_file", None))
 
@@ -222,7 +222,7 @@ def create_slv_array(cfg_array, add_down=True, **kwargs):
     for slv in cfg_array:
         slv_inst = mysql_class.SlaveRep(
             slv["name"], slv["sid"], slv["user"], slv["passwd"],
-            machine=getattr(machine, slv["serv_os"])(), host=slv["host"],
+            os_type=getattr(machine, slv["serv_os"])(), host=slv["host"],
             port=int(slv["port"]), defaults_file=slv["cfg_file"])
         slv_inst.connect()
 
@@ -276,7 +276,7 @@ def crt_srv_inst(cfg, path, **kwargs):
 
     return mysql_class.Server(
         svr.name, svr.sid, svr.user, svr.passwd,
-        machine=getattr(machine, svr.serv_os)(), host=svr.host, port=svr.port,
+        os_type=getattr(machine, svr.serv_os)(), host=svr.host, port=svr.port,
         defaults_file=svr.cfg_file)
 
 
