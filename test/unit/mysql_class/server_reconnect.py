@@ -29,6 +29,7 @@ import mock
 # Local
 sys.path.append(os.getcwd())
 import lib.gen_libs as gen_libs
+import lib.machine as machine
 import mysql_class
 import version
 
@@ -61,7 +62,7 @@ class UnitTest(unittest.TestCase):
         self.server_id = 10
         self.sql_user = "mysql_user"
         self.sql_pass = "my_pwd"
-        self.machine = "Linux"
+        self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
@@ -82,7 +83,7 @@ class UnitTest(unittest.TestCase):
 
         mysqldb = mysql_class.Server(
             self.name, self.server_id, self.sql_user, self.sql_pass,
-            machine=self.machine, defaults_file=self.defaults_file)
+            os_type=self.machine, defaults_file=self.defaults_file)
 
         self.assertFalse(mysqldb.reconnect())
 
