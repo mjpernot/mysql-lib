@@ -87,7 +87,6 @@ class UnitTest(unittest.TestCase):
 
         """
 
-
         mock_conn.return_value = True
         mock_set.return_value = True
         mock_update.return_value = True
