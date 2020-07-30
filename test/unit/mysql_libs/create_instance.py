@@ -120,7 +120,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Cfg = Cfg()
+        self.cfg = Cfg()
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
@@ -145,7 +145,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_cfg.return_value = self.Cfg
+        mock_cfg.return_value = self.cfg
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
