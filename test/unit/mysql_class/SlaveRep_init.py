@@ -29,6 +29,7 @@ import mock
 # Local
 sys.path.append(os.getcwd())
 import mysql_class
+import lib.machine as machine
 import version
 
 __version__ = version.__version__
@@ -60,7 +61,7 @@ class UnitTest(unittest.TestCase):
         self.server_id = 10
         self.sql_user = "mysql_user"
         self.sql_pass = "my_pwd"
-        self.machine = "Linux"
+        self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
@@ -78,7 +79,7 @@ class UnitTest(unittest.TestCase):
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
-            machine=self.machine, defaults_file=self.defaults_file)
+            os_type=self.machine, defaults_file=self.defaults_file)
 
         self.assertEqual(
             (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
