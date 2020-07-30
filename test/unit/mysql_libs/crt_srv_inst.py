@@ -118,11 +118,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Cfg = Cfg()
-        self.Server = Server(
-            self.Cfg.name, self.Cfg.sid, self.Cfg.user, self.Cfg.passwd,
-            machine=self.Cfg.serv_os, host=self.Cfg.host, port=self.Cfg.port,
-            defaults_file=self.Cfg.cfg_file)
+        self.cfg = Cfg()
+        self.server = Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.passwd,
+            machine=self.cfg.serv_os, host=self.cfg.host, port=self.cfg.port,
+            defaults_file=self.cfg.cfg_file)
 
     @mock.patch("mysql_libs.mysql_class.Server")
     @mock.patch("mysql_libs.gen_libs.load_module")
@@ -136,11 +136,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_cfg.return_value = self.Cfg
-        mock_srv.return_value = self.Server
+        mock_cfg.return_value = self.cfg
+        mock_srv.return_value = self.server
 
         instance = mysql_libs.crt_srv_inst("Cfgfile", "DirPath")
-        self.assertEqual(type(instance), type(self.Server))
+        self.assertEqual(type(instance), type(self.server))
 
 
 if __name__ == "__main__":
