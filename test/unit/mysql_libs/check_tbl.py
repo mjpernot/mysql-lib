@@ -95,7 +95,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
 
     def test_check_tbl(self):
 
@@ -107,7 +107,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.check_tbl(self.Server, "Dbname", "Tblname"))
+        self.assertTrue(mysql_libs.check_tbl(self.server, "Dbname", "Tblname"))
 
 
 if __name__ == "__main__":
