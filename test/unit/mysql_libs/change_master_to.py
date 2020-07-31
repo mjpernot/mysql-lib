@@ -107,8 +107,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Master = Server()
-        self.Slave = Server()
+        self.master = Server()
+        self.slave = Server()
 
     def test_change_master_to_non_gtid(self):
 
@@ -120,11 +120,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Master.gtid_mode = None
+        self.master.gtid_mode = None
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs.change_master_to(self.Master,
-                                                         self.Slave))
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
 
     def test_change_master_to_gtid(self):
 
@@ -137,8 +137,8 @@ class UnitTest(unittest.TestCase):
         """
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs.change_master_to(self.Master,
-                                                         self.Slave))
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
 
 
 if __name__ == "__main__":
