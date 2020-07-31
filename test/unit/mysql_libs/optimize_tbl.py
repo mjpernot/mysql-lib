@@ -68,7 +68,7 @@ class Server(object):
 
         """
 
-        self.cmd =  cmd
+        self.cmd = cmd
 
         return True
 
