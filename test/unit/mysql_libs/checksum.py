@@ -95,7 +95,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
 
     def test_checksum(self):
 
@@ -107,7 +107,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.checksum(self.Server, "Dbname", "Tblname"))
+        self.assertTrue(mysql_libs.checksum(self.server, "Dbname", "Tblname"))
 
 
 if __name__ == "__main__":
