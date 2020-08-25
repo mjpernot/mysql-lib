@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  MasterRep_init.py
+"""Program:  masterrep_init.py
 
     Description:  Unit testing of MasterRep.__init__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/MasterRep_init.py
+        test/unit/mysql_class/masterrep_init.py
 
     Arguments:
 
