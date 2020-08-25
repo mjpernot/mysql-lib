@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  Position_cmp.py
+"""Program:  position_cmp.py
 
     Description:  Unit testing of Position.__cmp__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/Position_cmp.py
+        test/unit/mysql_class/position_cmp.py
 
     Arguments:
 
