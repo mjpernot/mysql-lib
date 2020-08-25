@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  SlaveRep_init.py
+"""Program:  slaverep_init.py
 
     Description:  Unit testing of SlaveRep.__init__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/SlaveRep_init.py
+        test/unit/mysql_class/slaverep_init.py
 
     Arguments:
 
