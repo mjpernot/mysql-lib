@@ -35,10 +35,10 @@ pipeline {
                 ./test/unit/mysql_class/gtidset_lt.py
                 ./test/unit/mysql_class/gtidset_ne.py
                 ./test/unit/mysql_class/masterrep_connect.py
-                ./test/unit/mysql_class/MasterRep_init.py
-                ./test/unit/mysql_class/MasterRep_showslvhosts.py
-                ./test/unit/mysql_class/MasterRep_getloginfo.py
-                ./test/unit/mysql_class/MasterRep_updmststatus.py
+                ./test/unit/mysql_class/masterrep_init.py
+                ./test/unit/mysql_class/masterrep_showslvhosts.py
+                ./test/unit/mysql_class/masterrep_getloginfo.py
+                ./test/unit/mysql_class/masterrep_updmststatus.py
                 ./test/unit/mysql_class/Position_cmp.py
                 ./test/unit/mysql_class/Rep_fetchdodb.py
                 ./test/unit/mysql_class/Rep_fetchigndb.py
