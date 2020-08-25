@@ -49,24 +49,24 @@ pipeline {
                 ./test/unit/mysql_class/Rep_startslave.py
                 ./test/unit/mysql_class/Rep_stopslave.py
                 ./test/unit/mysql_class/server_chg_db.py
+                ./test/unit/mysql_class/server_connect.py
+                ./test/unit/mysql_class/server_disconnect.py
+                ./test/unit/mysql_class/server_fetchlogs.py
+                ./test/unit/mysql_class/server_fetchmstrepcfg.py
+                ./test/unit/mysql_class/server_fetchslvrepcfg.py
+                ./test/unit/mysql_class/server_flushlogs.py
+                ./test/unit/mysql_class/server_getname.py
                 ./test/unit/mysql_class/server_init.py
+                ./test/unit/mysql_class/server_is_connected.py
                 ./test/unit/mysql_class/server_reconnect.py
-                ./test/unit/mysql_class/Server_setsrvbinlogcrc.py
-                ./test/unit/mysql_class/Server_setsrvgtid.py
-                ./test/unit/mysql_class/Server_fetchmstrepcfg.py
-                ./test/unit/mysql_class/Server_fetchslvrepcfg.py
-                ./test/unit/mysql_class/Server_getname.py
-                ./test/unit/mysql_class/Server_is_connected.py
-                ./test/unit/mysql_class/Server_updmstrepstat.py
-                ./test/unit/mysql_class/Server_updslvrepstat.py
-                ./test/unit/mysql_class/Server_updsrvperf.py
-                ./test/unit/mysql_class/Server_updsrvstat.py
-                ./test/unit/mysql_class/Server_connect.py
-                ./test/unit/mysql_class/Server_disconnect.py
-                ./test/unit/mysql_class/Server_fetchlogs.py
-                ./test/unit/mysql_class/Server_flushlogs.py
-                ./test/unit/mysql_class/Server_vertsql.py
-                ./test/unit/mysql_class/Server_updlogstats.py
+                ./test/unit/mysql_class/server_setsrvbinlogcrc.py
+                ./test/unit/mysql_class/server_setsrvgtid.py
+                ./test/unit/mysql_class/server_updlogstats.py
+                ./test/unit/mysql_class/server_updmstrepstat.py
+                ./test/unit/mysql_class/server_updsrvperf.py
+                ./test/unit/mysql_class/server_updslvrepstat.py
+                ./test/unit/mysql_class/server_updsrvstat.py
+                ./test/unit/mysql_class/server_vertsql.py
                 ./test/unit/mysql_class/slaverep_connect.py
                 ./test/unit/mysql_class/SlaveRep_init.py
                 ./test/unit/mysql_class/SlaveRep_fetchdotbl.py
