@@ -25,15 +25,15 @@ pipeline {
                 ./test/unit/mysql_class/slave_start.py
                 ./test/unit/mysql_class/slave_stop.py
                 ./test/unit/mysql_class/gtidset_or.py
-                ./test/unit/mysql_class/GTIDSet_init.py
-                ./test/unit/mysql_class/GTIDSet_str.py
-                ./test/unit/mysql_class/GTIDSet_union.py
-                ./test/unit/mysql_class/GTIDSet_eq.py
-                ./test/unit/mysql_class/GTIDSet_ge.py
-                ./test/unit/mysql_class/GTIDSet_gt.py
-                ./test/unit/mysql_class/GTIDSet_le.py
-                ./test/unit/mysql_class/GTIDSet_lt.py
-                ./test/unit/mysql_class/GTIDSet_ne.py
+                ./test/unit/mysql_class/gtidset_init.py
+                ./test/unit/mysql_class/gtidset_str.py
+                ./test/unit/mysql_class/gtidset_union.py
+                ./test/unit/mysql_class/gtidset_eq.py
+                ./test/unit/mysql_class/gtidset_ge.py
+                ./test/unit/mysql_class/gtidset_gt.py
+                ./test/unit/mysql_class/gtidset_le.py
+                ./test/unit/mysql_class/gtidset_lt.py
+                ./test/unit/mysql_class/gtidset_ne.py
                 ./test/unit/mysql_class/masterrep_connect.py
                 ./test/unit/mysql_class/MasterRep_init.py
                 ./test/unit/mysql_class/MasterRep_showslvhosts.py
