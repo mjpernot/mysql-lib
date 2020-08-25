@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  Server_init.py
+"""Program:  server_init.py
 
     Description:  Unit testing of Server.__init__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/Server_init.py
+        test/unit/mysql_class/server_init.py
 
     Arguments:
 
@@ -42,6 +42,10 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_no_extra_def_file -> Test with no extra_def_file arg.
+        test_extra_def_file -> Test with passing extra_def_file arg.
+        test_no_port -> Test with no port arg.
+        test_port -> Test with passing port arg.
         test_no_host -> Test with no host arg.
         test_host -> Test with passing host arg.
         test_no_default -> Test with no default file.
@@ -70,6 +74,79 @@ class UnitTest(unittest.TestCase):
         self.extra_def_file = "extra_cfg_file"
         self.results = self.machine.defaults_file
 
+    def test_no_extra_def_file(self):
+
+        """Function:  test_no_extra_def_file
+
+        Description:  Test with no extra_def_file arg.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.extra_def_file, None)
+
+    def test_extra_def_file(self):
+
+        """Function:  test_extra_def_file
+
+        Description:  Test with passing extra_def_file arg.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, extra_def_file=self.extra_def_file)
+
+        self.assertEqual(
+            (mysqldb.name, mysqldb.server_id, mysqldb.sql_user,
+             mysqldb.sql_pass, mysqldb.machine, mysqldb.host,
+             mysqldb.extra_def_file),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", self.extra_def_file))
+
+    def test_no_port(self):
+
+        """Function:  test_no_port
+
+        Description:  Test with no port arg.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.port, 3306)
+
+    def test_port(self):
+
+        """Function:  test_port
+
+        Description:  Test with passing port arg.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, port=self.port)
+
+        self.assertEqual(
+            (mysqldb.name, mysqldb.server_id, mysqldb.sql_user,
+             mysqldb.sql_pass, mysqldb.machine, mysqldb.host, mysqldb.port),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", self.port))
+
     def test_no_host(self):
 
         """Function:  test_no_host
@@ -84,7 +161,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.defaults_file, self.results)
+        self.assertEqual(mysqldb.host, "localhost")
 
     def test_host(self):
 
