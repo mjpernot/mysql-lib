@@ -42,7 +42,10 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_default -> Test with minimum number of arguments.
+        test_no_host -> Test with no host arg.
+        test_host -> Test with passing host arg.
+        test_no_default -> Test with no default file.
+        test_default -> Test with default file.
 
     """
 
@@ -66,6 +69,42 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
         self.results = self.machine.defaults_file
+
+    def test_no_host(self):
+
+        """Function:  test_no_host
+
+        Description:  Test with no host arg.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.defaults_file, self.results)
+
+    def test_host(self):
+
+        """Function:  test_host
+
+        Description:  Test with passing host arg.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, host=self.host)
+
+        self.assertEqual(
+            (mysqldb.name, mysqldb.server_id, mysqldb.sql_user,
+             mysqldb.sql_pass, mysqldb.machine, mysqldb.host, mysqldb.port),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, self.host, 3306))
 
     def test_no_default(self):
 
