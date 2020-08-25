@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  Rep_fetchdodb.py
+"""Program:  rep_init.py
 
-    Description:  Unit testing of Rep.fetch_do_db in mysql_class.py.
+    Description:  Unit testing of Rep.__init__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/Rep_fetchdodb.py
+        test/unit/mysql_class/rep_init.py
 
     Arguments:
 
@@ -28,6 +28,7 @@ else:
 # Local
 sys.path.append(os.getcwd())
 import mysql_class
+import lib.machine as machine
 import version
 
 __version__ = version.__version__
@@ -41,8 +42,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_list -> Test fetch_do_db method with data.
-        test_default -> Test fetch_do_db method with no data.
+        test_default -> Test with minimum number of arguments.
 
     """
 
@@ -60,44 +60,32 @@ class UnitTest(unittest.TestCase):
         self.server_id = 10
         self.sql_user = "mysql_user"
         self.sql_pass = "my_pwd"
-        self.machine = "Linux"
+        self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-    def test_list(self):
-
-        """Function:  test_list
-
-        Description:  Test fetch_do_db method with data.
-
-        Arguments:
-
-        """
-
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
-
-        mysqlrep.do_db = "DB1,DB2,DB3"
-        self.assertEqual(mysqlrep.fetch_do_db(), ["DB1", "DB2", "DB3"])
-
     def test_default(self):
 
         """Function:  test_default
 
-        Description:  Test fetch_do_db method with no data.
+        Description:  Test __init__ method with default arguments.
 
         Arguments:
 
         """
 
-        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
-                                   self.sql_pass, self.machine,
-                                   defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.Rep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, defaults_file=self.defaults_file)
 
-        self.assertEqual(mysqlrep.fetch_do_db(), [])
+        self.assertEqual(
+            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
+             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
+             mysqlrep.port),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", 3306))
 
 
 if __name__ == "__main__":

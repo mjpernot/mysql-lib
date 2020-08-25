@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  Rep_showslvstate.py
+"""Program:  rep_getservid.py
 
-    Description:  Unit testing of Rep.show_slv_state in mysql_class.py.
+    Description:  Unit testing of Rep.get_serv_id in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/Rep_showslvstate.py
+        test/unit/mysql_class/rep_getservid.py
 
     Arguments:
 
@@ -24,10 +24,12 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
 import mysql_class
+import lib.machine as machine
 import version
 
 __version__ = version.__version__
@@ -41,7 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_default -> Test show_slv_state method.
+        test_default -> Test get_serv_id method.
 
     """
 
@@ -59,27 +61,29 @@ class UnitTest(unittest.TestCase):
         self.server_id = 10
         self.sql_user = "mysql_user"
         self.sql_pass = "my_pwd"
-        self.machine = "Linux"
+        self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-    def test_default(self):
+    @mock.patch("mysql_class.fetch_sys_var")
+    def test_default(self, mock_fetch):
 
         """Function:  test_default
 
-        Description:  Test show_slv_state method.
+        Description:  Test get_serv_id method.
 
         Arguments:
 
         """
 
+        mock_fetch.return_value = {"server_id": 11}
         mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)
 
-        self.assertFalse(mysqlrep.show_slv_state())
+        self.assertEqual(mysqlrep.get_serv_id(), 11)
 
 
 if __name__ == "__main__":

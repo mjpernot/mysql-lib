@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  Rep_showslvhosts.py
+"""Program:  rep_fetchigndb.py
 
-    Description:  Unit testing of Rep.show_slv_hosts in mysql_class.py.
+    Description:  Unit testing of Rep.fetch_ign_db in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/Rep_showslvhosts.py
+        test/unit/mysql_class/rep_fetchigndb.py
 
     Arguments:
 
@@ -28,6 +28,7 @@ else:
 # Local
 sys.path.append(os.getcwd())
 import mysql_class
+import lib.machine as machine
 import version
 
 __version__ = version.__version__
@@ -41,7 +42,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_default -> Test show_slv_hosts method.
+        test_list -> Test fetch_ign_db method with data.
+        test_default -> Test fetch_ign_db method with no data.
 
     """
 
@@ -59,17 +61,34 @@ class UnitTest(unittest.TestCase):
         self.server_id = 10
         self.sql_user = "mysql_user"
         self.sql_pass = "my_pwd"
-        self.machine = "Linux"
+        self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
+    def test_list(self):
+
+        """Function:  test_list
+
+        Description:  Test fetch_ign_db method with data.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
+                                   self.sql_pass, self.machine,
+                                   defaults_file=self.defaults_file)
+        mysqlrep.ign_db = "DB1,DB2,DB3"
+
+        self.assertEqual(mysqlrep.fetch_ign_db(), ["DB1", "DB2", "DB3"])
+
     def test_default(self):
 
         """Function:  test_default
 
-        Description:  Test show_slv_hosts method.
+        Description:  Test fetch_ign_db method with no data.
 
         Arguments:
 
@@ -79,7 +98,7 @@ class UnitTest(unittest.TestCase):
                                    self.sql_pass, self.machine,
                                    defaults_file=self.defaults_file)
 
-        self.assertFalse(mysqlrep.show_slv_hosts())
+        self.assertEqual(mysqlrep.fetch_ign_db(), [])
 
 
 if __name__ == "__main__":

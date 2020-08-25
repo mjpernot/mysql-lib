@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  Rep_init.py
+"""Program:  rep_showslvhosts.py
 
-    Description:  Unit testing of Rep.__init__ in mysql_class.py.
+    Description:  Unit testing of Rep.show_slv_hosts in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/Rep_init.py
+        test/unit/mysql_class/rep_showslvhosts.py
 
     Arguments:
 
@@ -42,7 +42,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_default -> Test with minimum number of arguments.
+        test_default -> Test show_slv_hosts method.
 
     """
 
@@ -70,22 +70,17 @@ class UnitTest(unittest.TestCase):
 
         """Function:  test_default
 
-        Description:  Test __init__ method with default arguments.
+        Description:  Test show_slv_hosts method.
 
         Arguments:
 
         """
 
-        mysqlrep = mysql_class.Rep(
-            self.name, self.server_id, self.sql_user, self.sql_pass,
-            os_type=self.machine, defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.Rep(self.name, self.server_id, self.sql_user,
+                                   self.sql_pass, self.machine,
+                                   defaults_file=self.defaults_file)
 
-        self.assertEqual(
-            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
-             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
-             mysqlrep.port),
-            (self.name, self.server_id, self.sql_user, self.sql_pass,
-             self.machine, "localhost", 3306))
+        self.assertFalse(mysqlrep.show_slv_hosts())
 
 
 if __name__ == "__main__":
