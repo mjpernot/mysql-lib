@@ -39,7 +39,7 @@ pipeline {
                 ./test/unit/mysql_class/masterrep_showslvhosts.py
                 ./test/unit/mysql_class/masterrep_getloginfo.py
                 ./test/unit/mysql_class/masterrep_updmststatus.py
-                ./test/unit/mysql_class/Position_cmp.py
+                ./test/unit/mysql_class/position_cmp.py
                 ./test/unit/mysql_class/rep_fetchdodb.py
                 ./test/unit/mysql_class/rep_fetchigndb.py
                 ./test/unit/mysql_class/rep_getservid.py
