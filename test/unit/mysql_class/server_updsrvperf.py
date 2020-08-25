@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  Server_updsrvperf.py
+"""Program:  server_updsrvperf.py
 
     Description:  Unit testing of Server.upd_srv_perf in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/Server_updsrvperf.py
+        test/unit/mysql_class/server_updsrvperf.py
 
     Arguments:
 
@@ -29,6 +29,7 @@ import mock
 # Local
 sys.path.append(os.getcwd())
 import mysql_class
+import lib.machine as machine
 import version
 
 __version__ = version.__version__
@@ -60,7 +61,7 @@ class UnitTest(unittest.TestCase):
         self.server_id = 10
         self.sql_user = "mysql_user"
         self.sql_pass = "my_pwd"
-        self.machine = "Linux"
+        self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"

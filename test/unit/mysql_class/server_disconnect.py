@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  Server_disconnect.py
+"""Program:  server_disconnect.py
 
     Description:  Unit testing of Server.disconnect in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/Server_disconnect.py
+        test/unit/mysql_class/server_disconnect.py
 
     Arguments:
 
@@ -28,8 +28,8 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
-import lib.gen_libs as gen_libs
 import mysql_class
+import lib.gen_libs as gen_libs
 import version
 
 __version__ = version.__version__
