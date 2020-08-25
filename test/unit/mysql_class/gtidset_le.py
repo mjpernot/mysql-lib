@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  GTIDSet_le.py
+"""Program:  gtidset_le.py
 
     Description:  Unit testing of GTIDSet.__le__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/GTIDSet_le.py
+        test/unit/mysql_class/gtidset_le.py
 
     Arguments:
 

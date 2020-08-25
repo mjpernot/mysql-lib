@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  GTIDSet_union.py
+"""Program:  gtidset_union.py
 
     Description:  Unit testing of GTIDSet.union in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/GTIDSet_union.py
+        test/unit/mysql_class/gtidset_union.py
 
     Arguments:
 

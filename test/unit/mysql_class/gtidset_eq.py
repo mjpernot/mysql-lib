@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  GTIDSet_eq.py
+"""Program:  gtidset_eq.py
 
     Description:  Unit testing of GTIDSet.__eq__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/GTIDSet_eq.py
+        test/unit/mysql_class/gtidset_eq.py
 
     Arguments:
 

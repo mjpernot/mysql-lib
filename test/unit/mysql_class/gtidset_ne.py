@@ -1,12 +1,12 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  GTIDSet_ne.py
+"""Program:  gtidset_ne.py
 
     Description:  Unit testing of GTIDSet.__ne__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/GTIDSet_ne.py
+        test/unit/mysql_class/gtidset_ne.py
 
     Arguments:
 
