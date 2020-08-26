@@ -45,7 +45,7 @@ class Server(object):
 
     """
 
-    def __init__(self, name, sid, user, pswd, **kwargs):
+    def __init__(self, name, sid, user, japd, **kwargs):
 
         """Method:  __init__
 
@@ -58,7 +58,7 @@ class Server(object):
         self.name = name
         self.sid = sid
         self.user = user
-        self.pswd = pswd
+        self.japd = japd
         self.serv_os = kwargs.get("machine")
         self.host = kwargs.get("host")
         self.port = kwargs.get("port")
