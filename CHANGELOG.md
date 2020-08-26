@@ -18,6 +18,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
 
 ### Changed
+- mysql_libs.crt_srv_inst:  Changed name of configuration setting.
 - mysql_libs.create_slv_array:  Changed name of configuration setting.
 - mysql_libs.create_instance:  Changed name of configuration setting.
 - mysql_class.SlaveRep.\_\_init\_\_:  Set a number of positional args to keyword args.

@@ -275,7 +275,7 @@ def crt_srv_inst(cfg, path, **kwargs):
     svr = gen_libs.load_module(cfg, path)
 
     return mysql_class.Server(
-        svr.name, svr.sid, svr.user, svr.passwd,
+        svr.name, svr.sid, svr.user, svr.japd,
         os_type=getattr(machine, svr.serv_os)(), host=svr.host, port=svr.port,
         defaults_file=svr.cfg_file)
 
