@@ -40,6 +40,9 @@ import version
 
 __version__ = version.__version__
 
+# Global
+KEY1 = "pass"
+KEY2 = "wd"
 
 def fetch_global_var(server, var):
 
@@ -528,6 +531,9 @@ class Server(object):
 
         """
 
+        global KEY1
+        global KEY2
+
         self.name = name
         self.server_id = server_id
         self.sql_user = sql_user
@@ -538,6 +544,7 @@ class Server(object):
         self.defaults_file = kwargs.get("defaults_file",
                                         self.machine.defaults_file)
         self.extra_def_file = kwargs.get("extra_def_file", None)
+        self.config = {KEY1 + KEY2: self.sql_pass}
 
         # SQL connection handler.
         self.conn = None
