@@ -1092,8 +1092,7 @@ class Rep(Server):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, os_type,
-                 host="localhost", port=3306, defaults_file=None, **kwargs):
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -1105,17 +1104,20 @@ class Rep(Server):
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
             (input) os_type -> Machine operating system type class instance.
-            (input) host -> 'localhost' or host name or IP.
-            (input) port -> '3306' or port for MySQL.
-            (input) defaults_file -> Location of my.cnf file.
             (input) **kwargs:
                 extra_def_file -> Location of extra defaults file.
+                host -> Host name or IP of server.
+                port -> Port for MySQL.
+                defaults_file -> Location of my.cnf file.
 
         """
 
         super(Rep, self).__init__(
-            name, server_id, sql_user, sql_pass, os_type=os_type, host=host,
-            port=port, defaults_file=defaults_file, **kwargs)
+            name, server_id, sql_user, sql_pass, os_type=os_type,
+            host=kwargs.get("host", "localhost"),
+            port=kwargs.get("port", 3306),
+            defaults_file=kwargs.get("defaults_file", os_type.defaults_file),
+            extra_def_file=kwargs.get("extra_def_file", None))
 
     def show_slv_hosts(self):
 
