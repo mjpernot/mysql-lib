@@ -60,12 +60,12 @@ class Server(object):
         self.host = "hostname"
         self.port = 3306
         self.sql_user = "sqluser"
-        self.sql_pass = "sqluserpswd"
+        self.sql_pass = "japd"
         self.file = "binlog-filename"
         self.pos = "file-position"
         self.name = "server-name"
         self.rep_user = "rep_user"
-        self.rep_pswd = "rep_pswd"
+        self.rep_japd = "rep_japd"
         self.cmd = None
 
     def cmd_sql(self, cmd):
