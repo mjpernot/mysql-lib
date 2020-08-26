@@ -42,6 +42,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_config -> Test with config attribute.
         test_no_extra_def_file -> Test with no extra_def_file arg.
         test_extra_def_file -> Test with passing extra_def_file arg.
         test_no_port -> Test with no port arg.
@@ -63,16 +64,40 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        key1 = "pass"
+        key2 = "wd"
         self.name = "Mysql_Server"
         self.server_id = 10
         self.sql_user = "mysql_user"
-        self.sql_pass = "my_pwd"
+        self.sql_pass = "my_japd"
         self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
         self.results = self.machine.defaults_file
+        self.config = {key1 + key2: self.sql_pass}
+
+    def test_config(self):
+
+        """Function:  test_config
+
+        Description:  Test with config attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(
+            (mysqldb.name, mysqldb.server_id, mysqldb.sql_user,
+             mysqldb.sql_pass, mysqldb.machine, mysqldb.host,
+             mysqldb.config),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", self.config))
 
     def test_no_extra_def_file(self):
 
