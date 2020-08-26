@@ -221,7 +221,7 @@ def create_slv_array(cfg_array, add_down=True, **kwargs):
 
     for slv in cfg_array:
         slv_inst = mysql_class.SlaveRep(
-            slv["name"], slv["sid"], slv["user"], slv["passwd"],
+            slv["name"], slv["sid"], slv["user"], slv["japd"],
             os_type=getattr(machine, slv["serv_os"])(), host=slv["host"],
             port=int(slv["port"]), defaults_file=slv["cfg_file"])
         slv_inst.connect()
@@ -237,7 +237,7 @@ def crt_cmd(server, prog_name, **kwargs):
     """Function:  crt_cmd
 
     Description:  Create a basic MySQL program command line setup.  The basic
-        setup will include program name, user, passwd, host, and port.
+        setup will include program name, user, password, host, and port.
         The port is required to be set if MySQL instance is operating
         on a different port than 3306.
 
