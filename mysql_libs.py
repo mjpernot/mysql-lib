@@ -694,7 +694,7 @@ def switch_to_master(mst, slv, timeout=0, **kwargs):
     # Wait for relay log to empty.
     slv.upd_gtid_pos()
     status_flag = next(iter(select_wait_until(slv, slv.retrieved_gtidset,
-                                              timeout).values()))
+                                              timeout)[0]))
 
     if status_flag >= 0:
         mysql_class.slave_stop(slv)
