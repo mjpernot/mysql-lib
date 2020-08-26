@@ -59,7 +59,7 @@ class UnitTest(unittest.TestCase):
         self.name = "Mysql_Server"
         self.server_id = 10
         self.sql_user = "mysql_user"
-        self.sql_pass = "my_pwd"
+        self.sql_pass = "d"
         self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
