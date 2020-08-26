@@ -44,6 +44,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_database -> Test with database argument passed.
+        test_config -> Test with config attribute.
         test_connect_exception -> Test connection method exception.
         test_connect -> Test connect method.
 
@@ -71,6 +73,25 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
         self.config = {key1 + key2: self.sql_pass}
+        self.database = "minedatabase"
+
+    @mock.patch("mysql_class.mysql.connector.connect")
+    def test_database(self, mock_connect):
+
+        """Function:  test_database
+
+        Description:  Test with database argument passed.
+
+        Arguments:
+
+        """
+
+        mock_connect.return_value = True
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+
+        self.assertFalse(mysqldb.connect(database=self.database))
 
     @mock.patch("mysql_class.mysql.connector.connect")
     def test_config(self, mock_connect):

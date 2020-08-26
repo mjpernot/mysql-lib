@@ -86,14 +86,13 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        msg = "Error Message"
         self.slave1 = Server("Slave1", "Extra_Def_File")
         self.slave2 = Server("Slave2")
-        self.err_msg = "Error Message"
-        self.err_msg2 = \
-            ["Error Message", "Slave1:  Extra_Def_File is missing."]
+        self.err_msg = msg
+        self.err_msg2 = [msg, "Slave1:  Extra_Def_File is missing."]
         self.results = ["Slave2:  extra_def_file is not set."]
-        self.results2 = ["Error Message",
-                         "Slave1:  Extra_Def_File is missing.",
+        self.results2 = [msg, "Slave1:  Extra_Def_File is missing.",
                          "Slave2:  extra_def_file is not set."]
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
