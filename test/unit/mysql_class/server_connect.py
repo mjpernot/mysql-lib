@@ -59,15 +59,37 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        key1 = "pass"
+        key2 = "wd"
         self.name = "Mysql_Server"
         self.server_id = 10
         self.sql_user = "mysql_user"
-        self.sql_pass = "my_pwd"
+        self.sql_pass = "my_japd"
         self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
+        self.config = {key1 + key2: self.sql_pass}
+
+    @mock.patch("mysql_class.mysql.connector.connect")
+    def test_config(self, mock_connect):
+
+        """Function:  test_config
+
+        Description:  Test with config attribute.
+
+        Arguments:
+
+        """
+
+        mock_connect.return_value = True
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+
+        self.assertFalse(mysqldb.connect())
+        self.assertEqual(mysqldb.config, self.config)
 
     def test_connect_exception(self):
 
@@ -79,9 +101,9 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                     self.sql_pass, self.machine,
-                                     defaults_file=self.defaults_file)
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
 
         with gen_libs.no_std_out():
             self.assertFalse(mysqldb.connect())
@@ -98,9 +120,9 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_connect.return_value = True
-        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                     self.sql_pass, self.machine,
-                                     defaults_file=self.defaults_file)
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
 
         self.assertFalse(mysqldb.connect())
 
