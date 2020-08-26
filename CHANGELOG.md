@@ -18,6 +18,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
 
 ### Changed
+- mysql_class.MasterRep.\_\_init\_\_:  Set a number of positional args to keyword args.
 - mysql_class.Rep.\_\_init\_\_:  Set a number of positional args to keyword args.
 - mysql_class.Server.connect:  Added config attribute to connection command.
 - mysql_class.Server.\_\_init\_\_:  Added config attribute for connecting to Mysql database.

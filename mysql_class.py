@@ -1237,8 +1237,7 @@ class MasterRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, os_type,
-                 host="localhost", port=3306, defaults_file=None, **kwargs):
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -1256,13 +1255,19 @@ class MasterRep(Rep):
             (input) **kwargs:
                 extra_def_file -> Location of extra defaults file.
                 rep_user -> Replication user name.
-                rep_pswd -> Replication user password.
+                rep_japd -> Replication user password.
+                host -> Host name or IP of server.
+                port -> Port for MySQL.
+                defaults_file -> Location of my.cnf file.
 
         """
 
         super(MasterRep, self).__init__(
-            name, server_id, sql_user, sql_pass, os_type=os_type, host=host,
-            port=port, defaults_file=defaults_file, **kwargs)
+            name, server_id, sql_user, sql_pass, os_type=os_type,
+            host=kwargs.get("host", "localhost"),
+            port=kwargs.get("port", 3306),
+            defaults_file=kwargs.get("defaults_file", os_type.defaults_file),
+            extra_def_file=kwargs.get("extra_def_file", None))
 
         self.pos = None
         self.do_db = None
@@ -1270,7 +1275,7 @@ class MasterRep(Rep):
         self.ign_db = None
         self.exe_gtid = None
         self.rep_user = kwargs.get("rep_user", None)
-        self.rep_pswd = kwargs.get("rep_pswd", None)
+        self.rep_japd = kwargs.get("rep_japd", None)
 
     def connect(self):
 
