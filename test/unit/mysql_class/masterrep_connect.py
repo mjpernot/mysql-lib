@@ -68,11 +68,11 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
         self.rep_user = "rep_user"
-        self.rep_pswd = "rep_pswd"
+        self.rep_japd = "rep_japd"
         self.mysqlrep = mysql_class.MasterRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine, defaults_file=self.defaults_file,
-            rep_user=self.rep_user, rep_pswd=self.rep_pswd)
+            rep_user=self.rep_user, rep_japd=self.rep_japd)
 
     @mock.patch("mysql_class.MasterRep.upd_mst_status")
     @mock.patch("mysql_class.Server.set_srv_gtid")
