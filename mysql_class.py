@@ -892,16 +892,19 @@ class Server(object):
 
         return self.file
 
-    def connect(self, database=""):
+    def connect(self, **kwargs):
 
         """Method:  connect
 
         Description:  Sets up a connection to a database.
 
         Arguments:
-            (input) database -> Name of database.
+            (input) kwargs:
+                database -> Name of database to connect to.
 
         """
+
+        database = kwargs.get("database", "")
 
         if not self.conn:
 

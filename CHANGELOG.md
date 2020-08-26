@@ -20,6 +20,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
 
 ### Changed
+- mysql_class.Server.connect:  Changed database argument from positional to keyword.
 - mysql_libs.switch_to_master:  Changed to reference returning list due to change in select_wait_until.
 - mysql_libs.change_master_to:  Changed name of class attribute.
 - mysql_libs.crt_srv_inst:  Changed name of configuration setting.
