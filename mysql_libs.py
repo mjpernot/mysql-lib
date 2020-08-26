@@ -616,8 +616,9 @@ def select_wait_until(server, gtid_pos, timeout=0, **kwargs):
 
     """
 
-    return server.cmd_sql("select wait_until_sql_thread_after_gtids(%s, %s)"
-                          % (gtid_pos, timeout))
+    return server.sql("select wait_until_sql_thread_after_gtids(%s, %s)"
+                      % ('"' + str(gtid_pos) + '"', timeout),
+                      res_set="all")
 
 
 def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
