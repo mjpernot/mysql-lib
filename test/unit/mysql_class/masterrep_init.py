@@ -42,6 +42,12 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_no_extra_def_file -> Test with no extra_def_file arg.
+        test_extra_def_file -> Test with passing extra_def_file arg.
+        test_port -> Test with passing port arg.
+        test_host -> Test with host arg.
+        test_no_default -> Test with no default file.
+        test_config -> Test with config attribute.
         test_rep_user -> Test with rep user settings.
         test_default -> Test with minimum number of arguments.
 
@@ -57,17 +63,146 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        key1 = "pass"
+        key2 = "wd"
         self.name = "Mysql_Server"
         self.server_id = 10
         self.sql_user = "mysql_user"
-        self.sql_pass = "my_pwd"
+        self.sql_pass = "my_japd"
         self.machine = getattr(machine, "Linux")()
         self.host = "host_server"
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
         self.rep_user = "rep_user"
-        self.rep_pswd = "rep_pswd"
+        self.rep_japd = "rep_japd"
+        self.config = {key1 + key2: self.sql_pass}
+
+    def test_no_extra_def_file(self):
+
+        """Function:  test_no_extra_def_file
+
+        Description:  Test with no extra_def_file arg.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.MasterRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(
+            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
+             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
+             mysqlrep.port, mysqlrep.extra_def_file),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", 3306, None))
+
+    def test_extra_def_file(self):
+
+        """Function:  test_extra_def_file
+
+        Description:  Test with passing extra_def_file arg.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.MasterRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, extra_def_file=self.extra_def_file)
+
+        self.assertEqual(
+            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
+             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
+             mysqlrep.port, mysqlrep.extra_def_file),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", 3306, self.extra_def_file))
+
+    def test_port(self):
+
+        """Function:  test_port
+
+        Description:  Test with passing port arg.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.MasterRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, port=self.port)
+
+        self.assertEqual(
+            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
+             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
+             mysqlrep.port),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", self.port))
+
+    def test_host(self):
+
+        """Function:  test_host
+
+        Description:  Test with host arg.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.MasterRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, host=self.host)
+
+        self.assertEqual(
+            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
+             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
+             mysqlrep.port),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, self.host, 3306))
+
+    def test_no_default(self):
+
+        """Function:  test_no_default
+
+        Description:  Test with no default file.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.MasterRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(
+            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
+             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
+             mysqlrep.port, mysqlrep.defaults_file),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", 3306, self.machine.defaults_file))
+
+    def test_config(self):
+
+        """Function:  test_config
+
+        Description:  Test with config attribute.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.MasterRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(
+            (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
+             mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
+             mysqlrep.port, mysqlrep.config),
+            (self.name, self.server_id, self.sql_user, self.sql_pass,
+             self.machine, "localhost", 3306, self.config))
 
     def test_rep_user(self):
 
@@ -82,14 +217,14 @@ class UnitTest(unittest.TestCase):
         mysqlrep = mysql_class.MasterRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine, defaults_file=self.defaults_file,
-            rep_user=self.rep_user, rep_pswd=self.rep_pswd)
+            rep_user=self.rep_user, rep_japd=self.rep_japd)
 
         self.assertEqual(
             (mysqlrep.name, mysqlrep.server_id, mysqlrep.sql_user,
              mysqlrep.sql_pass, mysqlrep.machine, mysqlrep.host,
-             mysqlrep.port, mysqlrep.rep_user, mysqlrep.rep_pswd),
+             mysqlrep.port, mysqlrep.rep_user, mysqlrep.rep_japd),
             (self.name, self.server_id, self.sql_user, self.sql_pass,
-             self.machine, "localhost", 3306, self.rep_user, self.rep_pswd))
+             self.machine, "localhost", 3306, self.rep_user, self.rep_japd))
 
     def test_default(self):
 
