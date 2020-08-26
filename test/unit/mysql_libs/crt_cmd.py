@@ -57,7 +57,7 @@ class Server(object):
         self.name = "name"
         self.sid = "sid"
         self.sql_user = "user"
-        self.sql_pass = "pswd"
+        self.sql_pass = "japd"
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
