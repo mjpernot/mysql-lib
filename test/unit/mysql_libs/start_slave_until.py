@@ -140,7 +140,7 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(
             mysql_libs.start_slave_until(
-                self.Server, log_file="Filename", log_pos=12345),
+                self.server, log_file="Filename", log_pos=12345),
             (False, None))
 
 
