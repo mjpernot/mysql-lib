@@ -197,7 +197,7 @@ def create_instance(cfg_file, dir_path, cls_name, **kwargs):
     cfg = gen_libs.load_module(cfg_file, dir_path)
 
     return cls_name(
-        cfg.name, cfg.sid, cfg.user, cfg.passwd,
+        cfg.name, cfg.sid, cfg.user, cfg.japd,
         os_type=getattr(machine, cfg.serv_os)(), host=cfg.host, port=cfg.port,
         defaults_file=cfg.cfg_file,
         extra_def_file=cfg.__dict__.get("extra_def_file", None))
