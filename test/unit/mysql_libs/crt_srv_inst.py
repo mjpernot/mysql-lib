@@ -89,7 +89,7 @@ class Cfg(object):
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
-        self.passwd = None
+        self.japd = None
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
@@ -120,7 +120,7 @@ class UnitTest(unittest.TestCase):
 
         self.cfg = Cfg()
         self.server = Server(
-            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.passwd,
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
             machine=self.cfg.serv_os, host=self.cfg.host, port=self.cfg.port,
             defaults_file=self.cfg.cfg_file)
 
