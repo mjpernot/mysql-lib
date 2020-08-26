@@ -907,11 +907,9 @@ class Server(object):
         if not self.conn:
 
             try:
-                self.conn = mysql.connector.connect(host=self.host,
-                                                    user=self.sql_user,
-                                                    passwd=self.sql_pass,
-                                                    port=self.port,
-                                                    database=database)
+                self.conn = mysql.connector.connect(
+                    host=self.host, user=self.sql_user, port=self.port,
+                    database=database, **self.config)
 
             except mysql.connector.Error, err:
                 print("Couldn't connect to database.  MySQL error %d: %s" %
