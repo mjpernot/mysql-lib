@@ -672,8 +672,8 @@ class Server(object):
 
         data = {}
 
-        for x in self.col_sql("show status"):
-            data.update({x["Variable_name"]: x["Value"]})
+        for item in self.col_sql("show status"):
+            data.update({item["Variable_name"]: item["Value"]})
 
         self.indb_buf_free = int(data["Innodb_buffer_pool_pages_free"])
         self.indb_buf_data = int(data["Innodb_buffer_pool_pages_data"])
