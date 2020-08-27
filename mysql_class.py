@@ -44,6 +44,7 @@ __version__ = version.__version__
 KEY1 = "pass"
 KEY2 = "wd"
 
+
 def fetch_global_var(server, var):
 
     """Function:  fetch_global_var
