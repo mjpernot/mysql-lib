@@ -21,6 +21,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
 
 ### Changed
+- mysql_class.Server.col_sql:  Changed variable to standard naming convention.
 - mysql_class.Server.vert_sql:  Changed variable to standard naming convention.
 - mysql_class.Server.chg_db:  Changed variable to standard naming convention.
 - mysql_class.Server.upd_srv_perf:  Changed variable to standard naming convention.

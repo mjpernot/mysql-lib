@@ -987,10 +987,10 @@ class Server(object):
         """
 
         data = []
-        keys = [str(x[0]) for x in self.conn.cmd_query(cmd)["columns"]]
+        keys = [str(line[0]) for line in self.conn.cmd_query(cmd)["columns"]]
 
-        for y in self.conn.get_rows()[0]:
-            data.append(dict(zip(keys, [x for x in y])))
+        for line in self.conn.get_rows()[0]:
+            data.append(dict(zip(keys, [item for item in line])))
 
         return data
 
