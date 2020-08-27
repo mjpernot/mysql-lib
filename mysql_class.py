@@ -1013,8 +1013,8 @@ class Server(object):
 
         data = {}
 
-        for x in self.sql(cmd, params=params):
-            data[x[0]] = x[1]
+        for item in self.sql(cmd, params=params):
+            data[item[0]] = item[1]
 
         return data
 
