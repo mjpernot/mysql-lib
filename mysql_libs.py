@@ -342,7 +342,7 @@ def fetch_slv(slaves, slv_name, **kwargs):
     return slv, err_flag, err_msg
 
 
-def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
+def fetch_tbl_dict(server, dbn, tbl_type="BASE TABLE", **kwargs):
 
     """Function:  fetch_tbl_dict
 
@@ -351,14 +351,14 @@ def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Name of database.
+        (input) dbn -> Name of database.
         (input) tbl_type -> Type of table in the database.
         (output) List of tables in database.
 
     """
 
     qry = """select table_name from information_schema.tables where
-        table_type = '%s' and table_schema = '%s'""" % (tbl_type, db)
+        table_type = '%s' and table_schema = '%s'""" % (tbl_type, dbn)
 
     return server.col_sql(qry)
 
