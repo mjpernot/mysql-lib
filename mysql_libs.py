@@ -288,7 +288,7 @@ def fetch_db_dict(server, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (output) -> List of dictionary of database names.
+        (output) -> List of dictionaries of database names.
 
     """
 
