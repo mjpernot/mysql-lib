@@ -9,6 +9,7 @@ coverage erase
 echo ""
 echo "Running unit test modules in conjunction with coverage"
 coverage run -a --source=mysql_libs test/integration/mysql_libs/create_instance.py
+coverage run -a --source=mysql_libs test/integration/mysql_libs/crt_srv_inst.py
 
 echo ""
 echo "Producing code coverage report"
