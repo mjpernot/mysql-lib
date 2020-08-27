@@ -13,6 +13,7 @@ coverage run -a --source=mysql_libs test/integration/mysql_libs/crt_srv_inst.py
 coverage run -a --source=mysql_libs test/integration/mysql_libs/fetch_db_dict.py
 coverage run -a --source=mysql_libs test/integration/mysql_libs/fetch_logs.py
 coverage run -a --source=mysql_libs test/integration/mysql_libs/fetch_tbl_dict.py
+coverage run -a --source=mysql_libs test/integration/mysql_libs/is_cfg_valid.py
 
 echo ""
 echo "Producing code coverage report"

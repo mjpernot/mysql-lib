@@ -10,3 +10,4 @@ test/integration/mysql_libs/crt_srv_inst.py
 test/integration/mysql_libs/fetch_db_dict.py
 test/integration/mysql_libs/fetch_logs.py
 test/integration/mysql_libs/fetch_tbl_dict.py
+test/integration/mysql_libs/is_cfg_valid.py
