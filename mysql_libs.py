@@ -55,7 +55,7 @@ import version
 __version__ = version.__version__
 
 
-def analyze_tbl(server, db, tbl, **kwargs):
+def analyze_tbl(server, dbn, tbl, **kwargs):
 
     """Function:  analyze_tbl
 
@@ -63,14 +63,14 @@ def analyze_tbl(server, db, tbl, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Database name.
+        (input) dbn -> Database name.
         (input) tbl -> Table name.
         (output) Results of analyze table command.
 
     """
 
     # Must have back ticks around names in case they have special characters.
-    cmd = "analyze table `" + db + "`.`" + tbl + "`"
+    cmd = "analyze table `" + dbn + "`.`" + tbl + "`"
 
     return server.col_sql(cmd)
 

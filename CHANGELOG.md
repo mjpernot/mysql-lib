@@ -21,6 +21,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
 
 ### Changed
+- mysql_libs.analyze_tbl:  Changed variable to standard naming convention.
 - mysql_class.Server.sql:  Removed unnecessary else clause.
 - mysql_class.Server.is_connected:  Removed unnecessary else clause.
 - mysql_class.Server.upd_srv_stat:  Changed variable to standard naming convention.
