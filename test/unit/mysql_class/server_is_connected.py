@@ -24,12 +24,10 @@ else:
     import unittest
 
 # Third-party
-import mock
 
 # Local
 sys.path.append(os.getcwd())
 import mysql_class
-import lib.gen_libs as gen_libs
 import lib.machine as machine
 import version
 
