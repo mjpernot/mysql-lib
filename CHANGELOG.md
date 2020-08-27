@@ -55,6 +55,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_libs.change_master_to:  Replaced sql_user and sql_pass with rep_user and rep_pswd respectively.
 - mysql_class.MasterRep.\_\_init\_\_:  Added rep_user and rep_pswd to the class' attributes.
 - mysql_class.MasterRep.\_\_init\_\_:  Set a number of positional args to keyword args.
+- Documentation updates.
 
 ### Removed
 - Removed machine module.
