@@ -7,3 +7,4 @@
 echo "Integration test: mysql_libs"  
 test/integration/mysql_libs/create_instance.py
 test/integration/mysql_libs/crt_srv_inst.py
+test/integration/mysql_libs/fetch_db_dict.py
