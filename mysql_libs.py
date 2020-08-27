@@ -110,7 +110,7 @@ def change_master_to(mst, slv, **kwargs):
     print("Changed Slave: {0} to new Master: {1}".format(slv.name, mst.name))
 
 
-def checksum(server, db, tbl, **kwargs):
+def checksum(server, dbn, tbl, **kwargs):
 
     """Function:  checksum
 
@@ -118,14 +118,14 @@ def checksum(server, db, tbl, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Database name.
+        (input) dbn -> Database name.
         (input) tbl -> Table name.
         (output) Results of checksum table command.
 
     """
 
     # Must have back ticks around names in case they have special characters.
-    cmd = "checksum table `" + db + "`.`" + tbl + "`"
+    cmd = "checksum table `" + dbn + "`.`" + tbl + "`"
 
     return server.col_sql(cmd)
 
