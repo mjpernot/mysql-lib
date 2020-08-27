@@ -151,7 +151,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertTrue(type(self.server) == type(srv_inst))
+        self.assertTrue(isinstance(srv_inst, Server))
         self.assertEqual(srv_inst.extra_def_file, None)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
@@ -169,7 +169,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertTrue(type(self.server) == type(srv_inst))
+        self.assertTrue(isinstance(srv_inst, Server))
 
 
 if __name__ == "__main__":
