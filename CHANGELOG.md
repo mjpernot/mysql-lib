@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Changed the "change_master_to" command to use the replication user instead of the system user.
 
 ### Fixed
+- mysql_libs.start_slave_until:  Changed variable name due to naming conflict.
 - mysql_class.Server.\_\_init\_\_:  Initialized missing attributes cur_mem_mb and max_mem_mb.
 - mysql_libs.select_wait_until: Converted gtid position to a string.
 - mysql_libs.select_wait_until:  Changed to server.sql to force a single return.
@@ -22,18 +23,18 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ### Changed
 - mysql_libs.crt_cmd:  Removed unnecessary else clause.
-- mysql_libs.optimize_tbl:  Changed variable to standard naming convention.
-- mysql_libs.fetch_tbl_dict:  Changed variable to standard naming convention.
-- mysql_libs.check_tbl:  Changed variable to standard naming convention.
-- mysql_libs.checksum:  Changed variable to standard naming convention.
-- mysql_libs.analyze_tbl:  Changed variable to standard naming convention.
+- mysql_libs.optimize_tbl:  Changed variable name to standard naming convention.
+- mysql_libs.fetch_tbl_dict:  Changed variable name to standard naming convention.
+- mysql_libs.check_tbl:  Changed variable name to standard naming convention.
+- mysql_libs.checksum:  Changed variable name to standard naming convention.
+- mysql_libs.analyze_tbl:  Changed variable name to standard naming convention.
 - mysql_class.Server.sql:  Removed unnecessary else clause.
 - mysql_class.Server.is_connected:  Removed unnecessary else clause.
-- mysql_class.Server.upd_srv_stat:  Changed variable to standard naming convention.
-- mysql_class.Server.col_sql:  Changed variables to standard naming convention.
-- mysql_class.Server.vert_sql:  Changed variable to standard naming convention.
-- mysql_class.Server.chg_db:  Changed variable to standard naming convention.
-- mysql_class.Server.upd_srv_perf:  Changed variable to standard naming convention.
+- mysql_class.Server.upd_srv_stat:  Changed variable name to standard naming convention.
+- mysql_class.Server.col_sql:  Changed variables name to standard naming convention.
+- mysql_class.Server.vert_sql:  Changed variable name to standard naming convention.
+- mysql_class.Server.chg_db:  Changed variable name to standard naming convention.
+- mysql_class.Server.upd_srv_perf:  Changed variable name to standard naming convention.
 - mysql_class.Server.connect:  Changed database argument from positional to keyword.
 - mysql_libs.switch_to_master:  Changed to reference returning list due to change in select_wait_until.
 - mysql_libs.change_master_to:  Changed name of class attribute.
