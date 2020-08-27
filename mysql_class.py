@@ -1032,8 +1032,7 @@ class Server(object):
         if self.conn:
             return self.conn.is_connected()
 
-        else:
-            return False
+        return False
 
     def reconnect(self):
 
