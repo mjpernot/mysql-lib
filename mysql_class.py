@@ -953,8 +953,7 @@ class Server(object):
         if res_set == "row":
             return cur
 
-        else:
-            return cur.fetchall()
+        return cur.fetchall()
 
     def cmd_sql(self, cmd):
 
