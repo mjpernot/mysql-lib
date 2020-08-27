@@ -151,13 +151,13 @@ test/unit/mysql_class/code_coverage.sh
 
 ```
 cd {Python_Project}/mysql-lib
-test/unit/mysql_lib/unit_test_run.sh
+test/unit/mysql_libs/unit_test_run.sh
 ```
 
 ### Code Coverage mysql-lib.py:
 ```
 cd {Python_Project}/mysql-lib
-test/unit/mysql_lib/code_coverage.sh
+test/unit/mysql_libs/code_coverage.sh
 ```
 
 # Integration Testing:
@@ -241,12 +241,12 @@ test/integration/mysql_class/code_coverage.sh
 
 ```
 cd {Python_Project}/mysql-lib
-test/integration/mysql_lib/integration_test_run.sh
+test/integration/mysql_libs/integration_test_run.sh
 ```
 
 ### Code Coverage mysql-lib.py:
 ```
 cd {Python_Project}/mysql-lib
-test/integration/mysql_lib/code_coverage.sh
+test/integration/mysql_libs/code_coverage.sh
 ```
 
