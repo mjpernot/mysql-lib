@@ -8,8 +8,11 @@
 ###  This README file is broken down into the following sections:
   * Prerequisites
   * Installation
+    - Pip Installation
+    - Git Installation
   * Testing
     - Unit
+    - Integration
 
 
 # Prerequisites:
@@ -109,8 +112,6 @@ pip install -r requirements-python-lib.txt --target lib --trusted-host pypi.appd
 
 # Unit Testing:
 
-### Description: Testing consists of unit testing for the functions in the library modules and methods in the classes.
-
 ### Installation:
 
 Install the project using git.
@@ -126,7 +127,7 @@ git clone --branch {Branch_Name} git@sc.appdev.proj.coe.ic.gov:JAC-DSXD/mysql-li
 Install/upgrade system modules.
 
 ```
-cd python-lib
+cd mysql-lib
 sudo bash
 umask 022
 pip install -r requirements.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic.gov
@@ -157,5 +158,95 @@ test/unit/mysql_lib/unit_test_run.sh
 ```
 cd {Python_Project}/mysql-lib
 test/unit/mysql_lib/code_coverage.sh
+```
+
+# Integration Testing:
+
+NOTE:  Integration testing will require access to a MySQL database server.
+
+### Installation:
+
+Install the project using git.
+  * Replace **{Python_Project}** with the baseline path of the python program.
+  * Replace **{Branch_Name}** with the name of the Git branch being tested.  See Git Merge Request.
+
+```
+umask 022
+cd {Python_Project}
+git clone --branch {Branch_Name} git@sc.appdev.proj.coe.ic.gov:JAC-DSXD/mysql-lib.git
+```
+
+Install/upgrade system modules.
+
+```
+cd mysql-lib
+sudo bash
+umask 022
+pip install -r requirements.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic.gov
+exit
+```
+
+### Configuration:
+
+Create MySQL configuration file.
+
+Make the appropriate change to the environment.
+  * Change these entries in the MySQL setup:
+    - user = "USER"
+    - japd = "PASSWORD"
+    - host = "SERVER_IP"
+    - name = "HOST_NAME"
+    - sid = SERVER_ID
+    - extra_def_file = "PYTHON_PROJECT/config/mysql.cfg"
+    - cfg_file = "DIRECTORY_PATH/my.cnf"
+
+  * Change these entries only if required:
+    - serv_os = "Linux"
+    - port = 3306
+
+```
+cd test/integration/config
+cp mysql_cfg.py.TEMPLATE mysql_cfg.py
+vim mysql_cfg.py
+chmod 600 mysql_cfg.py
+```
+
+Create MySQL definition file.
+
+Make the appropriate change to the environment.
+  * Change these entries in the MySQL definition file:
+    - password="PASSWORD"
+    - socket=DIRECTORY_PATH/mysql.sock
+
+```
+cp mysql.cfg.TEMPLATE mysql.cfg
+vim mysql.cfg
+chmod 600 mysql.cfg
+```
+
+### Testing mysql_class.py:
+
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_class/integration_test_run.sh
+```
+
+### Code Coverage mysql_class.py:
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_class/code_coverage.sh
+```
+
+### Testing mysql-lib.py:
+
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_lib/integration_test_run.sh
+```
+
+### Code Coverage mysql-lib.py:
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_lib/code_coverage.sh
 ```
 
