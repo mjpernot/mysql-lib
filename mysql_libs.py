@@ -253,10 +253,10 @@ def crt_cmd(server, prog_name, **kwargs):
         return [prog_name, "--defaults-extra-file=" + server.extra_def_file,
                 "-u", server.sql_user, "-h", server.host, "-P",
                 str(server.port)]
-    else:
-        # Command with auth.
-        return [prog_name, "-u", server.sql_user, "-p" + server.sql_pass, "-h",
-                server.host, "-P", str(server.port)]
+
+    # Command with auth.
+    return [prog_name, "-u", server.sql_user, "-p" + server.sql_pass, "-h",
+            server.host, "-P", str(server.port)]
 
 
 def crt_srv_inst(cfg, path, **kwargs):
