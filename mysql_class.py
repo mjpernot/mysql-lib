@@ -722,8 +722,8 @@ class Server(object):
 
         data = {}
 
-        for x in self.col_sql("show global variables"):
-            data.update({x["Variable_name"]: x["Value"]})
+        for item in self.col_sql("show global variables"):
+            data.update({item["Variable_name"]: item["Value"]})
 
         self.buf_size = int(data["key_buffer_size"])
         self.indb_buf = int(data["innodb_buffer_pool_size"])
