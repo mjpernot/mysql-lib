@@ -30,12 +30,11 @@
 import copy
 
 # Third-party
-import mysql.connector
 import collections
+import mysql.connector
 
 # Local
 import lib.gen_libs as gen_libs
-import lib.machine as machine
 import version
 
 __version__ = version.__version__
