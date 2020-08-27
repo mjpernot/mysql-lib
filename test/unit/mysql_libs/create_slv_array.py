@@ -143,13 +143,13 @@ class UnitTest(unittest.TestCase):
                           "host": "hostname", "port": 3306,
                           "cfg_file": "cfg_file"}
         self.cfg_array2 = [{"name": "name", "sid": "sid", "user": "user",
-                           "japd": None, "serv_os": "Linux",
-                           "host": "hostname", "port": 3306,
-                           "cfg_file": "cfg_file"},
+                            "japd": None, "serv_os": "Linux",
+                            "host": "hostname", "port": 3306,
+                            "cfg_file": "cfg_file"},
                            {"name": "name2", "sid": "sid2", "user": "user",
                             "japd": None, "serv_os": "Linux",
-                           "host": "hostname", "port": 3306,
-                           "cfg_file": "cfg_file"}]
+                            "host": "hostname", "port": 3306,
+                            "cfg_file": "cfg_file"}]
 
     @mock.patch("mysql_libs.mysql_class.SlaveRep")
     def test_dont_add_array(self, mock_rep):
