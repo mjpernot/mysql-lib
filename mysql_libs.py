@@ -130,7 +130,7 @@ def checksum(server, dbn, tbl, **kwargs):
     return server.col_sql(cmd)
 
 
-def check_tbl(server, db, tbl, **kwargs):
+def check_tbl(server, dbn, tbl, **kwargs):
 
     """Function:  check_tbl
 
@@ -138,14 +138,14 @@ def check_tbl(server, db, tbl, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Database name.
+        (input) dbn -> Database name.
         (input) tbl -> Table name.
         (output) Results of check table command.
 
     """
 
     # Must have back ticks around names in case they have special characters.
-    cmd = "check table `" + db + "`.`" + tbl + "`"
+    cmd = "check table `" + dbn + "`.`" + tbl + "`"
 
     return server.col_sql(cmd)
 
