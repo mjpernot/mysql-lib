@@ -1048,19 +1048,19 @@ class Server(object):
         if not self.is_connected():
             self.conn.reconnect()
 
-    def chg_db(self, db=None):
+    def chg_db(self, dbn=None):
 
         """Method:  chg_db
 
         Description:  Change to another database.
 
         Arguments:
-            (input) db -> Name of database.
+            (input) dbn -> Name of database.
 
         """
 
-        if db:
-            self.conn.database = db
+        if dbn:
+            self.conn.database = dbn
 
     def get_name(self):
 
