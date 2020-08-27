@@ -595,6 +595,8 @@ class Server(object):
         self.cur_mem_usage = None
         self.prct_conn = None
         self.prct_mem = None
+        self.cur_mem_mb = None
+        self.max_mem_mb = None
 
         # Performace statistics.
         self.indb_buf_data = None

@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Changed the "change_master_to" command to use the replication user instead of the system user.
 
 ### Fixed
+- mysql_class.Server.\_\_init\_\_:  Initialized missing attributes cur_mem_mb and max_mem_mb.
 - mysql_libs.select_wait_until: Converted gtid position to a string.
 - mysql_libs.select_wait_until:  Changed to server.sql to force a single return.
 - mysql_libs.is_cfg_valid:  When extra_def_file is not set.
