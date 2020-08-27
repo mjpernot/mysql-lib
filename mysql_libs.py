@@ -530,7 +530,7 @@ def _sql_rep_chk(mst, slv, is_delayed=False, **kwargs):
     return is_delayed
 
 
-def optimize_tbl(server, db, tbl, **kwargs):
+def optimize_tbl(server, dbn, tbl, **kwargs):
 
     """Function:  optimize_tbl
 
@@ -538,14 +538,14 @@ def optimize_tbl(server, db, tbl, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Database name.
+        (input) dbn -> Database name.
         (input) tbl -> Table name.
         (output) Return check table results.
 
     """
 
     # Must have back ticks around names in case they have special characters.
-    cmd = "optimize table `" + db + "`.`" + tbl + "`"
+    cmd = "optimize table `" + dbn + "`.`" + tbl + "`"
 
     return server.col_sql(cmd)
 

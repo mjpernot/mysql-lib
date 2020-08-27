@@ -21,6 +21,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
 
 ### Changed
+- mysql_libs.optimize_tbl:  Changed variable to standard naming convention.
 - mysql_libs.fetch_tbl_dict:  Changed variable to standard naming convention.
 - mysql_libs.check_tbl:  Changed variable to standard naming convention.
 - mysql_libs.checksum:  Changed variable to standard naming convention.
