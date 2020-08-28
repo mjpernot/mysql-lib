@@ -58,15 +58,6 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        #self.name = "Mysql_Server"
-        #self.server_id = 10
-        #self.sql_user = "mysql_user"
-        #self.sql_pass = "my_japd"
-        #self.machine = getattr(machine, "Linux")()
-        #self.host = "host_server"
-        #self.port = 3307
-        #self.defaults_file = "def_cfg_file"
-        #self.extra_def_file = "extra_cfg_file"
         self.base_dir = "test/integration"
         self.config_dir = os.path.join(self.base_dir, "config")
         self.config_name = "mysql_cfg"
