@@ -10,4 +10,5 @@ test/integration/mysql_class/fetch_sys_var.py
 test/integration/mysql_class/server_init.py
 test/integration/mysql_class/server_set_srv_binlog_crc.py
 test/integration/mysql_class/server_set_srv_gtid.py
+test/integration/mysql_class/server_upd_srv_perf.py
 
