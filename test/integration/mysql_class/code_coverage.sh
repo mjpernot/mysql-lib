@@ -12,6 +12,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/fetch_global_v
 coverage run -a --source=mysql_class test/integration/mysql_class/fetch_sys_var.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_init.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_set_srv_binlog_crc.py
+coverage run -a --source=mysql_class test/integration/mysql_class/server_set_srv_gtid.py
 
 echo ""
 echo "Producing code coverage report"
