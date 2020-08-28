@@ -3,10 +3,10 @@
 
 """Program:  server_init.py
 
-    Description:  Unit testing of Server.__init__ in mysql_class.py.
+    Description:  Integration testing of Server.__init__ in mysql_class.py.
 
     Usage:
-        test/unit/mysql_class/server_init.py
+        test/integration/mysql_class/server_init.py
 
     Arguments:
 
@@ -71,15 +71,7 @@ class UnitTest(unittest.TestCase):
         self.cfg = gen_libs.load_module(self.config_name, self.config_dir)
         key1 = "pass"
         key2 = "wd"
-        #self.name = "Mysql_Server"
-        #self.server_id = 10
-        #self.sql_user = "mysql_user"
-        #self.sql_pass = "my_japd"
         self.machine = getattr(machine, "Linux")()
-        #self.host = "host_server"
-        #self.port = 3307
-        #self.defaults_file = "def_cfg_file"
-        #self.extra_def_file = "extra_cfg_file"
         self.results = self.machine.defaults_file
         self.config = {key1 + key2: self.cfg.japd}
 
