@@ -250,9 +250,47 @@ cd {Python_Project}/mysql-lib
 test/integration/mysql_libs/code_coverage.sh
 ```
 
-### Replication Testing Section
+### Master Replication Testing Section
 
 This section requires the database being tested to be a master database in a MySQL replica set.  Will include all previous testing units.
+
+### Configuration:
+
+Create MySQL configuration file.
+
+Make the appropriate change to the environment.
+  * Change these entries in the MySQL setup:
+    - user = "USER"
+    - japd = "PASSWORD"
+    - host = "SERVER_IP"
+    - name = "HOST_NAME"
+    - sid = SERVER_ID
+    - extra_def_file = "PYTHON_PROJECT/config/mysql.cfg"
+    - cfg_file = "DIRECTORY_PATH/my.cnf"
+
+  * Change these entries only if required:
+    - serv_os = "Linux"
+    - port = 3306
+
+```
+cd test/integration/config
+cp mysql_cfg.py.TEMPLATE master_mysql_cfg.py
+vim master_mysql_cfg.py
+chmod 600 master_mysql_cfg.py
+```
+
+Create MySQL definition file.
+
+Make the appropriate change to the environment.
+  * Change these entries in the MySQL definition file:
+    - password="PASSWORD"
+    - socket=DIRECTORY_PATH/mysql.sock
+
+```
+cp mysql.cfg.TEMPLATE mysql.cfg
+vim mysql.cfg
+chmod 600 mysql.cfg
+```
 
 ### Testing mysql_class.py:
 
@@ -265,5 +303,60 @@ test/integration/mysql_class/rep_integration_test_run.sh
 ```
 cd {Python_Project}/mysql-lib
 test/integration/mysql_class/rep_code_coverage.sh
+```
+
+### Slave Replication Testing Section
+
+This section requires the database being tested to be a slave database in a MySQL replica set.
+
+### Configuration:
+
+Create MySQL configuration file.
+
+Make the appropriate change to the environment.
+  * Change these entries in the MySQL setup:
+    - user = "USER"
+    - japd = "PASSWORD"
+    - host = "SERVER_IP"
+    - name = "HOST_NAME"
+    - sid = SERVER_ID
+    - extra_def_file = "PYTHON_PROJECT/config/mysql.cfg"
+    - cfg_file = "DIRECTORY_PATH/my.cnf"
+
+  * Change these entries only if required:
+    - serv_os = "Linux"
+    - port = 3306
+
+```
+cd test/integration/config
+cp mysql_cfg.py.TEMPLATE slave_mysql_cfg.py
+vim slave_mysql_cfg.py
+chmod 600 slave_mysql_cfg.py
+```
+
+Create MySQL definition file.
+
+Make the appropriate change to the environment.
+  * Change these entries in the MySQL definition file:
+    - password="PASSWORD"
+    - socket=DIRECTORY_PATH/mysql.sock
+
+```
+cp mysql.cfg.TEMPLATE mysql.cfg
+vim mysql.cfg
+chmod 600 mysql.cfg
+```
+
+### Testing mysql_class.py:
+
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_class/slaverep_integration_test_run.sh
+```
+
+### Code Coverage mysql_class.py:
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_class/slaverep_code_coverage.sh
 ```
 
