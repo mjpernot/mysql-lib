@@ -12,6 +12,7 @@ test/integration/mysql_class/masterrep_connect.py
 test/integration/mysql_class/masterrep_init.py
 test/integration/mysql_class/masterrep_get_log_info.py
 test/integration/mysql_class/masterrep_show_slv_hosts.py
+test/integration/mysql_class/masterrep_upd_mst_status.py
 test/integration/mysql_class/rep_fetch_do_db.py
 test/integration/mysql_class/rep_fetch_ign_db.py
 test/integration/mysql_class/rep_get_serv_id.py
