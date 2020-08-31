@@ -43,6 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_exe_gtid -> Test with exe_gtid attribute.
         test_gtid_mode -> Test with gtid_mode attribute.
         test_config -> Test with config attribute.
         test_connect_exception -> Test connection method exception.
