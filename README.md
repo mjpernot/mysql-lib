@@ -309,6 +309,8 @@ test/integration/mysql_class/rep_code_coverage.sh
 
 This section requires the database being tested to be a slave database in a MySQL replica set.
 
+Testing will also require a master_mysql_cfg.py file to be present in the config directory.  See above for details on creating one.
+
 ### Configuration:
 
 Create MySQL configuration file.
