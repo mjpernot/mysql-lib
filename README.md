@@ -250,3 +250,31 @@ cd {Python_Project}/mysql-lib
 test/integration/mysql_libs/code_coverage.sh
 ```
 
+### This section requires the database being tested to be a master database in a MySQL replica set.  Will include all previous testing units.
+
+### Testing mysql_class.py:
+
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_class/rep_integration_test_run.sh
+```
+
+### Code Coverage mysql_class.py:
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_class/rep_code_coverage.sh
+```
+
+### Testing mysql-lib.py:
+
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_libs/rep_integration_test_run.sh
+```
+
+### Code Coverage mysql-lib.py:
+```
+cd {Python_Project}/mysql-lib
+test/integration/mysql_libs/rep_code_coverage.sh
+```
+
