@@ -63,7 +63,7 @@ class UnitTest(unittest.TestCase):
 
         self.base_dir = "test/integration"
         self.config_dir = os.path.join(self.base_dir, "config")
-        self.config_name = "mysql_cfg"
+        self.config_name = "master_mysql_cfg"
         self.cfg = gen_libs.load_module(self.config_name, self.config_dir)
         self.svr = mysql_class.MasterRep(
             self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
