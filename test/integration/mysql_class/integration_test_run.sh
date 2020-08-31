@@ -9,6 +9,7 @@ test/integration/mysql_class/fetch_global_var.py
 test/integration/mysql_class/fetch_sys_var.py
 test/integration/mysql_class/server_chg_db.py
 test/integration/mysql_class/server_cmd_sql.py
+test/integration/mysql_class/server_col_sql.py
 test/integration/mysql_class/server_connect.py
 test/integration/mysql_class/server_disconnect.py
 test/integration/mysql_class/server_get_name.py
