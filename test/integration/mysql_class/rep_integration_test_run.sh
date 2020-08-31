@@ -23,4 +23,5 @@ test/integration/mysql_class/server_sql.py
 test/integration/mysql_class/server_upd_srv_perf.py
 test/integration/mysql_class/server_upd_srv_stat.py
 test/integration/mysql_class/server_vert_sql.py
+test/integration/mysql_class/show_master_stat.py
 
