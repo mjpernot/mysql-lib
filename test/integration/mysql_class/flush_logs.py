@@ -66,7 +66,7 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, cfg.serv_os)(), host=cfg.host,
             port=cfg.port, defaults_file=cfg.cfg_file)
         self.svr.connect()
-        self.cmd = "show binary logs"
+        self.cmd = "show master status"
 
     def test_flush_logs(self):
 
@@ -78,11 +78,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        pre_data = self.svr.col_sql(self.cmd)
+        pre_log = self.svr.col_sql(self.cmd)[0]["File"]
         mysql_class.flush_logs(self.svr)
-        post_data = self.svr.col_sql(self.cmd)
+        post_log = self.svr.col_sql(self.cmd)[0]["File"]
 
-        self.assertTrue(len(post_data) > len(pre_data))
+        self.assertTrue(pre_log != post_log)
 
 
 if __name__ == "__main__":
