@@ -13,6 +13,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/fetch_sys_var.
 coverage run -a --source=mysql_class test/integration/mysql_class/server_chg_db.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_connect.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_disconnect.py
+coverage run -a --source=mysql_class test/integration/mysql_class/server_get_name.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_init.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_is_connected.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_reconnect.py
