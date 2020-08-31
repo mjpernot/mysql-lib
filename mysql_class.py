@@ -494,6 +494,7 @@ class Server(object):
         upd_srv_stat
         upd_mst_rep_stat
         upd_slv_rep_stat
+        fetch_mst_rep_cfg
         fetch_slv_rep_cfg
         upd_log_stats
         flush_logs
