@@ -9,6 +9,7 @@ test/integration/mysql_class/fetch_global_var.py
 test/integration/mysql_class/fetch_sys_var.py
 test/integration/mysql_class/flush_logs.py
 test/integration/mysql_class/rep_fetch_do_db.py
+test/integration/mysql_class/rep_fetch_ign_db.py
 test/integration/mysql_class/rep_get_serv_id.py
 test/integration/mysql_class/rep_init.py
 test/integration/mysql_class/server_chg_db.py
