@@ -70,7 +70,6 @@ class UnitTest(unittest.TestCase):
         self.cmd = "show databases"
         self.database = "mysql"
 
-
     def test_all(self):
 
         """Function:  test_all
