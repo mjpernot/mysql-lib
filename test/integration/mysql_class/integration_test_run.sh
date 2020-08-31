@@ -10,6 +10,7 @@ test/integration/mysql_class/fetch_sys_var.py
 test/integration/mysql_class/server_chg_db.py
 test/integration/mysql_class/server_connect.py
 test/integration/mysql_class/server_disconnect.py
+test/integration/mysql_class/server_get_name.py
 test/integration/mysql_class/server_init.py
 test/integration/mysql_class/server_is_connected.py
 test/integration/mysql_class/server_reconnect.py
