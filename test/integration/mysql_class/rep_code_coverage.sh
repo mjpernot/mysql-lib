@@ -13,6 +13,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/fetch_sys_var.
 coverage run -a --source=mysql_class test/integration/mysql_class/flush_logs.py
 coverage run -a --source=mysql_class test/integration/mysql_class/masterrep_connect.py
 coverage run -a --source=mysql_class test/integration/mysql_class/masterrep_init.py
+coverage run -a --source=mysql_class test/integration/mysql_class/masterrep_show_slv_hosts.py
 coverage run -a --source=mysql_class test/integration/mysql_class/rep_fetch_do_db.py
 coverage run -a --source=mysql_class test/integration/mysql_class/rep_fetch_ign_db.py
 coverage run -a --source=mysql_class test/integration/mysql_class/rep_get_serv_id.py
