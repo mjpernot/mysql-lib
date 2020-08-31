@@ -44,7 +44,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_fetch_ign_db -> Test fetch_ign_db method.
+        test_get_log_info -> Test get_log_info method.
 
     """
 
@@ -68,11 +68,11 @@ class UnitTest(unittest.TestCase):
             port=cfg.port, defaults_file=cfg.cfg_file)
         self.svr.connect()
 
-    def test_fetch_ign_db(self):
+    def test_get_log_info(self):
 
-        """Function:  test_fetch_ign_db
+        """Function:  test_get_log_info
 
-        Description:  Test fetch_ign_db method.
+        Description:  Test get_log_info method.
 
         Arguments:
 
