@@ -16,6 +16,7 @@ test/integration/mysql_class/server_is_connected.py
 test/integration/mysql_class/server_reconnect.py
 test/integration/mysql_class/server_set_srv_binlog_crc.py
 test/integration/mysql_class/server_set_srv_gtid.py
+test/integration/mysql_class/server_sql.py
 test/integration/mysql_class/server_upd_srv_perf.py
 test/integration/mysql_class/server_upd_srv_stat.py
 
