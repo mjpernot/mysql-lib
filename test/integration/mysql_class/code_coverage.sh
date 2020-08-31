@@ -24,6 +24,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/server_set_srv
 coverage run -a --source=mysql_class test/integration/mysql_class/server_sql.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_upd_srv_perf.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_upd_srv_stat.py
+coverage run -a --source=mysql_class test/integration/mysql_class/server_vert_sql.py
 
 echo ""
 echo "Producing code coverage report"
