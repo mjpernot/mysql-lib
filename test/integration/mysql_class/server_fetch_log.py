@@ -78,7 +78,7 @@ class UnitTest(unittest.TestCase):
         Arguments:
 
         """
-        
+
         self.svr.fetch_log()
 
         self.assertTrue(self.svr.file)
