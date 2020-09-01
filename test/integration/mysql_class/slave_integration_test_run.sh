@@ -45,4 +45,5 @@ test/integration/mysql_class/slaverep_show_slv_state.py
 test/integration/mysql_class/slaverep_start_slave.py
 test/integration/mysql_class/slaverep_stop_slave.py
 test/integration/mysql_class/slaverep_upd_slv_state.py
+test/integration/mysql_class/slaverep_upd_slv_status.py
 
