@@ -43,6 +43,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/server_vert_sq
 coverage run -a --source=mysql_class test/integration/mysql_class/show_master_stat.py
 coverage run -a --source=mysql_class test/integration/mysql_class/show_slave_hosts.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_connect.py
+coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_fetch_do_tbl.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_get_err_stat.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_get_log_info.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_get_others.py
