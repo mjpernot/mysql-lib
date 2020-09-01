@@ -44,6 +44,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_non_option -> Test with a non-option.
         test_start_slaves2 -> Test start option with already started slaves.
         test_start_slaves -> Test with start option.
         test_stop_slaves2 -> Test with stop option on stopped slaves.
@@ -71,6 +72,28 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, cfg.serv_os)(), host=cfg.host,
             port=cfg.port, defaults_file=cfg.cfg_file)
         self.svr.connect()
+
+    def test_non_option(self):
+
+        """Function:  test_non_option
+
+        Description:  Test with a non-option.
+
+        Arguments:
+
+        """
+
+        self.svr.upd_slv_status()
+
+        if self.svr.is_slv_running():
+            with gen_libs.no_std_out():
+                mysql_libs.chg_slv_state([self.svr], "status")
+            self.svr.upd_slv_status()
+
+            self.assertTrue(self.svr.is_slv_running())
+
+        else:
+            self.assertTrue(False)
 
     def test_start_slaves2(self):
 
