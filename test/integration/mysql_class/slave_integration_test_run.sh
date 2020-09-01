@@ -41,4 +41,5 @@ test/integration/mysql_class/show_master_stat.py
 test/integration/mysql_class/show_slave_hosts.py
 test/integration/mysql_class/slaverep_connect.py
 test/integration/mysql_class/slaverep_init.py
+test/integration/mysql_class/slaverep_stop_slave.py
 
