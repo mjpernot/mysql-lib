@@ -56,6 +56,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_stop_
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_upd_gtid_pos.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_upd_slv_state.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_upd_slv_status.py
+coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_upd_slv_time.py
 
 echo ""
 echo "Producing code coverage report"
