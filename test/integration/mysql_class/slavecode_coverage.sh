@@ -44,6 +44,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/show_master_st
 coverage run -a --source=mysql_class test/integration/mysql_class/show_slave_hosts.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_connect.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_init.py
+coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_stop_slave.py
 
 echo ""
 echo "Producing code coverage report"
