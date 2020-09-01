@@ -6,5 +6,6 @@ lib
 test/integration/config/*.py
 test/integration/config/*.pyc
 test/integration/config/*.cfg
+test/integration/config/*.txt
 .coverage*
 coverage.xml
