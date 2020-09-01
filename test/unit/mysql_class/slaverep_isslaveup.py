@@ -83,10 +83,9 @@ class UnitTest(unittest.TestCase):
 
         mock_upd.return_value = True
 
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
         mysqlrep.slv_sql = "Yes"
         mysqlrep.slv_io = "Yes"
 
@@ -105,10 +104,9 @@ class UnitTest(unittest.TestCase):
 
         mock_upd.return_value = True
 
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
         mysqlrep.slv_sql = "Yes"
         mysqlrep.slv_io = "No"
 
@@ -127,10 +125,9 @@ class UnitTest(unittest.TestCase):
 
         mock_upd.return_value = True
 
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
         mysqlrep.slv_io = "Yes"
         mysqlrep.slv_sql = "No"
 
