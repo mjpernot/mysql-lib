@@ -11,6 +11,7 @@ echo "Running unit test modules in conjunction with coverage"
 coverage run -a --source=mysql_class test/integration/mysql_class/fetch_global_var.py
 coverage run -a --source=mysql_class test/integration/mysql_class/fetch_sys_var.py
 coverage run -a --source=mysql_class test/integration/mysql_class/flush_logs.py
+coverage run -a --source=mysql_class test/integration/mysql_class/gtidset.py
 coverage run -a --source=mysql_class test/integration/mysql_class/masterrep_connect.py
 coverage run -a --source=mysql_class test/integration/mysql_class/masterrep_init.py
 coverage run -a --source=mysql_class test/integration/mysql_class/masterrep_get_log_info.py
