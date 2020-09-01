@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -69,7 +70,8 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-    def test_slv_both_true(self):
+    @mock.patch("mysql_class.SlaveRep.upd_slv_state")
+    def test_slv_both_true(self, mock_upd):
 
         """Function:  test_slv_both_true
 
@@ -78,6 +80,8 @@ class UnitTest(unittest.TestCase):
         Arguments:
 
         """
+
+        mock_upd.return_value = True
 
         mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
                                         self.sql_user, self.sql_pass,
@@ -88,7 +92,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertTrue(mysqlrep.is_slave_up())
 
-    def test_slv_sql_true(self):
+    @mock.patch("mysql_class.SlaveRep.upd_slv_state")
+    def test_slv_sql_true(self, mock_upd):
 
         """Function:  test_slv_sql_true
 
@@ -97,6 +102,8 @@ class UnitTest(unittest.TestCase):
         Arguments:
 
         """
+
+        mock_upd.return_value = True
 
         mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
                                         self.sql_user, self.sql_pass,
@@ -107,7 +114,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertFalse(mysqlrep.is_slave_up())
 
-    def test_slv_io_true(self):
+    @mock.patch("mysql_class.SlaveRep.upd_slv_state")
+    def test_slv_io_true(self, mock_upd):
 
         """Function:  test_slv_io_true
 
@@ -116,6 +124,8 @@ class UnitTest(unittest.TestCase):
         Arguments:
 
         """
+
+        mock_upd.return_value = True
 
         mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
                                         self.sql_user, self.sql_pass,
@@ -126,7 +136,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertFalse(mysqlrep.is_slave_up())
 
-    def test_default(self):
+    @mock.patch("mysql_class.SlaveRep.upd_slv_state")
+    def test_default(self, mock_upd):
 
         """Function:  test_default
 
@@ -136,10 +147,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
+        mock_upd.return_value = True
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
         mysqlrep.slv_io = "No"
         mysqlrep.slv_sql = "No"
 
