@@ -349,6 +349,27 @@ vim mysql.cfg
 chmod 600 mysql.cfg
 ```
 
+Create a MySQL slave configuration file.
+
+Make the appropriate change to the environment.
+  * Change these entries in the MySQL slave setup:
+    - user = USER
+    - japd = PASSWORD
+    - host = IP_ADDRESS
+    - name = HOSTNAME
+    - sid = SERVER_ID
+  * Change these entries only if required:
+    - cfg_file = None
+    - serv_os = Linux
+    - port = 3306
+  * NOTE:  Create a new set of entries for each slave in the MySQL replica set.
+
+```
+cp slave.txt.TEMPLATE slave.txt
+vim slave.txt
+chmod 600 slave.txt
+```
+
 ### Testing mysql_class.py:
 
 ```
