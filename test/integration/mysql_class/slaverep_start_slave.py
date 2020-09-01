@@ -3,7 +3,8 @@
 
 """Program:  slaverep_start_slave.py
 
-    Description:  Integration testing of SlaveRep.start_slave in mysql_class.py.
+    Description:  Integration testing of SlaveRep.start_slave in
+        mysql_class.py.
 
     Usage:
         test/integration/mysql_class/slaverep_start_slave.py
