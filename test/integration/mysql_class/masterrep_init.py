@@ -43,6 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_conn -> Test with conn attribute.
         test_rep_user -> Test with rep user settings.
         test_no_rep_user -> Test with no rep user settings.
         test_config -> Test with config attribute.
@@ -78,6 +79,22 @@ class UnitTest(unittest.TestCase):
         self.config = {key1 + key2: self.cfg.japd}
         self.rep_user = "rep_user"
         self.rep_japd = "rep_japd"
+
+    def test_conn(self):
+
+        """Function:  test_conn
+
+        Description:  Test with conn attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.MasterRep(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host)
+
+        self.assertEqual(mysqldb.conn, None)
 
     def test_rep_user(self):
 
