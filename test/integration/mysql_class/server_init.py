@@ -43,6 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_conn -> Test with conn attribute.
         test_config -> Test with config attribute.
         test_no_extra_def_file -> Test with no extra_def_file arg.
         test_extra_def_file -> Test with passing extra_def_file arg.
@@ -74,6 +75,22 @@ class UnitTest(unittest.TestCase):
         self.machine = getattr(machine, "Linux")()
         self.results = self.machine.defaults_file
         self.config = {key1 + key2: self.cfg.japd}
+
+    def test_conn(self):
+
+        """Function:  test_conn
+
+        Description:  Test with conn attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host)
+
+        self.assertEqual(mysqldb.conn, None)
 
     def test_config(self):
 
