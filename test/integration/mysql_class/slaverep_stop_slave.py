@@ -101,6 +101,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        self.svr.upd_slv_status()
+
         if self.svr.is_slv_running():
             self.svr.stop_slave()
             self.svr.upd_slv_status()
