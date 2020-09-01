@@ -1666,6 +1666,8 @@ class SlaveRep(Rep):
 
         """
 
+        self.upd_slv_status()
+
         return gen_libs.is_true(self.slv_io) and gen_libs.is_true(self.run) \
             and gen_libs.is_true(self.slv_sql)
 
