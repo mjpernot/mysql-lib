@@ -45,6 +45,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/show_slave_hos
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_connect.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_init.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_is_slave_up.py
+coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_is_slv_running.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_show_slv_state.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_start_slave.py
 coverage run -a --source=mysql_class test/integration/mysql_class/slaverep_stop_slave.py
