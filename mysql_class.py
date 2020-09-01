@@ -1651,6 +1651,8 @@ class SlaveRep(Rep):
 
         """
 
+        self.upd_slv_state()
+
         return gen_libs.and_is_true(self.slv_io, self.slv_sql)
 
     def is_slv_running(self):

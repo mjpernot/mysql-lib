@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Changed the "change_master_to" command to use the replication user instead of the system user.
 
 ### Fixed
+- mysql_class.SlaveRep.is_slave_up:  Added call to upd_slv_state to update attributes before check.
 - mysql_libs.start_slave_until:  Changed variable name due to naming conflict.
 - mysql_class.Server.\_\_init\_\_:  Initialized missing attributes cur_mem_mb and max_mem_mb.
 - mysql_libs.select_wait_until: Converted gtid position to a string.
