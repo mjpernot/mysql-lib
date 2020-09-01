@@ -10,6 +10,7 @@ echo ""
 echo "Running unit test modules in conjunction with coverage"
 coverage run -a --source=mysql_libs test/integration/mysql_libs/chg_slv_state.py
 coverage run -a --source=mysql_libs test/integration/mysql_libs/create_slv_array.py
+coverage run -a --source=mysql_libs test/integration/mysql_libs/fetch_slv.py
 coverage run -a --source=mysql_libs test/integration/mysql_libs/slaverep_create_instance.py
 
 echo ""
