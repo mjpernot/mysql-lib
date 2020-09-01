@@ -41,6 +41,7 @@ test/integration/mysql_class/show_master_stat.py
 test/integration/mysql_class/show_slave_hosts.py
 test/integration/mysql_class/slaverep_connect.py
 test/integration/mysql_class/slaverep_fetch_do_tbl.py
+test/integration/mysql_class/slaverep_fetch_ign_tbl.py
 test/integration/mysql_class/slaverep_get_err_stat.py
 test/integration/mysql_class/slaverep_get_log_info.py
 test/integration/mysql_class/slaverep_get_others.py
