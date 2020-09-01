@@ -43,6 +43,7 @@ test/integration/mysql_class/slaverep_connect.py
 test/integration/mysql_class/slaverep_get_err_stat.py
 test/integration/mysql_class/slaverep_get_log_info.py
 test/integration/mysql_class/slaverep_get_thr_stat.py
+test/integration/mysql_class/slaverep_get_time.py
 test/integration/mysql_class/slaverep_init.py
 test/integration/mysql_class/slaverep_is_slave_up.py
 test/integration/mysql_class/slaverep_is_slv_error.py
