@@ -49,6 +49,9 @@ class UnitTest(unittest.TestCase):
         test_greater_than_equal -> Test with GTIDSets greater than equal.
         test_less_than_equal -> Test with GTIDSets less than equal.
         test_equal -> Test with GTIDSets equal.
+        test_string2 -> Test conversion of GTIDSet to string.
+        test_string -> Test conversion of GTIDSet to string.
+        test_is_class -> Test is GTIDSets class.
 
     """
 
@@ -148,6 +151,46 @@ class UnitTest(unittest.TestCase):
         """
 
         self.assertTrue(self.svr.exe_gtidset == self.svr2.exe_gtidset)
+
+    def test_string2(self):
+
+        """Function:  test_string2
+
+        Description:  Test conversion of GTIDSet to string.
+
+        Arguments:
+
+        """
+
+        line = "%s" % self.svr.exe_gtidset
+
+        self.assertTrue(isinstance(line, str))
+
+    def test_string(self):
+
+        """Function:  test_string
+
+        Description:  Test conversion of GTIDSet to string.
+
+        Arguments:
+
+        """
+
+        line = str(self.svr.exe_gtidset)
+
+        self.assertTrue(isinstance(line, str))
+
+    def test_is_class(self):
+
+        """Function:  test_is_class
+
+        Description:  Test is GTIDSets class.
+
+        Arguments:
+
+        """
+
+        self.assertTrue(isinstance(self.svr.exe_gtidset, mysql_class.GTIDSet))
 
 
 if __name__ == "__main__":
