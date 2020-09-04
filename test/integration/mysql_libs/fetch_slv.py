@@ -80,7 +80,7 @@ class UnitTest(unittest.TestCase):
         slaves = cmds_gen.create_cfg_array(self.config_name,
                                            cfg_path=self.config_dir)
         servers = mysql_libs.create_slv_array(slaves)
-        slv, err_flag, err_msg = mysql_libs.fetch_slv(servers, self.name)
+        _, err_flag, err_msg = mysql_libs.fetch_slv(servers, self.name)
 
         self.assertEqual((err_flag, err_msg), (True, self.err_msg))
 
@@ -97,7 +97,7 @@ class UnitTest(unittest.TestCase):
         slaves = cmds_gen.create_cfg_array(self.config_name,
                                            cfg_path=self.config_dir)
         servers = mysql_libs.create_slv_array(slaves)
-        slv, err_flag, err_msg = mysql_libs.fetch_slv(servers, self.name)
+        slv, _, _ = mysql_libs.fetch_slv(servers, self.name)
 
         self.assertFalse(slv)
 
@@ -115,7 +115,7 @@ class UnitTest(unittest.TestCase):
                                            cfg_path=self.config_dir)
         name = slaves[0]["name"]
         servers = mysql_libs.create_slv_array(slaves)
-        slv, err_flag, err_msg = mysql_libs.fetch_slv(servers, name)
+        _, err_flag, err_msg = mysql_libs.fetch_slv(servers, name)
 
         self.assertEqual((err_flag, err_msg), (False, None))
 
@@ -133,7 +133,7 @@ class UnitTest(unittest.TestCase):
                                            cfg_path=self.config_dir)
         name = slaves[0]["name"]
         servers = mysql_libs.create_slv_array(slaves)
-        slv, err_flag, err_msg = mysql_libs.fetch_slv(servers, name)
+        slv, _, _ = mysql_libs.fetch_slv(servers, name)
 
         self.assertTrue(isinstance(slv, mysql_class.SlaveRep))
 
