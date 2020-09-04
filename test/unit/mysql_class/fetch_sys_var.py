@@ -55,7 +55,8 @@ class Server(object):
 
         """
 
-        pass
+        self.cmd = None
+        self.var = None
 
     def vert_sql(self, cmd, var):
 
@@ -68,6 +69,9 @@ class Server(object):
             (input) var -> Variable name.
 
         """
+
+        self.cmd = cmd
+        self.var = var
 
         return True
 
@@ -94,7 +98,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
 
     def test_fetch_sys_var(self):
 
@@ -106,7 +110,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_class.fetch_sys_var(self.Server, "Variable"))
+        self.assertTrue(mysql_class.fetch_sys_var(self.server, "Variable"))
 
 
 if __name__ == "__main__":

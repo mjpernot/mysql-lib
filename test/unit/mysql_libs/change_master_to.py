@@ -60,10 +60,13 @@ class Server(object):
         self.host = "hostname"
         self.port = 3306
         self.sql_user = "sqluser"
-        self.sql_pass = "sqluserpswd"
+        self.sql_pass = "japd"
         self.file = "binlog-filename"
         self.pos = "file-position"
         self.name = "server-name"
+        self.rep_user = "rep_user"
+        self.rep_japd = "rep_japd"
+        self.cmd = None
 
     def cmd_sql(self, cmd):
 
@@ -75,6 +78,8 @@ class Server(object):
             (input) cmd -> Query command.
 
         """
+
+        self.cmd = cmd
 
         return True
 
@@ -102,8 +107,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Master = Server()
-        self.Slave = Server()
+        self.master = Server()
+        self.slave = Server()
 
     def test_change_master_to_non_gtid(self):
 
@@ -115,11 +120,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Master.gtid_mode = None
+        self.master.gtid_mode = None
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs.change_master_to(self.Master,
-                                                         self.Slave))
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
 
     def test_change_master_to_gtid(self):
 
@@ -132,8 +137,8 @@ class UnitTest(unittest.TestCase):
         """
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs.change_master_to(self.Master,
-                                                         self.Slave))
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
 
 
 if __name__ == "__main__":

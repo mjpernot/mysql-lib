@@ -4,6 +4,65 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.0.0] - 2020-07-28
+- Breaking change.
+- Changed the "change_master_to" command to use the replication user instead of the system user.
+
+### Fixed
+- mysql_class.SlaveRep.is_slv_running:  Added call to upd_slv_status to update attributes before check.
+- mysql_class.SlaveRep.is_slave_up:  Added call to upd_slv_state to update attributes before check.
+- mysql_libs.start_slave_until:  Changed variable name due to naming conflict.
+- mysql_class.Server.\_\_init\_\_:  Initialized missing attributes cur_mem_mb and max_mem_mb.
+- mysql_libs.select_wait_until: Converted gtid position to a string.
+- mysql_libs.select_wait_until:  Changed to server.sql to force a single return.
+- mysql_libs.is_cfg_valid:  When extra_def_file is not set.
+- mysql_class.Server.\_\_init\_\_:  Naming conflict between library module and argument.
+- mysql_class.Rep.\_\_init\_\_:  Naming conflict between library module and argument.
+- mysql_class.MasterRep.\_\_init\_\_:  Naming conflict between library module and argument.
+- mysql_class.SlaveRep.\_\_init\_\_:  Naming conflict between library module and argument.
+- mysql_class.MasterRep.connect:  Only updates attributes if a connection is successful.
+- mysql_class.SlaveRep.connect:  Only updates attributes if a connection is successful.
+
+### Changed
+- mysql_libs.crt_cmd:  Removed unnecessary else clause.
+- mysql_libs.optimize_tbl:  Changed variable name to standard naming convention.
+- mysql_libs.fetch_tbl_dict:  Changed variable name to standard naming convention.
+- mysql_libs.check_tbl:  Changed variable name to standard naming convention.
+- mysql_libs.checksum:  Changed variable name to standard naming convention.
+- mysql_libs.analyze_tbl:  Changed variable name to standard naming convention.
+- mysql_class.Server.sql:  Removed unnecessary else clause.
+- mysql_class.Server.is_connected:  Removed unnecessary else clause.
+- mysql_class.Server.upd_srv_stat:  Changed variable name to standard naming convention.
+- mysql_class.Server.col_sql:  Changed variables name to standard naming convention.
+- mysql_class.Server.vert_sql:  Changed variable name to standard naming convention.
+- mysql_class.Server.chg_db:  Changed variable name to standard naming convention.
+- mysql_class.Server.upd_srv_perf:  Changed variable name to standard naming convention.
+- mysql_class.Server.connect:  Changed database argument from positional to keyword.
+- mysql_libs.switch_to_master:  Changed to reference returning list due to change in select_wait_until.
+- mysql_libs.change_master_to:  Changed name of class attribute.
+- mysql_libs.crt_srv_inst:  Changed name of configuration setting.
+- mysql_libs.create_slv_array:  Changed name of configuration setting.
+- mysql_libs.create_instance:  Changed name of configuration setting.
+- mysql_class.SlaveRep.\_\_init\_\_:  Set a number of positional args to keyword args.
+- mysql_class.MasterRep.\_\_init\_\_:  Set a number of positional args to keyword args.
+- mysql_class.Rep.\_\_init\_\_:  Set a number of positional args to keyword args.
+- mysql_class.Server.connect:  Added config attribute to connection command.
+- mysql_class.Server.\_\_init\_\_:  Added config attribute for connecting to Mysql database.
+- mysql_class.Server.\_\_init\_\_:  Set a number of positional args to keyword args.
+- mysql_class.Rep.\_\_init\_\_:  Set a number of positional args to keyword args.
+- mysql_class.SlaveRep.\_\_init\_\_:  Set a number of positional args to keyword args.
+- mysql_libs.crt_srv_inst:  Set keyword args in mysql_class.Server call.
+- mysql_libs.create_instance:  Set keyword args in generic mysql_class class call.
+- mysql_libs.create_slv_array:  Set keyword args in mysql_class.SlaveRep call.
+- mysql_libs.change_master_to:  Replaced sql_user and sql_pass with rep_user and rep_pswd respectively.
+- mysql_class.MasterRep.\_\_init\_\_:  Added rep_user and rep_pswd to the class' attributes.
+- mysql_class.MasterRep.\_\_init\_\_:  Set a number of positional args to keyword args.
+- Documentation updates.
+
+### Removed
+- Removed machine module.
+
+
 ## [4.0.3] - 2020-05-07
 ### Fixed
 - mysql_libs.fetch_logs:  Returning correct data set results from query.

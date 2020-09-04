@@ -41,7 +41,7 @@ class Server(object):
 
     Methods:
         __init__ -> Class initialization.
-        cmd_sql -> Stub holder for mysql_class.Server.cmd_sql method.
+        sql -> Stub holder for mysql_class.Server.sql method.
 
     """
 
@@ -55,18 +55,23 @@ class Server(object):
 
         """
 
-        pass
+        self.cmd = None
+        self.res_set = None
 
-    def cmd_sql(self, cmd):
+    def sql(self, cmd, res_set):
 
-        """Method:  cmd_sql
+        """Method:  sql
 
-        Description:  Stub holder for mysql_class.Server.cmd_sql method.
+        Description:  Stub holder for mysql_class.Server.sql method.
 
         Arguments:
             (input) cmd -> Query command.
+            (input) res_set -> Type of return format.
 
         """
+
+        self.cmd = cmd
+        self.res_set = res_set
 
         return True
 
@@ -93,7 +98,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
 
     def test_select_wait_until(self):
 
@@ -105,7 +110,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.select_wait_until(self.Server, "Gtidpos"))
+        self.assertTrue(mysql_libs.select_wait_until(self.server, "Gtidpos"))
 
 
 if __name__ == "__main__":

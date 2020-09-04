@@ -67,6 +67,9 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_multi_both_fail -> Test with multiple servers with both failed.
+        test_multi_one_fail -> Test with multiple servers with one failed.
+        test_multi_servers -> Test with multiple servers valid.
         test_no_extra_file -> Test with no extra file present.
         test_chk_fails -> Test with check file fails.
         test_cfg_valid -> Test with extra cfg file is valid.
@@ -83,13 +86,64 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Slave1 = Server("Slave1", "Extra_Def_File")
-        self.Slave2 = Server("Slave2")
-        self.err_msg = "Error Message"
+        msg = "Error Message"
+        self.slave1 = Server("Slave1", "Extra_Def_File")
+        self.slave2 = Server("Slave2")
+        self.err_msg = msg
+        self.err_msg2 = [msg, "Slave1:  Extra_Def_File is missing."]
+        self.results = ["Slave2:  extra_def_file is not set."]
+        self.results2 = [msg, "Slave1:  Extra_Def_File is missing.",
+                         "Slave2:  extra_def_file is not set."]
 
-    @unittest.skip("Bug:  gen_libs.chk_crt_file fails if None is passed.")
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
-    def test_no_extra_file(self, mock_chk):
+    def test_multi_both_fail(self, mock_chk):
+
+        """Function:  test_multi_both_fail
+
+        Description:  Test with multiple servers with both failed.
+
+        Arguments:
+
+        """
+
+        mock_chk.return_value = (False, self.err_msg)
+
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1, self.slave2]),
+                         (False, self.results2))
+
+    @mock.patch("mysql_libs.gen_libs.chk_crt_file")
+    def test_multi_one_fail(self, mock_chk):
+
+        """Function:  test_multi_one_fail
+
+        Description:  Test with multiple servers with one failed.
+
+        Arguments:
+
+        """
+
+        mock_chk.return_value = (True, None)
+
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1, self.slave2]),
+                         (False, self.results))
+
+    @mock.patch("mysql_libs.gen_libs.chk_crt_file")
+    def test_multi_servers(self, mock_chk):
+
+        """Function:  test_multi_servers
+
+        Description:  Test with multiple servers valid.
+
+        Arguments:
+
+        """
+
+        mock_chk.return_value = (True, None)
+
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1, self.slave1]),
+                         (True, []))
+
+    def test_no_extra_file(self):
 
         """Function:  test_no_extra_file
 
@@ -99,10 +153,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_chk.return_value = (False, self.err_msg)
-
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]),
-                         (False, self.err_msg))
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave2]),
+                         (False, self.results))
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
     def test_chk_fails(self, mock_chk):
@@ -116,10 +168,9 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_chk.return_value = (False, self.err_msg)
-        err_msg = ['Error Message', 'Slave1:  Extra_Def_File is missing.']
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]),
-                         (False, err_msg))
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1]),
+                         (False, self.err_msg2))
 
     @mock.patch("mysql_libs.gen_libs.chk_crt_file")
     def test_cfg_valid(self, mock_chk):
@@ -134,7 +185,7 @@ class UnitTest(unittest.TestCase):
 
         mock_chk.return_value = (True, None)
 
-        self.assertEqual(mysql_libs.is_cfg_valid([self.Slave1]), (True, []))
+        self.assertEqual(mysql_libs.is_cfg_valid([self.slave1]), (True, []))
 
 
 if __name__ == "__main__":

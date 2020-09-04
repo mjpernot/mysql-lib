@@ -45,8 +45,7 @@ class Server(object):
 
     """
 
-    def __init__(self, name, sid, user, pswd, serv_os, host, port, cfg_file,
-                 extra_def_file=None):
+    def __init__(self, name, sid, user, japd, **kwargs):
 
         """Method:  __init__
 
@@ -59,12 +58,12 @@ class Server(object):
         self.name = name
         self.sid = sid
         self.user = user
-        self.pswd = pswd
-        self.serv_os = serv_os
-        self.host = host
-        self.port = port
-        self.cfg_file = cfg_file
-        self.extra_def_file = extra_def_file
+        self.japd = japd
+        self.serv_os = kwargs.get("machine")
+        self.host = kwargs.get("host")
+        self.port = kwargs.get("port")
+        self.cfg_file = kwargs.get("defaults_file")
+        self.extra_def_file = kwargs.get("extra_def_file", None)
 
 
 class Cfg(object):
@@ -91,7 +90,7 @@ class Cfg(object):
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
-        self.passwd = None
+        self.japd = None
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
@@ -107,6 +106,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_none_extra_def_file -> Test with none for extra_def_file.
         test_create_instance -> Test create_instance function.
 
     """
@@ -121,7 +121,38 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Cfg = Cfg()
+        self.cfg = Cfg()
+        self.name = "name"
+        self.sid = "sid"
+        self.user = "user"
+        self.japd = None
+        self.serv_os = "Linux"
+        self.host = "hostname"
+        self.port = 3306
+        self.cfg_file = "cfg_file"
+        self.extra_def_file = "extra_def_file"
+        self.server = Server(
+            self.name, self.sid, self.user, self.japd, machine=self.serv_os,
+            host=self.host, port=self.port, defaults_file=self.cfg_file)
+
+    @mock.patch("mysql_libs.gen_libs.load_module")
+    def test_none_extra_def_file(self, mock_cfg):
+
+        """Function:  test_none_extra_def_file
+
+        Description:  Test with none for extra_def_file.
+
+        Arguments:
+
+        """
+
+        mock_cfg.return_value = self.cfg
+        self.cfg.extra_def_file = None
+
+        srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
+
+        self.assertTrue(isinstance(srv_inst, Server))
+        self.assertEqual(srv_inst.extra_def_file, None)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_create_instance(self, mock_cfg):
@@ -134,10 +165,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_cfg.return_value = self.Cfg
+        mock_cfg.return_value = self.cfg
 
-        self.assertEqual(mysql_libs.create_instance("Cfgfile", "DirPath",
-                                                    "Server"), self.Server)
+        srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
+
+        self.assertTrue(isinstance(srv_inst, Server))
 
 
 if __name__ == "__main__":

@@ -30,15 +30,18 @@
 import copy
 
 # Third-party
-import mysql.connector
 import collections
+import mysql.connector
 
 # Local
 import lib.gen_libs as gen_libs
-import lib.machine as machine
 import version
 
 __version__ = version.__version__
+
+# Global
+KEY1 = "pass"
+KEY2 = "wd"
 
 
 def fetch_global_var(server, var):
@@ -491,6 +494,7 @@ class Server(object):
         upd_srv_stat
         upd_mst_rep_stat
         upd_slv_rep_stat
+        fetch_mst_rep_cfg
         fetch_slv_rep_cfg
         upd_log_stats
         flush_logs
@@ -508,8 +512,7 @@ class Server(object):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine,
-                 host="localhost", port=3306, defaults_file=None, **kwargs):
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -520,27 +523,29 @@ class Server(object):
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
-            (input) machine -> Operating system.
-            (input) host -> 'localhost' or host name or IP.
-            (input) port -> '3306' or port for MySQL.
-            (input) defaults_file -> Location of my.cnf file.
-            (input) **kwargs:
+            (input) os_type -> Machine operating system type class instance.
+            (input) kwargs:
                 extra_def_file -> Location of extra defaults file.
+                host -> Host name or IP of server.
+                port -> Port for MySQL.
+                defaults_file -> Location of my.cnf file.
 
         """
 
-        if not defaults_file:
-            defaults_file = machine.defaults_file
+        global KEY1
+        global KEY2
 
         self.name = name
         self.server_id = server_id
         self.sql_user = sql_user
         self.sql_pass = sql_pass
-        self.machine = machine
-        self.host = host
-        self.port = port
-        self.defaults_file = defaults_file
+        self.machine = os_type
+        self.host = kwargs.get("host", "localhost")
+        self.port = kwargs.get("port", 3306)
+        self.defaults_file = kwargs.get("defaults_file",
+                                        self.machine.defaults_file)
         self.extra_def_file = kwargs.get("extra_def_file", None)
+        self.config = {KEY1 + KEY2: self.sql_pass}
 
         # SQL connection handler.
         self.conn = None
@@ -591,6 +596,8 @@ class Server(object):
         self.cur_mem_usage = None
         self.prct_conn = None
         self.prct_mem = None
+        self.cur_mem_mb = None
+        self.max_mem_mb = None
 
         # Performace statistics.
         self.indb_buf_data = None
@@ -668,8 +675,8 @@ class Server(object):
 
         data = {}
 
-        for x in self.col_sql("show status"):
-            data.update({x["Variable_name"]: x["Value"]})
+        for item in self.col_sql("show status"):
+            data.update({item["Variable_name"]: item["Value"]})
 
         self.indb_buf_free = int(data["Innodb_buffer_pool_pages_free"])
         self.indb_buf_data = int(data["Innodb_buffer_pool_pages_data"])
@@ -716,8 +723,8 @@ class Server(object):
 
         data = {}
 
-        for x in self.col_sql("show global variables"):
-            data.update({x["Variable_name"]: x["Value"]})
+        for item in self.col_sql("show global variables"):
+            data.update({item["Variable_name"]: item["Value"]})
 
         self.buf_size = int(data["key_buffer_size"])
         self.indb_buf = int(data["innodb_buffer_pool_size"])
@@ -787,8 +794,7 @@ class Server(object):
             self,
             "innodb_flush_log_at_trx_commit")["innodb_flush_log_at_trx_commit"]
         self.innodb_xa = fetch_sys_var(
-            self,
-            "innodb_support_xa")["innodb_support_xa"]
+            self, "innodb_support_xa")["innodb_support_xa"]
         self.log_format = fetch_sys_var(self, "binlog_format")["binlog_format"]
 
     def upd_slv_rep_stat(self):
@@ -889,25 +895,26 @@ class Server(object):
 
         return self.file
 
-    def connect(self, database=""):
+    def connect(self, **kwargs):
 
         """Method:  connect
 
         Description:  Sets up a connection to a database.
 
         Arguments:
-            (input) database -> Name of database.
+            (input) kwargs:
+                database -> Name of database to connect to.
 
         """
+
+        database = kwargs.get("database", "")
 
         if not self.conn:
 
             try:
-                self.conn = mysql.connector.connect(host=self.host,
-                                                    user=self.sql_user,
-                                                    passwd=self.sql_pass,
-                                                    port=self.port,
-                                                    database=database)
+                self.conn = mysql.connector.connect(
+                    host=self.host, user=self.sql_user, port=self.port,
+                    database=database, **self.config)
 
             except mysql.connector.Error, err:
                 print("Couldn't connect to database.  MySQL error %d: %s" %
@@ -947,8 +954,7 @@ class Server(object):
         if res_set == "row":
             return cur
 
-        else:
-            return cur.fetchall()
+        return cur.fetchall()
 
     def cmd_sql(self, cmd):
 
@@ -981,10 +987,10 @@ class Server(object):
         """
 
         data = []
-        keys = [str(x[0]) for x in self.conn.cmd_query(cmd)["columns"]]
+        keys = [str(line[0]) for line in self.conn.cmd_query(cmd)["columns"]]
 
-        for y in self.conn.get_rows()[0]:
-            data.append(dict(zip(keys, [x for x in y])))
+        for line in self.conn.get_rows()[0]:
+            data.append(dict(zip(keys, [item for item in line])))
 
         return data
 
@@ -1007,8 +1013,8 @@ class Server(object):
 
         data = {}
 
-        for x in self.sql(cmd, params=params):
-            data[x[0]] = x[1]
+        for item in self.sql(cmd, params=params):
+            data[item[0]] = item[1]
 
         return data
 
@@ -1026,8 +1032,7 @@ class Server(object):
         if self.conn:
             return self.conn.is_connected()
 
-        else:
-            return False
+        return False
 
     def reconnect(self):
 
@@ -1042,19 +1047,19 @@ class Server(object):
         if not self.is_connected():
             self.conn.reconnect()
 
-    def chg_db(self, db=None):
+    def chg_db(self, dbn=None):
 
         """Method:  chg_db
 
         Description:  Change to another database.
 
         Arguments:
-            (input) db -> Name of database.
+            (input) dbn -> Name of database.
 
         """
 
-        if db:
-            self.conn.database = db
+        if dbn:
+            self.conn.database = dbn
 
     def get_name(self):
 
@@ -1091,8 +1096,7 @@ class Rep(Server):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine,
-                 host="localhost", port=3306, defaults_file=None, **kwargs):
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -1103,17 +1107,21 @@ class Rep(Server):
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
-            (input) machine -> Operating system.
-            (input) host -> 'localhost' or host name or IP.
-            (input) port -> '3306' or port for MySQL.
-            (input) defaults_file -> Location of my.cnf file.
+            (input) os_type -> Machine operating system type class instance.
             (input) **kwargs:
                 extra_def_file -> Location of extra defaults file.
+                host -> Host name or IP of server.
+                port -> Port for MySQL.
+                defaults_file -> Location of my.cnf file.
 
         """
 
-        super(Rep, self).__init__(name, server_id, sql_user, sql_pass, machine,
-                                  host, port, defaults_file, **kwargs)
+        super(Rep, self).__init__(
+            name, server_id, sql_user, sql_pass, os_type=os_type,
+            host=kwargs.get("host", "localhost"),
+            port=kwargs.get("port", 3306),
+            defaults_file=kwargs.get("defaults_file", os_type.defaults_file),
+            extra_def_file=kwargs.get("extra_def_file", None))
 
     def show_slv_hosts(self):
 
@@ -1233,8 +1241,7 @@ class MasterRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine,
-                 host="localhost", port=3306, defaults_file=None, **kwargs):
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -1245,24 +1252,34 @@ class MasterRep(Rep):
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
-            (input) machine -> Operating system.
+            (input) os_type -> Machine operating system type class instance.
             (input) host -> 'localhost' or host name or IP.
             (input) port -> '3306' or port for MySQL.
             (input) defaults_file -> Location of my.cnf file.
             (input) **kwargs:
                 extra_def_file -> Location of extra defaults file.
+                rep_user -> Replication user name.
+                rep_japd -> Replication user password.
+                host -> Host name or IP of server.
+                port -> Port for MySQL.
+                defaults_file -> Location of my.cnf file.
 
         """
 
-        super(MasterRep, self).__init__(name, server_id, sql_user, sql_pass,
-                                        machine, host, port, defaults_file,
-                                        **kwargs)
+        super(MasterRep, self).__init__(
+            name, server_id, sql_user, sql_pass, os_type=os_type,
+            host=kwargs.get("host", "localhost"),
+            port=kwargs.get("port", 3306),
+            defaults_file=kwargs.get("defaults_file", os_type.defaults_file),
+            extra_def_file=kwargs.get("extra_def_file", None))
 
         self.pos = None
         self.do_db = None
         self.file = None
         self.ign_db = None
         self.exe_gtid = None
+        self.rep_user = kwargs.get("rep_user", None)
+        self.rep_japd = kwargs.get("rep_japd", None)
 
     def connect(self):
 
@@ -1276,9 +1293,10 @@ class MasterRep(Rep):
         """
 
         super(MasterRep, self).connect()
-        super(MasterRep, self).set_srv_gtid()
 
-        self.upd_mst_status()
+        if self.conn:
+            super(MasterRep, self).set_srv_gtid()
+            self.upd_mst_status()
 
     def show_slv_hosts(self):
 
@@ -1354,8 +1372,7 @@ class SlaveRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, machine,
-                 host="localhost", port=3306, defaults_file=None, **kwargs):
+    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -1366,18 +1383,24 @@ class SlaveRep(Rep):
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
             (input) sql_pass -> SQL user's password.
-            (input) machine -> Operating system.
+            (input) os_type -> Machine operating system type class instance.
             (input) host -> 'localhost' or host name or IP.
             (input) port -> '3306' or port for MySQL.
             (input) defaults_file -> Location of my.cnf file.
             (input) **kwargs:
                 extra_def_file -> Location of extra defaults file.
+                host -> Host name or IP of server.
+                port -> Port for MySQL.
+                defaults_file -> Location of my.cnf file.
 
         """
 
-        super(SlaveRep, self).__init__(name, server_id, sql_user, sql_pass,
-                                       machine, host, port, defaults_file,
-                                       **kwargs)
+        super(SlaveRep, self).__init__(
+            name, server_id, sql_user, sql_pass, os_type=os_type,
+            host=kwargs.get("host", "localhost"),
+            port=kwargs.get("port", 3306),
+            defaults_file=kwargs.get("defaults_file", os_type.defaults_file),
+            extra_def_file=kwargs.get("extra_def_file", None))
 
         self.io_state = None
         self.mst_host = None
@@ -1452,9 +1475,10 @@ class SlaveRep(Rep):
         """
 
         super(SlaveRep, self).connect()
-        super(SlaveRep, self).set_srv_gtid()
 
-        self.upd_slv_status()
+        if self.conn:
+            super(SlaveRep, self).set_srv_gtid()
+            self.upd_slv_status()
 
     def stop_slave(self):
 
@@ -1627,6 +1651,8 @@ class SlaveRep(Rep):
 
         """
 
+        self.upd_slv_state()
+
         return gen_libs.and_is_true(self.slv_io, self.slv_sql)
 
     def is_slv_running(self):
@@ -1639,6 +1665,8 @@ class SlaveRep(Rep):
             (Output) Returns True | False on slave status.
 
         """
+
+        self.upd_slv_status()
 
         return gen_libs.is_true(self.slv_io) and gen_libs.is_true(self.run) \
             and gen_libs.is_true(self.slv_sql)
