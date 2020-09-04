@@ -67,6 +67,7 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
             port=self.cfg.port, defaults_file=self.cfg.cfg_file)
         self.svr.connect()
+        self.status = False
 
     def test_started_slave(self):
 
@@ -87,7 +88,7 @@ class UnitTest(unittest.TestCase):
             self.assertTrue(self.svr.is_slv_running())
 
         else:
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
     def test_start_slave(self):
 
@@ -103,7 +104,7 @@ class UnitTest(unittest.TestCase):
         self.svr.upd_slv_status()
 
         if self.svr.is_slv_running():
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
         else:
             mysql_class.slave_start(self.svr)
