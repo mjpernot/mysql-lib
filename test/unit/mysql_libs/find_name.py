@@ -80,11 +80,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Slave1 = Server("Slave1")
-        self.Slave2 = Server("Slave2")
+        self.slave1 = Server("Slave1")
+        self.slave2 = Server("Slave2")
         self.slv_list = []
-        self.slv_list.append(self.Slave1)
-        self.slv_list.append(self.Slave2)
+        self.slv_list.append(self.slave1)
+        self.slv_list.append(self.slave2)
 
     def test_slave_not_found(self):
 
@@ -109,7 +109,7 @@ class UnitTest(unittest.TestCase):
         """
 
         self.assertEqual(mysql_libs.find_name(self.slv_list, "Slave1"),
-                         self.Slave1)
+                         self.slave1)
 
 
 if __name__ == "__main__":

@@ -57,7 +57,7 @@ class Server(object):
         self.name = "name"
         self.sid = "sid"
         self.sql_user = "user"
-        self.sql_pass = "pswd"
+        self.sql_pass = "japd"
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
@@ -88,15 +88,15 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
         self.prog1 = ["Program",
-                      "--defaults-extra-file=" + self.Server.extra_def_file,
-                      "-u", self.Server.sql_user,
-                      "-h", self.Server.host, "-P",
-                      str(self.Server.port)]
-        self.prog2 = ["Program", "-u", self.Server.sql_user,
-                      "-p" + self.Server.sql_pass, "-h", self.Server.host,
-                      "-P", str(self.Server.port)]
+                      "--defaults-extra-file=" + self.server.extra_def_file,
+                      "-u", self.server.sql_user,
+                      "-h", self.server.host, "-P",
+                      str(self.server.port)]
+        self.prog2 = ["Program", "-u", self.server.sql_user,
+                      "-p" + self.server.sql_pass, "-h", self.server.host,
+                      "-P", str(self.server.port)]
 
     def test_no_extra_def_file(self):
 
@@ -108,9 +108,9 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server.extra_def_file = None
+        self.server.extra_def_file = None
 
-        self.assertEqual(mysql_libs.crt_cmd(self.Server, "Program"),
+        self.assertEqual(mysql_libs.crt_cmd(self.server, "Program"),
                          self.prog2)
 
     def test_extra_def_file(self):
@@ -123,7 +123,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertEqual(mysql_libs.crt_cmd(self.Server, "Program"),
+        self.assertEqual(mysql_libs.crt_cmd(self.server, "Program"),
                          self.prog1)
 
 

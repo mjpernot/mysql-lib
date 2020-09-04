@@ -55,7 +55,7 @@ class Server(object):
 
         """
 
-        pass
+        self.cmd = None
 
     def cmd_sql(self, cmd):
 
@@ -67,6 +67,8 @@ class Server(object):
             (input) cmd -> Query command.
 
         """
+
+        self.cmd = cmd
 
         return True
 
@@ -93,7 +95,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
 
     def test_purge_bin_logs(self):
 
@@ -105,7 +107,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertFalse(mysql_libs.purge_bin_logs(self.Server, "TO",
+        self.assertFalse(mysql_libs.purge_bin_logs(self.server, "TO",
                                                    "Filename"))
 
 

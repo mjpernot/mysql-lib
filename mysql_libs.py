@@ -55,7 +55,7 @@ import version
 __version__ = version.__version__
 
 
-def analyze_tbl(server, db, tbl, **kwargs):
+def analyze_tbl(server, dbn, tbl, **kwargs):
 
     """Function:  analyze_tbl
 
@@ -63,14 +63,14 @@ def analyze_tbl(server, db, tbl, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Database name.
+        (input) dbn -> Database name.
         (input) tbl -> Table name.
         (output) Results of analyze table command.
 
     """
 
     # Must have back ticks around names in case they have special characters.
-    cmd = "analyze table `" + db + "`.`" + tbl + "`"
+    cmd = "analyze table `" + dbn + "`.`" + tbl + "`"
 
     return server.col_sql(cmd)
 
@@ -96,21 +96,21 @@ def change_master_to(mst, slv, **kwargs):
     if mst.gtid_mode:
         chg_master_to = chg_master_to + """, master_auto_position=1"""
 
-        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.sql_user,
-                                     mst.sql_pass))
+        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
+                                     mst.rep_japd))
 
     # GTID mode is disabled, use file and position options.
     else:
         chg_master_to = chg_master_to + \
             """, master_log_file='%s', master_log_pos='%s'"""
 
-        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.sql_user,
-                                     mst.sql_pass, mst.file, mst.pos))
+        slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
+                                     mst.rep_japd, mst.file, mst.pos))
 
     print("Changed Slave: {0} to new Master: {1}".format(slv.name, mst.name))
 
 
-def checksum(server, db, tbl, **kwargs):
+def checksum(server, dbn, tbl, **kwargs):
 
     """Function:  checksum
 
@@ -118,19 +118,19 @@ def checksum(server, db, tbl, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Database name.
+        (input) dbn -> Database name.
         (input) tbl -> Table name.
         (output) Results of checksum table command.
 
     """
 
     # Must have back ticks around names in case they have special characters.
-    cmd = "checksum table `" + db + "`.`" + tbl + "`"
+    cmd = "checksum table `" + dbn + "`.`" + tbl + "`"
 
     return server.col_sql(cmd)
 
 
-def check_tbl(server, db, tbl, **kwargs):
+def check_tbl(server, dbn, tbl, **kwargs):
 
     """Function:  check_tbl
 
@@ -138,14 +138,14 @@ def check_tbl(server, db, tbl, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Database name.
+        (input) dbn -> Database name.
         (input) tbl -> Table name.
         (output) Results of check table command.
 
     """
 
     # Must have back ticks around names in case they have special characters.
-    cmd = "check table `" + db + "`.`" + tbl + "`"
+    cmd = "check table `" + dbn + "`.`" + tbl + "`"
 
     return server.col_sql(cmd)
 
@@ -196,10 +196,11 @@ def create_instance(cfg_file, dir_path, cls_name, **kwargs):
 
     cfg = gen_libs.load_module(cfg_file, dir_path)
 
-    return cls_name(cfg.name, cfg.sid, cfg.user, cfg.passwd,
-                    getattr(machine, cfg.serv_os)(), cfg.host, cfg.port,
-                    cfg.cfg_file,
-                    extra_def_file=cfg.__dict__.get("extra_def_file", None))
+    return cls_name(
+        cfg.name, cfg.sid, cfg.user, cfg.japd,
+        os_type=getattr(machine, cfg.serv_os)(), host=cfg.host, port=cfg.port,
+        defaults_file=cfg.cfg_file,
+        extra_def_file=cfg.__dict__.get("extra_def_file", None))
 
 
 def create_slv_array(cfg_array, add_down=True, **kwargs):
@@ -219,11 +220,10 @@ def create_slv_array(cfg_array, add_down=True, **kwargs):
     slaves = []
 
     for slv in cfg_array:
-        slv_inst = mysql_class.SlaveRep(slv["name"], slv["sid"], slv["user"],
-                                        slv["passwd"],
-                                        getattr(machine, slv["serv_os"])(),
-                                        slv["host"], int(slv["port"]),
-                                        slv["cfg_file"])
+        slv_inst = mysql_class.SlaveRep(
+            slv["name"], slv["sid"], slv["user"], slv["japd"],
+            os_type=getattr(machine, slv["serv_os"])(), host=slv["host"],
+            port=int(slv["port"]), defaults_file=slv["cfg_file"])
         slv_inst.connect()
 
         if add_down or slv_inst.conn:
@@ -237,7 +237,7 @@ def crt_cmd(server, prog_name, **kwargs):
     """Function:  crt_cmd
 
     Description:  Create a basic MySQL program command line setup.  The basic
-        setup will include program name, user, passwd, host, and port.
+        setup will include program name, user, password, host, and port.
         The port is required to be set if MySQL instance is operating
         on a different port than 3306.
 
@@ -253,10 +253,10 @@ def crt_cmd(server, prog_name, **kwargs):
         return [prog_name, "--defaults-extra-file=" + server.extra_def_file,
                 "-u", server.sql_user, "-h", server.host, "-P",
                 str(server.port)]
-    else:
-        # Command with auth.
-        return [prog_name, "-u", server.sql_user, "-p" + server.sql_pass, "-h",
-                server.host, "-P", str(server.port)]
+
+    # Command with auth.
+    return [prog_name, "-u", server.sql_user, "-p" + server.sql_pass, "-h",
+            server.host, "-P", str(server.port)]
 
 
 def crt_srv_inst(cfg, path, **kwargs):
@@ -274,9 +274,10 @@ def crt_srv_inst(cfg, path, **kwargs):
 
     svr = gen_libs.load_module(cfg, path)
 
-    return mysql_class.Server(svr.name, svr.sid, svr.user, svr.passwd,
-                              getattr(machine, svr.serv_os)(), svr.host,
-                              svr.port, svr.cfg_file)
+    return mysql_class.Server(
+        svr.name, svr.sid, svr.user, svr.japd,
+        os_type=getattr(machine, svr.serv_os)(), host=svr.host, port=svr.port,
+        defaults_file=svr.cfg_file)
 
 
 def fetch_db_dict(server, **kwargs):
@@ -287,7 +288,7 @@ def fetch_db_dict(server, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (output) -> Dictionary of database names.
+        (output) -> List of dictionaries of database names.
 
     """
 
@@ -341,7 +342,7 @@ def fetch_slv(slaves, slv_name, **kwargs):
     return slv, err_flag, err_msg
 
 
-def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
+def fetch_tbl_dict(server, dbn, tbl_type="BASE TABLE", **kwargs):
 
     """Function:  fetch_tbl_dict
 
@@ -350,14 +351,14 @@ def fetch_tbl_dict(server, db, tbl_type="BASE TABLE", **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Name of database.
+        (input) dbn -> Name of database.
         (input) tbl_type -> Type of table in the database.
         (output) List of tables in database.
 
     """
 
     qry = """select table_name from information_schema.tables where
-        table_type = '%s' and table_schema = '%s'""" % (tbl_type, db)
+        table_type = '%s' and table_schema = '%s'""" % (tbl_type, dbn)
 
     return server.col_sql(qry)
 
@@ -403,15 +404,20 @@ def is_cfg_valid(servers, **kwargs):
     status_msg = []
 
     for svr in servers:
-        status, err_msg = gen_libs.chk_crt_file(svr.extra_def_file)
+        if svr.extra_def_file:
+            status, err_msg = gen_libs.chk_crt_file(svr.extra_def_file)
 
-        if not status:
-            status_msg.append("%s" % (err_msg))
+            if not status:
+                status_msg.append("%s" % (err_msg))
 
-        if svr.extra_def_file and not status:
-            status_msg.append("%s:  %s is missing." % (svr.name,
-                                                       svr.extra_def_file))
+            if svr.extra_def_file and not status:
+                status_msg.append("%s:  %s is missing." % (svr.name,
+                                                           svr.extra_def_file))
+                status = False
+
+        else:
             status = False
+            status_msg.append("%s:  extra_def_file is not set." % (svr.name))
 
     return status, status_msg
 
@@ -524,7 +530,7 @@ def _sql_rep_chk(mst, slv, is_delayed=False, **kwargs):
     return is_delayed
 
 
-def optimize_tbl(server, db, tbl, **kwargs):
+def optimize_tbl(server, dbn, tbl, **kwargs):
 
     """Function:  optimize_tbl
 
@@ -532,14 +538,14 @@ def optimize_tbl(server, db, tbl, **kwargs):
 
     Arguments:
         (input) server -> Server instance.
-        (input) db -> Database name.
+        (input) dbn -> Database name.
         (input) tbl -> Table name.
         (output) Return check table results.
 
     """
 
     # Must have back ticks around names in case they have special characters.
-    cmd = "optimize table `" + db + "`.`" + tbl + "`"
+    cmd = "optimize table `" + dbn + "`.`" + tbl + "`"
 
     return server.col_sql(cmd)
 
@@ -610,8 +616,9 @@ def select_wait_until(server, gtid_pos, timeout=0, **kwargs):
 
     """
 
-    return server.cmd_sql("select wait_until_sql_thread_after_gtids(%s, %s)"
-                          % (gtid_pos, timeout))
+    return server.sql("select wait_until_sql_thread_after_gtids(%s, %s)"
+                      % ('"' + str(gtid_pos) + '"', timeout),
+                      res_set="all")
 
 
 def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
@@ -642,19 +649,19 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
 
     # Non-GTID MySQL.
     if log_file and log_pos:
-        start_slave_until = start_slv + \
+        start_slv_until = start_slv + \
             """master_log_file='%s', master_log_pos='%s'""" \
             % (log_file, log_pos)
         master_pos_wait = """select master_pos_wait('%s', '%s')""" \
             % (log_file, log_pos)
-        slv.cmd_sql(start_slave_until)
+        slv.cmd_sql(start_slv_until)
         slv.cmd_sql(master_pos_wait)
 
     # GTID MySQL.
     elif slv.gtid_mode and gtid:
-        start_slave_until = start_slv + """sql_""" + stop_pos + \
+        start_slv_until = start_slv + """sql_""" + stop_pos + \
             """_gtids='%s'""" % (gtid)
-        slv.cmd_sql(start_slave_until)
+        slv.cmd_sql(start_slv_until)
 
     else:
         err_flag = True
@@ -687,7 +694,7 @@ def switch_to_master(mst, slv, timeout=0, **kwargs):
     # Wait for relay log to empty.
     slv.upd_gtid_pos()
     status_flag = next(iter(select_wait_until(slv, slv.retrieved_gtidset,
-                                              timeout).values()))
+                                              timeout)[0]))
 
     if status_flag >= 0:
         mysql_class.slave_stop(slv)

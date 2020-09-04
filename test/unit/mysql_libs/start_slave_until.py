@@ -56,6 +56,7 @@ class Server(object):
         """
 
         self.gtid_mode = "Yes"
+        self.cmd = None
 
     def cmd_sql(self, cmd):
 
@@ -67,6 +68,8 @@ class Server(object):
             (input) cmd -> Query command.
 
         """
+
+        self.cmd = cmd
 
         return True
 
@@ -95,7 +98,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
 
     def test_fail(self):
 
@@ -107,8 +110,9 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertEqual(mysql_libs.start_slave_until(self.Server),
-                         (True, "One of the arguments is missing."))
+        self.assertEqual(
+            mysql_libs.start_slave_until(self.server),
+            (True, "One of the arguments is missing."))
 
     def test_gtid(self):
 
@@ -120,8 +124,9 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertEqual(mysql_libs.start_slave_until(self.Server,
-                         gtid=12345, stop_pos="before"), (False, None))
+        self.assertEqual(
+            mysql_libs.start_slave_until(
+                self.server, gtid=12345, stop_pos="before"), (False, None))
 
     def test_non_gtid(self):
 
@@ -133,8 +138,10 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertEqual(mysql_libs.start_slave_until(self.Server,
-                         log_file="Filename", log_pos=12345), (False, None))
+        self.assertEqual(
+            mysql_libs.start_slave_until(
+                self.server, log_file="Filename", log_pos=12345),
+            (False, None))
 
 
 if __name__ == "__main__":

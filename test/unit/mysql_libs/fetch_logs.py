@@ -95,7 +95,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
 
     def test_fetch_logs(self):
 
@@ -107,7 +107,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.fetch_logs(self.Server))
+        self.assertTrue(mysql_libs.fetch_logs(self.server))
 
 
 if __name__ == "__main__":

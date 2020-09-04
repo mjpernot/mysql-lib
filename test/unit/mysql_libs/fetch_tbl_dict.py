@@ -55,7 +55,7 @@ class Server(object):
 
         """
 
-        pass
+        self.qry = None
 
     def col_sql(self, qry):
 
@@ -67,6 +67,8 @@ class Server(object):
             (input) qry -> Query command.
 
         """
+
+        self.qry = qry
 
         return True
 
@@ -93,7 +95,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Server = Server()
+        self.server = Server()
 
     def test_fetch_tbl_dict(self):
 
@@ -105,7 +107,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(mysql_libs.fetch_tbl_dict(self.Server, "Dbname"))
+        self.assertTrue(mysql_libs.fetch_tbl_dict(self.server, "Dbname"))
 
 
 if __name__ == "__main__":

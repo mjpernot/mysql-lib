@@ -94,8 +94,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Slave = Server()
-        self.Master = Server()
+        self.slave = Server()
+        self.master = Server()
 
     @mock.patch("mysql_libs.select_wait_until")
     def test_status_fail(self, mock_wait):
@@ -108,9 +108,9 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_wait.return_value = {"somekey": -1}
+        mock_wait.return_value = [(-1,)]
 
-        self.assertEqual(mysql_libs.switch_to_master(self.Slave, self.Master),
+        self.assertEqual(mysql_libs.switch_to_master(self.slave, self.master),
                          -1)
 
     @mock.patch("mysql_libs.select_wait_until")
@@ -130,9 +130,9 @@ class UnitTest(unittest.TestCase):
         mock_stop.return_value = True
         mock_chg.return_value = True
         mock_start.return_value = True
-        mock_wait.return_value = {"somekey": 0}
+        mock_wait.return_value = [(0,)]
 
-        self.assertEqual(mysql_libs.switch_to_master(self.Slave, self.Master),
+        self.assertEqual(mysql_libs.switch_to_master(self.slave, self.master),
                          0)
 
 

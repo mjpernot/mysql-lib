@@ -45,7 +45,7 @@ class Server(object):
 
     """
 
-    def __init__(self, name, sid, user, pswd, serv_os, host, port, cfg_file):
+    def __init__(self, name, sid, user, japd, **kwargs):
 
         """Method:  __init__
 
@@ -58,11 +58,11 @@ class Server(object):
         self.name = name
         self.sid = sid
         self.user = user
-        self.pswd = pswd
-        self.serv_os = serv_os
-        self.host = host
-        self.port = port
-        self.cfg_file = cfg_file
+        self.japd = japd
+        self.serv_os = kwargs.get("machine")
+        self.host = kwargs.get("host")
+        self.port = kwargs.get("port")
+        self.cfg_file = kwargs.get("cfg_file")
 
 
 class Cfg(object):
@@ -89,7 +89,7 @@ class Cfg(object):
         self.name = "name"
         self.sid = "sid"
         self.user = "user"
-        self.passwd = None
+        self.japd = None
         self.serv_os = "Linux"
         self.host = "hostname"
         self.port = 3306
@@ -118,10 +118,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.Cfg = Cfg()
-        self.Server = Server(self.Cfg.name, self.Cfg.sid, self.Cfg.user,
-                             self.Cfg.passwd, self.Cfg.serv_os, self.Cfg.host,
-                             self.Cfg.port, self.Cfg.cfg_file)
+        self.cfg = Cfg()
+        self.server = Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            machine=self.cfg.serv_os, host=self.cfg.host, port=self.cfg.port,
+            defaults_file=self.cfg.cfg_file)
 
     @mock.patch("mysql_libs.mysql_class.Server")
     @mock.patch("mysql_libs.gen_libs.load_module")
@@ -135,11 +136,11 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_cfg.return_value = self.Cfg
-        mock_srv.return_value = self.Server
+        mock_cfg.return_value = self.cfg
+        mock_srv.return_value = self.server
 
         instance = mysql_libs.crt_srv_inst("Cfgfile", "DirPath")
-        self.assertEqual(type(instance), type(self.Server))
+        self.assertEqual(type(instance), type(self.server))
 
 
 if __name__ == "__main__":

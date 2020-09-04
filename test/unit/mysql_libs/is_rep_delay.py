@@ -72,7 +72,7 @@ class SlaveRep(object):
     """
 
     def __init__(self, gtid_mode, ret_gtid, mst_log, mst_pos, exe_gtid,
-                 relay_log, exe_pos):
+                 **kwargs):
 
         """Method:  __init__
 
@@ -87,8 +87,8 @@ class SlaveRep(object):
         self.mst_log = mst_log
         self.mst_read_pos = mst_pos
         self.exe_gtid = exe_gtid
-        self.relay_mst_log = relay_log
-        self.exec_mst_pos = exe_pos
+        self.relay_mst_log = kwargs.get("relay_log")
+        self.exec_mst_pos = kwargs.get("exe_pos")
 
 
 class UnitTest(unittest.TestCase):
@@ -133,7 +133,8 @@ class UnitTest(unittest.TestCase):
         """
 
         master = MasterRep(None, None, "File1", 12345)
-        slave = SlaveRep(None, None, None, None, None, "File1", 12346)
+        slave = SlaveRep(None, None, None, None, None, relay_log="File1",
+                         exe_pos=12346)
 
         self.assertTrue(mysql_libs.is_rep_delay(master, slave, "SQL"))
 
@@ -148,7 +149,8 @@ class UnitTest(unittest.TestCase):
         """
 
         master = MasterRep(None, None, "File1", 12345)
-        slave = SlaveRep(None, None, None, None, None, "File1", 12345)
+        slave = SlaveRep(None, None, None, None, None, relay_log="File1",
+                         exe_pos=12345)
 
         self.assertFalse(mysql_libs.is_rep_delay(master, slave, "SQL"))
 
@@ -163,7 +165,8 @@ class UnitTest(unittest.TestCase):
         """
 
         master = MasterRep("Yes", 12345, None, None)
-        slave = SlaveRep("Yes", None, None, None, 12346, None, None)
+        slave = SlaveRep("Yes", None, None, None, 12346, relay_log=None,
+                         exe_pos=None)
 
         self.assertTrue(mysql_libs.is_rep_delay(master, slave, "SQL"))
 
@@ -178,7 +181,8 @@ class UnitTest(unittest.TestCase):
         """
 
         master = MasterRep("Yes", 12345, None, None)
-        slave = SlaveRep("Yes", None, None, None, 12345, None, None)
+        slave = SlaveRep("Yes", None, None, None, 12345, relay_log=None,
+                         exe_pos=None)
 
         self.assertFalse(mysql_libs.is_rep_delay(master, slave, "SQL"))
 
@@ -193,7 +197,8 @@ class UnitTest(unittest.TestCase):
         """
 
         master = MasterRep(None, None, "File1", 12345)
-        slave = SlaveRep(None, None, "File1", 12346, None, None, None)
+        slave = SlaveRep(None, None, "File1", 12346, None, relay_log=None,
+                         exe_pos=None)
 
         self.assertTrue(mysql_libs.is_rep_delay(master, slave, "IO"))
 
@@ -208,7 +213,8 @@ class UnitTest(unittest.TestCase):
         """
 
         master = MasterRep(None, None, "File1", 12345)
-        slave = SlaveRep(None, None, "File1", 12345, None, None, None)
+        slave = SlaveRep(None, None, "File1", 12345, None, relay_log=None,
+                         exe_pos=None)
 
         self.assertFalse(mysql_libs.is_rep_delay(master, slave, "IO"))
 
@@ -223,7 +229,8 @@ class UnitTest(unittest.TestCase):
         """
 
         master = MasterRep("Yes", 12345, None, None)
-        slave = SlaveRep("Yes", 12346, None, None, None, None, None)
+        slave = SlaveRep("Yes", 12346, None, None, None, relay_log=None,
+                         exe_pos=None)
 
         self.assertTrue(mysql_libs.is_rep_delay(master, slave, "IO"))
 
@@ -238,7 +245,8 @@ class UnitTest(unittest.TestCase):
         """
 
         master = MasterRep("Yes", 12345, None, None)
-        slave = SlaveRep("Yes", 12345, None, None, None, None, None)
+        slave = SlaveRep("Yes", 12345, None, None, None, relay_log=None,
+                         exe_pos=None)
 
         self.assertFalse(mysql_libs.is_rep_delay(master, slave, "IO"))
 
