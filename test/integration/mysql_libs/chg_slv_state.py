@@ -72,6 +72,7 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, cfg.serv_os)(), host=cfg.host,
             port=cfg.port, defaults_file=cfg.cfg_file)
         self.svr.connect()
+        self.status = False
 
     def test_non_option(self):
 
@@ -93,7 +94,7 @@ class UnitTest(unittest.TestCase):
             self.assertTrue(self.svr.is_slv_running())
 
         else:
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
     def test_start_slaves2(self):
 
@@ -114,7 +115,7 @@ class UnitTest(unittest.TestCase):
             self.assertTrue(self.svr.is_slv_running())
 
         else:
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
     def test_start_slaves(self):
 
@@ -130,7 +131,7 @@ class UnitTest(unittest.TestCase):
         self.svr.upd_slv_status()
 
         if self.svr.is_slv_running():
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
         else:
             mysql_libs.chg_slv_state([self.svr], "start")
@@ -152,7 +153,7 @@ class UnitTest(unittest.TestCase):
         self.svr.upd_slv_status()
 
         if self.svr.is_slv_running():
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
         else:
             mysql_libs.chg_slv_state([self.svr], "stop")
@@ -179,7 +180,7 @@ class UnitTest(unittest.TestCase):
             self.assertFalse(self.svr.is_slv_running())
 
         else:
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
     def tearDown(self):
 
