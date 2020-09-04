@@ -69,6 +69,7 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
             port=self.cfg.port, defaults_file=self.cfg.cfg_file)
         self.svr.connect()
+        self.status = False
 
     def test_down_slave(self):
 
@@ -84,7 +85,7 @@ class UnitTest(unittest.TestCase):
         self.svr.upd_slv_status()
 
         if self.svr.is_slv_running():
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
         else:
             self.svr.upd_slv_state()
@@ -113,7 +114,7 @@ class UnitTest(unittest.TestCase):
             self.assertTrue(self.svr.io_state)
 
         else:
-            self.assertTrue(False)
+            self.assertTrue(self.status)
 
     def tearDown(self):
 
