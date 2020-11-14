@@ -43,6 +43,12 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_int_lastsqlerror -> Test integer for Last_SQL_Errno.
+        test_string_lastsqlerror -> Test string for Last_SQL_Errno.
+        test_except_lastsqlerror -> Test raising exception for Last_SQL_Errno.
+        test_int_lastioerror -> Test integer for Last_IO_Errno.
+        test_string_lastioerror -> Test string for Last_IO_Errno.
+        test_except_lastioerror -> Test raising exception for Last_IO_Errno.
         test_value -> Test with values returned.
 
     """
@@ -121,11 +127,194 @@ class UnitTest(unittest.TestCase):
                            "Executed_Gtid_Set": "exegtid",
                            "Auto_Position": "autopos"}]
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos")
+    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
+                mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_value(self, mock_stat, mock_global, mock_var, mock_gtid):
+    def test_int_lastsqlerror(self, mock_stat, mock_global, mock_var):
+
+        """Function:  test_int_lastsqlerror
+
+        Description:  Test integer for Last_SQL_Errno.
+
+        Arguments:
+
+        """
+
+        self.show_stat[0]["Last_SQL_Errno"] = 1
+
+        mock_var.return_value = {"read_only": "ON"}
+        mock_global.side_effect = [{"Slave_running": "Value"},
+                                   {"Slave_open_temp_tables": "Value"},
+                                   {"Slave_retried_transactions": "Value"}]
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.upd_slv_status()
+        self.assertEqual(mysqlrep.sql_err, 1)
+
+    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
+                mock.Mock(return_value=True))
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_string_lastsqlerror(self, mock_stat, mock_global, mock_var):
+
+        """Function:  test_string_lastsqlerror
+
+        Description:  Test string for Last_SQL_Errno.
+
+        Arguments:
+
+        """
+
+        self.show_stat[0]["Last_SQL_Errno"] = "1"
+
+        mock_var.return_value = {"read_only": "ON"}
+        mock_global.side_effect = [{"Slave_running": "Value"},
+                                   {"Slave_open_temp_tables": "Value"},
+                                   {"Slave_retried_transactions": "Value"}]
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.upd_slv_status()
+        self.assertEqual(mysqlrep.sql_err, 1)
+
+    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
+                mock.Mock(return_value=True))
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_except_lastsqlerror(self, mock_stat, mock_global, mock_var):
+
+        """Function:  test_except_lastsqlerror
+
+        Description:  Test raising exception for Last_SQL_Errno.
+
+        Arguments:
+
+        """
+
+        mock_var.return_value = {"read_only": "ON"}
+        mock_global.side_effect = [{"Slave_running": "Value"},
+                                   {"Slave_open_temp_tables": "Value"},
+                                   {"Slave_retried_transactions": "Value"}]
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.upd_slv_status()
+        self.assertEqual(mysqlrep.sql_err, "lastsqlnumber")
+
+    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
+                mock.Mock(return_value=True))
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_int_lastioerror(self, mock_stat, mock_global, mock_var):
+
+        """Function:  test_int_lastioerror
+
+        Description:  Test integer for Last_IO_Errno.
+
+        Arguments:
+
+        """
+
+        self.show_stat[0]["Last_IO_Errno"] = 1
+
+        mock_var.return_value = {"read_only": "ON"}
+        mock_global.side_effect = [{"Slave_running": "Value"},
+                                   {"Slave_open_temp_tables": "Value"},
+                                   {"Slave_retried_transactions": "Value"}]
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.upd_slv_status()
+        self.assertEqual(mysqlrep.io_err, 1)
+
+    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
+                mock.Mock(return_value=True))
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_string_lastioerror(self, mock_stat, mock_global, mock_var):
+
+        """Function:  test_string_lastioerror
+
+        Description:  Test string for Last_IO_Errno.
+
+        Arguments:
+
+        """
+
+        self.show_stat[0]["Last_IO_Errno"] = "1"
+
+        mock_var.return_value = {"read_only": "ON"}
+        mock_global.side_effect = [{"Slave_running": "Value"},
+                                   {"Slave_open_temp_tables": "Value"},
+                                   {"Slave_retried_transactions": "Value"}]
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.upd_slv_status()
+        self.assertEqual(mysqlrep.io_err, 1)
+
+    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
+                mock.Mock(return_value=True))
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_except_lastioerror(self, mock_stat, mock_global, mock_var):
+
+        """Function:  test_except_lastioerror
+
+        Description:  Test raising exception for Last_IO_Errno.
+
+        Arguments:
+
+        """
+
+        mock_var.return_value = {"read_only": "ON"}
+        mock_global.side_effect = [{"Slave_running": "Value"},
+                                   {"Slave_open_temp_tables": "Value"},
+                                   {"Slave_retried_transactions": "Value"}]
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.upd_slv_status()
+        self.assertEqual(mysqlrep.io_err, "lastionumber")
+
+    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
+                mock.Mock(return_value=True))
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_value(self, mock_stat, mock_global, mock_var):
 
         """Function:  test_value
 
@@ -135,7 +324,6 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_gtid.return_value = True
         mock_var.return_value = {"read_only": "ON"}
         mock_global.side_effect = [{"Slave_running": "Value"},
                                    {"Slave_open_temp_tables": "Value"},
