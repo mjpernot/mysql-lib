@@ -1589,9 +1589,21 @@ class SlaveRep(Rep):
         self.ssl_key = data["Master_SSL_Key"]
         self.secs_behind = data["Seconds_Behind_Master"]
         self.ssl_verify = data["Master_SSL_Verify_Server_Cert"]
-        self.io_err = data["Last_IO_Errno"]
+
+        try:
+            self.io_err = int(data["Last_IO_Errno"])
+
+        except ValueError:
+            self.io_err = data["Last_IO_Errno"]
+
         self.io_msg = data["Last_IO_Error"]
-        self.sql_err = data["Last_SQL_Errno"]
+
+        try:
+            self.sql_err = int(data["Last_SQL_Errno"])
+
+        except ValueError:
+            self.sql_err = data["Last_SQL_Errno"]
+
         self.sql_msg = data["Last_SQL_Error"]
         self.ign_ids = data["Replicate_Ignore_Server_Ids"]
         self.mst_id = data["Master_Server_Id"]

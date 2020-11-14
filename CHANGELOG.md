@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.0.1] - 2020-11-13
+- Updated to work with (much older) mysql.connector v1.1.6 library module.
+
+### Changed
+- mysql_class.SlaveRep.upd_slv_status:  Last_IO_Errno and Last_SQL_Errno can handle string or integer datatypes.
+
+
 ## [5.0.0] - 2020-07-28
 - Breaking change.
 - Changed the "change_master_to" command to use the replication user instead of the system user.
