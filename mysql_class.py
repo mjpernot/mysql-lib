@@ -1500,7 +1500,7 @@ class SlaveRep(Rep):
         try:
             self.secs_behind = int(data["Seconds_Behind_Master"])
 
-        except ValueError:
+        except (ValueError, TypeError):
             self.secs_behind = data["Seconds_Behind_Master"]
 
     def start_slave(self):
@@ -1522,7 +1522,7 @@ class SlaveRep(Rep):
         try:
             self.secs_behind = int(data["Seconds_Behind_Master"])
 
-        except ValueError:
+        except (ValueError, TypeError):
             self.secs_behind = data["Seconds_Behind_Master"]
 
     def show_slv_state(self):
@@ -1607,7 +1607,7 @@ class SlaveRep(Rep):
         try:
             self.secs_behind = int(data["Seconds_Behind_Master"])
 
-        except ValueError:
+        except (ValueError, TypeError):
             self.secs_behind = data["Seconds_Behind_Master"]
 
         self.ssl_verify = data["Master_SSL_Verify_Server_Cert"]
@@ -1793,7 +1793,7 @@ class SlaveRep(Rep):
         try:
             self.secs_behind = int(data["Seconds_Behind_Master"])
 
-        except ValueError:
+        except (ValueError, TypeError):
             self.secs_behind = data["Seconds_Behind_Master"]
 
     def get_time(self):
