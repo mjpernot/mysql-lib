@@ -73,6 +73,28 @@ class UnitTest(unittest.TestCase):
         self.show_stat = [{"Seconds_Behind_Master": "10"}]
 
     @mock.patch("mysql_class.show_slave_stat")
+    def test_none_secsbehind(self, mock_stat):
+
+        """Function:  test_none_secsbehind
+
+        Description:  Test None for Seconds_Behind_Master.
+
+        Arguments:
+
+        """
+
+        self.show_stat[0]["Seconds_Behind_Master"] = None
+
+        mock_stat.return_value = self.show_stat
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.upd_slv_time()
+        self.assertEqual(mysqlrep.secs_behind, None)
+
+    @mock.patch("mysql_class.show_slave_stat")
     def test_int_secsbehind(self, mock_stat):
 
         """Function:  test_int_secsbehind
