@@ -43,6 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_none_secsbehind -> Test None for Seconds_Behind_Master.
         test_int_secsbehind -> Test integer for Seconds_Behind_Master.
         test_string_secsbehind -> Test string for Seconds_Behind_Master.
         test_except_secsbehind -> Test raising exception: Seconds_Behind_Master
@@ -135,6 +136,37 @@ class UnitTest(unittest.TestCase):
                            "Retrieved_Gtid_Set": "retgtid",
                            "Executed_Gtid_Set": "exegtid",
                            "Auto_Position": "autopos"}]
+
+    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
+                mock.Mock(return_value=True))
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_none_secsbehind(self, mock_stat, mock_global, mock_var):
+
+        """Function:  test_none_secsbehind
+
+        Description:  Test None for Seconds_Behind_Master.
+
+        Arguments:
+
+        """
+
+        self.show_stat[0]["Seconds_Behind_Master"] = None
+
+        mock_var.return_value = {"read_only": "ON"}
+        mock_global.side_effect = [{"Slave_running": "Value"},
+                                   {"Slave_open_temp_tables": "Value"},
+                                   {"Slave_retried_transactions": "Value"}]
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.upd_slv_status()
+        self.assertEqual(mysqlrep.secs_behind, None)
 
     @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
                 mock.Mock(return_value=True))
