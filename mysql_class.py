@@ -1585,7 +1585,13 @@ class SlaveRep(Rep):
         self.wild_ign_tbl = data["Replicate_Wild_Ignore_Table"]
         self.last_err = data["Last_Errno"]
         self.err_msg = data["Last_Error"]
-        self.skip_ctr = data["Skip_Counter"]
+
+        try:
+            self.skip_ctr = int(data["Skip_Counter"])
+
+        except ValueError:
+            self.skip_ctr = data["Skip_Counter"]
+
         self.exec_mst_pos = data["Exec_Master_Log_Pos"]
         self.log_space = data["Relay_Log_Space"]
         self.until_cond = data["Until_Condition"]
