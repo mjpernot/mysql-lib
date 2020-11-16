@@ -43,7 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_none_secsbehindmaster -> Test None for Seconds_Behind_Master.
+        test_none_secsbehind -> Test None for Seconds_Behind_Master.
         test_int_secsbehind -> Test integer for Seconds_Behind_Master.
         test_string_secsbehind -> Test string for Seconds_Behind_Master.
         test_except_secsbehind -> Test raising exception: Seconds_Behind_Master

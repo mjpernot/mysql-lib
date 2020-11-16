@@ -43,9 +43,9 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_none_secsbehindmaster -> Test None for Seconds_Behind_Master.
-        test_int_secsbehindmaster -> Test integer for Seconds_Behind_Master.
-        test_string_secsbehindmaster -> Test string for Seconds_Behind_Master.
+        test_none_secsbehind -> Test None for Seconds_Behind_Master.
+        test_int_secsbehind -> Test integer for Seconds_Behind_Master.
+        test_string_secsbehind -> Test string for Seconds_Behind_Master.
         test_except_secsbehind -> Test raising exception: Seconds_Behind_Master
         test_value -> Test with values returned.
 
@@ -76,9 +76,9 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
-    def test_none_secsbehindmaster(self, mock_stat):
+    def test_none_secsbehind(self, mock_stat):
 
-        """Function:  test_none_secsbehindmaster
+        """Function:  test_none_secsbehind
 
         Description:  Test None for Seconds_Behind_Master.
 
@@ -100,9 +100,9 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
-    def test_int_secsbehindmaster(self, mock_stat):
+    def test_int_secsbehind(self, mock_stat):
 
-        """Function:  test_int_secsbehindmaster
+        """Function:  test_int_secsbehind
 
         Description:  Test integer for Seconds_Behind_Master.
 
@@ -124,9 +124,9 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
-    def test_string_secsbehindmaster(self, mock_stat):
+    def test_string_secsbehind(self, mock_stat):
 
-        """Function:  test_string_secsbehindmaster
+        """Function:  test_string_secsbehind
 
         Description:  Test string for Seconds_Behind_Master.
 
@@ -146,9 +146,9 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
-    def test_except_secsbehindmaster(self, mock_stat):
+    def test_except_secsbehind(self, mock_stat):
 
-        """Function:  test_except_secsbehindmaster
+        """Function:  test_except_secsbehind
 
         Description:  Test raising exception: Seconds_Behind_Master.
 
