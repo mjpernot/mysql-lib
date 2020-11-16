@@ -130,8 +130,6 @@ class UnitTest(unittest.TestCase):
                            "Executed_Gtid_Set": "exegtid",
                            "Auto_Position": "autopos"}]
 
-###################################
-
     @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
                 mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
@@ -223,7 +221,6 @@ class UnitTest(unittest.TestCase):
         mysqlrep.upd_slv_status()
         self.assertEqual(mysqlrep.mst_id, "serverid")
 
-###################################
     @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
                 mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
