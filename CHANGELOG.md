@@ -8,6 +8,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Updated to work with (much older) mysql.connector v1.1.6 library module.
 
 ### Changed
+- mysql_class.SlaveRep.upd_slv_time:  Changed Seconds_Behind_Master attribute to handle string or integer datatypes.
 - mysql_class.SlaveRep.start_slave:  Changed Seconds_Behind_Master attribute to handle string or integer datatypes.
 - mysql_class.SlaveRep.upd_slv_status:  Changed a number of attributes to handle string or integer datatypes.
 - mysql_class.SlaveRep.stop_slave:  Changed Seconds_Behind_Master attribute to handle string or integer datatypes.
