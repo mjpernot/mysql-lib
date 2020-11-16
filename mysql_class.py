@@ -1496,7 +1496,12 @@ class SlaveRep(Rep):
         data = show_slave_stat(self)[0]
 
         self.io_state = data["Slave_IO_State"]
-        self.secs_behind = data["Seconds_Behind_Master"]
+
+        try:
+            self.secs_behind = int(data["Seconds_Behind_Master"])
+
+        except ValueError:
+            self.secs_behind = data["Seconds_Behind_Master"]
 
     def start_slave(self):
 
@@ -1513,7 +1518,12 @@ class SlaveRep(Rep):
         data = show_slave_stat(self)[0]
 
         self.io_state = data["Slave_IO_State"]
-        self.secs_behind = data["Seconds_Behind_Master"]
+
+        try:
+            self.secs_behind = int(data["Seconds_Behind_Master"])
+
+        except ValueError:
+            self.secs_behind = data["Seconds_Behind_Master"]
 
     def show_slv_state(self):
 
@@ -1575,7 +1585,13 @@ class SlaveRep(Rep):
         self.wild_ign_tbl = data["Replicate_Wild_Ignore_Table"]
         self.last_err = data["Last_Errno"]
         self.err_msg = data["Last_Error"]
-        self.skip_ctr = data["Skip_Counter"]
+
+        try:
+            self.skip_ctr = int(data["Skip_Counter"])
+
+        except ValueError:
+            self.skip_ctr = data["Skip_Counter"]
+
         self.exec_mst_pos = data["Exec_Master_Log_Pos"]
         self.log_space = data["Relay_Log_Space"]
         self.until_cond = data["Until_Condition"]
@@ -1587,14 +1603,38 @@ class SlaveRep(Rep):
         self.ssl_cert = data["Master_SSL_Cert"]
         self.ssl_cipher = data["Master_SSL_Cipher"]
         self.ssl_key = data["Master_SSL_Key"]
-        self.secs_behind = data["Seconds_Behind_Master"]
+
+        try:
+            self.secs_behind = int(data["Seconds_Behind_Master"])
+
+        except ValueError:
+            self.secs_behind = data["Seconds_Behind_Master"]
+
         self.ssl_verify = data["Master_SSL_Verify_Server_Cert"]
-        self.io_err = data["Last_IO_Errno"]
+
+        try:
+            self.io_err = int(data["Last_IO_Errno"])
+
+        except ValueError:
+            self.io_err = data["Last_IO_Errno"]
+
         self.io_msg = data["Last_IO_Error"]
-        self.sql_err = data["Last_SQL_Errno"]
+
+        try:
+            self.sql_err = int(data["Last_SQL_Errno"])
+
+        except ValueError:
+            self.sql_err = data["Last_SQL_Errno"]
+
         self.sql_msg = data["Last_SQL_Error"]
         self.ign_ids = data["Replicate_Ignore_Server_Ids"]
-        self.mst_id = data["Master_Server_Id"]
+
+        try:
+            self.mst_id = int(data["Master_Server_Id"])
+
+        except ValueError:
+            self.mst_id = data["Master_Server_Id"]
+
         self.mst_uuid = data.get("Master_UUID", None)
         self.mst_info = data.get("Master_Info_File", None)
         self.sql_delay = data.get("SQL_Delay", None)
@@ -1749,7 +1789,12 @@ class SlaveRep(Rep):
         """
 
         data = show_slave_stat(self)[0]
-        self.secs_behind = data["Seconds_Behind_Master"]
+
+        try:
+            self.secs_behind = int(data["Seconds_Behind_Master"])
+
+        except ValueError:
+            self.secs_behind = data["Seconds_Behind_Master"]
 
     def get_time(self):
 
