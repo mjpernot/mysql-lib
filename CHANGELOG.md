@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ### Changed
 - mysql_class.SlaveRep.upd_slv_status:  Changed a number of attributes to handle string or integer datatypes.
+- mysql_class.SlaveRep.stop_slave:  Changed Seconds_Behind_Master attribute to handle string or integer datatypes.
 
 
 ## [5.0.0] - 2020-07-28
