@@ -1500,7 +1500,7 @@ class SlaveRep(Rep):
         try:
             self.secs_behind = int(data["Seconds_Behind_Master"])
 
-        except ValueError:
+        except (ValueError, TypeError):
             self.secs_behind = data["Seconds_Behind_Master"]
 
     def start_slave(self):
