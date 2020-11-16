@@ -1518,7 +1518,12 @@ class SlaveRep(Rep):
         data = show_slave_stat(self)[0]
 
         self.io_state = data["Slave_IO_State"]
-        self.secs_behind = data["Seconds_Behind_Master"]
+
+        try:
+            self.secs_behind = int(data["Seconds_Behind_Master"])
+
+        except ValueError:
+            self.secs_behind = data["Seconds_Behind_Master"]
 
     def show_slv_state(self):
 
