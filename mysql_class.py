@@ -1606,7 +1606,13 @@ class SlaveRep(Rep):
 
         self.sql_msg = data["Last_SQL_Error"]
         self.ign_ids = data["Replicate_Ignore_Server_Ids"]
-        self.mst_id = data["Master_Server_Id"]
+
+        try:
+            self.mst_id = int(data["Master_Server_Id"])
+
+        except ValueError:
+            self.mst_id = data["Master_Server_Id"]
+
         self.mst_uuid = data.get("Master_UUID", None)
         self.mst_info = data.get("Master_Info_File", None)
         self.sql_delay = data.get("SQL_Delay", None)
