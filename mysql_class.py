@@ -1603,7 +1603,13 @@ class SlaveRep(Rep):
         self.ssl_cert = data["Master_SSL_Cert"]
         self.ssl_cipher = data["Master_SSL_Cipher"]
         self.ssl_key = data["Master_SSL_Key"]
-        self.secs_behind = data["Seconds_Behind_Master"]
+
+        try:
+            self.secs_behind = int(data["Seconds_Behind_Master"])
+
+        except ValueError:
+            self.secs_behind = data["Seconds_Behind_Master"]
+
         self.ssl_verify = data["Master_SSL_Verify_Server_Cert"]
 
         try:
