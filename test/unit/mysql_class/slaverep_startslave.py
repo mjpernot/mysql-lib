@@ -43,6 +43,10 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_none_secsbehindmaster -> Test None for Seconds_Behind_Master.
+        test_int_secsbehindmaster -> Test integer for Seconds_Behind_Master.
+        test_string_secsbehindmaster -> Test string for Seconds_Behind_Master.
+        test_except_secsbehind -> Test raising exception: Seconds_Behind_Master
         test_value -> Test with values returned.
 
     """
@@ -69,6 +73,30 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat = [{"Slave_IO_State": "Up",
                            "Seconds_Behind_Master": "20"}]
+
+    @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_none_secsbehindmaster(self, mock_stat):
+
+        """Function:  test_none_secsbehindmaster
+
+        Description:  Test None for Seconds_Behind_Master.
+
+        Arguments:
+
+        """
+
+        self.show_stat[0]["Seconds_Behind_Master"] = None
+
+        mock_stat.return_value = self.show_stat
+        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
+                                        self.sql_user, self.sql_pass,
+                                        self.machine,
+                                        defaults_file=self.defaults_file)
+
+        mysqlrep.start_slave()
+        self.assertEqual((mysqlrep.io_state, mysqlrep.secs_behind),
+                         ("Up", None))
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
