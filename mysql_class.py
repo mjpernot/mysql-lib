@@ -1607,7 +1607,7 @@ class SlaveRep(Rep):
         try:
             self.secs_behind = int(data["Seconds_Behind_Master"])
 
-        except ValueError:
+        except (ValueError, TypeError):
             self.secs_behind = data["Seconds_Behind_Master"]
 
         self.ssl_verify = data["Master_SSL_Verify_Server_Cert"]

@@ -6,6 +6,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.0.2] - 2020-11-16
 ### Fixed
+- mysql_class.SlaveRep.upd_slv_status:  Added TypeError to exception handler for Seconds_Behind_Master attribute. 
 - mysql_class.SlaveRep.start_slave:  Added TypeError to exception handler for Seconds_Behind_Master attribute. 
 - mysql_class.SlaveRep.stop_slave:  Added TypeError to exception handler for Seconds_Behind_Master attribute. 
 
