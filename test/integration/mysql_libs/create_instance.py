@@ -42,7 +42,11 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_create_instance -> Test create_instance function.
+        test_rep_user -> Test with passing rep_user information.
+        test_create_slv_rep_inst -> Test with SlaveRep class instance.
+        test_create_mst_rep_inst -> Test with MasterRep class instance.
+        test_create_rep_inst -> Test with Rep class instance.
+        test_create_server_inst -> Test with Server class instance.
 
     """
 
@@ -59,12 +63,73 @@ class UnitTest(unittest.TestCase):
         self.base_dir = "test/integration"
         self.config_dir = os.path.join(self.base_dir, "config")
         self.config_name = "mysql_cfg"
+        self.rep_user = "REP_USER"
 
-    def test_create_instance(self):
+    def test_rep_user(self):
 
-        """Function:  test_create_instance
+        """Function:  test_rep_user
 
-        Description:  Test create_instance function.
+        Description:  Test with passing rep_user information.
+
+        Arguments:
+
+        """
+
+        srv = mysql_libs.create_instance(
+            self.config_name, self.config_dir, mysql_class.SlaveRep)
+
+        self.assertEqual(srv.rep_user, self.rep_user)
+
+    def test_create_slv_rep_inst(self):
+
+        """Function:  test_create_slv_rep_inst
+
+        Description:  Test with SlaveRep class instance.
+
+        Arguments:
+
+        """
+
+        srv = mysql_libs.create_instance(
+            self.config_name, self.config_dir, mysql_class.SlaveRep)
+
+        self.assertTrue(isinstance(srv, mysql_class.SlaveRep))
+
+    def test_create_mst_rep_inst(self):
+
+        """Function:  test_create_mst_rep_inst
+
+        Description:  Test with MasterRep class instance.
+
+        Arguments:
+
+        """
+
+        srv = mysql_libs.create_instance(
+            self.config_name, self.config_dir, mysql_class.MasterRep)
+
+        self.assertTrue(isinstance(srv, mysql_class.MasterRep))
+
+    def test_create_rep_inst(self):
+
+        """Function:  test_create_rep_inst
+
+        Description:  Test with Rep class instance.
+
+        Arguments:
+
+        """
+
+        srv = mysql_libs.create_instance(
+            self.config_name, self.config_dir, mysql_class.Rep)
+
+        self.assertTrue(isinstance(srv, mysql_class.Rep))
+
+    def test_create_server_inst(self):
+
+        """Function:  test_create_server_inst
+
+        Description:  Test with Server class instance.
 
         Arguments:
 
