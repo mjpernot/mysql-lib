@@ -43,6 +43,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_rep_user -> Test with rep_user passed.
+        test_no_rep_user -> Test with no rep_user passed.
         test_conn -> Test with conn attribute.
         test_config -> Test with config attribute.
         test_no_extra_def_file -> Test with no extra_def_file arg.
@@ -77,6 +79,40 @@ class UnitTest(unittest.TestCase):
         self.config = {key1 + key2: self.cfg.japd}
         self.rep_user = "rep_user"
         self.rep_japd = "rep_japd"
+
+    def test_rep_user(self):
+
+        """Function:  test_rep_user
+
+        Description:  Test with rep_user passed.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.SlaveRep(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port, rep_user=self.rep_user, rep_japd=self.rep_japd)
+
+        self.assertEqual(mysqldb.rep_user, self.rep_user)
+
+    def test_no_rep_user(self):
+
+        """Function:  test_no_rep_user
+
+        Description:  Test with no rep_user passed.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.SlaveRep(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port)
+
+        self.assertEqual(mysqldb.rep_user, None)
 
     def test_conn(self):
 
