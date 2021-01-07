@@ -549,6 +549,7 @@ class Server(object):
 
         # SQL connection handler.
         self.conn = None
+        self.conn_msg = None
 
         # Binary log information.
         self.pos = None

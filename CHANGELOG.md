@@ -6,6 +6,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.0.3] - 2021-01-07
 ### Changed
+- mysql_class.Server.\_\_init\_\_:  Added conn_msg to handle connection error messages.
 - mysql_class.Server.upd_srv_stat:  Replaced percentage equations with calls to gen_libs.pct_int.
 
 
