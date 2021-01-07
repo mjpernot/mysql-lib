@@ -773,10 +773,10 @@ class Server(object):
 
         # Percentage values:
         # Current connections to Max connections
-        self.prct_conn = int(float(self.cur_conn) / self.max_conn * 100)
+        self.prct_conn = gen_libs.pct_int(self.cur_conn, self.max_conn)
 
         # Current Memory to Max Memory
-        self.prct_mem = int(float(self.cur_mem_mb) / self.max_mem_mb * 100)
+        self.prct_mem = gen_libs.pct_int(self.cur_mem_mb, self.max_mem_mb)
 
     def upd_mst_rep_stat(self):
 
