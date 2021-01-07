@@ -4,6 +4,9 @@
 # Slave 1 Configuration
 user = USER
 japd = PASSWORD
+# Replication user information
+rep_user = REP_USER
+rep_japd = REP_PSWORD
 # MySQL DB host information
 host = SERVER_IP
 name = HOST_NAME
@@ -15,3 +18,5 @@ cfg_file = None
 port = 3306
 # Server running OS
 serv_os = Linux
+# MySQL Definition configuration file
+extra_def_file = DIRECTORY_PATH/mysql.cfg
