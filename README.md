@@ -193,7 +193,7 @@ Create MySQL configuration file.
 Make the appropriate change to the environment.
   * Change these entries in the MySQL setup:
     - user = "USER"
-    - japd = "PASSWORD"
+    - japd = "PSWORD"
     - host = "SERVER_IP"
     - name = "HOST_NAME"
     - sid = SERVER_ID
