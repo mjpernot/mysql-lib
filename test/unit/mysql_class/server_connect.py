@@ -44,6 +44,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_silent_exception2 -> Test silent connection method exception.
+        test_silent_exception -> Test silent connection method exception.
         test_database -> Test with database argument passed.
         test_config -> Test with config attribute.
         test_connect_exception -> Test connection method exception.
@@ -74,6 +76,44 @@ class UnitTest(unittest.TestCase):
         self.extra_def_file = "extra_cfg_file"
         self.config = {key1 + key2: self.sql_pass}
         self.database = "minedatabase"
+        errnum = 1045
+        errmsg = "1045 (28000): Access denied for user \
+'mysql_user'@'localhost' (using password: YES)"
+        self.results = "Couldn't connect to database.  MySQL error %d: %s" \
+                       % (errnum, errmsg)
+
+    def test_silent_exception2(self):
+
+        """Function:  test_silent_exception2
+
+        Description:  Test silent connection method exception.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqldb.connect(silent=True)
+
+        self.assertEqual(mysqldb.conn_msg, self.results)
+
+    def test_silent_exception(self):
+
+        """Function:  test_silent_exception
+
+        Description:  Test silent connection method exception.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+
+        self.assertFalse(mysqldb.connect(silent=True))
 
     @mock.patch("mysql_class.mysql.connector.connect")
     def test_database(self, mock_connect):
