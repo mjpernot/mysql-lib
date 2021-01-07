@@ -1399,6 +1399,8 @@ class SlaveRep(Rep):
                 host -> Host name or IP of server.
                 port -> Port for MySQL.
                 defaults_file -> Location of my.cnf file.
+                rep_user -> Replication user name.
+                rep_japd -> Replication user password.
 
         """
 
@@ -1469,6 +1471,11 @@ class SlaveRep(Rep):
         self.purged_gtidset = None
         self.retrieved_gtidset = None
         self.exe_gtidset = None
+
+        # Replication connection attributes in replica set.
+        self.rep_user = kwargs.get("rep_user", None)
+        self.rep_japd = kwargs.get("rep_japd", None)
+
 
     def connect(self):
 
