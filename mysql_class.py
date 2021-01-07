@@ -905,10 +905,12 @@ class Server(object):
         Arguments:
             (input) kwargs:
                 database -> Name of database to connect to.
+                silent -> True|False - Print connection error message.
 
         """
 
         database = kwargs.get("database", "")
+        silent = kwargs.get("silent", False)
 
         if not self.conn:
 
@@ -918,8 +920,12 @@ class Server(object):
                     database=database, **self.config)
 
             except mysql.connector.Error, err:
-                print("Couldn't connect to database.  MySQL error %d: %s" %
-                      (err.args[0], err.args[1]))
+                self.conn_msg = \
+                    "Couldn't connect to database.  MySQL error %d: %s" \
+                    % (err.args[0], err.args[1])
+
+                if not silent:
+                    print(self.conn_msg)
 
     def disconnect(self):
 
