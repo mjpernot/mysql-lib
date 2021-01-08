@@ -194,7 +194,7 @@ Make the appropriate change to the environment.
   * Change these entries in the MySQL setup:
     - user = "USER"
     - japd = "PSWORD"
-    - host = "SERVER_IP"
+    - host = "HOST_IP"
     - name = "HOST_NAME"
     - sid = SERVER_ID
     - extra_def_file = "PYTHON_PROJECT/config/mysql.cfg"
@@ -261,8 +261,10 @@ Create MySQL configuration file.
 Make the appropriate change to the environment.
   * Change these entries in the MySQL setup:
     - user = "USER"
-    - japd = "PASSWORD"
-    - host = "SERVER_IP"
+    - japd = "PSWORD"
+    - rep_user = "REP_USER"
+    - rep_japd = "REP_PSWORD"
+    - host = "HOST_IP"
     - name = "HOST_NAME"
     - sid = SERVER_ID
     - extra_def_file = "PYTHON_PROJECT/config/mysql.cfg"
@@ -318,8 +320,10 @@ Create MySQL configuration file.
 Make the appropriate change to the environment.
   * Change these entries in the MySQL setup:
     - user = "USER"
-    - japd = "PASSWORD"
-    - host = "SERVER_IP"
+    - japd = "PSWORD"
+    - rep_user = "REP_USER"
+    - rep_japd = "REP_PSWORD"
+    - host = "HOST_IP"
     - name = "HOST_NAME"
     - sid = SERVER_ID
     - extra_def_file = "PYTHON_PROJECT/config/mysql.cfg"
@@ -354,14 +358,18 @@ Create a MySQL slave configuration file.
 Make the appropriate change to the environment.
   * Change these entries in the MySQL slave setup:
     - user = USER
-    - japd = PASSWORD
-    - host = IP_ADDRESS
+    - japd = PSWORD
+    - rep_user = REP_USER
+    - rep_japd = REP_PSWORD
+    - host = HOST_IP
     - name = HOSTNAME
     - sid = SERVER_ID
+
   * Change these entries only if required:
     - cfg_file = None
     - serv_os = Linux
     - port = 3306
+
   * NOTE:  Create a new set of entries for each slave in the MySQL replica set.
 
 ```
