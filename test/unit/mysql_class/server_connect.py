@@ -76,9 +76,8 @@ class UnitTest(unittest.TestCase):
         self.extra_def_file = "extra_cfg_file"
         self.config = {key1 + key2: self.sql_pass}
         self.database = "minedatabase"
-        errnum = 1045
-        errmsg = "1045 (28000): Access denied for user \
-'mysql_user'@'localhost' (using password: YES)"
+        errnum = 2003
+        errmsg = "2003 (HY000): Can't connect to MySQL server on"
         self.results = "Couldn't connect to database.  MySQL error %d: %s" \
                        % (errnum, errmsg)
 
@@ -97,7 +96,7 @@ class UnitTest(unittest.TestCase):
             self.machine, defaults_file=self.defaults_file)
         mysqldb.connect(silent=True)
 
-        self.assertEqual(mysqldb.conn_msg, self.results)
+        self.assertEqual(mysqldb.conn_msg[:95], self.results)
 
     def test_silent_exception(self):
 
@@ -134,6 +133,24 @@ class UnitTest(unittest.TestCase):
         self.assertFalse(mysqldb.connect(database=self.database))
 
     @mock.patch("mysql_class.mysql.connector.connect")
+    def test_config2(self, mock_connect):
+
+        """Function:  test_config2
+
+        Description:  Test with config attribute.
+
+        Arguments:
+
+        """
+
+        mock_connect.return_value = True
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+
+        self.assertEqual(mysqldb.config, self.config)
+
+    @mock.patch("mysql_class.mysql.connector.connect")
     def test_config(self, mock_connect):
 
         """Function:  test_config
@@ -150,7 +167,6 @@ class UnitTest(unittest.TestCase):
             self.machine, defaults_file=self.defaults_file)
 
         self.assertFalse(mysqldb.connect())
-        self.assertEqual(mysqldb.config, self.config)
 
     def test_connect_exception(self):
 
