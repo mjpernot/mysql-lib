@@ -9,7 +9,6 @@
   * Prerequisites
   * Installation
     - Pip Installation
-    - Git Installation
   * Testing
     - Unit
     - Integration
@@ -27,41 +26,25 @@
 
 
 # Installation:
-  There are two types of installs: pip and git.
 
 ### Pip Installation:
+  * Replace **{Python_Project}** with the baseline path of the python program.
   * Replace **{Other_Python_Project}** with the baseline path of another python program.
 
 ###### Create requirements file in another program's project to install mysql-lib as a library module.
 
-Create requirements-mysql-lib.txt file:
-```
-vim {Other_Python_Project}/requirements-mysql-lib.txt
-```
+Create requirements-mysql-lib.txt file and requirements-python-lib.txt files:
 
-Add the following lines to the requirements-mysql-lib.txt file:
 ```
-git+ssh://git@sc.appdev.proj.coe.ic.gov/JAC-DSXD/mysql-lib.git#egg=mysql-lib
-```
-
-Create requirements-python-lib.txt file:
-```
-vim {Other_Python_Project}/requirements-python-lib.txt
-```
-
-Add the following lines to the requirements-python-lib.txt file:
-```
-git+ssh://git@sc.appdev.proj.coe.ic.gov/JAC-DSXD/python-lib.git#egg=python-lib
+cd {Python_Project}
+cp requirements-mysql-lib.txt > {Other_Python_Project}/requirements-mysql-lib.txt
+cp requirements-python-lib.txt > {Other_Python_Project}/requirements-python-lib.txt
 ```
 
 ##### Modify the other program's README.md file to add the pip commands under the "Install supporting classes and libraries" section.
 
-Modify the README.md file:
-```
-vim {Other_Python_Project}/README.md
-```
+Modify the {Other_Python_Project}/README.md file:
 
-Add the following lines under the "Install supporting classes and libraries" section.
 ```
    pip install -r requirements-mysql-lib.txt --target mysql_lib --trusted-host pypi.appdev.proj.coe.ic.gov
    pip install -r requirements-python-lib.txt --target mysql_lib/lib --trusted-host pypi.appdev.proj.coe.ic.gov
@@ -69,42 +52,11 @@ Add the following lines under the "Install supporting classes and libraries" sec
 
 ##### Add the general Mysql-Lib requirements to the other program's requirements.txt file.  Remove any duplicates.
 
-Modify the requirements.txt file:
-```
-vim {Other_Python_Project}/requirements.txt
-```
+Add/modify the following lines to the {Other_Python_Project}/requirements.txt file:
 
-Add the following lines to the requirements.txt file:
 ```
 mysql-connector-python==8.0.16
 simplejson==2.0.9
-```
-
-
-### Git Installation:
-
-Install general Python libraries and classes using git.
-  * Replace **{Python_Project}** with the baseline path of the python program.
-
-```
-cd {Python_Project}
-git clone git@sc.appdev.proj.coe.ic.gov:JAC-DSXD/mysql-lib.git
-```
-
-Install/upgrade system modules.
-
-```
-sudo bash
-umask 022
-pip install -r requirements.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic.gov
-exit
-```
-
-Install supporting classes and libraries
-
-```
-cd mysql-lib
-pip install -r requirements-python-lib.txt --target lib --trusted-host pypi.appdev.proj.coe.ic.gov
 ```
 
 
