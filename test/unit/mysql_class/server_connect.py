@@ -80,6 +80,10 @@ class UnitTest(unittest.TestCase):
         errmsg = "2003 (HY000): Can't connect to MySQL server on"
         self.results = "Couldn't connect to database.  MySQL error %d: %s" \
                        % (errnum, errmsg)
+        errnum2 = 1045
+        errmsg2 = "1045 (28000): Access denied for user"
+        self.results2 = "Couldn't connect to database.  MySQL error %d: %s" \
+                       % (errnum2, errmsg2)
 
     def test_silent_exception2(self):
 
@@ -96,7 +100,8 @@ class UnitTest(unittest.TestCase):
             self.machine, defaults_file=self.defaults_file)
         mysqldb.connect(silent=True)
 
-        self.assertEqual(mysqldb.conn_msg[:95], self.results)
+        self.assertTrue(mysqldb.conn_msg[:95] == self.results or
+                        mysqldb.conn_msg[:85] == self.results2)
 
     def test_silent_exception(self):
 
