@@ -43,6 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_percentage_attr -> Test one of the percentage attributes.
         test_decision -> Test with decision based attributes.
         test_derived -> Test with derived attributes.
         test_base -> Test with base attributes.
@@ -68,6 +69,20 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, cfg.serv_os)(), host=cfg.host,
             port=cfg.port, defaults_file=cfg.cfg_file)
         self.svr.connect()
+
+    def test_percentage_attr(self):
+
+        """Function:  test_percentage_attr
+
+        Description:  Test one of the percentage attributes.
+
+        Arguments:
+
+        """
+
+        self.svr.upd_srv_stat()
+
+        self.assertTrue(self.svr.prct_mem >= 0)
 
     def test_decision(self):
 

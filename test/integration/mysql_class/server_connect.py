@@ -43,6 +43,9 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_silent -> Test silent option.
+        test_conn_msg2 -> Test conn_msg attribute failed connection.
+        test_conn_msg -> Test conn_msg attribute failed connection.
         test_database -> Test with database argument passed.
         test_config -> Test with config attribute.
         test_connect_exception -> Test connection method exception.
@@ -69,6 +72,60 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
             port=self.cfg.port, defaults_file=self.cfg.cfg_file)
         self.database = "mysql"
+        self.results = "Couldn't connect to database.  MySQL error 1045:"
+
+    def test_silent(self):
+
+        """Function:  test_silent
+
+        Description:  Test silent option.
+
+        Arguments:
+
+        """
+
+        svr = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, "testme",
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port, defaults_file=self.cfg.cfg_file)
+
+        svr.connect(silent=True)
+
+        self.assertEqual(svr.conn_msg[:48], self.results)
+
+    def test_conn_msg2(self):
+
+        """Function:  test_conn_msg2
+
+        Description:  Test conn_msg attribute successful connection.
+
+        Arguments:
+
+        """
+
+        self.svr.connect()
+
+        self.assertFalse(self.svr.conn_msg)
+
+    def test_conn_msg(self):
+
+        """Function:  test_conn_msg
+
+        Description:  Test conn_msg attribute failed connection.
+
+        Arguments:
+
+        """
+
+        svr = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, "testme",
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port, defaults_file=self.cfg.cfg_file)
+
+        with gen_libs.no_std_out():
+            svr.connect()
+
+        self.assertEqual(svr.conn_msg[:48], self.results)
 
     def test_database(self):
 

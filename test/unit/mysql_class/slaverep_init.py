@@ -42,6 +42,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_rep_user -> Test with replication user information passed.
+        test_no_rep_user -> Test with no replication user information passed.
         test_no_extra_def_file -> Test with no extra_def_file arg.
         test_extra_def_file -> Test with passing extra_def_file arg.
         test_port -> Test with passing port arg.
@@ -74,6 +76,44 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
         self.config = {key1 + key2: self.sql_pass}
+        self.rep_user = "rep_user"
+        self.rep_japd = "rep_japd"
+
+    def test_rep_user(self):
+
+        """Function:  test_rep_user
+
+        Description:  Test with replication user information passed.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, defaults_file=self.defaults_file,
+            rep_user=self.rep_user, rep_japd=self.rep_japd)
+
+        self.assertEqual(
+            (mysqlrep.rep_user, mysqlrep.rep_japd),
+            (self.rep_user, self.rep_japd))
+
+    def test_no_rep_user(self):
+
+        """Function:  test_no_rep_user
+
+        Description:  Test with no replication user information passed.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, defaults_file=self.defaults_file)
+
+        self.assertEqual(
+            (mysqlrep.rep_user, mysqlrep.rep_japd), (None, None))
 
     def test_no_extra_def_file(self):
 
