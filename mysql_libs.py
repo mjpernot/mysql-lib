@@ -200,7 +200,9 @@ def create_instance(cfg_file, dir_path, cls_name, **kwargs):
         cfg.name, cfg.sid, cfg.user, cfg.japd,
         os_type=getattr(machine, cfg.serv_os)(), host=cfg.host, port=cfg.port,
         defaults_file=cfg.cfg_file,
-        extra_def_file=cfg.__dict__.get("extra_def_file", None))
+        extra_def_file=cfg.__dict__.get("extra_def_file", None),
+        rep_user=cfg.__dict__.get("rep_user", None),
+        rep_japd=cfg.__dict__.get("rep_japd", None))
 
 
 def create_slv_array(cfg_array, add_down=True, **kwargs):

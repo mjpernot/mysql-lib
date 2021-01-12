@@ -549,6 +549,7 @@ class Server(object):
 
         # SQL connection handler.
         self.conn = None
+        self.conn_msg = None
 
         # Binary log information.
         self.pos = None
@@ -773,10 +774,10 @@ class Server(object):
 
         # Percentage values:
         # Current connections to Max connections
-        self.prct_conn = int(float(self.cur_conn) / self.max_conn * 100)
+        self.prct_conn = gen_libs.pct_int(self.cur_conn, self.max_conn)
 
         # Current Memory to Max Memory
-        self.prct_mem = int(float(self.cur_mem_mb) / self.max_mem_mb * 100)
+        self.prct_mem = gen_libs.pct_int(self.cur_mem_mb, self.max_mem_mb)
 
     def upd_mst_rep_stat(self):
 
@@ -904,10 +905,12 @@ class Server(object):
         Arguments:
             (input) kwargs:
                 database -> Name of database to connect to.
+                silent -> True|False - Print connection error message.
 
         """
 
         database = kwargs.get("database", "")
+        silent = kwargs.get("silent", False)
 
         if not self.conn:
 
@@ -917,8 +920,12 @@ class Server(object):
                     database=database, **self.config)
 
             except mysql.connector.Error, err:
-                print("Couldn't connect to database.  MySQL error %d: %s" %
-                      (err.args[0], err.args[1]))
+                self.conn_msg = \
+                    "Couldn't connect to database.  MySQL error %d: %s" \
+                    % (err.args[0], err.args[1])
+
+                if not silent:
+                    print(self.conn_msg)
 
     def disconnect(self):
 
@@ -1392,6 +1399,8 @@ class SlaveRep(Rep):
                 host -> Host name or IP of server.
                 port -> Port for MySQL.
                 defaults_file -> Location of my.cnf file.
+                rep_user -> Replication user name.
+                rep_japd -> Replication user password.
 
         """
 
@@ -1462,6 +1471,11 @@ class SlaveRep(Rep):
         self.purged_gtidset = None
         self.retrieved_gtidset = None
         self.exe_gtidset = None
+
+        # Replication connection attributes in replica set.
+        self.rep_user = kwargs.get("rep_user", None)
+        self.rep_japd = kwargs.get("rep_japd", None)
+
 
     def connect(self):
 
