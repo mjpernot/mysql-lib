@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.0.4] - 2021-02-05
+
+
 ## [5.0.3] - 2021-01-07
 ### Changed
 - mysql_libs.create_instance:  Added "rep_user" and "rep_japd" to be allowed to be passed to class instance if detected.
