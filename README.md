@@ -86,30 +86,19 @@ pip install -r requirements.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic
 exit
 ```
 
-### Testing mysql_class.py:
-
-```
-cd {Python_Project}/mysql-lib
-test/unit/mysql_class/unit_test_run.sh
-```
-
-### Code Coverage mysql_class.py:
-```
-cd {Python_Project}/mysql-lib
-test/unit/mysql_class/code_coverage.sh
-```
-
-### Testing mysql-lib.py:
+### Testing:
 
 ```
 cd {Python_Project}/mysql-lib
 test/unit/mysql_libs/unit_test_run.sh
+test/unit/mysql_class/unit_test_run.sh
 ```
 
-### Code Coverage mysql-lib.py:
+### Code Coverage:
 ```
 cd {Python_Project}/mysql-lib
 test/unit/mysql_libs/code_coverage.sh
+test/unit/mysql_class/code_coverage.sh
 ```
 
 # Integration Testing:
@@ -176,30 +165,19 @@ vim mysql.cfg
 chmod 600 mysql.cfg
 ```
 
-### Testing mysql_class.py:
-
-```
-cd {Python_Project}/mysql-lib
-test/integration/mysql_class/integration_test_run.sh
-```
-
-### Code Coverage mysql_class.py:
-```
-cd {Python_Project}/mysql-lib
-test/integration/mysql_class/code_coverage.sh
-```
-
-### Testing mysql-lib.py:
+### Testing:
 
 ```
 cd {Python_Project}/mysql-lib
 test/integration/mysql_libs/integration_test_run.sh
+test/integration/mysql_class/integration_test_run.sh
 ```
 
-### Code Coverage mysql-lib.py:
+### Code Coverage:
 ```
 cd {Python_Project}/mysql-lib
 test/integration/mysql_libs/code_coverage.sh
+test/integration/mysql_class/code_coverage.sh
 ```
 
 ### Master Replication Testing Section
@@ -246,14 +224,14 @@ vim mysql.cfg
 chmod 600 mysql.cfg
 ```
 
-### Testing mysql_class.py:
+### Testing:
 
 ```
 cd {Python_Project}/mysql-lib
 test/integration/mysql_class/rep_integration_test_run.sh
 ```
 
-### Code Coverage mysql_class.py:
+### Code Coverage:
 ```
 cd {Python_Project}/mysql-lib
 test/integration/mysql_class/rep_code_coverage.sh
@@ -330,14 +308,14 @@ vim slave.txt
 chmod 600 slave.txt
 ```
 
-### Testing mysql_class.py:
+### Testing:
 
 ```
 cd {Python_Project}/mysql-lib
 test/integration/mysql_class/slaverep_integration_test_run.sh
 ```
 
-### Code Coverage mysql_class.py:
+### Code Coverage:
 ```
 cd {Python_Project}/mysql-lib
 test/integration/mysql_class/slaverep_code_coverage.sh
