@@ -5,6 +5,8 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 
 ## [5.0.4] - 2021-02-05
+### Changed
+- mysql_class.Master.connect:  Added silent option connect method call.
 
 
 ## [5.0.3] - 2021-01-07

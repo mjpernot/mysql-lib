@@ -1288,7 +1288,7 @@ class MasterRep(Rep):
         self.rep_user = kwargs.get("rep_user", None)
         self.rep_japd = kwargs.get("rep_japd", None)
 
-    def connect(self):
+    def connect(self, **kwargs):
 
         """Method:  connect
 
@@ -1296,10 +1296,12 @@ class MasterRep(Rep):
             the replication attributes.
 
         Arguments:
+            (input) **kwargs:
+                silent -> True|False - Print connection error message.
 
         """
 
-        super(MasterRep, self).connect()
+        super(MasterRep, self).connect(silent=kwargs.get("silent", False))
 
         if self.conn:
             super(MasterRep, self).set_srv_gtid()
