@@ -15,6 +15,7 @@
         create_slv_array
         crt_cmd
         crt_srv_inst
+        disconnect
         fetch_db_dict
         fetch_logs
         fetch_slv
@@ -280,6 +281,32 @@ def crt_srv_inst(cfg, path, **kwargs):
         svr.name, svr.sid, svr.user, svr.japd,
         os_type=getattr(machine, svr.serv_os)(), host=svr.host, port=svr.port,
         defaults_file=svr.cfg_file)
+
+
+def disconnect(*args):
+
+    """Function:  disconnect
+
+    Description:  Disconnects a class database connection.  Will check to see
+        if an argument is an list and if so will loop on the array to
+        disconnect all connections and only disconnect those connections with
+        activate connections.  Will require a disconnect method within the
+        class.
+
+    Arguments:
+        (input) *arg -> One or more connection instances.
+
+    """
+
+    for server in args:
+        if isinstance(server, list):
+            for srv in server:
+                if srv.conn:
+                    srv.disconnect()
+
+        else:
+            if server.conn:
+                server.disconnect()
 
 
 def fetch_db_dict(server, **kwargs):

@@ -8,6 +8,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ### Changed
 - mysql_class.MasterRep.connect, mysql_class.SlaveRep.connect:  Added silent option connect method call.
 
+### Added
+- mysql_libs.disconnect:  Disconnects one or more class database connections.
+
 
 ## [5.0.3] - 2021-01-07
 ### Changed
