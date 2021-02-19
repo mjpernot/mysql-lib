@@ -226,7 +226,9 @@ def create_slv_array(cfg_array, add_down=True):
         slv_inst = mysql_class.SlaveRep(
             slv["name"], slv["sid"], slv["user"], slv["japd"],
             os_type=getattr(machine, slv["serv_os"])(), host=slv["host"],
-            port=int(slv["port"]), defaults_file=slv["cfg_file"])
+            port=int(slv["port"]), defaults_file=slv["cfg_file"],
+            rep_user=slv.get("rep_user", None),
+            rep_japd=slv.get("rep_japd", None))
         slv_inst.connect()
 
         if add_down or slv_inst.conn:

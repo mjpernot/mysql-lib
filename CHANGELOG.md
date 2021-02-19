@@ -6,6 +6,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.0.4] - 2021-02-05
 ### Changed
+- mysql_libs.create_slv_array:  Added replication user information to mysql_class.SlaveRep instance call.
 - mysql_libs:  Removed unnesscary \*\*kwargs from argument lists.
 - mysql_class.MasterRep.connect, mysql_class.SlaveRep.connect:  Added silent option connect method call.
 
