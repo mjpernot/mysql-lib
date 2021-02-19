@@ -1478,7 +1478,6 @@ class SlaveRep(Rep):
         self.rep_user = kwargs.get("rep_user", None)
         self.rep_japd = kwargs.get("rep_japd", None)
 
-
     def connect(self, **kwargs):
 
         """Method:  connect
