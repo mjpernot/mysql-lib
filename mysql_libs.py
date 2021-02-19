@@ -56,7 +56,7 @@ import version
 __version__ = version.__version__
 
 
-def analyze_tbl(server, dbn, tbl, **kwargs):
+def analyze_tbl(server, dbn, tbl):
 
     """Function:  analyze_tbl
 
@@ -76,7 +76,7 @@ def analyze_tbl(server, dbn, tbl, **kwargs):
     return server.col_sql(cmd)
 
 
-def change_master_to(mst, slv, **kwargs):
+def change_master_to(mst, slv):
 
     """Function:  change_master_to
 
@@ -111,7 +111,7 @@ def change_master_to(mst, slv, **kwargs):
     print("Changed Slave: {0} to new Master: {1}".format(slv.name, mst.name))
 
 
-def checksum(server, dbn, tbl, **kwargs):
+def checksum(server, dbn, tbl):
 
     """Function:  checksum
 
@@ -131,7 +131,7 @@ def checksum(server, dbn, tbl, **kwargs):
     return server.col_sql(cmd)
 
 
-def check_tbl(server, dbn, tbl, **kwargs):
+def check_tbl(server, dbn, tbl):
 
     """Function:  check_tbl
 
@@ -151,7 +151,7 @@ def check_tbl(server, dbn, tbl, **kwargs):
     return server.col_sql(cmd)
 
 
-def chg_slv_state(slaves, opt, **kwargs):
+def chg_slv_state(slaves, opt):
 
     """Function:  chg_slv_state
 
@@ -180,7 +180,7 @@ def chg_slv_state(slaves, opt, **kwargs):
         gen_libs.prt_msg("Error", "No option selected to stop/start rep.")
 
 
-def create_instance(cfg_file, dir_path, cls_name, **kwargs):
+def create_instance(cfg_file, dir_path, cls_name):
 
     """Function:  create_instance
 
@@ -206,7 +206,7 @@ def create_instance(cfg_file, dir_path, cls_name, **kwargs):
         rep_japd=cfg.__dict__.get("rep_japd", None))
 
 
-def create_slv_array(cfg_array, add_down=True, **kwargs):
+def create_slv_array(cfg_array, add_down=True):
 
     """Function:  create_slv_array
 
@@ -235,7 +235,7 @@ def create_slv_array(cfg_array, add_down=True, **kwargs):
     return slaves
 
 
-def crt_cmd(server, prog_name, **kwargs):
+def crt_cmd(server, prog_name):
 
     """Function:  crt_cmd
 
@@ -262,7 +262,7 @@ def crt_cmd(server, prog_name, **kwargs):
             server.host, "-P", str(server.port)]
 
 
-def crt_srv_inst(cfg, path, **kwargs):
+def crt_srv_inst(cfg, path):
 
     """Function:  crt_srv_inst
 
@@ -309,7 +309,7 @@ def disconnect(*args):
                 server.disconnect()
 
 
-def fetch_db_dict(server, **kwargs):
+def fetch_db_dict(server):
 
     """Function:  fetch_db_dict
 
@@ -324,7 +324,7 @@ def fetch_db_dict(server, **kwargs):
     return server.col_sql("show databases")
 
 
-def fetch_logs(server, **kwargs):
+def fetch_logs(server):
 
     """Function:  fetch_logs
 
@@ -339,7 +339,7 @@ def fetch_logs(server, **kwargs):
     return server.col_sql("show binary logs")
 
 
-def fetch_slv(slaves, slv_name, **kwargs):
+def fetch_slv(slaves, slv_name):
 
     """Function:  fetch_slv
 
@@ -371,7 +371,7 @@ def fetch_slv(slaves, slv_name, **kwargs):
     return slv, err_flag, err_msg
 
 
-def fetch_tbl_dict(server, dbn, tbl_type="BASE TABLE", **kwargs):
+def fetch_tbl_dict(server, dbn, tbl_type="BASE TABLE"):
 
     """Function:  fetch_tbl_dict
 
@@ -392,7 +392,7 @@ def fetch_tbl_dict(server, dbn, tbl_type="BASE TABLE", **kwargs):
     return server.col_sql(qry)
 
 
-def find_name(slaves, name, **kwargs):
+def find_name(slaves, name):
 
     """Function:  find_name
 
@@ -414,7 +414,7 @@ def find_name(slaves, name, **kwargs):
     return None
 
 
-def is_cfg_valid(servers, **kwargs):
+def is_cfg_valid(servers):
 
     """Function:  is_cfg_valid
 
@@ -451,7 +451,7 @@ def is_cfg_valid(servers, **kwargs):
     return status, status_msg
 
 
-def is_logs_synced(mst, slv, **kwargs):
+def is_logs_synced(mst, slv):
 
     """Function:  is_logs_synced
 
@@ -479,7 +479,7 @@ def is_logs_synced(mst, slv, **kwargs):
     return is_synced
 
 
-def is_rep_delay(mst, slv, opt, **kwargs):
+def is_rep_delay(mst, slv, opt):
 
     """Function:  is_rep_delay
 
@@ -505,7 +505,7 @@ def is_rep_delay(mst, slv, opt, **kwargs):
     return is_delay
 
 
-def _io_rep_chk(mst, slv, is_delayed=False, **kwargs):
+def _io_rep_chk(mst, slv, is_delayed=False):
 
     """Function:  _io_rep_chk
 
@@ -532,7 +532,7 @@ def _io_rep_chk(mst, slv, is_delayed=False, **kwargs):
     return is_delayed
 
 
-def _sql_rep_chk(mst, slv, is_delayed=False, **kwargs):
+def _sql_rep_chk(mst, slv, is_delayed=False):
 
     """Function:  _sql_rep_chk
 
@@ -559,7 +559,7 @@ def _sql_rep_chk(mst, slv, is_delayed=False, **kwargs):
     return is_delayed
 
 
-def optimize_tbl(server, dbn, tbl, **kwargs):
+def optimize_tbl(server, dbn, tbl):
 
     """Function:  optimize_tbl
 
@@ -579,7 +579,7 @@ def optimize_tbl(server, dbn, tbl, **kwargs):
     return server.col_sql(cmd)
 
 
-def purge_bin_logs(server, prg_type, cutoff, **kwargs):
+def purge_bin_logs(server, prg_type, cutoff):
 
     """Function:  purge_bin_logs
 
@@ -598,7 +598,7 @@ def purge_bin_logs(server, prg_type, cutoff, **kwargs):
     server.cmd_sql(cmd)
 
 
-def reset_master(server, **kwargs):
+def reset_master(server):
 
     """Function:  reset_master
 
@@ -612,7 +612,7 @@ def reset_master(server, **kwargs):
     server.cmd_sql("reset master")
 
 
-def reset_slave(server, **kwargs):
+def reset_slave(server):
 
     """Function:  reset_slave
 
@@ -626,7 +626,7 @@ def reset_slave(server, **kwargs):
     server.cmd_sql("reset slave all")
 
 
-def select_wait_until(server, gtid_pos, timeout=0, **kwargs):
+def select_wait_until(server, gtid_pos, timeout=0):
 
     """Function:  select_wait_until
 
@@ -701,7 +701,7 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
     return err_flag, err_msg
 
 
-def switch_to_master(mst, slv, timeout=0, **kwargs):
+def switch_to_master(mst, slv, timeout=0):
 
     """Function:  switch_to_master
 
@@ -733,7 +733,7 @@ def switch_to_master(mst, slv, timeout=0, **kwargs):
     return status_flag
 
 
-def sync_delay(mst, slv, opt, **kwargs):
+def sync_delay(mst, slv, opt):
 
     """Function:  sync_delay
 
@@ -770,7 +770,7 @@ def sync_delay(mst, slv, opt, **kwargs):
             slv.stop_slave()
 
 
-def _io_delay_chk(mst, slv, **kwargs):
+def _io_delay_chk(mst, slv):
 
     """Function:  _io_delay_chk
 
@@ -800,7 +800,7 @@ def _io_delay_chk(mst, slv, **kwargs):
             print("Error: %s" % (err_msg))
 
 
-def sync_rep_slv(mst, slv, **kwargs):
+def sync_rep_slv(mst, slv):
 
     """Function:  sync_rep_slv
 
@@ -868,7 +868,7 @@ def wait_until(slv, opt, log_file=None, log_pos=None, **kwargs):
         _sql_wait_chk(slv, gtid, log_file, log_pos)
 
 
-def _io_wait_chk(slv, gtid, log_file, log_pos, **kwargs):
+def _io_wait_chk(slv, gtid, log_file, log_pos):
 
     """Function:  _io_wait_chk
 
@@ -904,7 +904,7 @@ def _io_wait_chk(slv, gtid, log_file, log_pos, **kwargs):
         slv.upd_slv_status()
 
 
-def _sql_wait_chk(slv, gtid, log_file, log_pos, **kwargs):
+def _sql_wait_chk(slv, gtid, log_file, log_pos):
 
     """Function:  _sql_wait_chk
 
