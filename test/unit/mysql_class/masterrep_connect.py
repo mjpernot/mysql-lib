@@ -77,10 +77,8 @@ class UnitTest(unittest.TestCase):
             os_type=self.machine, defaults_file=self.defaults_file,
             rep_user=self.rep_user, rep_japd=self.rep_japd)
 
-    @mock.patch("mysql_class.MasterRep.upd_mst_status")
-    @mock.patch("mysql_class.Server.set_srv_gtid")
     @mock.patch("mysql_class.Server.connect")
-    def test_silent_true(self, mock_conn, mock_set, mock_update):
+    def test_silent_true(self, mock_server):
 
         """Function:  test_silent_true
 
@@ -90,18 +88,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_conn.return_value = True
-        mock_set.return_value = True
-        mock_update.return_value = True
-
-        self.mysqlrep.conn = True
+        mock_server.return_value = True
 
         self.assertFalse(self.mysqlrep.connect(silent=True))
 
-    @mock.patch("mysql_class.MasterRep.upd_mst_status")
-    @mock.patch("mysql_class.Server.set_srv_gtid")
     @mock.patch("mysql_class.Server.connect")
-    def test_silent_false(self, mock_conn, mock_set, mock_update):
+    def test_silent_false(self, mock_server):
 
         """Function:  test_silent_false
 
@@ -111,18 +103,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_conn.return_value = True
-        mock_set.return_value = True
-        mock_update.return_value = True
-
-        self.mysqlrep.conn = True
+        mock_server.return_value = True
 
         self.assertFalse(self.mysqlrep.connect(silent=False))
 
-    @mock.patch("mysql_class.MasterRep.upd_mst_status")
-    @mock.patch("mysql_class.Server.set_srv_gtid")
     @mock.patch("mysql_class.Server.connect")
-    def test_silent_default(self, mock_conn, mock_set, mock_update):
+    def test_silent_default(self, mock_server):
 
         """Function:  test_silent_default
 
@@ -132,11 +118,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_conn.return_value = True
-        mock_set.return_value = True
-        mock_update.return_value = True
-
-        self.mysqlrep.conn = True
+        mock_server.return_value = True
 
         self.assertFalse(self.mysqlrep.connect())
 
