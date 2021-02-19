@@ -1479,7 +1479,7 @@ class SlaveRep(Rep):
         self.rep_japd = kwargs.get("rep_japd", None)
 
 
-    def connect(self):
+    def connect(self, **kwargs):
 
         """Method:  connect
 
@@ -1487,10 +1487,12 @@ class SlaveRep(Rep):
             the slave replication attributes.
 
         Arguments:
+            (input) **kwargs:
+                silent -> True|False - Print connection error message.
 
         """
 
-        super(SlaveRep, self).connect()
+        super(SlaveRep, self).connect(silent=kwargs.get("silent", False))
 
         if self.conn:
             super(SlaveRep, self).set_srv_gtid()
