@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.1.0] - 2021-04-21
+- Validated to work in MySQL 5.7 environment.
+
+
 ## [5.0.4] - 2021-02-05
 ### Changed
 - mysql_libs.create_slv_array:  Added replication user information to mysql_class.SlaveRep instance call.
