@@ -921,6 +921,7 @@ class Server(object):
                 self.conn = mysql.connector.connect(
                     host=self.host, user=self.sql_user, port=self.port,
                     database=database, **self.config)
+                self.version = self.conn.get_server_version()
 
             except mysql.connector.Error, err:
                 self.conn_msg = \
