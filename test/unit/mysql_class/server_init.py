@@ -51,6 +51,7 @@ class UnitTest(unittest.TestCase):
         test_host -> Test with passing host arg.
         test_no_default -> Test with no default file.
         test_default -> Test with default file.
+        test_version -> Test with version attribute.
 
     """
 
