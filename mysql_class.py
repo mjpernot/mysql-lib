@@ -629,6 +629,9 @@ class Server(object):
         # Server's Binlog checksum.
         self.crc = None
 
+        # Server's version
+        self.version = None
+
     def set_srv_binlog_crc(self):
 
         """Method:  set_srv_binlog_crc

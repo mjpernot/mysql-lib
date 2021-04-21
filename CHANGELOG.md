@@ -7,6 +7,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ## [5.1.0] - 2021-04-21
 - Validated to work in MySQL 5.7 environment.
 
+### Changed
+- mysql_class.Server.\_\_init\_\_:  Added version attribute to hold MySQL server's version.
+
 
 ## [5.0.4] - 2021-02-05
 ### Changed
