@@ -78,6 +78,22 @@ class UnitTest(unittest.TestCase):
         self.results = self.machine.defaults_file
         self.config = {key1 + key2: self.sql_pass}
 
+    def test_version(self):
+
+        """Function:  test_version
+
+        Description:  Test with version attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.version, None)
+
     def test_config(self):
 
         """Function:  test_config
