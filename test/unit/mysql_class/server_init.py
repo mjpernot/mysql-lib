@@ -42,6 +42,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_version -> Test with version attribute.
         test_config -> Test with config attribute.
         test_no_extra_def_file -> Test with no extra_def_file arg.
         test_extra_def_file -> Test with passing extra_def_file arg.
@@ -51,7 +52,6 @@ class UnitTest(unittest.TestCase):
         test_host -> Test with passing host arg.
         test_no_default -> Test with no default file.
         test_default -> Test with default file.
-        test_version -> Test with version attribute.
 
     """
 
