@@ -81,6 +81,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_version -> Test with version attribute..
         test_silent_exception2 -> Test silent connection method exception.
         test_silent_exception -> Test silent connection method exception.
         test_database -> Test with database argument passed.
