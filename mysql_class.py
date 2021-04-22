@@ -1846,11 +1846,11 @@ class SlaveRep(Rep):
         Arguments:
             (output) skip_ctr -> Skip_Counter
             (output) tmp_tbl -> slave_open_temp_tables
-            (output) retry -> slave_retried_transactions.
+            (output) tran_retry -> slave_retried_transactions.
 
         """
 
-        return self.skip_ctr, self.tmp_tbl, self.retry
+        return self.skip_ctr, self.tmp_tbl, self.tran_retry
 
     def fetch_do_tbl(self):
 
