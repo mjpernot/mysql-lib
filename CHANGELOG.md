@@ -9,7 +9,8 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Validated to work in MySQL 5.7 environment.
 
 ### Changed
-- mysql_class.Server.upd_srv_stat:  Set qry_cache to zero if not present.
+- mysql_class.Server.upd_mst_rep_stat:  Set innodb_xa to None if not present in MySQL 8.0.
+- mysql_class.Server.upd_srv_stat:  Set qry_cache to zero if not present in MySQL 8.0.
 - mysql_class.Server.connect:  Added get_server_version call to set server's version attribute.
 - mysql_class.Server.\_\_init\_\_:  Added version attribute to hold MySQL server's version.
 

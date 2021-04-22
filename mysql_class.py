@@ -800,8 +800,11 @@ class Server(object):
         self.innodb_flush = fetch_sys_var(
             self,
             "innodb_flush_log_at_trx_commit")["innodb_flush_log_at_trx_commit"]
+
+        # innodb_support_xa has been removed in MySQL 8.0
         self.innodb_xa = fetch_sys_var(
-            self, "innodb_support_xa")["innodb_support_xa"]
+            self, "innodb_support_xa").get("innodb_support_xa", None)
+
         self.log_format = fetch_sys_var(self, "binlog_format")["binlog_format"]
 
     def upd_slv_rep_stat(self):
