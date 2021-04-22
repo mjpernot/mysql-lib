@@ -733,7 +733,14 @@ class Server(object):
         self.buf_size = int(data["key_buffer_size"])
         self.indb_buf = int(data["innodb_buffer_pool_size"])
         self.indb_log_buf = int(data["innodb_log_buffer_size"])
-        self.qry_cache = int(data["query_cache_size"])
+
+        # Set qry_cache to zero for MySQL 8.0 and above.
+        if self.version[0] < 8:
+            self.qry_cache = int(data["query_cache_size"])
+
+        else:
+            self.qry_cache = 0
+
         self.read_buf = int(data["read_buffer_size"])
         self.read_rnd_buf = int(data["read_rnd_buffer_size"])
         self.sort_buf = int(data["sort_buffer_size"])
