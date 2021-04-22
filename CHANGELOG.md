@@ -6,7 +6,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.1.0] - 2021-04-21
 - Updated to work in MySQL 8.0 environment.
-- Validated to work in MySQL 5.7 environment.
+- Updated to work in MySQL 5.7 environment.
 
 ### Fixed
 - mysql_class.SlaveRep.get_others:  Renamed self.retry to self.tran_retry.
