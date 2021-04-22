@@ -1426,7 +1426,7 @@ class SlaveRep(Rep):
         self.io_state = None
         self.mst_host = None
         self.mst_port = None
-        self.retry = None
+        self.conn_retry = None
         self.mst_log = None
         self.mst_read_pos = None
         self.relay_log = None
@@ -1478,7 +1478,7 @@ class SlaveRep(Rep):
         self.auto_pos = None
         self.run = None
         self.tmp_tbl = None
-        self.retry = None
+        self.tran_retry = None
         self.read_only = None
         self.purged_gtidset = None
         self.retrieved_gtidset = None
