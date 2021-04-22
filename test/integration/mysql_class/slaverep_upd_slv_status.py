@@ -44,6 +44,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_run -> Test with run attribute.
         test_tran_retry -> Test with tran_retry attribute.
         test_conn_retry -> Test with conn_retry attribute.
         test_down_slave -> Test with stats with non-running slave.
@@ -72,6 +73,26 @@ class UnitTest(unittest.TestCase):
             port=self.cfg.port, defaults_file=self.cfg.cfg_file)
         self.svr.connect()
         self.status = False
+
+    def test_run(self):
+
+        """Function:  test_run
+
+        Description:  Test with run attribute.
+
+        Arguments:
+
+        """
+
+        self.svr.start_slave()
+
+        if self.svr.is_slv_running():
+            self.svr.upd_slv_status()
+
+            self.assertTrue(self.svr.run)
+
+        else:
+            self.assertTrue(self.status)
 
     def test_tran_retry(self):
 
