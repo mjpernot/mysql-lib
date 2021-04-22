@@ -86,7 +86,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat = [{"Slave_IO_State": "up",
                            "Master_Host": "masterhost",
                            "Master_Port": "masterport",
-                           "Connect_Retry": "retry",
+                           "Connect_Retry": "conn_retry",
                            "Master_Log_File": "masterlog",
                            "Read_Master_Log_Pos": "masterpos",
                            "Relay_Log_File": "relaylog",
