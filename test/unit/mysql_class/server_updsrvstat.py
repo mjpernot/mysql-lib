@@ -133,6 +133,35 @@ class UnitTest(unittest.TestCase):
              "Value": "13"},
             {"Variable_name": "tmp_table_size",
              "Value": "4"}]
+        self.show_status3 = [
+            {"Variable_name": "key_buffer_size",
+             "Value": "10000000"},
+            {"Variable_name": "innodb_buffer_pool_size",
+             "Value": "2"},
+            {"Variable_name": "innodb_additional_mem_pool_size",
+             "Value": "3"},
+            {"Variable_name": "innodb_log_buffer_size",
+             "Value": "4"},
+            {"Variable_name": "read_buffer_size",
+             "Value": "5"},
+            {"Variable_name": "read_rnd_buffer_size",
+             "Value": "6"},
+            {"Variable_name": "sort_buffer_size",
+             "Value": "7"},
+            {"Variable_name": "join_buffer_size",
+             "Value": "8"},
+            {"Variable_name": "thread_stack",
+             "Value": "9"},
+            {"Variable_name": "max_allowed_packet",
+             "Value": "10"},
+            {"Variable_name": "net_buffer_length",
+             "Value": "11"},
+            {"Variable_name": "max_connections",
+             "Value": "12"},
+            {"Variable_name": "max_heap_table_size",
+             "Value": "13"},
+            {"Variable_name": "tmp_table_size",
+             "Value": "14"}]
 
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.Server.col_sql")
@@ -148,7 +177,7 @@ class UnitTest(unittest.TestCase):
 
         mock_var.side_effect = [{"Threads_connected": "15"},
                                 {"Uptime": "16"}]
-        mock_sql.return_value = self.show_status
+        mock_sql.return_value = self.show_status3
         mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
