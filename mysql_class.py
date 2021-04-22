@@ -1677,11 +1677,23 @@ class SlaveRep(Rep):
         self.exe_gtid = data.get("Executed_Gtid_Set", None)
         self.auto_pos = data.get("Auto_Position", None)
 
-        self.run = fetch_global_var(self, "slave_running")["Slave_running"]
+        # tran_retry and run are in different location in MySQL 8.0
+        if self.version[0] < 8:
+            self.run = fetch_global_var(self, "slave_running")["Slave_running"]
+            self.tran_retry = fetch_global_var(
+                self,
+                "slave_retried_transactions")["Slave_retried_transactions"]
+
+        else:
+            sql = \
+                "select %s from performance_schema.replication_applier_status"
+            item = "SERVICE_STATE"
+            self.run = self.col_sql(sql % (item))[0][item]
+            ctr = "COUNT_TRANSACTIONS_RETRIES"
+            self.tran_retry = self.col_sql(sql % (ctr))[0][ctr]
+
         self.tmp_tbl = fetch_global_var(
             self, "slave_open_temp_tables")["Slave_open_temp_tables"]
-        self.tran_retry = fetch_global_var(
-            self, "slave_retried_transactions")["Slave_retried_transactions"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
         self.upd_gtid_pos()
