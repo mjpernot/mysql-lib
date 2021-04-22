@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Validated to work in MySQL 5.7 environment.
 
 ### Fixed
+- mysql_class.SlaveRep.upd_slv_status:  Renamed conflicted self.retry to self.conn_retry and self.tran_retry.
 - mysql_class.SlaveRep.\_\_init\_\_:  Renamed conflicted self.retry to self.conn_retry and self.tran_retry.
 
 ### Changed

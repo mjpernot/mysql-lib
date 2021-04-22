@@ -1596,7 +1596,7 @@ class SlaveRep(Rep):
         self.io_state = data["Slave_IO_State"]
         self.mst_host = data["Master_Host"]
         self.mst_port = data["Master_Port"]
-        self.retry = data["Connect_Retry"]
+        self.conn_retry = data["Connect_Retry"]
         self.mst_log = data["Master_Log_File"]
         self.mst_read_pos = data["Read_Master_Log_Pos"]
         self.relay_log = data["Relay_Log_File"]
@@ -1680,7 +1680,7 @@ class SlaveRep(Rep):
         self.run = fetch_global_var(self, "slave_running")["Slave_running"]
         self.tmp_tbl = fetch_global_var(
             self, "slave_open_temp_tables")["Slave_open_temp_tables"]
-        self.retry = fetch_global_var(
+        self.tran_retry = fetch_global_var(
             self, "slave_retried_transactions")["Slave_retried_transactions"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
