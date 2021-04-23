@@ -699,6 +699,7 @@ class Server(object):
         self.indb_buf_reqt = int(data["Innodb_buffer_pool_read_requests"])
         self.indb_buf_evt = int(data["Innodb_buffer_pool_read_ahead_evicted"])
         self.indb_buf_ahd = int(data["Innodb_buffer_pool_read_ahead"])
+        self.indb_buf_write = int(data["Innodb_buffer_pool_write_requests"])
         self.crt_tmp_tbls = int(data["Created_tmp_disk_tables"])
 
         # Percentage of dirty pages in data cache.

@@ -18,6 +18,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.Server.upd_mst_rep_stat:  Set innodb_xa to None if not present in MySQL 8.0.
 - mysql_class.Server.upd_srv_stat:  Set qry_cache to zero if not present in MySQL 8.0.
 - mysql_class.Server.connect:  Added get_server_version call to set server's version attribute.
+- mysql_class.Server.upd_srv_perf:  Added indb_buf_write to capture innodb_buffer_pool_write_requests.
 - mysql_class.Server.\_\_init\_\_:  Added indb_buf_write attribute to hold MySQL's innodb_buffer_pool_write_requests.
 - mysql_class.Server.\_\_init\_\_:  Added version attribute to hold MySQL server's version.
 
