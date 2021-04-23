@@ -621,6 +621,7 @@ class Server(object):
         self.indb_buf_evt = None
         self.indb_buf_evt_pct = None
         self.indb_buf_free = None
+        self.indb_buf_write = None
         self.crt_tmp_tbls = None
 
         # Server's GTID mode.
