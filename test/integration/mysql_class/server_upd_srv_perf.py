@@ -43,6 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_pool_write -> Test with Innodb_buffer_pool_write_requests attr.
         test_secondary_attr -> Test with secondary attribute.
         test_base_attr -> Test with base attribute.
 
@@ -67,6 +68,20 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, cfg.serv_os)(), host=cfg.host,
             port=cfg.port, defaults_file=cfg.cfg_file)
         self.svr.connect()
+
+    def test_pool_write(self):
+
+        """Function:  test_pool_write
+
+        Description:  Test with Innodb_buffer_pool_write_requests attr.
+
+        Arguments:
+
+        """
+
+        self.svr.upd_srv_perf()
+
+        self.assertTrue(self.svr.indb_buf_write >= 0)
 
     def test_secondary_attr(self):
 
