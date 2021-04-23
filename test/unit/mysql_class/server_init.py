@@ -42,6 +42,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_indb_buf_write -> Test with indb_buf_write attribute.
         test_version -> Test with version attribute.
         test_config -> Test with config attribute.
         test_no_extra_def_file -> Test with no extra_def_file arg.
@@ -78,6 +79,22 @@ class UnitTest(unittest.TestCase):
         self.extra_def_file = "extra_cfg_file"
         self.results = self.machine.defaults_file
         self.config = {key1 + key2: self.sql_pass}
+
+    def test_indb_buf_write(self):
+
+        """Function:  test_indb_buf_write
+
+        Description:  Test with indb_buf_write attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.indb_buf_write, None)
 
     def test_version(self):
 
