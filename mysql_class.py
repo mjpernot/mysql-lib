@@ -509,6 +509,7 @@ class Server(object):
         reconnect
         chg_db
         get_name
+        set_pass_config
 
     """
 
@@ -1092,6 +1093,23 @@ class Server(object):
         """
 
         return self.name
+
+    def set_pass_config(self, sql_pass):
+
+        """Method:  set_pass_config
+
+        Description:  Set the SQL passwd config attributes.
+
+        Arguments:
+            (input) sql_pass -> SQL user's passwd.
+
+        """
+
+        global KEY1
+        global KEY2
+
+        self.sql_pass = sql_pass
+        self.config = {KEY1 + KEY2: self.sql_pass}
 
 
 class Rep(Server):

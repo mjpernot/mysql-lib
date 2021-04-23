@@ -13,6 +13,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.upd_slv_status:  Renamed conflicted self.retry to self.conn_retry and self.tran_retry.
 - mysql_class.SlaveRep.\_\_init\_\_:  Renamed conflicted self.retry to self.conn_retry and self.tran_retry.
 
+### Added
+- mysql_class.Server.set_pass_config:  Set the SQL passwd config attributes.
+
 ### Changed
 - mysql_class.SlaveRep.upd_slv_status:  The attributes tran_retry and run are in different location in MySQL 8.0.
 - mysql_class.Server.upd_mst_rep_stat:  Set innodb_xa to None if not present in MySQL 8.0.
