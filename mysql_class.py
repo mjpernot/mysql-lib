@@ -533,20 +533,16 @@ class Server(object):
 
         """
 
-        global KEY1
-        global KEY2
-
         self.name = name
         self.server_id = server_id
         self.sql_user = sql_user
-        self.sql_pass = sql_pass
         self.machine = os_type
         self.host = kwargs.get("host", "localhost")
         self.port = kwargs.get("port", 3306)
         self.defaults_file = kwargs.get("defaults_file",
                                         self.machine.defaults_file)
         self.extra_def_file = kwargs.get("extra_def_file", None)
-        self.config = {KEY1 + KEY2: self.sql_pass}
+        self.set_pass_config(sql_pass)
 
         # SQL connection handler.
         self.conn = None
