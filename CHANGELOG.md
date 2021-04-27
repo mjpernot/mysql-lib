@@ -15,17 +15,17 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.\_\_init\_\_:  Renamed conflicted self.retry to self.conn_retry and self.tran_retry.
 
 ### Added
-- mysql_class.Server.set_pass_config:  Set the SQL passwd config attributes.
+- mysql_class.Server.set_pass_config:  Set the self.sql_pass and self.config attributes.
 
 ### Changed
-- mysql_class.Server.\_\_init\_\_:  Added call to set_pass_config and removed setting of self.sql_pass and self.config attributes.
-- mysql_class.SlaveRep.upd_slv_status:  The attributes tran_retry and run are in different location in MySQL 8.0.
-- mysql_class.Server.upd_mst_rep_stat:  Set innodb_xa to None if not present in MySQL 8.0.
-- mysql_class.Server.upd_srv_stat:  Set qry_cache to zero if not present in MySQL 8.0.
-- mysql_class.Server.connect:  Added get_server_version call to set server's version attribute.
-- mysql_class.Server.upd_srv_perf:  Added indb_buf_write to capture innodb_buffer_pool_write_requests.
-- mysql_class.Server.\_\_init\_\_:  Added indb_buf_write attribute to hold MySQL's innodb_buffer_pool_write_requests.
-- mysql_class.Server.\_\_init\_\_:  Added version attribute to hold MySQL server's version.
+- mysql_class.Server.\_\_init\_\_:  Added call to set_pass_config method and removed setting of self.sql_pass and self.config attributes.
+- mysql_class.SlaveRep.upd_slv_status:  The attributes self.tran_retry and self.run are in different location in MySQL 8.0.
+- mysql_class.Server.upd_mst_rep_stat:  Set self.innodb_xa to None if not present in MySQL 8.0.
+- mysql_class.Server.upd_srv_stat:  Set self.qry_cache to zero if not present in MySQL 8.0.
+- mysql_class.Server.connect:  Added get_server_version call to set server's self.version attribute.
+- mysql_class.Server.upd_srv_perf:  Added self.indb_buf_write to capture innodb_buffer_pool_write_requests.
+- mysql_class.Server.\_\_init\_\_:  Added self.indb_buf_write attribute to hold MySQL's innodb_buffer_pool_write_requests.
+- mysql_class.Server.\_\_init\_\_:  Added self.version attribute to hold MySQL server's version.
 
 
 ## [5.0.4] - 2021-02-05
