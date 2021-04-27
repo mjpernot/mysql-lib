@@ -43,6 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_sql_pass -> Test with sql_pass attribute.
         test_indb_buf_write -> Test with indb_buf_write attribute.
         test_version -> Test with version attribute.
         test_conn_msg -> Test with conn_msg attribute.
@@ -78,6 +79,23 @@ class UnitTest(unittest.TestCase):
         self.machine = getattr(machine, "Linux")()
         self.results = self.machine.defaults_file
         self.config = {key1 + key2: self.cfg.japd}
+
+    def test_sql_pass(self):
+
+        """Function:  test_sql_pass
+
+        Description:  Test with sql_pass attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port)
+
+        self.assertEqual(mysqldb.sql_pass, self.cfg.japd)
 
     def test_indb_buf_write(self):
 
@@ -158,11 +176,7 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
             port=self.cfg.port)
 
-        self.assertEqual(
-            (mysqldb.name, mysqldb.server_id, mysqldb.sql_user, mysqldb.host,
-             mysqldb.config),
-            (self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.host,
-             self.config))
+        self.assertEqual(mysqldb.config, self.config)
 
     def test_no_extra_def_file(self):
 
