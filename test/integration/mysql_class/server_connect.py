@@ -43,6 +43,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_conn_msg3 -> Test conn_msg with corrected passwd.
         test_version2 -> Test with version attribute with connection failure.
         test_version -> Test with version attribute.
         test_silent -> Test silent option.
@@ -127,6 +128,25 @@ class UnitTest(unittest.TestCase):
         svr.connect(silent=True)
 
         self.assertEqual(svr.conn_msg[:48], self.results)
+
+    def test_conn_msg3(self):
+
+        """Function:  test_conn_msg3
+
+        Description:  Test conn_msg with corrected passwd.
+
+        Arguments:
+
+        """
+
+        tmp_japd = self.svr.sql_pass
+        self.svr.set_pass_config("testme")
+        self.svr.connect(silent=True)
+        tmp_msg = self.svr.conn_msg[:48]
+        self.svr.set_pass_config(tmp_japd)
+        self.svr.connect(silent=True)
+
+        self.assertEqual((tmp_msg, self.svr.conn_msg), (self.results, None))
 
     def test_conn_msg2(self):
 
