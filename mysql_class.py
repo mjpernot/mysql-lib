@@ -1147,8 +1147,7 @@ class Server(object):
         if self.ssl_client_ca \
            or (self.ssl_client_key and self.ssl_client_cert):
 
-            self.set_ssl_config(self.ssl_client_ca, self.ssl_client_key,
-                                self.ssl_client_cert, self.ssl_client_flag)
+            self.set_ssl_config()
 
     def set_ssl_config(self):
 
