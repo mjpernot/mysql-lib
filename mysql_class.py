@@ -510,6 +510,7 @@ class Server(object):
         chg_db
         get_name
         set_pass_config
+        setup_ssl
 
     """
 
@@ -530,6 +531,10 @@ class Server(object):
                 host -> Host name or IP of server.
                 port -> Port for MySQL.
                 defaults_file -> Location of my.cnf file.
+                ssl_client_ca -> SSL certificate authority file.
+                ssl_client_key -> SSL X.509 key file.
+                ssl_client_cert -> SSL X.509 certificate file.
+                ssl_client_flag -> SSL client flag option.
 
         """
 
@@ -543,14 +548,18 @@ class Server(object):
                                         self.machine.defaults_file)
         self.extra_def_file = kwargs.get("extra_def_file", None)
         self.config = {}
-        self.sql_pass = None
-        self.set_pass_config(sql_pass)
+
+        # Passwd configuration setup
+        self.sql_pass = sql_pass
+        self.set_pass_config()
 
         # SSL configuration settings
-        self.ssl_client_ca = None
-        self.ssl_client_key = None
-        self.ssl_client_cert = None
-        self.ssl_client_flags = []
+        self.ssl_client_ca = kwargs.get("ssl_client_ca", None)
+        self.ssl_client_key = kwargs.get("ssl_client_key", None)
+        self.ssl_client_cert = kwargs.get("ssl_client_cert", None)
+        self.ssl_client_flag = kwargs.get("ssl_client_flag",
+                                          mysql.connector.ClientFlag.SSL)
+        self.set_ssl_config()
 
         # SQL connection handler.
         self.conn = None
@@ -1099,22 +1108,70 @@ class Server(object):
 
         return self.name
 
-    def set_pass_config(self, sql_pass):
+    def set_pass_config(self):
 
         """Method:  set_pass_config
 
         Description:  Set the SQL passwd config attributes.
 
         Arguments:
-            (input) sql_pass -> SQL user's passwd.
 
         """
 
         global KEY1
         global KEY2
 
-        self.sql_pass = sql_pass
         self.config[KEY1 + KEY2] = self.sql_pass
+
+    def setup_ssl(self, ssl_client_ca=None, ssl_client_key=None,
+                  ssl_client_cert=None,
+                  ssl_client_flag=mysql.connector.ClientFlag.SSL):
+
+        """Method:  setup_ssl
+
+        Description:  Initialize the ssl attributes and append to config.
+
+        Arguments:
+            (input) ssl_client_ca -> SSL certificate authority file.
+            (input) ssl_client_key -> SSL X.509 key file.
+            (input) ssl_client_cert -> SSL X.509 certificate file.
+            (input) ssl_client_flag -> SSL client flag option.
+
+        """
+
+        self.ssl_client_ca = ssl_client_ca
+        self.ssl_client_key = ssl_client_key
+        self.ssl_client_cert = ssl_client_cert
+        self.ssl_client_flag = ssl_client_flag
+
+        if self.ssl_client_ca \
+           or (self.ssl_client_key and self.ssl_client_cert):
+
+            self.set_ssl_config(self.ssl_client_ca, self.ssl_client_key,
+                                self.ssl_client_cert, self.ssl_client_flag)
+
+    def set_ssl_config(self):
+
+        """Method:  set_ssl_config
+
+        Description:  Append SSL attributes to config.
+
+        Arguments:
+
+        """
+
+        if self.ssl_client_ca:
+            self.config["ssl_ca"] = self.ssl_client_ca
+
+            if self.ssl_client_flag:
+                self.config["client_flags"] = [self.ssl_client_flag]
+
+        if self.ssl_client_key and self.ssl_client_cert:
+            self.config["ssl_key"] = self.ssl_client_key
+            self.config["ssl_cert"] = self.ssl_client_cert
+
+            if self.ssl_client_flag:
+                self.config["client_flags"] = [self.ssl_client_flag]
 
 
 class Rep(Server):
