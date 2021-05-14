@@ -543,6 +543,7 @@ class Server(object):
                                         self.machine.defaults_file)
         self.extra_def_file = kwargs.get("extra_def_file", None)
         self.config = {}
+        self.sql_pass = None
         self.set_pass_config(sql_pass)
 
         # SQL connection handler.

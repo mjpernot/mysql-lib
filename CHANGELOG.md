@@ -6,7 +6,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.2.0] - 2021-05-14
 ### Fixed
-- mysql_class.Server.\_\_init\_\_:  Initialized self.config attribute.
+- mysql_class.Server.\_\_init\_\_:  Initialized self.config and self.sql_pass attributes.
 
 ### Changed
 - mysql_class.Server.set_pass_config:  Instead of initialize the dictionary, updated the dictionary.
