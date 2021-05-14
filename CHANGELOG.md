@@ -9,11 +9,12 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.Server.\_\_init\_\_:  Initialized self.config and self.sql_pass attributes.
 
 ### Added
-- mysql_class.Server.setup_ssl:  Initialize the ssl attributes and append to config.
+- mysql_class.Server.setup_ssl:  Update the ssl attributes and append to config.
+- mysql_class.Server.set_ssl_config:  Append ssl attributes to config.
 
 ### Changed
 - mysql_class.Server.\_\_init\_\_:  Added SSL configuration setting attributes.
-- mysql_class.Server.set_pass_config:  Instead of initialize the dictionary, updated the dictionaryi and removed setting self.sql_pass attribute.
+- mysql_class.Server.set_pass_config:  Instead of initialize the dictionary, updated the dictionary and removed setting self.sql_pass attribute.
 
 
 ## [5.1.0] - 2021-04-21
