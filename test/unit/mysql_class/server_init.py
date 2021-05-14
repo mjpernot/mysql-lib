@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mysql.connector
 
 # Local
 sys.path.append(os.getcwd())
@@ -42,9 +43,17 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
-        test_ssl_client_flags -> Test with ssl_client_flags attribute.
+        test_ssl_config4 -> Test config with ssl attributes set.
+        test_ssl_config3 -> Test config with ssl attributes set.
+        test_ssl_config2 -> Test config with ssl attributes set.
+        test_ssl_config -> Test config with ssl attributes set.
+        test_ssl_client_flag2 -> Test with ssl_client_flag attribute.
+        test_ssl_client_flag -> Test with ssl_client_flag attribute.
+        test_ssl_client_cert2 -> Test with ssl_client_cert attribute.
         test_ssl_client_cert -> Test with ssl_client_cert attribute.
+        test_ssl_client_key2 -> Test with ssl_client_key attribute.
         test_ssl_client_key -> Test with ssl_client_key attribute.
+        test_ssl_client_ca2 -> Test with ssl_client_ca attribute.
         test_ssl_client_ca -> Test with ssl_client_ca attribute.
         test_sql_pass -> Test with sql_pass attribute.
         test_indb_buf_write -> Test with indb_buf_write attribute.
@@ -83,13 +92,119 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
         self.results = self.machine.defaults_file
-        self.config = {key1 + key2: self.sql_pass}
+        self.config = {}
+        self.config2 = {}
+        self.config3 = {}
+        self.config4 = {}
+        self.config5 = {}
+        self.config[key1 + key2] = self.sql_pass
+        self.config2[key1 + key2] = self.sql_pass
+        self.config2["ssl_ca"] = "CAFile"
+        self.config2["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config3[key1 + key2] = self.sql_pass
+        self.config3["ssl_key"] = "KeyFile"
+        self.config3["ssl_cert"] = "CertFile"
+        self.config3["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config4[key1 + key2] = self.sql_pass
+        self.config4["ssl_ca"] = "CAFile"
+        self.config4["ssl_key"] = "KeyFile"
+        self.config4["ssl_cert"] = "CertFile"
+        self.config4["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config5[key1 + key2] = self.sql_pass
+        self.config5["ssl_ca"] = "CAFile"
+        self.config5["ssl_key"] = "KeyFile"
+        self.config5["ssl_cert"] = "CertFile"
+        self.config5["client_flags"] = [4096]
 
-    def test_ssl_client_flags(self):
+    def test_ssl_config4(self):
 
-        """Function:  test_ssl_client_flags
+        """Function:  test_ssl_config4
 
-        Description:  Test with ssl_client_flags attribute.
+        Description:  Test config with ssl attributes set.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_ca="CAFile",
+            ssl_client_key="KeyFile", ssl_client_cert="CertFile",
+            ssl_client_flag=4096)
+
+        self.assertEqual(mysqldb.config, self.config5)
+
+    def test_ssl_config3(self):
+
+        """Function:  test_ssl_config3
+
+        Description:  Test config with ssl attributes set.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_ca="CAFile",
+            ssl_client_key="KeyFile", ssl_client_cert="CertFile")
+
+        self.assertEqual(mysqldb.config, self.config4)
+
+    def test_ssl_config2(self):
+
+        """Function:  test_ssl_config2
+
+        Description:  Test config with ssl attributes set.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_key="KeyFile",
+            ssl_client_cert="CertFile")
+
+        self.assertEqual(mysqldb.config, self.config3)
+
+    def test_ssl_config(self):
+
+        """Function:  test_ssl_config
+
+        Description:  Test config with ssl attributes set.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_ca="CAFile")
+
+        self.assertEqual(mysqldb.config, self.config2)
+
+    def test_ssl_client_flag2(self):
+
+        """Function:  test_ssl_client_flag2
+
+        Description:  Test with ssl_client_flag attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_flag=4096)
+
+        self.assertEqual(mysqldb.ssl_client_flag, 4096)
+
+    def test_ssl_client_flag(self):
+
+        """Function:  test_ssl_client_flag
+
+        Description:  Test with ssl_client_flag attribute.
 
         Arguments:
 
@@ -99,7 +214,24 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_client_flags, [])
+        self.assertEqual(mysqldb.ssl_client_flag,
+                         mysql.connector.ClientFlag.SSL)
+
+    def test_ssl_client_cert2(self):
+
+        """Function:  test_ssl_client_cert2
+
+        Description:  Test with ssl_client_cert attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_cert="CertFile")
+
+        self.assertEqual(mysqldb.ssl_client_cert, "CertFile")
 
     def test_ssl_client_cert(self):
 
@@ -117,6 +249,22 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqldb.ssl_client_cert, None)
 
+    def test_ssl_client_key2(self):
+
+        """Function:  test_ssl_client_key2
+
+        Description:  Test with ssl_client_key attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_key="KeyFile")
+
+        self.assertEqual(mysqldb.ssl_client_key, "KeyFile")
+
     def test_ssl_client_key(self):
 
         """Function:  test_ssl_client_key
@@ -132,6 +280,22 @@ class UnitTest(unittest.TestCase):
             os_type=self.machine)
 
         self.assertEqual(mysqldb.ssl_client_key, None)
+
+    def test_ssl_client_ca2(self):
+
+        """Function:  test_ssl_client_ca2
+
+        Description:  Test with ssl_client_ca attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_ca="CAFile")
+
+        self.assertEqual(mysqldb.ssl_client_ca, "CAFile")
 
     def test_ssl_client_ca(self):
 
