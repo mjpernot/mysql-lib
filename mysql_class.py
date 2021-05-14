@@ -1107,7 +1107,7 @@ class Server(object):
         global KEY2
 
         self.sql_pass = sql_pass
-        self.config = {KEY1 + KEY2: self.sql_pass}
+        self.config[KEY1 + KEY2] = self.sql_pass
 
 
 class Rep(Server):
