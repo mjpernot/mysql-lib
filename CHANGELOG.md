@@ -5,6 +5,8 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 
 ## [5.2.0] - 2021-05-14
+### Fixed
+- mysql_class.Server.\_\_init\_\_:  Initialized self.config attribute.
 
 
 ## [5.1.0] - 2021-04-21
