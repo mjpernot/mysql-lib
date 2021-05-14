@@ -43,6 +43,10 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_ssl_client_flags -> Test with ssl_client_flags attribute.
+        test_ssl_client_cert -> Test with ssl_client_cert attribute.
+        test_ssl_client_key -> Test with ssl_client_key attribute.
+        test_ssl_client_ca -> Test with ssl_client_ca attribute.
         test_sql_pass -> Test with sql_pass attribute.
         test_indb_buf_write -> Test with indb_buf_write attribute.
         test_version -> Test with version attribute.
@@ -79,6 +83,74 @@ class UnitTest(unittest.TestCase):
         self.machine = getattr(machine, "Linux")()
         self.results = self.machine.defaults_file
         self.config = {key1 + key2: self.cfg.japd}
+
+    def test_ssl_client_flags(self):
+
+        """Function:  test_ssl_client_flags
+
+        Description:  Test with ssl_client_flags attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port)
+
+        self.assertEqual(mysqldb.ssl_client_flags, [])
+
+    def test_ssl_client_cert(self):
+
+        """Function:  test_ssl_client_cert
+
+        Description:  Test with ssl_client_cert attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port)
+
+        self.assertEqual(mysqldb.ssl_client_cert, None)
+
+    def test_ssl_client_key(self):
+
+        """Function:  test_ssl_client_key
+
+        Description:  Test with ssl_client_key attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port)
+
+        self.assertEqual(mysqldb.ssl_client_key, None)
+
+    def test_ssl_client_ca(self):
+
+        """Function:  test_ssl_client_ca
+
+        Description:  Test with ssl_client_ca attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port)
+
+        self.assertEqual(mysqldb.ssl_client_ca, None)
 
     def test_sql_pass(self):
 
