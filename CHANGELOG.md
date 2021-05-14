@@ -9,6 +9,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.Server.\_\_init\_\_:  Initialized self.config and self.sql_pass attributes.
 
 ### Changed
+- mysql_class.Server.\_\_init\_\_:  Added SSL configuration setting attributes.
 - mysql_class.Server.set_pass_config:  Instead of initialize the dictionary, updated the dictionary.
 
 

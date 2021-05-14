@@ -546,6 +546,12 @@ class Server(object):
         self.sql_pass = None
         self.set_pass_config(sql_pass)
 
+        # SSL configuration settings
+        self.ssl_client_ca = None
+        self.ssl_client_key = None
+        self.ssl_client_cert = None
+        self.ssl_client_flags = []
+
         # SQL connection handler.
         self.conn = None
         self.conn_msg = None
