@@ -43,10 +43,12 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_ssl_all2 -> Test with all ssl arguments present.
         test_ssl_all -> Test with all ssl arguments present.
         test_ssl_client_cert -> Test with ssl_client_cert only.
         test_ssl_client_key -> Test with ssl_client_key only.
         test_ssl_client_flag -> Test with ssl_client_flag present.
+        test_ssl_client_key_cert3 -> Test with both cert and key present.
         test_ssl_client_key_cert2 -> Test with both cert and key present.
         test_ssl_client_key_cert -> Test with both cert and key present.
         test_ssl_client_ca3 -> Test with ssl_client_ca only present.
@@ -84,8 +86,38 @@ class UnitTest(unittest.TestCase):
         self.config[key1 + key2] = self.sql_pass
         self.config["ssl_ca"] = "CAFile"
         self.config["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config2 = {}
+        self.config2[key1 + key2] = self.sql_pass
+        self.config2["ssl_key"] = "KeyFile"
+        self.config2["ssl_cert"] = "CertFile"
+        self.config2["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config3 = {}
+        self.config3[key1 + key2] = self.sql_pass
+        self.config3["ssl_ca"] = "CAFile"
+        self.config3["ssl_key"] = "KeyFile"
+        self.config3["ssl_cert"] = "CertFile"
+        self.config3["client_flags"] = [mysql.connector.ClientFlag.SSL]
 
-# Another to test self.config
+    def test_ssl_all2(self):
+
+        """Function:  test_ssl_all2
+
+        Description:  Test with all ssl arguments present.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+        mysqldb.setup_ssl(
+            ssl_client_ca=self.ssl_client_ca,
+            ssl_client_key=self.ssl_client_key,
+            ssl_client_cert=self.ssl_client_cert,
+            ssl_client_flag=self.ssl_client_flag)
+
+        self.assertEqual(mysqldb.config, self.config3)
 
     def test_ssl_all(self):
 
@@ -163,7 +195,24 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqldb.ssl_client_flag, self.ssl_client_flag)
 
-# Another to test self.config
+    def test_ssl_client_key_cert3(self):
+
+        """Function:  test_ssl_client_key_cert3
+
+        Description:  Test with both cert and key present.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+        mysqldb.setup_ssl(ssl_client_key=self.ssl_client_key,
+                          ssl_client_cert=self.ssl_client_cert)
+
+        self.assertEqual(mysqldb.config, self.config2)
+
 
     def test_ssl_client_key_cert2(self):
 
