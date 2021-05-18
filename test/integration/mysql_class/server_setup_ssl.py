@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mysql.connector
 
 # Local
 sys.path.append(os.getcwd())
@@ -43,14 +44,17 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_ssl_all2 -> Test with all ssl arguments present.
         test_ssl_all -> Test with all ssl arguments present.
         test_ssl_client_cert -> Test with ssl_client_cert only.
         test_ssl_client_key -> Test with ssl_client_key only.
-        test_ssl_client_flags -> Test with ssl_client_flags present.
+        test_ssl_client_flag -> Test with ssl_client_flag present.
+        test_ssl_client_key_cert3 -> Test with both cert and key present.
         test_ssl_client_key_cert2 -> Test with both cert and key present.
         test_ssl_client_key_cert -> Test with both cert and key present.
-        test_ssl_client_sa2 -> Test with ssl_client_sa only present.
-        test_ssl_client_sa -> Test with ssl_client_sa only present.
+        test_ssl_client_ca3 -> Test with ssl_client_ca only present.
+        test_ssl_client_ca2 -> Test with ssl_client_ca only present.
+        test_ssl_client_ca -> Test with ssl_client_ca only present.
 
     """
 
@@ -64,6 +68,8 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        key1 = "pass"
+        key2 = "wd"
         self.base_dir = "test/integration"
         self.config_dir = os.path.join(self.base_dir, "config")
         self.config_name = "mysql_cfg"
@@ -73,12 +79,44 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, cfg.serv_os)(), host=cfg.host,
             port=cfg.port, defaults_file=cfg.cfg_file)
 
-        self.ssl_client_sa = "sa_file"
-        self.ssl_client_key = "key_file"
-        self.ssl_client_cert = "cert_file"
-        self.ssl_client_flags = [2048]
+        self.ssl_client_ca = "CAFile"
+        self.ssl_client_key = "KeyFile"
+        self.ssl_client_cert = "CertFile"
+        self.ssl_client_flag = mysql.connector.ClientFlag.SSL
+        self.config = {}
+        self.config[key1 + key2] = self.svr.sql_pass
+        self.config["ssl_ca"] = "CAFile"
+        self.config["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config2 = {}
+        self.config2[key1 + key2] = self.svr.sql_pass
+        self.config2["ssl_key"] = "KeyFile"
+        self.config2["ssl_cert"] = "CertFile"
+        self.config2["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config3 = {}
+        self.config3[key1 + key2] = self.svr.sql_pass
+        self.config3["ssl_ca"] = "CAFile"
+        self.config3["ssl_key"] = "KeyFile"
+        self.config3["ssl_cert"] = "CertFile"
+        self.config3["client_flags"] = [mysql.connector.ClientFlag.SSL]
 
-# Another to test self.config
+    def test_ssl_all2(self):
+
+        """Function:  test_ssl_all2
+
+        Description:  Test with all ssl arguments present.
+
+        Arguments:
+
+        """
+
+        self.svr.setup_ssl(
+            ssl_client_ca=self.ssl_client_ca,
+            ssl_client_key=self.ssl_client_key,
+            ssl_client_cert=self.ssl_client_cert,
+            ssl_client_flag=self.ssl_client_flag)
+
+        self.assertEqual(self.svr.config, self.config3)
+
 
     def test_ssl_all(self):
 
@@ -91,16 +129,16 @@ class UnitTest(unittest.TestCase):
         """
 
         self.svr.setup_ssl(
-            ssl_client_sa=self.ssl_client_sa,
+            ssl_client_ca=self.ssl_client_ca,
             ssl_client_key=self.ssl_client_key,
             ssl_client_cert=self.ssl_client_cert,
-            ssl_client_flags=self.ssl_client_flags)
+            ssl_client_flag=self.ssl_client_flag)
 
         self.assertEqual(
-            (self.svr.ssl_client_sa, self.svr.ssl_client_key,
-             self.svr.ssl_client_cert, self.svr.ssl_client_flags),
-            (self.ssl_client_sa, self.ssl_client_key, self.ssl_client_cert,
-             self.ssl_client_flags))
+            (self.svr.ssl_client_ca, self.svr.ssl_client_key,
+             self.svr.ssl_client_cert, self.svr.ssl_client_flag),
+            (self.ssl_client_ca, self.ssl_client_key, self.ssl_client_cert,
+             self.ssl_client_flag))
 
     def test_ssl_client_cert(self):
 
@@ -130,21 +168,34 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(self.svr.ssl_client_key, self.ssl_client_key)
 
-    def test_ssl_client_flags(self):
+    def test_ssl_client_flag(self):
 
-        """Function:  test_ssl_client_flags
+        """Function:  test_ssl_client_flag
 
-        Description:  Test with ssl_client_flags present.
+        Description:  Test with ssl_client_flag present.
 
         Arguments:
 
         """
 
-        self.svr.setup_ssl(ssl_client_flags=self.ssl_client_flags)
+        self.svr.setup_ssl(ssl_client_flag=self.ssl_client_flag)
 
-        self.assertEqual(self.svr.ssl_client_flags, self.ssl_client_flags)
+        self.assertEqual(self.svr.ssl_client_flag, self.ssl_client_flag)
 
-# Another to test self.config
+    def test_ssl_client_key_cert3(self):
+
+        """Function:  test_ssl_client_key_cert3
+
+        Description:  Test with both cert and key present.
+
+        Arguments:
+
+        """
+
+        self.svr.setup_ssl(ssl_client_key=self.ssl_client_key,
+                           ssl_client_cert=self.ssl_client_cert)
+
+        self.assertEqual(self.svr.config, self.config2)
 
     def test_ssl_client_key_cert2(self):
 
@@ -160,7 +211,8 @@ class UnitTest(unittest.TestCase):
                            ssl_client_cert=self.ssl_client_cert)
 
         self.assertEqual(
-            (self.svr.ssl_client_sa, self.svr.ssl_client_flags), (None, []))
+            (self.svr.ssl_client_ca, self.svr.ssl_client_flag),
+            (None, mysql.connector.ClientFlag.SSL))
 
     def test_ssl_client_key_cert(self):
 
@@ -179,37 +231,50 @@ class UnitTest(unittest.TestCase):
             (self.svr.ssl_client_key, self.svr.ssl_client_cert),
             (self.ssl_client_key, self.ssl_client_cert))
 
-# Another to test self.config
+    def test_ssl_client_ca3(self):
 
-    def test_ssl_client_sa2(self):
+        """Function:  test_ssl_client_flag3
 
-        """Function:  test_ssl_client_flags2
-
-        Description:  Test with ssl_client_sa only present.
+        Description:  Test with ssl_client_ca only present.
 
         Arguments:
 
         """
 
-        self.svr.setup_ssl(ssl_client_sa=self.ssl_client_sa)
+        self.svr.setup_ssl(ssl_client_ca=self.ssl_client_ca)
+
+        self.assertEqual(self.svr.config, self.config)
+
+    def test_ssl_client_ca2(self):
+
+        """Function:  test_ssl_client_flag2
+
+        Description:  Test with ssl_client_ca only present.
+
+        Arguments:
+
+        """
+
+        self.svr.setup_ssl(ssl_client_ca=self.ssl_client_ca)
 
         self.assertEqual(
             (self.svr.ssl_client_key, self.svr.ssl_client_cert,
-             self.svr.ssl_client_flags), (None, None, []))
+             self.svr.ssl_client_flag),
+            (None, None, mysql.connector.ClientFlag.SSL))
 
-    def test_ssl_client_sa(self):
+    def test_ssl_client_ca(self):
 
-        """Function:  test_ssl_client_flags
+        """Function:  test_ssl_client_flag
 
-        Description:  Test with ssl_client_sa only present.
+        Description:  Test with ssl_client_ca only present.
 
         Arguments:
 
         """
 
-        self.svr.setup_ssl(ssl_client_sa=self.ssl_client_sa)
+        self.svr.setup_ssl(ssl_client_ca=self.ssl_client_ca)
 
-        self.assertEqual(self.svr.ssl_client_sa, self.ssl_client_sa)
+        self.assertEqual(self.svr.ssl_client_ca, self.ssl_client_ca)
 
 
 if __name__ == "__main__":
