@@ -511,6 +511,7 @@ class Server(object):
         get_name
         set_pass_config
         setup_ssl
+        set_ssl_config
 
     """
 
