@@ -52,6 +52,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/server_init.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_is_connected.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_reconnect.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_set_pass_config.py
+coverage run -a --source=mysql_class test/unit/mysql_class/server_set_ssl_config.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_setsrvbinlogcrc.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_setsrvgtid.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_setup_ssl.py
