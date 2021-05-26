@@ -105,6 +105,7 @@ class UnitTest(unittest.TestCase):
         self.config3["ssl_key"] = "KeyFile"
         self.config3["ssl_cert"] = "CertFile"
         self.config3["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config3["ssl_ca"] = ""
         self.config4[key1 + key2] = self.sql_pass
         self.config4["ssl_ca"] = "CAFile"
         self.config4["ssl_key"] = "KeyFile"
