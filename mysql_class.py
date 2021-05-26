@@ -1173,6 +1173,10 @@ class Server(object):
             if self.ssl_client_flag:
                 self.config["client_flags"] = [self.ssl_client_flag]
 
+            # Mysql.connector as of v8.0.16 requires ssl_ca argument to be set
+            if "ssl_ca" not in self.config:
+                self.config["ssl_ca"] = ""
+
 
 class Rep(Server):
 
