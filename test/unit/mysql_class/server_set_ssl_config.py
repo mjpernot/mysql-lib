@@ -43,6 +43,12 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_key_cert_yes_ca3 -> Test with cert and key present and with ca.
+        test_key_cert_yes_ca2 -> Test with cert and key present and with ca.
+        test_key_cert_yes_ca -> Test with cert and key present and with ca.
+        test_key_cert_no_ca3 -> Test with cert and key present, but no ca.
+        test_key_cert_no_ca2 -> Test with cert and key present, but no ca.
+        test_key_cert_no_ca -> Test with cert and key present, but no ca.
         test_ssl_all2 -> Test with all ssl arguments present.
         test_ssl_all -> Test with all ssl arguments present.
         test_ssl_client_cert -> Test with ssl_client_cert only.
@@ -91,12 +97,127 @@ class UnitTest(unittest.TestCase):
         self.config2["ssl_key"] = "KeyFile"
         self.config2["ssl_cert"] = "CertFile"
         self.config2["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config2["ssl_ca"] = ""
         self.config3 = {}
         self.config3[key1 + key2] = self.sql_pass
         self.config3["ssl_ca"] = "CAFile"
         self.config3["ssl_key"] = "KeyFile"
         self.config3["ssl_cert"] = "CertFile"
         self.config3["client_flags"] = [mysql.connector.ClientFlag.SSL]
+
+    def test_key_cert_yes_ca3(self):
+
+        """Function:  test_key_cert_yes_ca3
+
+        Description:  Test with cert and key present and with ca.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_key=self.ssl_client_key,
+            ssl_client_cert=self.ssl_client_cert,
+            ssl_client_ca=self.ssl_client_ca)
+
+        self.assertEqual(mysqldb.config, self.config3)
+
+    def test_key_cert_yes_ca2(self):
+
+        """Function:  test_key_cert_yes_ca2
+
+        Description:  Test with cert and key present and with ca.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_key=self.ssl_client_key,
+            ssl_client_cert=self.ssl_client_cert,
+            ssl_client_ca=self.ssl_client_ca)
+
+        self.assertEqual(
+            (mysqldb.ssl_client_ca, mysqldb.ssl_client_flag),
+            (self.ssl_client_ca, mysql.connector.ClientFlag.SSL))
+
+    def test_key_cert_yes_ca(self):
+
+        """Function:  test_key_cert_yes_ca
+
+        Description:  Test with cert and key present and with ca.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_key=self.ssl_client_key,
+            ssl_client_cert=self.ssl_client_cert,
+            ssl_client_ca=self.ssl_client_ca)
+
+        self.assertEqual(
+            (mysqldb.ssl_client_key, mysqldb.ssl_client_cert),
+            (self.ssl_client_key, self.ssl_client_cert))
+
+    def test_key_cert_no_ca3(self):
+
+        """Function:  test_key_cert_no_ca3
+
+        Description:  Test with cert and key present, but no ca.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_key=self.ssl_client_key,
+            ssl_client_cert=self.ssl_client_cert)
+
+        self.assertEqual(mysqldb.config, self.config2)
+
+
+    def test_key_cert_no_ca2(self):
+
+        """Function:  test_key_cert_no_ca2
+
+        Description:  Test with cert and key present, but no ca.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_key=self.ssl_client_key,
+            ssl_client_cert=self.ssl_client_cert)
+
+        self.assertEqual(
+            (mysqldb.ssl_client_ca, mysqldb.ssl_client_flag),
+            (None, mysql.connector.ClientFlag.SSL))
+
+    def test_key_cert_no_ca(self):
+
+        """Function:  test_key_cert_no_ca
+
+        Description:  Test with cert and key present, but no ca.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_client_key=self.ssl_client_key,
+            ssl_client_cert=self.ssl_client_cert)
+
+        self.assertEqual(
+            (mysqldb.ssl_client_key, mysqldb.ssl_client_cert),
+            (self.ssl_client_key, self.ssl_client_cert))
 
     def test_ssl_all2(self):
 
