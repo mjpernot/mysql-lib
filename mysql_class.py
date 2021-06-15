@@ -1183,26 +1183,6 @@ class Server(object):
                 self.config["ssl_key"] = self.ssl_client_key
                 self.config["ssl_cert"] = self.ssl_client_cert
 
-        """
-        ### OLD CODE
-        if self.ssl_client_ca:
-            self.config["ssl_ca"] = self.ssl_client_ca
-
-            if self.ssl_client_flag:
-                self.config["client_flags"] = [self.ssl_client_flag]
-
-        if self.ssl_client_key and self.ssl_client_cert:
-            self.config["ssl_key"] = self.ssl_client_key
-            self.config["ssl_cert"] = self.ssl_client_cert
-
-            if self.ssl_client_flag:
-                self.config["client_flags"] = [self.ssl_client_flag]
-
-            # Mysql.connector as of v8.0.16 requires ssl_ca argument to be set
-            if "ssl_ca" not in self.config:
-                self.config["ssl_ca"] = ""
-        """
-
 
 class Rep(Server):
 
