@@ -13,6 +13,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.Server.set_ssl_config:  Append ssl attributes to config.
 
 ### Changed
+- mysql_class.MasterRep.\_\_init\_\_:  Added capability to allow SSL attributes to be set.
 - mysql_class.Rep.\_\_init\_\_:  Added capability to allow SSL attributes to be set.
 - mysql_class.Server.\_\_init\_\_:  Added SSL configuration setting attributes.
 - mysql_class.Server.set_pass_config:  Instead of initialize the dictionary, updated the dictionary and removed setting self.sql_pass attribute.
