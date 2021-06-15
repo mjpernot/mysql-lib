@@ -1238,14 +1238,14 @@ class Rep(Server):
             port=kwargs.get("port", 3306),
             defaults_file=kwargs.get("defaults_file", os_type.defaults_file),
             extra_def_file=kwargs.get("extra_def_file", None),
-            ssl_client_ca=kwargs.get("ssl_client_ca", None),
-            ssl_client_key=kwargs.get("ssl_client_key", None),
-            ssl_client_cert=kwargs.get("ssl_client_cert", None),
+            ssl_disabled=kwargs.get("ssl_disabled", False),
             ssl_client_flag=kwargs.get("ssl_client_flag",
                                        mysql.connector.ClientFlag.SSL),
-            ssl_disabled=kwargs.get("ssl_disabled", False),
+            ssl_client_ca=kwargs.get("ssl_client_ca", None),
+            ssl_verify_cert=kwargs.get("ssl_verify_cert", False),
+            ssl_client_cert=kwargs.get("ssl_client_cert", None),
             ssl_verify_id=kwargs.get("ssl_verify_id", False),
-            ssl_verify_cert=kwargs.get("ssl_verify_cert", False))
+            ssl_client_key=kwargs.get("ssl_client_key", None))
 
     def show_slv_hosts(self):
 
@@ -1403,14 +1403,14 @@ class MasterRep(Rep):
             port=kwargs.get("port", 3306),
             defaults_file=kwargs.get("defaults_file", os_type.defaults_file),
             extra_def_file=kwargs.get("extra_def_file", None),
-            ssl_client_ca=kwargs.get("ssl_client_ca", None),
-            ssl_client_key=kwargs.get("ssl_client_key", None),
-            ssl_client_cert=kwargs.get("ssl_client_cert", None),
             ssl_client_flag=kwargs.get("ssl_client_flag",
                                        mysql.connector.ClientFlag.SSL),
             ssl_disabled=kwargs.get("ssl_disabled", False),
-            ssl_verify_id=kwargs.get("ssl_verify_id", False),
-            ssl_verify_cert=kwargs.get("ssl_verify_cert", False))
+            ssl_client_ca=kwargs.get("ssl_client_ca", None),
+            ssl_verify_cert=kwargs.get("ssl_verify_cert", False),
+            ssl_client_key=kwargs.get("ssl_client_key", None),
+            ssl_client_cert=kwargs.get("ssl_client_cert", None),
+            ssl_verify_id=kwargs.get("ssl_verify_id", False))
 
         self.pos = None
         self.do_db = None
