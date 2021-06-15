@@ -92,7 +92,6 @@ class UnitTest(unittest.TestCase):
 
         """
 
-
         self.base_dir = "test/integration"
         self.config_dir = os.path.join(self.base_dir, "config")
         self.config_name = "mysql_cfg"
