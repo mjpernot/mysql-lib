@@ -192,7 +192,6 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(self.svr.config, self.config2)
 
-
     def test_key_cert_no_ca2(self):
 
         """Function:  test_key_cert_no_ca2
@@ -248,7 +247,6 @@ class UnitTest(unittest.TestCase):
             ssl_client_flag=self.ssl_client_flag)
 
         self.assertEqual(self.svr.config, self.config3)
-
 
     def test_ssl_all(self):
 
