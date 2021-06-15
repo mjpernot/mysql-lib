@@ -1517,6 +1517,10 @@ class SlaveRep(Rep):
                 defaults_file -> Location of my.cnf file.
                 rep_user -> Replication user name.
                 rep_japd -> Replication user password.
+                ssl_client_ca -> SSL certificate authority file.
+                ssl_client_key -> SSL X.509 key file.
+                ssl_client_cert -> SSL X.509 certificate file.
+                ssl_client_flag -> SSL client flag option.
 
         """
 
@@ -1525,7 +1529,12 @@ class SlaveRep(Rep):
             host=kwargs.get("host", "localhost"),
             port=kwargs.get("port", 3306),
             defaults_file=kwargs.get("defaults_file", os_type.defaults_file),
-            extra_def_file=kwargs.get("extra_def_file", None))
+            extra_def_file=kwargs.get("extra_def_file", None),
+            ssl_client_ca=kwargs.get("ssl_client_ca", None),
+            ssl_client_key=kwargs.get("ssl_client_key", None),
+            ssl_client_cert=kwargs.get("ssl_client_cert", None),
+            ssl_client_flag=kwargs.get("ssl_client_flag",
+                                       mysql.connector.ClientFlag.SSL))
 
         self.io_state = None
         self.mst_host = None
