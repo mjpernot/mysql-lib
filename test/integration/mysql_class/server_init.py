@@ -89,6 +89,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
+
         self.base_dir = "test/integration"
         self.config_dir = os.path.join(self.base_dir, "config")
         self.config_name = "mysql_cfg"
@@ -98,29 +99,131 @@ class UnitTest(unittest.TestCase):
         self.machine = getattr(machine, "Linux")()
         self.results = self.machine.defaults_file
         self.config = {}
-        self.config2 = {}
-        self.config3 = {}
-        self.config4 = {}
-        self.config5 = {}
         self.config[key1 + key2] = self.cfg.japd
+
+        self.config2 = {}
         self.config2[key1 + key2] = self.cfg.japd
         self.config2["ssl_ca"] = "CAFile"
         self.config2["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config2["ssl_disabled"] = False
+        self.config2["ssl_verify_identity"] = False
+        self.config2["ssl_verify_cert"] = False
+
+        self.config3 = {}
         self.config3[key1 + key2] = self.cfg.japd
         self.config3["ssl_key"] = "KeyFile"
         self.config3["ssl_cert"] = "CertFile"
         self.config3["client_flags"] = [mysql.connector.ClientFlag.SSL]
         self.config3["ssl_ca"] = ""
+        self.config3["ssl_disabled"] = False
+        self.config3["ssl_verify_identity"] = False
+
+        self.config4 = {}
         self.config4[key1 + key2] = self.cfg.japd
         self.config4["ssl_ca"] = "CAFile"
         self.config4["ssl_key"] = "KeyFile"
         self.config4["ssl_cert"] = "CertFile"
         self.config4["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config4["ssl_disabled"] = False
+        self.config4["ssl_verify_identity"] = False
+        self.config4["ssl_verify_cert"] = False
+
+        self.config5 = {}
         self.config5[key1 + key2] = self.cfg.japd
         self.config5["ssl_ca"] = "CAFile"
         self.config5["ssl_key"] = "KeyFile"
         self.config5["ssl_cert"] = "CertFile"
         self.config5["client_flags"] = [4096]
+        self.config5["ssl_disabled"] = False
+        self.config5["ssl_verify_identity"] = False
+        self.config5["ssl_verify_cert"] = False
+
+        self.config6 = {}
+        self.config6[key1 + key2] = self.cfg.japd
+        self.config6["ssl_ca"] = "CAFile"
+        self.config6["ssl_key"] = "KeyFile"
+        self.config6["ssl_cert"] = "CertFile"
+        self.config6["client_flags"] = [4096]
+        self.config6["ssl_disabled"] = True
+        self.config6["ssl_verify_identity"] = False
+        self.config6["ssl_verify_cert"] = False
+
+        self.config7 = {}
+        self.config7[key1 + key2] = self.cfg.japd
+        self.config7["ssl_ca"] = "CAFile"
+        self.config7["ssl_key"] = "KeyFile"
+        self.config7["ssl_cert"] = "CertFile"
+        self.config7["client_flags"] = [4096]
+        self.config7["ssl_disabled"] = False
+        self.config7["ssl_verify_identity"] = True
+        self.config7["ssl_verify_cert"] = False
+
+        self.config8 = {}
+        self.config8[key1 + key2] = self.cfg.japd
+        self.config8["ssl_ca"] = "CAFile"
+        self.config8["ssl_key"] = "KeyFile"
+        self.config8["ssl_cert"] = "CertFile"
+        self.config8["client_flags"] = [4096]
+        self.config8["ssl_disabled"] = False
+        self.config8["ssl_verify_identity"] = False
+        self.config8["ssl_verify_cert"] = True
+
+    def test_ssl_config7(self):
+
+        """Function:  test_ssl_config7
+
+        Description:  Test config with ssl attributes set.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port, ssl_client_ca="CAFile",
+            ssl_client_key="KeyFile", ssl_client_cert="CertFile",
+            ssl_client_flag=4096, ssl_verify_cert=True)
+
+        self.assertEqual(mysqldb.config, self.config8)
+
+    def test_ssl_config6(self):
+
+        """Function:  test_ssl_config6
+
+        Description:  Test config with ssl attributes set.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port, ssl_client_ca="CAFile",
+            ssl_client_key="KeyFile", ssl_client_cert="CertFile",
+            ssl_client_flag=4096, ssl_verify_id=True)
+
+        self.assertEqual(mysqldb.config, self.config7)
+
+    def test_ssl_config5(self):
+
+        """Function:  test_ssl_config5
+
+        Description:  Test config with ssl attributes set.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
+            os_type=getattr(machine, self.cfg.serv_os)(), host=self.cfg.host,
+            port=self.cfg.port, ssl_client_ca="CAFile",
+            ssl_client_key="KeyFile", ssl_client_cert="CertFile",
+            ssl_client_flag=4096, ssl_disabled=True)
+
+        self.assertEqual(mysqldb.config, self.config6)
 
     def test_ssl_config4(self):
 
