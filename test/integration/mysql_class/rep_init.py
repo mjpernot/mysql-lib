@@ -87,7 +87,6 @@ class UnitTest(unittest.TestCase):
         key2 = "wd"
         self.machine = getattr(machine, "Linux")()
         self.results = self.machine.defaults_file
-#        self.config = {key1 + key2: self.cfg.japd}
         self.config = {}
         self.config2 = {}
         self.config3 = {}
