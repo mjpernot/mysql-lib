@@ -56,7 +56,6 @@ class UnitTest(unittest.TestCase):
         test_indb_buf_write -> Test with indb_buf_write attribute.
         test_version -> Test with version attribute.
         test_conn_msg -> Test with conn_msg attribute.
-
         test_conn -> Test with conn attribute.
         test_rep_user -> Test with rep user settings.
         test_no_rep_user -> Test with no rep user settings.
