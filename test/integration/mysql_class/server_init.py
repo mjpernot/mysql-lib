@@ -44,6 +44,9 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp -> Initialize testing environment.
+        test_ssl_config7 -> Test config with ssl attributes set.
+        test_ssl_config6 -> Test config with ssl attributes set.
+        test_ssl_config5 -> Test config with ssl attributes set.
         test_ssl_config4 -> Test config with ssl attributes set.
         test_ssl_config3 -> Test config with ssl attributes set.
         test_ssl_config2 -> Test config with ssl attributes set.
