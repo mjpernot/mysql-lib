@@ -88,22 +88,33 @@ class UnitTest(unittest.TestCase):
         self.ssl_client_key = "KeyFile"
         self.ssl_client_cert = "CertFile"
         self.ssl_client_flag = mysql.connector.ClientFlag.SSL
+
         self.config = {}
         self.config[key1 + key2] = self.sql_pass
         self.config["ssl_ca"] = "CAFile"
         self.config["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config["ssl_disabled"] = False
+        self.config["ssl_verify_identity"] = False
+        self.config["ssl_verify_cert"] = False
+
         self.config2 = {}
         self.config2[key1 + key2] = self.sql_pass
         self.config2["ssl_key"] = "KeyFile"
         self.config2["ssl_cert"] = "CertFile"
         self.config2["client_flags"] = [mysql.connector.ClientFlag.SSL]
         self.config2["ssl_ca"] = ""
+        self.config2["ssl_disabled"] = False
+        self.config2["ssl_verify_identity"] = False
+
         self.config3 = {}
         self.config3[key1 + key2] = self.sql_pass
         self.config3["ssl_ca"] = "CAFile"
         self.config3["ssl_key"] = "KeyFile"
         self.config3["ssl_cert"] = "CertFile"
         self.config3["client_flags"] = [mysql.connector.ClientFlag.SSL]
+        self.config3["ssl_disabled"] = False
+        self.config3["ssl_verify_identity"] = False
+        self.config3["ssl_verify_cert"] = False
 
     def test_key_cert_yes_ca3(self):
 
