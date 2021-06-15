@@ -1539,6 +1539,9 @@ class SlaveRep(Rep):
                 ssl_client_key -> SSL X.509 key file.
                 ssl_client_cert -> SSL X.509 certificate file.
                 ssl_client_flag -> SSL client flag option.
+                ssl_disabled -> True|False - Disable SSL.
+                ssl_verify_id -> True|False - Validate the destination host.
+                ssl_verify_cert -> True|False - Validate the CA certification.
 
         """
 
@@ -1552,7 +1555,10 @@ class SlaveRep(Rep):
             ssl_client_key=kwargs.get("ssl_client_key", None),
             ssl_client_cert=kwargs.get("ssl_client_cert", None),
             ssl_client_flag=kwargs.get("ssl_client_flag",
-                                       mysql.connector.ClientFlag.SSL))
+                                       mysql.connector.ClientFlag.SSL),
+            ssl_disabled=kwargs.get("ssl_disabled", False),
+            ssl_verify_id=kwargs.get("ssl_verify_id", False),
+            ssl_verify_cert=kwargs.get("ssl_verify_cert", False))
 
         self.io_state = None
         self.mst_host = None
