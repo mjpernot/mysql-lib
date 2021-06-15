@@ -1136,7 +1136,8 @@ class Server(object):
 
         """Method:  setup_ssl
 
-        Description:  Initialize the ssl attributes and append to config.
+        Description:  Set the ssl attributes and append/update config
+            dictionary.
 
         Arguments:
             (input) ssl_client_ca -> SSL certificate authority file.
@@ -1166,6 +1167,24 @@ class Server(object):
 
         """
 
+        if self.ssl_client_ca \
+           or (self.ssl_client_key and self.ssl_client_cert):
+
+            self.config["client_flags"] = [self.ssl_client_flag]
+            self.config["ssl_disabled"] = self.ssl_disabled
+            self.config["ssl_verify_identity"] = self.ssl_verify_id
+            self.config["ssl_ca"] = ""
+
+            if self.ssl_client_ca:
+                self.config["ssl_ca"] = self.ssl_client_ca
+                self.config["ssl_verify_cert"] = self.ssl_verify_cert
+
+            if self.ssl_client_key and self.ssl_client_cert:
+                self.config["ssl_key"] = self.ssl_client_key
+                self.config["ssl_cert"] = self.ssl_client_cert
+
+        """
+        ### OLD CODE
         if self.ssl_client_ca:
             self.config["ssl_ca"] = self.ssl_client_ca
 
@@ -1182,6 +1201,7 @@ class Server(object):
             # Mysql.connector as of v8.0.16 requires ssl_ca argument to be set
             if "ssl_ca" not in self.config:
                 self.config["ssl_ca"] = ""
+        """
 
 
 class Rep(Server):
