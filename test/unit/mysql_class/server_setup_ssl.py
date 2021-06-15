@@ -210,7 +210,6 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqldb.config, self.config2)
 
-
     def test_key_cert_no_ca2(self):
 
         """Function:  test_key_cert_no_ca2
@@ -371,7 +370,6 @@ class UnitTest(unittest.TestCase):
                           ssl_client_cert=self.ssl_client_cert)
 
         self.assertEqual(mysqldb.config, self.config2)
-
 
     def test_ssl_client_key_cert2(self):
 
