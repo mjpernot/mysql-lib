@@ -35,3 +35,12 @@ ssl_client_cert = None
 # SSL Client Flag Value.
 # If not set, will take the default value of mysql.connector.ClientFlag.SSL (typically 2048).
 ssl_client_flag = None
+# SSL Disabled
+# Will disable SSL for connection if set to True.
+ssl_disabled = False
+# SSL Verify Identity
+# Will cerify the hostname of the destination with the certifcation.
+ssl_cerify_id = False
+# SSL Verify Certification
+# Will validate the CA certification.
+ssl_cerify_cert = False
