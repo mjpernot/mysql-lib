@@ -50,6 +50,12 @@ class UnitTest(unittest.TestCase):
         test_ssl_config3 -> Test config with ssl attributes set.
         test_ssl_config2 -> Test config with ssl attributes set.
         test_ssl_config -> Test config with ssl attributes set.
+        test_ssl_verify_cert2 -> Test with ssl_verify_cert attribute.
+        test_ssl_verify_cert -> Test with ssl_verify_cert attribute.
+        test_ssl_verify_id2 -> Test with ssl_verify_id attribute.
+        test_ssl_verify_id -> Test with ssl_verify_id attribute.
+        test_ssl_disabled2 -> Test with ssl_disabled attribute.
+        test_ssl_disabled -> Test with ssl_disabled attribute.
         test_ssl_client_flag2 -> Test with ssl_client_flag attribute.
         test_ssl_client_flag -> Test with ssl_client_flag attribute.
         test_ssl_client_cert2 -> Test with ssl_client_cert attribute.
@@ -288,6 +294,102 @@ class UnitTest(unittest.TestCase):
             os_type=self.machine, ssl_client_ca="CAFile")
 
         self.assertEqual(mysqlrep.config, self.config2)
+
+    def test_ssl_verify_cert2(self):
+
+        """Function:  test_ssl_verify_cert2
+
+        Description:  Test with ssl_verify_cert attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Rep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_verify_cert=True)
+
+        self.assertEqual(mysqldb.ssl_verify_cert, True)
+
+    def test_ssl_verify_cert(self):
+
+        """Function:  test_ssl_verify_cert
+
+        Description:  Test with ssl_verify_cert attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Rep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.ssl_verify_cert, False)
+
+    def test_ssl_verify_id2(self):
+
+        """Function:  test_ssl_verify_id2
+
+        Description:  Test with ssl_verify_id attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Rep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_verify_id=True)
+
+        self.assertEqual(mysqldb.ssl_verify_id, True)
+
+    def test_ssl_verify_id(self):
+
+        """Function:  test_ssl_verify_id
+
+        Description:  Test with ssl_verify_id attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Rep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.ssl_verify_id, False)
+
+    def test_ssl_disabled2(self):
+
+        """Function:  test_ssl_disabled2
+
+        Description:  Test with ssl_disabled attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Rep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, ssl_disabled=True)
+
+        self.assertEqual(mysqldb.ssl_disabled, True)
+
+    def test_ssl_disabled(self):
+
+        """Function:  test_ssl_disabled
+
+        Description:  Test with ssl_disabled attribute.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Rep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.ssl_disabled, False)
 
     def test_ssl_client_flag2(self):
 
