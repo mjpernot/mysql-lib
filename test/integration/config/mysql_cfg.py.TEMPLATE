@@ -25,12 +25,19 @@ cfg_file = "MYSQL_DIRECTORY/mysqld.cnf"
 # File containing the SSL certificate authority.
 # Example: ssl_client_ca = "/opt/mysql/certs/ca.pem"
 ssl_client_ca = None
+# Path to the directory containing CA certificates.
+# Example: ssl_ca_path = "/opt/mysql/certs"
+ssl_ca_path = None
 # File containing the SSL key.
 # Example:  ssl_client_key = "/opt/mysql/certs/client-key.pem"
 ssl_client_key = None
 # File containing the SSL certificate file.
 # Example: ssl_client_cert = "/opt/mysql/certs/client-cert.pem"
 ssl_client_cert = None
+# Type of SSL connection mode being requested.
+# Mode types:  DISABLED|PREFERRED|REQUIRED|VERIFY_CA|VERIFY_IDENTITY
+# Example: ssl_mode = REQUIRED
+ssl_mode = PREFERRED
 # SSL Client Flag Value.
 # If not set, will take the default value of mysql.connector.ClientFlag.SSL (typically 2048).
 ssl_client_flag = None
