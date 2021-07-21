@@ -37,7 +37,7 @@ ssl_client_cert = None
 # Type of SSL connection mode being requested.
 # Mode types:  DISABLED|PREFERRED|REQUIRED|VERIFY_CA|VERIFY_IDENTITY
 # Example: ssl_mode = REQUIRED
-ssl_mode = PREFERRED
+ssl_mode = "PREFERRED"
 # SSL Client Flag Value.
 # If not set, will take the default value of mysql.connector.ClientFlag.SSL (typically 2048).
 ssl_client_flag = None
