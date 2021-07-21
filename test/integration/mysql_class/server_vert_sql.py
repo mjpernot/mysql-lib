@@ -42,9 +42,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_no_params -> Test with col_sql method with no params.
-        test_params -> Test with params.
+        setUp
+        test_no_params
+        test_params
 
     """
 
