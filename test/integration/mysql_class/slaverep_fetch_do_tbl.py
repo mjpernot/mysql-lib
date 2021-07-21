@@ -43,8 +43,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_fetch_do_tbl -> Test fetch_do_tbl method.
+        setUp
+        test_fetch_do_tbl
 
     """
 
