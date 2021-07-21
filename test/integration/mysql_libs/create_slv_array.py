@@ -42,9 +42,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_create_slv_array2 -> Test create_slv_array function.
-        test_create_slv_array -> Test create_slv_array function.
+        setUp
+        test_create_slv_array2
+        test_create_slv_array
 
     """
 

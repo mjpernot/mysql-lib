@@ -41,8 +41,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_crt_srv_inst -> Test crt_srv_inst function.
+        setUp
+        test_crt_srv_inst
 
     """
 
