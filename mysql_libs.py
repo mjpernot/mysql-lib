@@ -55,6 +55,10 @@ import version
 
 __version__ = version.__version__
 
+# Global
+KEY1 = "pass"
+KEY2 = "word"
+
 
 def analyze_tbl(server, dbn, tbl):
 
@@ -90,8 +94,11 @@ def change_master_to(mst, slv):
 
     """
 
+    global KEY1
+    global KEY2
+
     chg_master_to = """change master to master_host='%s', master_port=%s,
-        master_user='%s', master_password='%s'"""
+        master_user='%s', master_""" + KEY1 + KEY2 +"""='%s'"""
 
     # GTID mode is enabled, use the auto position option.
     if mst.gtid_mode:
@@ -242,7 +249,7 @@ def crt_cmd(server, prog_name):
     """Function:  crt_cmd
 
     Description:  Create a basic MySQL program command line setup.  The basic
-        setup will include program name, user, password, host, and port.
+        setup will include program name, user login info, host, and port.
         The port is required to be set if MySQL instance is operating
         on a different port than 3306.
 

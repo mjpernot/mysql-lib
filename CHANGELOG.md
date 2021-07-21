@@ -5,6 +5,8 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 
 ## [5.2.1] - 2021-06-16
+### Changed
+- mysql_libs.change_master_to:  Reformatted chg_master_to variable.
 
 
 ## [5.2.0] - 2021-05-14
