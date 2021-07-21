@@ -43,13 +43,13 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_sql_err_time -> Test with sql_err_time attribute.
-        test_io_err_time -> Test with io_err_time attribute.
-        test_sql_msg -> Test with sql_msg attribute.
-        test_io_msg -> Test with io_msg attribute.
-        test_sql_err -> Test with sql_err attribute.
-        test_io_err -> Test with io_err attribute.
+        setUp
+        test_sql_err_time
+        test_io_err_time
+        test_sql_msg
+        test_io_msg
+        test_sql_err
+        test_io_err
 
     """
 
