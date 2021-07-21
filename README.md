@@ -21,8 +21,7 @@
     - python-pip
 
   * Local class/library dependencies within the program structure.
-    - lib/machine
-    - lib/gen_libs
+    - python-lib
 
 
 # Installation:
