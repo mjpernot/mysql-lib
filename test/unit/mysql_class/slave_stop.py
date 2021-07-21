@@ -40,8 +40,8 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        __init__
+        sql
 
     """
 
@@ -64,7 +64,7 @@ class Server(object):
         Description:  Stub holder for Server.cmd_sql method.
 
         Arguments:
-            (input) cmd -> Query command.
+            (input) cmd
 
         """
 
@@ -80,8 +80,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_slave_stop -> Test slave_stop function.
+        setUp
+        test_slave_stop
 
     """
 
