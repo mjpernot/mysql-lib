@@ -43,13 +43,13 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_run -> Test with run attribute.
-        test_tran_retry -> Test with tran_retry attribute.
-        test_conn_retry -> Test with conn_retry attribute.
-        test_down_slave -> Test with stats with non-running slave.
-        test_up_slave -> Test with stats with running slave.
-        tearDown -> Clean up of testing environment.
+        setUp
+        test_run
+        test_tran_retry
+        test_conn_retry
+        test_down_slave
+        test_up_slave
+        tearDown
 
     """
 
