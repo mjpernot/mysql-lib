@@ -42,9 +42,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_is_connected_true -> Test is_connected is True.
-        test_is_connected_false -> Test is_connected is False.
+        setUp
+        test_is_connected_true
+        test_is_connected_false
 
     """
 
