@@ -41,8 +41,8 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
-        cmd_sql -> Stub holder for Server.cmd_sql method.
+        __init__
+        cmd_sql
 
     """
 
@@ -75,7 +75,7 @@ class Server(object):
         Description:  Stub holder for Server.cmd_sql method.
 
         Arguments:
-            (input) cmd -> Query command.
+            (input) cmd
 
         """
 
@@ -91,9 +91,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_change_master_to_non_gtid -> Test in gtid_mode off.
-        test_change_master_to_gtid -> Test in gtid_mode on.
+        setUp
+        test_change_master_to_non_gtid
+        test_change_master_to_gtid
 
     """
 
