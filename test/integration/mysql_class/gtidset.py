@@ -42,16 +42,16 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_greater_than -> Test with GTIDSets greater than.
-        test_less_than -> Test with GTIDSets less than.
-        test_not_equal -> Test with GTIDSets not equal.
-        test_greater_than_equal -> Test with GTIDSets greater than equal.
-        test_less_than_equal -> Test with GTIDSets less than equal.
-        test_equal -> Test with GTIDSets equal.
-        test_string2 -> Test conversion of GTIDSet to string.
-        test_string -> Test conversion of GTIDSet to string.
-        test_is_class -> Test is GTIDSets class.
+        setUp
+        test_greater_than
+        test_less_than
+        test_not_equal
+        test_greater_than_equal
+        test_less_than_equal
+        test_equal
+        test_string2
+        test_string
+        test_is_class
 
     """
 
