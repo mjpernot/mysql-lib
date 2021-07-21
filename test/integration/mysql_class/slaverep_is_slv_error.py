@@ -43,8 +43,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_error_codes -> Test with io_err and sql_err attributes.
+        setUp
+        test_error_codes
 
     """
 
