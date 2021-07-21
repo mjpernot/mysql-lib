@@ -41,7 +41,7 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -65,9 +65,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_slave_not_found -> Test with slave not found.
-        test_slave_found -> Test with slave found.
+        setUp
+        test_slave_not_found
+        test_slave_found
 
     """
 

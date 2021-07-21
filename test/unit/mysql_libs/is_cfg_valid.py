@@ -41,7 +41,7 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -66,13 +66,13 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_multi_both_fail -> Test with multiple servers with both failed.
-        test_multi_one_fail -> Test with multiple servers with one failed.
-        test_multi_servers -> Test with multiple servers valid.
-        test_no_extra_file -> Test with no extra file present.
-        test_chk_fails -> Test with check file fails.
-        test_cfg_valid -> Test with extra cfg file is valid.
+        setUp
+        test_multi_both_fail
+        test_multi_one_fail
+        test_multi_servers
+        test_no_extra_file
+        test_chk_fails
+        test_cfg_valid
 
     """
 
