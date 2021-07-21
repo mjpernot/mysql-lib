@@ -41,8 +41,8 @@ class SlaveRep2(object):
     Description:  Class stub holder for mysql_class.SlaveRep class.
 
     Methods:
-        __init__ -> Class initialization.
-        connect ->  Stub holder for mysql_class.SlaveRep.connect method.
+        __init__
+        connect
 
     """
 
@@ -78,8 +78,8 @@ class SlaveRep(object):
     Description:  Class stub holder for mysql_class.SlaveRep class.
 
     Methods:
-        __init__ -> Class initialization.
-        connect ->  Stub holder for mysql_class.SlaveRep.connect method.
+        __init__
+        connect
 
     """
 
@@ -115,16 +115,16 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_rep_user -> Test with rep_user information passed.
-        test_no_rep_user -> Test with no rep_user information passed.
-        test_dont_add_array -> Test with do not add slaves that are down.
-        test_multiple_array_down -> Test with multiple slaves and down slave.
-        test_multiple_array -> Test with multiple slaves.
-        test_add_down_conn_false -> Test with add_down and conn set to false.
-        test_add_down_false -> Test with add_down option set to false.
-        test_add_down_true -> Test with add_down option set to true.
-        test_create_slv_array -> Test create_slv_array function.
+        setUp
+        test_rep_user
+        test_no_rep_user
+        test_dont_add_array
+        test_multiple_array_down
+        test_multiple_array
+        test_add_down_conn_false
+        test_add_down_false
+        test_add_down_true
+        test_create_slv_array
 
     """
 

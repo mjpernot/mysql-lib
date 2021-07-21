@@ -41,7 +41,7 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -72,7 +72,7 @@ class Cfg(object):
     Description:  Stub holder for configuration file.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -103,8 +103,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_crt_srv_inst -> Test crt_srv_inst function.
+        setUp
+        test_crt_srv_inst
 
     """
 

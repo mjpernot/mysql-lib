@@ -41,10 +41,10 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
-        stop_slave -> Stub holder for mysql_class.Rep.stop_slave method.
-        start_slave -> Stub holder for mysql_class.Rep.start_slave method.
-        upd_slv_status -> Stub holder - mysql_class.Rep.upd_slv_status method.
+        __init__
+        stop_slave
+        start_slave
+        upd_slv_status
 
     """
 
@@ -104,10 +104,10 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_stop_option -> Test with stop option selected.
-        test_start_option -> Test with start option selected.
-        test_else_option -> Test with other option selected.
+        setUp
+        test_stop_option
+        test_start_option
+        test_else_option
 
     """
 

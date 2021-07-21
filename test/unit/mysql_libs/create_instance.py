@@ -41,7 +41,7 @@ class SlaveRep(object):
     Description:  Class stub holder for SlaveRep class.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -75,7 +75,7 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -107,7 +107,7 @@ class Cfg(object):
     Description:  Stub holder for configuration file.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -139,7 +139,7 @@ class Cfg2(object):
     Description:  Stub holder for configuration file.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -173,14 +173,14 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_rep_user2 -> Test with for rep_user.
-        test_rep_user -> Test with for rep_user.
-        test_none_rep_user2 -> Test with none for rep_user.
-        test_none_rep_user -> Test with none for rep_user.
-        test_none_extra_def_file2 -> Test with none for extra_def_file.
-        test_none_extra_def_file -> Test with none for extra_def_file.
-        test_create_instance -> Test create_instance function.
+        setUp
+        test_rep_user2
+        test_rep_user
+        test_none_rep_user2
+        test_none_rep_user
+        test_none_extra_def_file2
+        test_none_extra_def_file
+        test_create_instance
 
     """
 
