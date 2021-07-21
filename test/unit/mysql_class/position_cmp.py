@@ -40,9 +40,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_positions_not_equal -> Test with positions not equal.
-        test_positions_equal -> Test with positions equal.
+        setUp
+        test_positions_not_equal
+        test_positions_equal
 
     """
 
