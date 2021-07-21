@@ -47,6 +47,9 @@
 # Standard
 import time
 
+# Third-party
+import mysql.connector
+
 # Local
 import lib.gen_libs as gen_libs
 import lib.machine as machine
@@ -202,7 +205,35 @@ def create_instance(cfg_file, dir_path, cls_name):
 
     """
 
+    ssl_client_ca = None
+    ssl_client_key = None
+    ssl_client_cert = None
+    ssl_client_flag = mysql.connector.ClientFlag.SSL
+    ssl_disabled = False
+    ssl_verify_id = False
+    ssl_verify_cert = False
     cfg = gen_libs.load_module(cfg_file, dir_path)
+    
+    if hasattr(cfg, "ssl_client_ca"):
+        ssl_client_ca = cfg.ssl_client_ca
+
+    if hasattr(cfg, "ssl_client_key"):
+        ssl_client_key = cfg.ssl_client_key
+
+    if hasattr(cfg, "ssl_client_cert"):
+        ssl_client_cert = cfg.ssl_client_cert
+
+    if hasattr(cfg, "ssl_client_flag") and cfg.ssl_client_flag:
+        ssl_client_flag = cfg.ssl_client_flag
+
+    if hasattr(cfg, "ssl_disabled"):
+        ssl_disabled = cfg.ssl_disabled
+
+    if hasattr(cfg, "ssl_verify_id"):
+        ssl_verify_id = cfg.ssl_verify_id
+
+    if hasattr(cfg, "ssl_verify_cert"):
+        ssl_verify_cert = cfg.ssl_verify_cert
 
     return cls_name(
         cfg.name, cfg.sid, cfg.user, cfg.japd,
@@ -210,7 +241,11 @@ def create_instance(cfg_file, dir_path, cls_name):
         defaults_file=cfg.cfg_file,
         extra_def_file=cfg.__dict__.get("extra_def_file", None),
         rep_user=cfg.__dict__.get("rep_user", None),
-        rep_japd=cfg.__dict__.get("rep_japd", None))
+        rep_japd=cfg.__dict__.get("rep_japd", None),
+        ssl_client_ca=ssl_client_ca, ssl_client_key=ssl_client_key,
+        ssl_client_cert=ssl_client_cert, ssl_client_flag=ssl_client_flag,
+        ssl_disabled=ssl_disabled, ssl_verify_id=ssl_verify_id,
+        ssl_verify_cert=ssl_verify_cert)
 
 
 def create_slv_array(cfg_array, add_down=True):
