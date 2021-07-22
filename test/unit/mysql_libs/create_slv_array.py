@@ -116,6 +116,10 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_ssl_flag2
+        test_ssl_flag
+        test_ssl2
+        test_ssl
         test_rep_user
         test_no_rep_user
         test_dont_add_array
@@ -167,6 +171,124 @@ class UnitTest(unittest.TestCase):
                             "host": "hostname", "port": 3306,
                             "cfg_file": "cfg_file", "rep_user": "rep_user",
                             "rep_japd": None}]
+        self.cfg_array5 = {"name": "name", "sid": "sid", "user": "user",
+                           "japd": None, "serv_os": "Linux",
+                           "host": "hostname", "port": 3306,
+                           "cfg_file": "cfg_file", "rep_user": "rep_user",
+                           "rep_japd": None, "ssl_client_ca": "CAFile",
+                            "ssl_client_key": "KeyFile",
+                            "ssl_client_cert": "CertFile",
+                            "ssl_client_flag": 2048, "ssl_disabled": False,
+                            "ssl_verify_id": False, "ssl_verify_cert": False}
+        self.cfg_array6 = [{"name": "name", "sid": "sid", "user": "user",
+                            "japd": None, "serv_os": "Linux",
+                            "host": "hostname", "port": 3306,
+                            "cfg_file": "cfg_file", "rep_user": "rep_user",
+                            "rep_japd": None, "ssl_client_ca": "CAFile",
+                            "ssl_client_key": "KeyFile",
+                            "ssl_client_cert": "CertFile",
+                            "ssl_client_flag": 2048, "ssl_disabled": False,
+                            "ssl_verify_id": False, "ssl_verify_cert": False},
+                           {"name": "name2", "sid": "sid2", "user": "user",
+                            "japd": None, "serv_os": "Linux",
+                            "host": "hostname", "port": 3306,
+                            "cfg_file": "cfg_file", "rep_user": "rep_user",
+                            "rep_japd": None, "ssl_client_ca": "CAFile",
+                            "ssl_client_key": "KeyFile",
+                            "ssl_client_cert": "CertFile",
+                            "ssl_client_flag": 2048, "ssl_disabled": False,
+                            "ssl_verify_id": False, "ssl_verify_cert": False}]
+        self.cfg_array7 = {"name": "name", "sid": "sid", "user": "user",
+                           "japd": None, "serv_os": "Linux",
+                           "host": "hostname", "port": 3306,
+                           "cfg_file": "cfg_file", "rep_user": "rep_user",
+                           "rep_japd": None, "ssl_client_ca": "CAFile",
+                            "ssl_client_key": "KeyFile",
+                            "ssl_client_cert": "CertFile",
+                            "ssl_client_flag": None, "ssl_disabled": False,
+                            "ssl_verify_id": False, "ssl_verify_cert": False}
+        self.cfg_array8 = [{"name": "name", "sid": "sid", "user": "user",
+                            "japd": None, "serv_os": "Linux",
+                            "host": "hostname", "port": 3306,
+                            "cfg_file": "cfg_file", "rep_user": "rep_user",
+                            "rep_japd": None, "ssl_client_ca": "CAFile",
+                            "ssl_client_key": "KeyFile",
+                            "ssl_client_cert": "CertFile",
+                            "ssl_client_flag": None, "ssl_disabled": False,
+                            "ssl_verify_id": False, "ssl_verify_cert": False},
+                           {"name": "name2", "sid": "sid2", "user": "user",
+                            "japd": None, "serv_os": "Linux",
+                            "host": "hostname", "port": 3306,
+                            "cfg_file": "cfg_file", "rep_user": "rep_user",
+                            "rep_japd": None, "ssl_client_ca": "CAFile",
+                            "ssl_client_key": "KeyFile",
+                            "ssl_client_cert": "CertFile",
+                            "ssl_client_flag": None, "ssl_disabled": False,
+                            "ssl_verify_id": False, "ssl_verify_cert": False}]
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_ssl_flag2(self, mock_rep):
+
+        """Function:  test_ssl_flag2
+
+        Description:  Test with SSL Client Flag set to None.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array(self.cfg_array6)
+
+        self.assertEqual(len(slaves), 2)
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_ssl_flag(self, mock_rep):
+
+        """Function:  test_ssl_flag
+
+        Description:  Test with SSL Client Flag set to None.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array5])
+
+        self.assertEqual(len(slaves), 1)
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_ssl2(self, mock_rep):
+
+        """Function:  test_ssl2
+
+        Description:  Test with SSL configuration.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array(self.cfg_array6)
+
+        self.assertEqual(len(slaves), 2)
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_ssl(self, mock_rep):
+
+        """Function:  test_ssl
+
+        Description:  Test with SSL configuration.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array5])
+
+        self.assertEqual(len(slaves), 1)
 
     @mock.patch("mysql_libs.mysql_class.SlaveRep")
     def test_rep_user2(self, mock_rep):
