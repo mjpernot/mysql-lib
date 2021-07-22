@@ -176,10 +176,10 @@ class UnitTest(unittest.TestCase):
                            "host": "hostname", "port": 3306,
                            "cfg_file": "cfg_file", "rep_user": "rep_user",
                            "rep_japd": None, "ssl_client_ca": "CAFile",
-                            "ssl_client_key": "KeyFile",
-                            "ssl_client_cert": "CertFile",
-                            "ssl_client_flag": 2048, "ssl_disabled": False,
-                            "ssl_verify_id": False, "ssl_verify_cert": False}
+                           "ssl_client_key": "KeyFile",
+                           "ssl_client_cert": "CertFile",
+                           "ssl_client_flag": 2048, "ssl_disabled": False,
+                           "ssl_verify_id": False, "ssl_verify_cert": False}
         self.cfg_array6 = [{"name": "name", "sid": "sid", "user": "user",
                             "japd": None, "serv_os": "Linux",
                             "host": "hostname", "port": 3306,
@@ -203,10 +203,10 @@ class UnitTest(unittest.TestCase):
                            "host": "hostname", "port": 3306,
                            "cfg_file": "cfg_file", "rep_user": "rep_user",
                            "rep_japd": None, "ssl_client_ca": "CAFile",
-                            "ssl_client_key": "KeyFile",
-                            "ssl_client_cert": "CertFile",
-                            "ssl_client_flag": None, "ssl_disabled": False,
-                            "ssl_verify_id": False, "ssl_verify_cert": False}
+                           "ssl_client_key": "KeyFile",
+                           "ssl_client_cert": "CertFile",
+                           "ssl_client_flag": None, "ssl_disabled": False,
+                           "ssl_verify_id": False, "ssl_verify_cert": False}
         self.cfg_array8 = [{"name": "name", "sid": "sid", "user": "user",
                             "japd": None, "serv_os": "Linux",
                             "host": "hostname", "port": 3306,
