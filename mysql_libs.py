@@ -213,7 +213,7 @@ def create_instance(cfg_file, dir_path, cls_name):
     ssl_verify_id = False
     ssl_verify_cert = False
     cfg = gen_libs.load_module(cfg_file, dir_path)
-    
+
     if hasattr(cfg, "ssl_client_ca"):
         ssl_client_ca = cfg.ssl_client_ca
 
@@ -265,12 +265,23 @@ def create_slv_array(cfg_array, add_down=True):
     slaves = []
 
     for slv in cfg_array:
+
+        if "ssl_client_flag" not in slv or slv["ssl_client_flag"] is None:
+            slv["ssl_client_flag"] = mysql.connector.ClientFlag.SSL
+
         slv_inst = mysql_class.SlaveRep(
             slv["name"], slv["sid"], slv["user"], slv["japd"],
             os_type=getattr(machine, slv["serv_os"])(), host=slv["host"],
             port=int(slv["port"]), defaults_file=slv["cfg_file"],
             rep_user=slv.get("rep_user", None),
-            rep_japd=slv.get("rep_japd", None))
+            rep_japd=slv.get("rep_japd", None),
+            ssl_client_ca=slv.get("ssl_client_ca", None),
+            ssl_client_key=slv.get("ssl_client_key", None),
+            ssl_client_cert=slv.get("ssl_client_cert", None),
+            ssl_client_flag=slv.get("ssl_client_flag"),
+            ssl_disabled=slv.get("ssl_disabled", False),
+            ssl_verify_id=slv.get("ssl_verify_id", False),
+            ssl_verify_cert=slv.get("ssl_verify_cert", False))
         slv_inst.connect()
 
         if add_down or slv_inst.conn:

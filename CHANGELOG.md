@@ -6,7 +6,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.2.1] - 2021-06-16
 ### Changed
-- mysql_libs.create_instance:  Added SSL connection parameters to class instance call.
+- mysql_libs.create_instance, mysql_libs.create_slv_array:  Added SSL connection parameters to class instance call.
 - mysql_libs.change_master_to:  Reformatted chg_master_to variable.
 
 
