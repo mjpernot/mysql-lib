@@ -10,7 +10,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_libs.change_master_to:  Reformatted chg_master_to variable.
 
 ### Deprecated
-- mysql_libs.crt_srv_inst:  Replaced by mysql_libs.create_instance function.
+- mysql_libs.crt_srv_inst:  Being replaced with mysql_libs.create_instance function.
 
 
 ## [5.2.0] - 2021-05-14
