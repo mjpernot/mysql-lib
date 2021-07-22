@@ -43,44 +43,44 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_ssl_config7 -> Test config with ssl attributes set.
-        test_ssl_config6 -> Test config with ssl attributes set.
-        test_ssl_config5 -> Test config with ssl attributes set.
-        test_ssl_config4 -> Test config with ssl attributes set.
-        test_ssl_config3 -> Test config with ssl attributes set.
-        test_ssl_config2 -> Test config with ssl attributes set.
-        test_ssl_config -> Test config with ssl attributes set.
-        test_ssl_verify_cert2 -> Test with ssl_verify_cert attribute.
-        test_ssl_verify_cert -> Test with ssl_verify_cert attribute.
-        test_ssl_verify_id2 -> Test with ssl_verify_id attribute.
-        test_ssl_verify_id -> Test with ssl_verify_id attribute.
-        test_ssl_disabled2 -> Test with ssl_disabled attribute.
-        test_ssl_disabled -> Test with ssl_disabled attribute.
-        test_ssl_client_flag2 -> Test with ssl_client_flag attribute.
-        test_ssl_client_flag -> Test with ssl_client_flag attribute.
-        test_ssl_client_cert2 -> Test with ssl_client_cert attribute.
-        test_ssl_client_cert -> Test with ssl_client_cert attribute.
-        test_ssl_client_key2 -> Test with ssl_client_key attribute.
-        test_ssl_client_key -> Test with ssl_client_key attribute.
-        test_ssl_client_ca2 -> Test with ssl_client_ca attribute.
-        test_ssl_client_ca -> Test with ssl_client_ca attribute.
-        test_sql_pass -> Test with sql_pass attribute.
-        test_indb_buf_write -> Test with indb_buf_write attribute.
-        test_version -> Test with version attribute.
-        test_conn_msg -> Test with conn_msg attribute.
-        test_conn -> Test with conn attribute.
-        test_rep_user -> Test with rep user settings.
-        test_no_rep_user -> Test with no rep user settings.
-        test_config -> Test with config attribute.
-        test_no_extra_def_file -> Test with no extra_def_file arg.
-        test_extra_def_file -> Test with passing extra_def_file arg.
-        test_no_port -> Test with no port arg.
-        test_port -> Test with passing port arg.
-        test_no_host -> Test with no host arg.
-        test_host -> Test with passing host arg.
-        test_no_default -> Test with no default file.
-        test_default -> Test with default file.
+        setUp
+        test_ssl_config7
+        test_ssl_config6
+        test_ssl_config5
+        test_ssl_config4
+        test_ssl_config3
+        test_ssl_config2
+        test_ssl_config
+        test_ssl_verify_cert2
+        test_ssl_verify_cert
+        test_ssl_verify_id2
+        test_ssl_verify_id
+        test_ssl_disabled2
+        test_ssl_disabled
+        test_ssl_client_flag2
+        test_ssl_client_flag
+        test_ssl_client_cert2
+        test_ssl_client_cert
+        test_ssl_client_key2
+        test_ssl_client_key
+        test_ssl_client_ca2
+        test_ssl_client_ca
+        test_sql_pass
+        test_indb_buf_write
+        test_version
+        test_conn_msg
+        test_conn
+        test_rep_user
+        test_no_rep_user
+        test_config
+        test_no_extra_def_file
+        test_extra_def_file
+        test_no_port
+        test_port
+        test_no_host
+        test_host
+        test_no_default
+        test_default
 
     """
 

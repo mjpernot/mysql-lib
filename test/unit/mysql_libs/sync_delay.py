@@ -42,7 +42,7 @@ class MasterRep(object):
     Description:  Class stub holder for mysql_class.MasterRep class.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -70,7 +70,7 @@ class SlaveRep(object):
     Description:  Class stub holder for mysql_class.SlaveRep class.
 
     Methods:
-        __init__ -> Class initialization.
+        __init__
 
     """
 
@@ -106,11 +106,11 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_io_sync_fail_non_gtid -> Test with IO sync fail with non-GTID.
-        test_io_sync_good_non_gtid -> Test with IO sync good with non-GTID.
-        test_io_sync_fail_gtid -> Test with IO sync fail with GTID.
-        test_io_sync_good_gtid -> Test with IO sync good with GTID.
+        setUp
+        test_io_sync_fail_non_gtid
+        test_io_sync_good_non_gtid
+        test_io_sync_fail_gtid
+        test_io_sync_good_gtid
 
     """
 

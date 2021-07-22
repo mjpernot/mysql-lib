@@ -41,12 +41,12 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_rep_user -> Test with passing rep_user information.
-        test_create_slv_rep_inst -> Test with SlaveRep class instance.
-        test_create_mst_rep_inst -> Test with MasterRep class instance.
-        test_create_rep_inst -> Test with Rep class instance.
-        test_create_server_inst -> Test with Server class instance.
+        setUp
+        test_rep_user
+        test_create_slv_rep_inst
+        test_create_mst_rep_inst
+        test_create_rep_inst
+        test_create_server_inst
 
     """
 

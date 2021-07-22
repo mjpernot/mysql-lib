@@ -42,9 +42,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_all -> Test with all return.
-        test_row -> Test with row return.
+        setUp
+        test_all
+        test_row
 
     """
 

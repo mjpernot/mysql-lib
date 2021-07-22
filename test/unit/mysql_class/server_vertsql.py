@@ -42,8 +42,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_vert_sql -> Test vert_sql method.
+        setUp
+        test_vert_sql
 
     """
 

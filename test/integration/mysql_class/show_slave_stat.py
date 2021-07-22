@@ -42,9 +42,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_show_slave_stat2 -> Test show_slave_stat function.
-        test_show_slave_stat -> Test show_slave_stat function.
+        setUp
+        test_show_slave_stat2
+        test_show_slave_stat
 
     """
 

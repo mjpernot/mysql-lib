@@ -41,11 +41,11 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_slv_both_true -> Test with all attrs set to True.
-        test_sql_err_true -> Test with sql_err set to True.
-        test_io_err_true -> Test with io_err set to True.
-        test_default -> Test show_slv_state method.
+        setUp
+        test_slv_both_true
+        test_sql_err_true
+        test_io_err_true
+        test_default
 
     """
 

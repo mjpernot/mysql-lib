@@ -43,13 +43,13 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_non_option -> Test with a non-option.
-        test_start_slaves2 -> Test start option with already started slaves.
-        test_start_slaves -> Test with start option.
-        test_stop_slaves2 -> Test with stop option on stopped slaves.
-        test_stop_slaves -> Test with stop option.
-        tearDown -> Clean up of testing environment.
+        setUp
+        test_non_option
+        test_start_slaves2
+        test_start_slaves
+        test_stop_slaves2
+        test_stop_slaves
+        tearDown
 
     """
 

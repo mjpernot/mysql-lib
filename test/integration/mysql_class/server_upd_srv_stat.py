@@ -42,12 +42,12 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_query_cache_size -> Test using version setting.
-        test_percentage_attr -> Test one of the percentage attributes.
-        test_decision -> Test with decision based attributes.
-        test_derived -> Test with derived attributes.
-        test_base -> Test with base attributes.
+        setUp
+        test_query_cache_size
+        test_percentage_attr
+        test_decision
+        test_derived
+        test_base
 
     """
 

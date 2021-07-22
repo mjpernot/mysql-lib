@@ -40,9 +40,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_or_not_subset -> Test set 1 is not subset of set 2.
-        test_or_subset -> Test set 1 is subset of set 2.
+        setUp
+        test_or_not_subset
+        test_or_subset
 
     """
 

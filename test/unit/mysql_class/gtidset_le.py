@@ -40,10 +40,10 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_gtidset_le_false -> Test GTIDSet.__le__ method for False return.
-        test_gtidset_le_equal -> Test GTIDSet.__le__ for equal values.
-        test_gtidset_le_true -> Test GTIDSet.__le__ method for True return.
+        setUp
+        test_gtidset_le_false
+        test_gtidset_le_equal
+        test_gtidset_le_true
 
     """
 

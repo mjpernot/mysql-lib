@@ -42,12 +42,12 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_none_secsbehind -> Test None for Seconds_Behind_Master.
-        test_int_secsbehind -> Test integer for Seconds_Behind_Master.
-        test_string_secsbehind -> Test string for Seconds_Behind_Master.
+        setUp
+        test_none_secsbehind
+        test_int_secsbehind
+        test_string_secsbehind
         test_except_secsbehind -> Test raising exception: Seconds_Behind_Master
-        test_value -> Test with values returned.
+        test_value
 
     """
 

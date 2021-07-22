@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.2.1] - 2021-06-16
+### Changed
+- mysql_libs.create_instance, mysql_libs.create_slv_array:  Added SSL connection parameters to class instance call.
+- mysql_libs.change_master_to:  Reformatted chg_master_to variable.
+
+### Deprecated
+- mysql_libs.crt_srv_inst:  Being replaced with mysql_libs.create_instance function.
+
+
 ## [5.2.0] - 2021-05-14
 ### Fixed
 - mysql_class.Server.\_\_init\_\_:  Initialized self.config and self.sql_pass attributes.
