@@ -9,6 +9,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_libs.create_instance, mysql_libs.create_slv_array:  Added SSL connection parameters to class instance call.
 - mysql_libs.change_master_to:  Reformatted chg_master_to variable.
 
+### Deprecated
+- mysql_libs.crt_srv_inst:  Replaced by mysql_libs.create_instance function.
+
 
 ## [5.2.0] - 2021-05-14
 ### Fixed
