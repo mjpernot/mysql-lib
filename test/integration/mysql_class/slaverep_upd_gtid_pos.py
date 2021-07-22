@@ -43,9 +43,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_gtid_mode -> Test with GTID mode.
-        test_gtid_pos -> Test with GTID positions.
+        setUp
+        test_gtid_mode
+        test_gtid_pos
 
     """
 

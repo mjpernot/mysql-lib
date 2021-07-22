@@ -40,8 +40,8 @@ class Server(object):
     Description:  Class is a representation of Server class.
 
     Methods:
-        __init__ -> Initialize configuration environment.
-        disconnect -> Method is representation of disconnect method.
+        __init__
+        disconnect
 
     """
 
@@ -77,19 +77,19 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Unit testing initilization.
-        test_combo_no_conn2 -> Test with combination and no connections.
-        test_combo_no_conn -> Test with combination and no connections.
-        test_combo2 -> Test with combination of list and single instances.
-        test_combo -> Test with combination of list and single instances.
-        test_list_no_conn3 -> Test with database with no connection in list.
-        test_list_no_conn2 -> Test with database with no connection in list.
-        test_list_no_conn -> Test with database with no connection in list.
-        test_single_no_conn -> Test with database with no connection.
-        test_list_entry3 -> Test with disconnect in list.
-        test_list_entry2 -> Test with disconnect in list.
-        test_list_entry -> Test with disconnect in list.
-        test_single_entry -> Test with single disconnect.
+        setUp
+        test_combo_no_conn2
+        test_combo_no_conn
+        test_combo2
+        test_combo
+        test_list_no_conn3
+        test_list_no_conn2
+        test_list_no_conn
+        test_single_no_conn
+        test_list_entry3
+        test_list_entry2
+        test_list_entry
+        test_single_entry
 
     """
 

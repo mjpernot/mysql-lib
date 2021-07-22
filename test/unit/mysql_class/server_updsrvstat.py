@@ -42,10 +42,10 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_version -> Test with version pre MySQL 8.0.
-        test_value2 -> Test with smaller tmp_tbl size.
-        test_value -> Test with values returned.
+        setUp
+        test_version
+        test_value2
+        test_value
 
     """
 

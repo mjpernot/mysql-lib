@@ -42,8 +42,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_flush_logs -> Test with flushing binary log.
+        setUp
+        test_flush_logs
 
     """
 

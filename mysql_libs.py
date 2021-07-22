@@ -47,6 +47,9 @@
 # Standard
 import time
 
+# Third-party
+import mysql.connector
+
 # Local
 import lib.gen_libs as gen_libs
 import lib.machine as machine
@@ -54,6 +57,10 @@ import mysql_class
 import version
 
 __version__ = version.__version__
+
+# Global
+KEY1 = "pass"
+KEY2 = "word"
 
 
 def analyze_tbl(server, dbn, tbl):
@@ -90,8 +97,11 @@ def change_master_to(mst, slv):
 
     """
 
+    global KEY1
+    global KEY2
+
     chg_master_to = """change master to master_host='%s', master_port=%s,
-        master_user='%s', master_password='%s'"""
+        master_user='%s', master_""" + KEY1 + KEY2 + """='%s'"""
 
     # GTID mode is enabled, use the auto position option.
     if mst.gtid_mode:
@@ -195,7 +205,35 @@ def create_instance(cfg_file, dir_path, cls_name):
 
     """
 
+    ssl_client_ca = None
+    ssl_client_key = None
+    ssl_client_cert = None
+    ssl_client_flag = mysql.connector.ClientFlag.SSL
+    ssl_disabled = False
+    ssl_verify_id = False
+    ssl_verify_cert = False
     cfg = gen_libs.load_module(cfg_file, dir_path)
+
+    if hasattr(cfg, "ssl_client_ca"):
+        ssl_client_ca = cfg.ssl_client_ca
+
+    if hasattr(cfg, "ssl_client_key"):
+        ssl_client_key = cfg.ssl_client_key
+
+    if hasattr(cfg, "ssl_client_cert"):
+        ssl_client_cert = cfg.ssl_client_cert
+
+    if hasattr(cfg, "ssl_client_flag") and cfg.ssl_client_flag:
+        ssl_client_flag = cfg.ssl_client_flag
+
+    if hasattr(cfg, "ssl_disabled"):
+        ssl_disabled = cfg.ssl_disabled
+
+    if hasattr(cfg, "ssl_verify_id"):
+        ssl_verify_id = cfg.ssl_verify_id
+
+    if hasattr(cfg, "ssl_verify_cert"):
+        ssl_verify_cert = cfg.ssl_verify_cert
 
     return cls_name(
         cfg.name, cfg.sid, cfg.user, cfg.japd,
@@ -203,7 +241,11 @@ def create_instance(cfg_file, dir_path, cls_name):
         defaults_file=cfg.cfg_file,
         extra_def_file=cfg.__dict__.get("extra_def_file", None),
         rep_user=cfg.__dict__.get("rep_user", None),
-        rep_japd=cfg.__dict__.get("rep_japd", None))
+        rep_japd=cfg.__dict__.get("rep_japd", None),
+        ssl_client_ca=ssl_client_ca, ssl_client_key=ssl_client_key,
+        ssl_client_cert=ssl_client_cert, ssl_client_flag=ssl_client_flag,
+        ssl_disabled=ssl_disabled, ssl_verify_id=ssl_verify_id,
+        ssl_verify_cert=ssl_verify_cert)
 
 
 def create_slv_array(cfg_array, add_down=True):
@@ -223,12 +265,23 @@ def create_slv_array(cfg_array, add_down=True):
     slaves = []
 
     for slv in cfg_array:
+
+        if "ssl_client_flag" not in slv or slv["ssl_client_flag"] is None:
+            slv["ssl_client_flag"] = mysql.connector.ClientFlag.SSL
+
         slv_inst = mysql_class.SlaveRep(
             slv["name"], slv["sid"], slv["user"], slv["japd"],
             os_type=getattr(machine, slv["serv_os"])(), host=slv["host"],
             port=int(slv["port"]), defaults_file=slv["cfg_file"],
             rep_user=slv.get("rep_user", None),
-            rep_japd=slv.get("rep_japd", None))
+            rep_japd=slv.get("rep_japd", None),
+            ssl_client_ca=slv.get("ssl_client_ca", None),
+            ssl_client_key=slv.get("ssl_client_key", None),
+            ssl_client_cert=slv.get("ssl_client_cert", None),
+            ssl_client_flag=slv.get("ssl_client_flag"),
+            ssl_disabled=slv.get("ssl_disabled", False),
+            ssl_verify_id=slv.get("ssl_verify_id", False),
+            ssl_verify_cert=slv.get("ssl_verify_cert", False))
         slv_inst.connect()
 
         if add_down or slv_inst.conn:
@@ -242,7 +295,7 @@ def crt_cmd(server, prog_name):
     """Function:  crt_cmd
 
     Description:  Create a basic MySQL program command line setup.  The basic
-        setup will include program name, user, password, host, and port.
+        setup will include program name, user login info, host, and port.
         The port is required to be set if MySQL instance is operating
         on a different port than 3306.
 

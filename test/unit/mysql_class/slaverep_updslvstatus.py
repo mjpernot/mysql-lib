@@ -42,26 +42,26 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_run -> Test with run attribute in MySQL 8.0.
-        test_run_pre -> Test with run attribute in pre-MySQL 8.0.
-        test_none_secsbehind -> Test None for Seconds_Behind_Master.
-        test_int_secsbehind -> Test integer for Seconds_Behind_Master.
-        test_string_secsbehind -> Test string for Seconds_Behind_Master.
+        setUp
+        test_run
+        test_run_pre
+        test_none_secsbehind
+        test_int_secsbehind
+        test_string_secsbehind
         test_except_secsbehind -> Test raising exception: Seconds_Behind_Master
-        test_int_skipcounter -> Test integer for Skip_Counter.
-        test_string_skipcounter -> Test string for Skip_Counter.
-        test_except_skipcounter -> Test raising exception: Skip_Counter.
-        test_int_masterserverid -> Test integer for Master_Server_Id.
-        test_string_masterserverid -> Test string for Master_Server_Id.
-        test_except_masterserverid -> Test raising exception: Master_Server_Id.
-        test_int_lastsqlerror -> Test integer for Last_SQL_Errno.
-        test_string_lastsqlerror -> Test string for Last_SQL_Errno.
-        test_except_lastsqlerror -> Test raising exception for Last_SQL_Errno.
-        test_int_lastioerror -> Test integer for Last_IO_Errno.
-        test_string_lastioerror -> Test string for Last_IO_Errno.
-        test_except_lastioerror -> Test raising exception for Last_IO_Errno.
-        test_value -> Test with values returned.
+        test_int_skipcounter
+        test_string_skipcounter
+        test_except_skipcounter
+        test_int_masterserverid
+        test_string_masterserverid
+        test_except_masterserverid
+        test_int_lastsqlerror
+        test_string_lastsqlerror
+        test_except_lastsqlerror
+        test_int_lastioerror
+        test_string_lastioerror
+        test_except_lastioerror
+        test_value
 
     """
 

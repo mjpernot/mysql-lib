@@ -42,9 +42,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_pool_write -> Test with Innodb_buffer_pool_write_requests attr.
-        test_value -> Test with values returned.
+        setUp
+        test_pool_write
+        test_value
 
     """
 

@@ -43,8 +43,8 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Initialize environment.
-        disconnect -> Test of disconnect method.
+        __init__
+        disconnect
 
     """
 
@@ -80,14 +80,14 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_version -> Test with version attribute..
-        test_silent_exception2 -> Test silent connection method exception.
-        test_silent_exception -> Test silent connection method exception.
-        test_database -> Test with database argument passed.
-        test_config -> Test with config attribute.
-        test_connect_exception -> Test connection method exception.
-        test_connect -> Test connect method.
+        setUp
+        test_version
+        test_silent_exception2
+        test_silent_exception
+        test_database
+        test_config
+        test_connect_exception
+        test_connect
 
     """
 

@@ -40,8 +40,8 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
-        sql -> Stub holder for mysql_class.Server.sql method.
+        __init__
+        sql
 
     """
 
@@ -64,7 +64,7 @@ class Server(object):
         Description:  Stub holder for mysql_class.Server.col_sql method.
 
         Arguments:
-            (input) qry -> Query command.
+            (input) qry
 
         """
 
@@ -80,8 +80,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_fetch_tbl_dict -> Test fetch_tbl_dict function.
+        setUp
+        test_fetch_tbl_dict
 
     """
 

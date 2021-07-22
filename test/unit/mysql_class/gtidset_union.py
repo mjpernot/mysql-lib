@@ -40,9 +40,9 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_not_gtidset -> Test GTIDSet.union method with non-GTIDSet.
-        test_gtidset_union -> Test GTIDSet.union method.
+        setUp
+        test_not_gtidset
+        test_gtidset_union
 
     """
 

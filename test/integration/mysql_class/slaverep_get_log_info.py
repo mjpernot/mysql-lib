@@ -43,11 +43,11 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_exec_mst_pos -> Test with exec_mst_pos attribute.
-        test_mst_read_pos -> Test with mst_read_pos attribute.
-        test_relay_mst_log -> Test with relay_mst_log attribute.
-        test_mst_log -> Test with mst_log attribute.
+        setUp
+        test_exec_mst_pos
+        test_mst_read_pos
+        test_relay_mst_log
+        test_mst_log
 
     """
 

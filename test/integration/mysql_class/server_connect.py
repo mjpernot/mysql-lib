@@ -42,17 +42,17 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_conn_msg3 -> Test conn_msg with corrected passwd.
-        test_version2 -> Test with version attribute with connection failure.
-        test_version -> Test with version attribute.
-        test_silent -> Test silent option.
-        test_conn_msg2 -> Test conn_msg attribute failed connection.
-        test_conn_msg -> Test conn_msg attribute failed connection.
-        test_database -> Test with database argument passed.
-        test_config -> Test with config attribute.
-        test_connect_exception -> Test connection method exception.
-        test_connect -> Test connect method.
+        setUp
+        test_conn_msg3
+        test_version2
+        test_version
+        test_silent
+        test_conn_msg2
+        test_conn_msg
+        test_database
+        test_config
+        test_connect_exception
+        test_connect
 
     """
 

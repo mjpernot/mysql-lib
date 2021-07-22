@@ -42,12 +42,12 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_silent_true -> Test with silent true set.
-        test_silent_false -> Test with silent false set.
-        test_silent_default -> Test with silent default setting.
-        test_db_up -> Test with connection up.
-        test_db_down -> Test with connection down.
+        setUp
+        test_silent_true
+        test_silent_false
+        test_silent_default
+        test_db_up
+        test_db_down
 
     """
 

@@ -40,8 +40,8 @@ class Server(object):
     Description:  Class stub holder for Server class.
 
     Methods:
-        __init__ -> Class initialization.
-        sql -> Stub holder for Server.sql method.
+        __init__
+        sql
 
     """
 
@@ -65,8 +65,8 @@ class Server(object):
         Description:  Stub holder for Server.vert_sql method.
 
         Arguments:
-            (input) cmd -> Query command.
-            (input) var -> Variable name.
+            (input) cmd
+            (input) var
 
         """
 
@@ -83,8 +83,8 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_fetch_sys_var -> Test fetch_sys_var function.
+        setUp
+        test_fetch_sys_var
 
     """
 

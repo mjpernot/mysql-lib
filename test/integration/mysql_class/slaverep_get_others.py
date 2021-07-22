@@ -43,10 +43,10 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_conn_retry -> Test with conn_retry attribute.
-        test_tmp_tbl -> Test with tmp_tbl attribute.
-        test_skip_ctr -> Test with skip_ctr attribute.
+        setUp
+        test_conn_retry
+        test_tmp_tbl
+        test_skip_ctr
 
     """
 

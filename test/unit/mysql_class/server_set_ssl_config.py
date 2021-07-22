@@ -42,34 +42,34 @@ class UnitTest(unittest.TestCase):
     Description:  Class which is a representation of a unit testing.
 
     Methods:
-        setUp -> Initialize testing environment.
-        test_key_cert_yes_ca6 -> Test with cert and key present and with ca.
-        test_key_cert_yes_ca5 -> Test with cert and key present and with ca.
-        test_key_cert_yes_ca4 -> Test with cert and key present and with ca.
-        test_key_cert_yes_ca3 -> Test with cert and key present and with ca.
-        test_key_cert_yes_ca2 -> Test with cert and key present and with ca.
-        test_key_cert_yes_ca -> Test with cert and key present and with ca.
-        test_key_cert_no_ca5 -> Test with cert and key present, but no ca.
-        test_key_cert_no_ca4 -> Test with cert and key present, but no ca.
-        test_key_cert_no_ca3 -> Test with cert and key present, but no ca.
-        test_key_cert_no_ca2 -> Test with cert and key present, but no ca.
-        test_key_cert_no_ca -> Test with cert and key present, but no ca.
-        test_ssl_all2 -> Test with all ssl arguments present.
-        test_ssl_all -> Test with all ssl arguments present.
-        test_ssl_client_cert -> Test with ssl_client_cert only.
-        test_ssl_client_key -> Test with ssl_client_key only.
-        test_ssl_client_flag -> Test with ssl_client_flag present.
-        test_ssl_client_key_cert5 -> Test with both cert and key present.
-        test_ssl_client_key_cert4 -> Test with both cert and key present.
-        test_ssl_client_key_cert3 -> Test with both cert and key present.
-        test_ssl_client_key_cert2 -> Test with both cert and key present.
-        test_ssl_client_key_cert -> Test with both cert and key present.
-        test_ssl_client_ca6 -> Test with ssl_client_ca only present.
-        test_ssl_client_ca5 -> Test with ssl_client_ca only present.
-        test_ssl_client_ca4 -> Test with ssl_client_ca only present.
-        test_ssl_client_ca3 -> Test with ssl_client_ca only present.
-        test_ssl_client_ca2 -> Test with ssl_client_ca only present.
-        test_ssl_client_ca -> Test with ssl_client_ca only present.
+        setUp
+        test_key_cert_yes_ca6
+        test_key_cert_yes_ca5
+        test_key_cert_yes_ca4
+        test_key_cert_yes_ca3
+        test_key_cert_yes_ca2
+        test_key_cert_yes_ca
+        test_key_cert_no_ca5
+        test_key_cert_no_ca4
+        test_key_cert_no_ca3
+        test_key_cert_no_ca2
+        test_key_cert_no_ca
+        test_ssl_all2
+        test_ssl_all
+        test_ssl_client_cert
+        test_ssl_client_key
+        test_ssl_client_flag
+        test_ssl_client_key_cert5
+        test_ssl_client_key_cert4
+        test_ssl_client_key_cert3
+        test_ssl_client_key_cert2
+        test_ssl_client_key_cert
+        test_ssl_client_ca6
+        test_ssl_client_ca5
+        test_ssl_client_ca4
+        test_ssl_client_ca3
+        test_ssl_client_ca2
+        test_ssl_client_ca
 
     """
 

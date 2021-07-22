@@ -21,8 +21,7 @@
     - python-pip
 
   * Local class/library dependencies within the program structure.
-    - lib/machine
-    - lib/gen_libs
+    - python-lib
 
 
 # Installation:
@@ -121,8 +120,6 @@ Make the appropriate change to the environment.
     - extra_def_file = "PYTHON_PROJECT/config/mysql.cfg"
     - cfg_file = "DIRECTORY_PATH/my.cnf"
     - ssl_disabled = True
-    - ssl_verify_id = True
-    - ssl_verify_cert = True
 
   * Change these entries only if required:
     - serv_os = "Linux"
