@@ -101,7 +101,7 @@ def change_master_to(mst, slv):
     global KEY2
 
     chg_master_to = """change master to master_host='%s', master_port=%s,
-        master_user='%s', master_""" + KEY1 + KEY2 +"""='%s'"""
+        master_user='%s', master_""" + KEY1 + KEY2 + """='%s'"""
 
     # GTID mode is enabled, use the auto position option.
     if mst.gtid_mode:
