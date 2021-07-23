@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.2.2] - 2021-06-23
+
+
 ## [5.2.1] - 2021-06-16
 ### Changed
 - mysql_libs.create_instance, mysql_libs.create_slv_array:  Added SSL connection parameters to class instance call.
