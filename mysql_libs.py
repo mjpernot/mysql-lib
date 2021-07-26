@@ -103,6 +103,13 @@ def change_master_to(mst, slv):
     chg_master_to = """change master to master_host='%s', master_port=%s,
         master_user='%s', master_""" + KEY1 + KEY2 + """='%s'"""
 
+    # Add SSL options if master is configured
+    if mysql_class.fetch_sys_var(
+        mst, "require_secure_transport", level="session").get(
+            "require_secure_transport", "OFF") == "ON":
+
+        chg_master_to = chg_master_to + """, master_ssl=1"""
+
     # GTID mode is enabled, use the auto position option.
     if mst.gtid_mode:
         chg_master_to = chg_master_to + """, master_auto_position=1"""
