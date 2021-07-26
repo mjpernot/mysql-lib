@@ -24,6 +24,7 @@ else:
     import unittest
 
 # Third-party
+import mock
 
 # Local
 sys.path.append(os.getcwd())
@@ -92,6 +93,12 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_ssl_on2
+        test_ssl_on
+        test_ssl_off2
+        test_ssl_off
+        test_ssl_empty_return2
+        test_ssl_empty_return
         test_change_master_to_non_gtid
         test_change_master_to_gtid
 
@@ -109,8 +116,120 @@ class UnitTest(unittest.TestCase):
 
         self.master = Server()
         self.slave = Server()
+        self.fetch = {}
+        self.fetch2 = {"require_secure_transport": "OFF"}
+        self.fetch3 = {"require_secure_transport": "ON"}
 
-    def test_change_master_to_non_gtid(self):
+    @mock.patch("mysql_libs.mysql_class.fetch_sys_var")
+    def test_ssl_on2(self, mock_fetch):
+
+        """Function:  test_ssl_on2
+
+        Description:  Test with SSL returned with secure transport set to on.
+
+        Arguments:
+
+        """
+
+        mock_fetch.return_value = self.fetch3
+
+        self.master.gtid_mode = None
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
+
+    @mock.patch("mysql_libs.mysql_class.fetch_sys_var")
+    def test_ssl_on(self, mock_fetch):
+
+        """Function:  test_ssl_on
+
+        Description:  Test with SSL returned with secure transport set to on.
+
+        Arguments:
+
+        """
+
+        mock_fetch.return_value = self.fetch3
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
+
+    @mock.patch("mysql_libs.mysql_class.fetch_sys_var")
+    def test_ssl_off2(self, mock_fetch):
+
+        """Function:  test_ssl_off2
+
+        Description:  Test with SSL returned with secure transport set to off.
+
+        Arguments:
+
+        """
+
+        mock_fetch.return_value = self.fetch2
+
+        self.master.gtid_mode = None
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
+
+    @mock.patch("mysql_libs.mysql_class.fetch_sys_var")
+    def test_ssl_off(self, mock_fetch):
+
+        """Function:  test_ssl_off
+
+        Description:  Test with SSL returned with secure transport set to off.
+
+        Arguments:
+
+        """
+
+        mock_fetch.return_value = self.fetch2
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
+
+    @mock.patch("mysql_libs.mysql_class.fetch_sys_var")
+    def test_ssl_empty_return2(self, mock_fetch):
+
+        """Function:  test_ssl_empty_return2
+
+        Description:  Test with SSL returned with no data.
+
+        Arguments:
+
+        """
+
+        mock_fetch.return_value = self.fetch
+
+        self.master.gtid_mode = None
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
+
+    @mock.patch("mysql_libs.mysql_class.fetch_sys_var")
+    def test_ssl_empty_return(self, mock_fetch):
+
+        """Function:  test_ssl_empty_return
+
+        Description:  Test with SSL returned with no data.
+
+        Arguments:
+
+        """
+
+        mock_fetch.return_value = self.fetch
+
+        with gen_libs.no_std_out():
+            self.assertFalse(mysql_libs.change_master_to(self.master,
+                                                         self.slave))
+
+    @mock.patch("mysql_libs.mysql_class.fetch_sys_var")
+    def test_change_master_to_non_gtid(self, mock_fetch):
 
         """Function:  test_change_master_to_non_gtid
 
@@ -120,13 +239,16 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        mock_fetch.return_value = self.fetch
+
         self.master.gtid_mode = None
 
         with gen_libs.no_std_out():
             self.assertFalse(mysql_libs.change_master_to(self.master,
                                                          self.slave))
 
-    def test_change_master_to_gtid(self):
+    @mock.patch("mysql_libs.mysql_class.fetch_sys_var")
+    def test_change_master_to_gtid(self, mock_fetch):
 
         """Function:  test_change_master_to_gtid
 
@@ -135,6 +257,8 @@ class UnitTest(unittest.TestCase):
         Arguments:
 
         """
+
+        mock_fetch.return_value = self.fetch
 
         with gen_libs.no_std_out():
             self.assertFalse(mysql_libs.change_master_to(self.master,
