@@ -105,9 +105,8 @@ def change_master_to(mst, slv):
 
     # Add SSL options if master is configured
     if mysql_class.fetch_sys_var(
-        mst, "require_secure_transport", level="session").get(
-            "require_secure_transport", "OFF") == "ON":
-
+            mst, "require_secure_transport", level="session").get(
+                "require_secure_transport", "OFF") == "ON":
         chg_master_to = chg_master_to + """, master_ssl=1"""
 
     # GTID mode is enabled, use the auto position option.
