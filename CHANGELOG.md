@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.3.0] - 2022-02-14
+- Added TLS version capability to classes.
+
+### Changed
+- Documentation updates.
+
+
 ## [5.2.2] - 2021-06-23
 ### Changed
 - mysql_libs.change_master_to:  Add SSL options if master is configured for SSL connections.
