@@ -525,7 +525,7 @@ class Server(object):
             (input) name -> Name of the MySQL server.
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
-            (input) sql_pass -> SQL user's password.
+            (input) sql_pass -> SQL user's pswd.
             (input) os_type -> Machine operating system type class instance.
             (input) kwargs:
                 extra_def_file -> Location of extra defaults file.
@@ -1215,7 +1215,7 @@ class Rep(Server):
             (input) name -> Name of the MySQL server.
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
-            (input) sql_pass -> SQL user's password.
+            (input) sql_pass -> SQL user's pswd.
             (input) os_type -> Machine operating system type class instance.
             (input) **kwargs:
                 extra_def_file -> Location of extra defaults file.
@@ -1375,7 +1375,7 @@ class MasterRep(Rep):
             (input) name -> Name of the MySQL server.
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
-            (input) sql_pass -> SQL user's password.
+            (input) sql_pass -> SQL user's pswd.
             (input) os_type -> Machine operating system type class instance.
             (input) host -> 'localhost' or host name or IP.
             (input) port -> '3306' or port for MySQL.
@@ -1383,7 +1383,7 @@ class MasterRep(Rep):
             (input) **kwargs:
                 extra_def_file -> Location of extra defaults file.
                 rep_user -> Replication user name.
-                rep_japd -> Replication user password.
+                rep_japd -> Replication user pswd.
                 host -> Host name or IP of server.
                 port -> Port for MySQL.
                 defaults_file -> Location of my.cnf file.
@@ -1523,7 +1523,7 @@ class SlaveRep(Rep):
             (input) name -> Name of the MySQL server.
             (input) server_id -> Server's ID.
             (input) sql_user -> SQL user's name.
-            (input) sql_pass -> SQL user's password.
+            (input) sql_pass -> SQL user's pswd.
             (input) os_type -> Machine operating system type class instance.
             (input) host -> 'localhost' or host name or IP.
             (input) port -> '3306' or port for MySQL.
@@ -1534,7 +1534,7 @@ class SlaveRep(Rep):
                 port -> Port for MySQL.
                 defaults_file -> Location of my.cnf file.
                 rep_user -> Replication user name.
-                rep_japd -> Replication user password.
+                rep_japd -> Replication user pswd.
                 ssl_client_ca -> SSL certificate authority file.
                 ssl_client_key -> SSL X.509 key file.
                 ssl_client_cert -> SSL X.509 certificate file.
