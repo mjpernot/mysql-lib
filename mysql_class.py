@@ -512,6 +512,7 @@ class Server(object):
         set_pass_config
         setup_ssl
         set_ssl_config
+        set_tls_config
 
     """
 
@@ -567,6 +568,10 @@ class Server(object):
         self.ssl_verify_id = kwargs.get("ssl_verify_id", False)
         self.ssl_verify_cert = kwargs.get("ssl_verify_cert", False)
         self.set_ssl_config()
+
+        # TLS configuration settings
+        self.tls_versions = kwargs.get("tls_versions", list())
+        self.set_tls_config()
 
         # SQL connection handler.
         self.conn = None
@@ -1182,6 +1187,22 @@ class Server(object):
             if self.ssl_client_key and self.ssl_client_cert:
                 self.config["ssl_key"] = self.ssl_client_key
                 self.config["ssl_cert"] = self.ssl_client_cert
+
+    def set_tls_config(self):
+
+        """Method:  set_tls_config
+
+        Description:  Append TLS attributes to config.
+
+        Arguments:
+
+        """
+
+        if self.tls_versions and isinstance(self.tls_versions, list):
+            self.config["tls_versions"] = self.tls_versions
+
+        elif self.tls_versions:
+            self.config["tls_versions"] = [self.tls_versions]
 
 
 class Rep(Server):

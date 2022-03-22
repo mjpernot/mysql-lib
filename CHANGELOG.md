@@ -8,7 +8,11 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Added TLS version capability to classes.
 
 ### Changed
+- mysql_class.Server.\_\_init\_\_: Added tls_version attribute.
 - Documentation updates.
+
+### Added
+- mysql_class.set_tls_config: Append TLS attributes to config dictionary attribute.
 
 
 ## [5.2.2] - 2021-06-23
@@ -59,10 +63,10 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.SlaveRep.upd_slv_status:  The attributes self.tran_retry and self.run are in different location in MySQL 8.0.
 - mysql_class.Server.upd_mst_rep_stat:  Set self.innodb_xa to None if not present in MySQL 8.0.
 - mysql_class.Server.upd_srv_stat:  Set self.qry_cache to zero if not present in MySQL 8.0.
-- mysql_class.Server.connect:  Added get_server_version call to set server's self.version attribute.
+- mysql_class.Server.connect:  Added get_server_version call to set server self.version attribute.
 - mysql_class.Server.upd_srv_perf:  Added self.indb_buf_write to capture innodb_buffer_pool_write_requests.
-- mysql_class.Server.\_\_init\_\_:  Added self.indb_buf_write attribute to hold MySQL's innodb_buffer_pool_write_requests.
-- mysql_class.Server.\_\_init\_\_:  Added self.version attribute to hold MySQL server's version.
+- mysql_class.Server.\_\_init\_\_:  Added self.indb_buf_write attribute to hold MySQL innodb_buffer_pool_write_requests.
+- mysql_class.Server.\_\_init\_\_:  Added self.version attribute to hold MySQL server version.
 
 
 ## [5.0.4] - 2021-02-05
@@ -125,7 +129,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_libs.create_instance:  Set keyword args in generic mysql_class class call.
 - mysql_libs.create_slv_array:  Set keyword args in mysql_class.SlaveRep call.
 - mysql_libs.change_master_to:  Replaced sql_user and sql_pass with rep_user and rep_pswd respectively.
-- mysql_class.MasterRep.\_\_init\_\_:  Added rep_user and rep_pswd to the class' attributes.
+- mysql_class.MasterRep.\_\_init\_\_:  Added rep_user and rep_pswd to the class attributes.
 - Documentation updates.
 
 ### Removed
@@ -191,7 +195,7 @@ Breaking Change
 - mysql_class.Server.connect:  Moved change database to within the connection string.
 
 ### Added
-- mysql_class.Server.get_name:  Return the server's name.  Replacing the get_name methods in MasterRep and SlaveRep classes.
+- mysql_class.Server.get_name:  Return the server name.  Replacing the get_name methods in MasterRep and SlaveRep classes.
 - mysql_libs.\_sql_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
 - mysql_libs.\_io_rep_chk:  Create private function for is_rep_delay() to reduce factor complexity.
 - mysql_libs.\_io_delay_chk:  Create private function for sync_delay() to reduce factor complexity.
@@ -211,7 +215,7 @@ Breaking Change
 - mysql_class.Server.\_\_init\_\_:  Removed reference to innodb_additional_mem_pool_size.  Deprecated in MySQL 5.6.3 and removed in MySQL 5.7.4.
 - mysql_class.SlaveRep.get_name:  Replaced by the mysql_class.Server.get_name method.
 - mysql_class.MasterRep.get_name:  Replaced by the mysql_class.Server.get_name method.
-- mysql_class.Server.Row:  Removed the class it's no longer required.  The "mysql.connector" module has it's own Row iterator.
+- mysql_class.Server.Row:  Removed the class it is no longer required.  The "mysql.connector" module has it is own Row iterator.
 - mysql_class.compare_sets.inner_compare:  Remove inner function, was replaced by \_inner_compare.
 
 
