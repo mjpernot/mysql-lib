@@ -11,6 +11,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.Server.\_\_init\_\_: Added tls_version attribute.
 - Documentation updates.
 
+### Added
+- mysql_class.set_tls_config: Append TLS attributes to config dictionary attribute.
+
 
 ## [5.2.2] - 2021-06-23
 ### Changed
