@@ -568,6 +568,9 @@ class Server(object):
         self.ssl_verify_cert = kwargs.get("ssl_verify_cert", False)
         self.set_ssl_config()
 
+        # TLS configuration settings
+        self.tls_versions = kwargs.get("tls_versions", list())
+
         # SQL connection handler.
         self.conn = None
         self.conn_msg = None
