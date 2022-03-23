@@ -254,7 +254,7 @@ def create_instance(cfg_file, dir_path, cls_name):
         ssl_verify_cert=ssl_verify_cert)
 
 
-def create_slv_array(cfg_array, add_down=True):
+def create_slv_array(cfg_array, add_down=True, **kwargs):
 
     """Function:  create_slv_array
 
@@ -263,6 +263,8 @@ def create_slv_array(cfg_array, add_down=True):
     Arguments:
         (input) cfg_array -> List of configurations.
         (input) add_down -> True|False - Add any down slaves to the array.
+        (input) **kwargs:
+                silent -> True|False - Print connection error message.
         (output) slaves -> List of slave replication instances.
 
     """
@@ -288,7 +290,7 @@ def create_slv_array(cfg_array, add_down=True):
             ssl_disabled=slv.get("ssl_disabled", False),
             ssl_verify_id=slv.get("ssl_verify_id", False),
             ssl_verify_cert=slv.get("ssl_verify_cert", False))
-        slv_inst.connect()
+        slv_inst.connect(silent=kwargs.get("silent", False))
 
         if add_down or slv_inst.conn:
             slaves.append(slv_inst)
