@@ -40,6 +40,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/rep_showslvhosts.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_showslvstate.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_startslave.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_stopslave.py
+coverage run -a --source=mysql_class test/unit/mysql_class/rep_verify_srv_id.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_chg_db.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_connect.py
 coverage run -a --source=mysql_class test/unit/mysql_class/server_disconnect.py
