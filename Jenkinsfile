@@ -48,6 +48,7 @@ pipeline {
                 ./test/unit/mysql_class/rep_showslvstate.py
                 ./test/unit/mysql_class/rep_startslave.py
                 ./test/unit/mysql_class/rep_stopslave.py
+                ./test/unit/mysql_class/rep_verify_srv_id.py
                 ./test/unit/mysql_class/server_chg_db.py
                 ./test/unit/mysql_class/server_connect.py
                 ./test/unit/mysql_class/server_disconnect.py
