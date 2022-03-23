@@ -7,12 +7,16 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ## [5.3.0] - 2022-02-14
 - Added TLS version capability to classes.
 
+### Fixed
+- mysql_class.Rep.get_serv_id: Converted output from unicode to int.
+
 ### Changed
 - mysql_libs.create_slv_array: Added silent parameter to connect call.
 - mysql_class.Server.\_\_init\_\_: Added tls_version attribute.
 - Documentation updates.
 
 ### Added
+- mysql_class.Rep.verify_srv_id: Checks to see if the instance configuration file server id matches with the database's server id.
 - mysql_class.set_tls_config: Append TLS attributes to config dictionary attribute.
 
 

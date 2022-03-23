@@ -1223,6 +1223,7 @@ class Rep(Server):
         show_slv_state
         fetch_do_db
         fetch_ign_db
+        verify_srv_id
 
     """
 
@@ -1329,7 +1330,7 @@ class Rep(Server):
 
         var = "server_id"
 
-        return fetch_sys_var(self, var)[var]
+        return int(fetch_sys_var(self, var)[var])
 
     def fetch_do_db(self):
 
@@ -1366,6 +1367,20 @@ class Rep(Server):
             ign_dic = gen_libs.str_2_list(self.ign_db, ",")
 
         return ign_dic
+
+    def verify_srv_id(self):
+
+        """Method:  verify_srv_id
+
+        Description:  Checks to see if the instance configuration file server
+            id matches with the database's server id.
+
+        Arguments:
+            (output) True|False -> If config file id and database id match
+
+        """
+
+        return True if self.server_id == self.get_serv_id() else False
 
 
 class MasterRep(Rep):
