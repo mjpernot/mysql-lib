@@ -8,6 +8,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Added TLS version capability to classes.
 
 ### Changed
+- mysql_libs.create_slv_array: Added silent parameter to connect call.
 - mysql_class.Server.\_\_init\_\_: Added tls_version attribute.
 - Documentation updates.
 
