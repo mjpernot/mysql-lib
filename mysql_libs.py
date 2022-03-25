@@ -263,7 +263,7 @@ def create_slv_array(cfg_array, add_down=True, **kwargs):
         (input) cfg_array -> List of configurations.
         (input) add_down -> True|False - Add any down slaves to the array.
         (input) **kwargs:
-                silent -> True|False - Print connection error message.
+            silent -> True|False - Print connection error message.
         (output) slaves -> List of slave replication instances.
 
     """
