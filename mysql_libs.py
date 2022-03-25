@@ -14,7 +14,6 @@
         create_instance
         create_slv_array
         crt_cmd
-        crt_srv_inst
         disconnect
         fetch_db_dict
         fetch_logs
@@ -323,27 +322,6 @@ def crt_cmd(server, prog_name):
     # Command with auth.
     return [prog_name, "-u", server.sql_user, "-p" + server.sql_pass, "-h",
             server.host, "-P", str(server.port)]
-
-
-def crt_srv_inst(cfg, path):
-
-    """Function:  crt_srv_inst
-
-    Description:  Create a server class instance from the configuration file.
-
-    Arguments:
-        (input) cfg -> Configuration file.
-        (input) path -> Directory path to the configuration file.
-        (output) -> Server instance.
-
-    """
-
-    svr = gen_libs.load_module(cfg, path)
-
-    return mysql_class.Server(
-        svr.name, svr.sid, svr.user, svr.japd,
-        os_type=getattr(machine, svr.serv_os)(), host=svr.host, port=svr.port,
-        defaults_file=svr.cfg_file)
 
 
 def disconnect(*args):
