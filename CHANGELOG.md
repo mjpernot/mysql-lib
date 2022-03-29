@@ -16,8 +16,11 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Documentation updates.
 
 ### Added
-- mysql_class.Rep.verify_srv_id: Checks to see if the instance configuration file server id matches with the database's server id.
+- mysql_class.Rep.verify_srv_id: Checks to see if the instance configuration file server id matches with the database server id.
 - mysql_class.set_tls_config: Append TLS attributes to config dictionary attribute.
+
+### Removed
+- mysql_libs.crt_srv_inst
 
 
 ## [5.2.2] - 2021-06-23
