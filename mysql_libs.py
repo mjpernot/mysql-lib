@@ -101,11 +101,9 @@ def change_master_to(mst, slv):
 
     # Used the earilest version between master and slave
     db_ver = mst.version if mst.version <= slv.version else slv.version
-    print(db_ver)
 
     # Semantic change in MySQL 8.0.23
     master = "source" if db_ver >= (8, 0, 23) else "master"
-    print(master)
 
     chg_master_to = """change """ + master + """ to """ + master + \
         """_host='%s', """ + master + """_port=%s, """ + master + \
