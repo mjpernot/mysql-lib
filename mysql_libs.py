@@ -672,7 +672,10 @@ def reset_slave(server):
 
     """
 
-    server.cmd_sql("reset slave all")
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if server.version >= (8, 0, 22) else "slave"
+
+    server.cmd_sql("reset " + slave + " all")
 
 
 def select_wait_until(server, gtid_pos, timeout=0):
