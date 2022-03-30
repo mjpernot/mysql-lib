@@ -56,6 +56,7 @@ class Server(object):
         """
 
         self.cmd = None
+        self.version = (8, 0, 28)
 
     def cmd_sql(self, cmd):
 
@@ -81,6 +82,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_post_8022
+        test_pre_8022
         test_reset_slave
 
     """
@@ -96,6 +99,32 @@ class UnitTest(unittest.TestCase):
         """
 
         self.server = Server()
+
+    def test_post_8022(self):
+
+        """Function:  test_post_8022
+
+        Description:  Test with post-MySQL 8.0.22 version.
+
+        Arguments:
+
+        """
+
+        self.assertFalse(mysql_libs.reset_slave(self.server))
+
+    def test_pre_8022(self):
+
+        """Function:  test_pre_8022
+
+        Description:  Test with pre-MySQL 8.0.22 version.
+
+        Arguments:
+
+        """
+
+        self.server.version = (8, 0, 21)
+
+        self.assertFalse(mysql_libs.reset_slave(self.server))
 
     def test_reset_slave(self):
 

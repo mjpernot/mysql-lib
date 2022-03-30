@@ -99,26 +99,34 @@ def change_master_to(mst, slv):
     global KEY1
     global KEY2
 
-    chg_master_to = """change master to master_host='%s', master_port=%s,
-        master_user='%s', master_""" + KEY1 + KEY2 + """='%s'"""
+    # Use the earilest version between master and slave
+    db_ver = mst.version if mst.version <= slv.version else slv.version
+
+    # Semantic change in MySQL 8.0.23
+    master = "source" if db_ver >= (8, 0, 23) else "master"
+
+    chg_master_to = """change """ + master + """ to """ + master + \
+        """_host='%s', """ + master + """_port=%s, """ + master + \
+        """_user='%s', """ + master + """_""" + KEY1 + KEY2 + """='%s'"""
 
     # Add SSL options if master is configured
     if mysql_class.fetch_sys_var(
             mst, "require_secure_transport", level="session").get(
                 "require_secure_transport", "OFF") == "ON":
-        chg_master_to = chg_master_to + """, master_ssl=1"""
+        chg_master_to = chg_master_to + """, """ + master + """_ssl=1"""
 
     # GTID mode is enabled, use the auto position option.
     if mst.gtid_mode:
-        chg_master_to = chg_master_to + """, master_auto_position=1"""
+        chg_master_to = chg_master_to + """, """ + master + \
+            """_auto_position=1"""
 
         slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
                                      mst.rep_japd))
 
     # GTID mode is disabled, use file and position options.
     else:
-        chg_master_to = chg_master_to + \
-            """, master_log_file='%s', master_log_pos='%s'"""
+        chg_master_to = chg_master_to + """, """ + master + \
+            """_log_file='%s', """ + master + """_log_pos='%s'"""
 
         slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
                                      mst.rep_japd, mst.file, mst.pos))
@@ -664,7 +672,10 @@ def reset_slave(server):
 
     """
 
-    server.cmd_sql("reset slave all")
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if server.version >= (8, 0, 22) else "slave"
+
+    server.cmd_sql("reset " + slave + " all")
 
 
 def select_wait_until(server, gtid_pos, timeout=0):
@@ -715,15 +726,22 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
     err_msg = None
     gtid = kwargs.get("gtid", None)
     stop_pos = kwargs.get("stop_pos", "before")
-    start_slv = """start slave until """
+
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if slv.version >= (8, 0, 22) else "slave"
+    start_slv = """start """ + slave + """ until """
 
     # Non-GTID MySQL.
     if log_file and log_pos:
         start_slv_until = start_slv + \
             """master_log_file='%s', master_log_pos='%s'""" \
             % (log_file, log_pos)
-        master_pos_wait = """select master_pos_wait('%s', '%s')""" \
-            % (log_file, log_pos)
+
+        # Semantic change in MySQL 8.0.26
+        master = "source" if slv.version >= (8, 0, 26) else "master"
+        master_pos_wait = """select """ + master + \
+            """_pos_wait('%s', '%s')""" % (log_file, log_pos)
+
         slv.cmd_sql(start_slv_until)
         slv.cmd_sql(master_pos_wait)
 

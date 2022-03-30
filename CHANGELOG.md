@@ -6,11 +6,15 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.3.0] - 2022-02-14
 - Added TLS version capability to classes.
+- Updated to work with MySQL 8.0.28 new semantic changes.
 
 ### Fixed
 - mysql_class.Rep.get_serv_id: Converted output from unicode to int.
 
 ### Changed
+- mysql_libs.start_slave_until: Added version check for 8.0.22 to determine if slave or replica should be used and added version check for 8.0.26 to determine if master or souce should be used.
+- mysql_libs.reset_slave, mysql_libs.start_slave_until: Added version check for 8.0.22 to determine if slave or replica should be used.
+- mysql_libs.change_master_to: Added version check for 8.0.23 to determine if master or source should be used.
 - mysql_libs.create_slv_array: Added silent parameter to connect call.
 - mysql_class.Server.\_\_init\_\_: Added tls_version attribute.
 - Documentation updates.
