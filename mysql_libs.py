@@ -726,15 +726,22 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
     err_msg = None
     gtid = kwargs.get("gtid", None)
     stop_pos = kwargs.get("stop_pos", "before")
-    start_slv = """start slave until """
+
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if slv.version >= (8, 0, 22) else "slave"
+    start_slv = """start """ + slave + """ until """
 
     # Non-GTID MySQL.
     if log_file and log_pos:
         start_slv_until = start_slv + \
             """master_log_file='%s', master_log_pos='%s'""" \
             % (log_file, log_pos)
-        master_pos_wait = """select master_pos_wait('%s', '%s')""" \
-            % (log_file, log_pos)
+
+        # Semantic change in MySQL 8.0.26
+        master = "source" if slv.version >= (8, 0, 26) else "master"
+        master_pos_wait = """select """ + master + \
+            """_pos_wait('%s', '%s')""" % (log_file, log_pos)
+
         slv.cmd_sql(start_slv_until)
         slv.cmd_sql(master_pos_wait)
 
