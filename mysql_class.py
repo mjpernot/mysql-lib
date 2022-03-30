@@ -125,7 +125,10 @@ def show_slave_hosts(server):
 
     """
 
-    return server.col_sql("show slave hosts")
+    # Semantic change in MySQL 8.0.22
+    slaves = "replicas" if server.version >= (8, 0, 22) else "slave hosts"
+
+    return server.col_sql("show " + slaves)
 
 
 def show_slave_stat(server):
