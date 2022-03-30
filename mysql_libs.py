@@ -99,7 +99,7 @@ def change_master_to(mst, slv):
     global KEY1
     global KEY2
 
-    # Used the earilest version between master and slave
+    # Use the earilest version between master and slave
     db_ver = mst.version if mst.version <= slv.version else slv.version
 
     # Semantic change in MySQL 8.0.23
