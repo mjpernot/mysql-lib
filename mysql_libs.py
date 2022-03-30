@@ -99,26 +99,36 @@ def change_master_to(mst, slv):
     global KEY1
     global KEY2
 
-    chg_master_to = """change master to master_host='%s', master_port=%s,
-        master_user='%s', master_""" + KEY1 + KEY2 + """='%s'"""
+    # Used the earilest version between master and slave
+    db_ver = mst.version if mst.version <= slv.version else slv.version
+    print(db_ver)
+
+    # Semantic change in MySQL 8.0.23
+    master = "source" if db_ver >= (8, 0, 23) else "master"
+    print(master)
+
+    chg_master_to = """change """ + master + """ to """ + master + \
+        """_host='%s', """ + master + """_port=%s, """ + master + \
+        """_user='%s', """ + master + """_""" + KEY1 + KEY2 + """='%s'"""
 
     # Add SSL options if master is configured
     if mysql_class.fetch_sys_var(
             mst, "require_secure_transport", level="session").get(
                 "require_secure_transport", "OFF") == "ON":
-        chg_master_to = chg_master_to + """, master_ssl=1"""
+        chg_master_to = chg_master_to + """, """ + master + """_ssl=1"""
 
     # GTID mode is enabled, use the auto position option.
     if mst.gtid_mode:
-        chg_master_to = chg_master_to + """, master_auto_position=1"""
+        chg_master_to = chg_master_to + """, """ + master + \
+            """_auto_position=1"""
 
         slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
                                      mst.rep_japd))
 
     # GTID mode is disabled, use file and position options.
     else:
-        chg_master_to = chg_master_to + \
-            """, master_log_file='%s', master_log_pos='%s'"""
+        chg_master_to = chg_master_to + """, """ + master + \
+            """_log_file='%s', """ + master + """_log_pos='%s'"""
 
         slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
                                      mst.rep_japd, mst.file, mst.pos))
