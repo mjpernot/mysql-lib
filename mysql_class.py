@@ -177,7 +177,10 @@ def slave_stop(server):
 
     """
 
-    server.cmd_sql("stop slave")
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if server.version >= (8, 0, 22) else "slave"
+
+    server.cmd_sql("stop " + slave)
 
 
 class Position(collections.namedtuple("Position", "file, pos")):
