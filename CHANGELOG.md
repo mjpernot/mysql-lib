@@ -12,6 +12,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.Rep.get_serv_id: Converted output from unicode to int.
 
 ### Changed
+- mysql_class.Server.upd_slv_rep_stat: Added version for 8.0.26 to determine if 'master' or 'source' and if 'slave' or 'replica' should be used.
 - mysql_class.slave_stop, mysql_class.slave_start, mysql_class.show_slave_stat: Added version check for 8.0.22 to determine if 'slave' or 'replica' should be used.
 - mysql_class.show_slave_hosts: Added version check for 8.0.22 to determine if 'slave hosts' or 'replicas' should be used.
 - mysql_libs.start_slave_until: Added version check for 8.0.22 to determine if 'slave' or 'replica' should be used and added version check for 8.0.26 to determine if 'master' or 'source' should be used.

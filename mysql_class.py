@@ -857,12 +857,16 @@ class Server(object):
 
         """
 
+        # Semantic change in MySQL 8.0.26
+        master = "source" if self.version >= (8, 0, 26) else "master"
+        slave = "replica" if self.version >= (8, 0, 26) else "slave"
+
         self.log_bin = fetch_sys_var(self, "log_bin")["log_bin"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
         self.log_slv_upd = fetch_sys_var(
-            self, "log_slave_updates")["log_slave_updates"]
+            self, "log_" + slave + "_updates")["log_" + slave + "_updates"]
         self.sync_mst = fetch_sys_var(
-            self, "sync_master_info")["sync_master_info"]
+            self, "sync_" + master + "_info")["sync_" + master + "_info"]
         self.sync_relay = fetch_sys_var(
             self, "sync_relay_log")["sync_relay_log"]
         self.sync_rly_info = fetch_sys_var(
