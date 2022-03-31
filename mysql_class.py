@@ -160,7 +160,10 @@ def slave_start(server):
 
     """
 
-    server.cmd_sql("start slave")
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if server.version >= (8, 0, 22) else "slave"
+
+    server.cmd_sql("start " + slave)
 
 
 def slave_stop(server):
