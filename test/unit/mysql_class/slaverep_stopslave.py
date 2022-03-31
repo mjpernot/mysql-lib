@@ -43,10 +43,12 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_post_8022
+        test_pre_8022
         test_none_secsbehind
         test_int_secsbehind
         test_string_secsbehind
-        test_except_secsbehind -> Test raising exception: Seconds_Behind_Master
+        test_except_secsbehind
         test_value
 
     """
@@ -71,8 +73,60 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
-        self.show_stat = [{"Slave_IO_State": "Down",
-                           "Seconds_Behind_Master": "20"}]
+        self.show_stat = [
+            {"Slave_IO_State": "Down", "Seconds_Behind_Master": "20"}]
+        self.show_stat2 = [
+            {"Replica_IO_State": "Down", "Seconds_Behind_Source": "20"}]
+
+    @mock.patch("mysql_class.slave_stop", mock.Mock(return_value=True))
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_post_8022(self, mock_stat):
+
+        """Function:  test_post_8022
+
+        Description:  Test with post-MySQL 8.0.22.
+
+        Arguments:
+
+        """
+
+        self.show_stat2[0]["Seconds_Behind_Source"] = None
+
+        mock_stat.return_value = self.show_stat2
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = (8, 0, 28)
+        mysqlrep.stop_slave()
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Down", None))
+
+    @mock.patch("mysql_class.slave_stop", mock.Mock(return_value=True))
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_pre_8022(self, mock_stat):
+
+        """Function:  test_pre_8022
+
+        Description:  Test with pre-MySQL 8.0.22.
+
+        Arguments:
+
+        """
+
+        self.show_stat[0]["Seconds_Behind_Master"] = None
+
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = (8, 0, 21)
+        mysqlrep.stop_slave()
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Down", None))
 
     @mock.patch("mysql_class.slave_stop", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
@@ -89,14 +143,15 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Seconds_Behind_Master"] = None
 
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
 
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = (8, 0, 21)
         mysqlrep.stop_slave()
-        self.assertEqual((mysqlrep.io_state, mysqlrep.secs_behind),
-                         ("Down", None))
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Down", None))
 
     @mock.patch("mysql_class.slave_stop", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
@@ -113,14 +168,15 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Seconds_Behind_Master"] = 20
 
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
 
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = (8, 0, 21)
         mysqlrep.stop_slave()
-        self.assertEqual((mysqlrep.io_state, mysqlrep.secs_behind),
-                         ("Down", 20))
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Down", 20))
 
     @mock.patch("mysql_class.slave_stop", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
@@ -135,14 +191,15 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
 
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = (8, 0, 21)
         mysqlrep.stop_slave()
-        self.assertEqual((mysqlrep.io_state, mysqlrep.secs_behind),
-                         ("Down", 20))
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Down", 20))
 
     @mock.patch("mysql_class.slave_stop", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
@@ -159,14 +216,15 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Seconds_Behind_Master"] = "time"
 
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
 
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = (8, 0, 21)
         mysqlrep.stop_slave()
-        self.assertEqual((mysqlrep.io_state, mysqlrep.secs_behind),
-                         ("Down", "time"))
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Down", "time"))
 
     @mock.patch("mysql_class.slave_stop", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
@@ -181,14 +239,15 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_stat.return_value = self.show_stat
-        mysqlrep = mysql_class.SlaveRep(self.name, self.server_id,
-                                        self.sql_user, self.sql_pass,
-                                        self.machine,
-                                        defaults_file=self.defaults_file)
 
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = (8, 0, 21)
         mysqlrep.stop_slave()
-        self.assertEqual((mysqlrep.io_state, mysqlrep.secs_behind),
-                         ("Down", 20))
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Down", 20))
 
 
 if __name__ == "__main__":
