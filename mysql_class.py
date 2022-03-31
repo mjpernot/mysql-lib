@@ -2039,13 +2039,16 @@ class SlaveRep(Rep):
 
         """
 
+        # Semantic change in MySQL 8.0.22
+        master = "Source" if self.version >= (8, 0, 22) else "Master"
+
         data = show_slave_stat(self)[0]
 
         try:
-            self.secs_behind = int(data["Seconds_Behind_Master"])
+            self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_Master"]
+            self.secs_behind = data["Seconds_Behind_" + master]
 
     def get_time(self):
 
