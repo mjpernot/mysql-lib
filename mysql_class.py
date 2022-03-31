@@ -1738,16 +1738,20 @@ class SlaveRep(Rep):
 
         """
 
+        # Semantic change in MySQL 8.0.22
+        master = "Source" if self.version >= (8, 0, 22) else "Master"
+        slave = "Replica" if self.version >= (8, 0, 22) else "Slave"
+
         slave_start(self)
         data = show_slave_stat(self)[0]
 
-        self.io_state = data["Slave_IO_State"]
+        self.io_state = data[slave + "_IO_State"]
 
         try:
-            self.secs_behind = int(data["Seconds_Behind_Master"])
+            self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_Master"]
+            self.secs_behind = data["Seconds_Behind_" + master]
 
     def show_slv_state(self):
 
