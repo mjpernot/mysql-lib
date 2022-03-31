@@ -85,9 +85,9 @@ class UnitTest(unittest.TestCase):
             {"log_replica_updates": "YES"}, {"sync_source_info": "NO"},
             {"sync_relay_log": "ON"},  {"sync_relay_log_info": "YES"}]
 
-        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                     self.sql_pass, self.machine,
-                                     defaults_file=self.defaults_file)
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
         mysqldb.version = (8, 0, 28)
 
         mysqldb.upd_slv_rep_stat()
@@ -111,9 +111,9 @@ class UnitTest(unittest.TestCase):
             {"log_slave_updates": "YES"}, {"sync_master_info": "NO"},
             {"sync_relay_log": "ON"},  {"sync_relay_log_info": "YES"}]
 
-        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                     self.sql_pass, self.machine,
-                                     defaults_file=self.defaults_file)
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
         mysqldb.version = (8, 0, 21)
 
         mysqldb.upd_slv_rep_stat()
@@ -137,9 +137,9 @@ class UnitTest(unittest.TestCase):
             {"log_slave_updates": "YES"}, {"sync_master_info": "NO"},
             {"sync_relay_log": "ON"},  {"sync_relay_log_info": "YES"}]
 
-        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                     self.sql_pass, self.machine,
-                                     defaults_file=self.defaults_file)
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
         mysqldb.version = (8, 0, 21)
 
         mysqldb.upd_slv_rep_stat()
