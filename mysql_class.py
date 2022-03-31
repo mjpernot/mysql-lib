@@ -143,7 +143,10 @@ def show_slave_stat(server):
 
     """
 
-    return server.col_sql("show slave status")
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if server.version >= (8, 0, 22) else "slave"
+
+    return server.col_sql("show " + slave + " status")
 
 
 def slave_start(server):
