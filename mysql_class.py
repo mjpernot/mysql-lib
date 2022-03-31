@@ -1778,10 +1778,13 @@ class SlaveRep(Rep):
 
         """
 
+        # Semantic change in MySQL 8.0.22
+        slave = "Replica" if self.version >= (8, 0, 22) else "Slave"
+
         data = show_slave_stat(self)[0]
-        self.io_state = data["Slave_IO_State"]
-        self.slv_io = data["Slave_IO_Running"]
-        self.slv_sql = data["Slave_SQL_Running"]
+        self.io_state = data[slave + "_IO_State"]
+        self.slv_io = data[slave + "_IO_Running"]
+        self.slv_sql = data[slave + "_SQL_Running"]
 
     def upd_slv_status(self):
 
