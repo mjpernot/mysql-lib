@@ -143,7 +143,10 @@ def show_slave_stat(server):
 
     """
 
-    return server.col_sql("show slave status")
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if server.version >= (8, 0, 22) else "slave"
+
+    return server.col_sql("show " + slave + " status")
 
 
 def slave_start(server):
@@ -157,7 +160,10 @@ def slave_start(server):
 
     """
 
-    server.cmd_sql("start slave")
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if server.version >= (8, 0, 22) else "slave"
+
+    server.cmd_sql("start " + slave)
 
 
 def slave_stop(server):
@@ -171,7 +177,10 @@ def slave_stop(server):
 
     """
 
-    server.cmd_sql("stop slave")
+    # Semantic change in MySQL 8.0.22
+    slave = "replica" if server.version >= (8, 0, 22) else "slave"
+
+    server.cmd_sql("stop " + slave)
 
 
 class Position(collections.namedtuple("Position", "file, pos")):
@@ -848,12 +857,16 @@ class Server(object):
 
         """
 
+        # Semantic change in MySQL 8.0.26
+        master = "source" if self.version >= (8, 0, 26) else "master"
+        slave = "replica" if self.version >= (8, 0, 26) else "slave"
+
         self.log_bin = fetch_sys_var(self, "log_bin")["log_bin"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
         self.log_slv_upd = fetch_sys_var(
-            self, "log_slave_updates")["log_slave_updates"]
+            self, "log_" + slave + "_updates")["log_" + slave + "_updates"]
         self.sync_mst = fetch_sys_var(
-            self, "sync_master_info")["sync_master_info"]
+            self, "sync_" + master + "_info")["sync_" + master + "_info"]
         self.sync_relay = fetch_sys_var(
             self, "sync_relay_log")["sync_relay_log"]
         self.sync_rly_info = fetch_sys_var(
@@ -885,11 +898,15 @@ class Server(object):
 
         """
 
+        # Semantic change in MySQL 8.0.26
+        master = "source" if self.version >= (8, 0, 26) else "master"
+        slave = "replica" if self.version >= (8, 0, 26) else "slave"
+
         return {"log_bin": self.log_bin,
                 "sync_relay_log": self.sync_relay,
                 "read_only": self.read_only,
-                "sync_master_info": self.sync_mst,
-                "log_slave_updates": self.log_slv_upd,
+                "sync_" + master + "_info": self.sync_mst,
+                "log_" + slave + "_updates": self.log_slv_upd,
                 "sync_relay_log_info": self.sync_rly_info}
 
     def upd_log_stats(self):
@@ -1695,16 +1712,20 @@ class SlaveRep(Rep):
 
         """
 
+        # Semantic change in MySQL 8.0.22
+        master = "Source" if self.version >= (8, 0, 22) else "Master"
+        slave = "Replica" if self.version >= (8, 0, 22) else "Slave"
+
         slave_stop(self)
         data = show_slave_stat(self)[0]
 
-        self.io_state = data["Slave_IO_State"]
+        self.io_state = data[slave + "_IO_State"]
 
         try:
-            self.secs_behind = int(data["Seconds_Behind_Master"])
+            self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_Master"]
+            self.secs_behind = data["Seconds_Behind_" + master]
 
     def start_slave(self):
 
@@ -1717,16 +1738,20 @@ class SlaveRep(Rep):
 
         """
 
+        # Semantic change in MySQL 8.0.22
+        master = "Source" if self.version >= (8, 0, 22) else "Master"
+        slave = "Replica" if self.version >= (8, 0, 22) else "Slave"
+
         slave_start(self)
         data = show_slave_stat(self)[0]
 
-        self.io_state = data["Slave_IO_State"]
+        self.io_state = data[slave + "_IO_State"]
 
         try:
-            self.secs_behind = int(data["Seconds_Behind_Master"])
+            self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_Master"]
+            self.secs_behind = data["Seconds_Behind_" + master]
 
     def show_slv_state(self):
 
@@ -1753,10 +1778,13 @@ class SlaveRep(Rep):
 
         """
 
+        # Semantic change in MySQL 8.0.22
+        slave = "Replica" if self.version >= (8, 0, 22) else "Slave"
+
         data = show_slave_stat(self)[0]
-        self.io_state = data["Slave_IO_State"]
-        self.slv_io = data["Slave_IO_Running"]
-        self.slv_sql = data["Slave_SQL_Running"]
+        self.io_state = data[slave + "_IO_State"]
+        self.slv_io = data[slave + "_IO_Running"]
+        self.slv_sql = data[slave + "_SQL_Running"]
 
     def upd_slv_status(self):
 
@@ -1768,18 +1796,26 @@ class SlaveRep(Rep):
 
         """
 
+        # Semantic change in MySQL 8.0.22
+        master = "Source" if self.version >= (8, 0, 22) else "Master"
+        slave = "Replica" if self.version >= (8, 0, 22) else "Slave"
+
+        # Semantic change in MySQL 8.0.26
+        slave2 = "replica" if self.version >= (8, 0, 26) else "slave"
+        slave3 = "Replica" if self.version >= (8, 0, 26) else "Slave"
+
         data = show_slave_stat(self)[0]
-        self.io_state = data["Slave_IO_State"]
-        self.mst_host = data["Master_Host"]
-        self.mst_port = data["Master_Port"]
+        self.io_state = data[slave + "_IO_State"]
+        self.mst_host = data[master + "_Host"]
+        self.mst_port = data[master + "_Port"]
         self.conn_retry = data["Connect_Retry"]
-        self.mst_log = data["Master_Log_File"]
-        self.mst_read_pos = data["Read_Master_Log_Pos"]
+        self.mst_log = data[master + "_Log_File"]
+        self.mst_read_pos = data["Read_" + master + "_Log_Pos"]
         self.relay_log = data["Relay_Log_File"]
         self.relay_pos = data["Relay_Log_Pos"]
-        self.relay_mst_log = data["Relay_Master_Log_File"]
-        self.slv_io = data["Slave_IO_Running"]
-        self.slv_sql = data["Slave_SQL_Running"]
+        self.relay_mst_log = data["Relay_" + master + "_Log_File"]
+        self.slv_io = data[slave + "_IO_Running"]
+        self.slv_sql = data[slave + "_SQL_Running"]
         self.do_db = data["Replicate_Do_DB"]
         self.ign_db = data["Replicate_Ignore_DB"]
         self.do_tbl = data["Replicate_Do_Table"]
@@ -1795,25 +1831,25 @@ class SlaveRep(Rep):
         except ValueError:
             self.skip_ctr = data["Skip_Counter"]
 
-        self.exec_mst_pos = data["Exec_Master_Log_Pos"]
+        self.exec_mst_pos = data["Exec_" + master + "_Log_Pos"]
         self.log_space = data["Relay_Log_Space"]
         self.until_cond = data["Until_Condition"]
         self.until_log = data["Until_Log_File"]
         self.until_pos = data["Until_Log_Pos"]
-        self.ssl_allow = data["Master_SSL_Allowed"]
-        self.ssl_file = data["Master_SSL_CA_File"]
-        self.ssl_path = data["Master_SSL_CA_Path"]
-        self.ssl_cert = data["Master_SSL_Cert"]
-        self.ssl_cipher = data["Master_SSL_Cipher"]
-        self.ssl_key = data["Master_SSL_Key"]
+        self.ssl_allow = data[master + "_SSL_Allowed"]
+        self.ssl_file = data[master + "_SSL_CA_File"]
+        self.ssl_path = data[master + "_SSL_CA_Path"]
+        self.ssl_cert = data[master + "_SSL_Cert"]
+        self.ssl_cipher = data[master + "_SSL_Cipher"]
+        self.ssl_key = data[master + "_SSL_Key"]
 
         try:
-            self.secs_behind = int(data["Seconds_Behind_Master"])
+            self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_Master"]
+            self.secs_behind = data["Seconds_Behind_" + master]
 
-        self.ssl_verify = data["Master_SSL_Verify_Server_Cert"]
+        self.ssl_verify = data[master + "_SSL_Verify_Server_Cert"]
 
         try:
             self.io_err = int(data["Last_IO_Errno"])
@@ -1833,28 +1869,28 @@ class SlaveRep(Rep):
         self.ign_ids = data["Replicate_Ignore_Server_Ids"]
 
         try:
-            self.mst_id = int(data["Master_Server_Id"])
+            self.mst_id = int(data[master + "_Server_Id"])
 
         except ValueError:
-            self.mst_id = data["Master_Server_Id"]
+            self.mst_id = data[master + "_Server_Id"]
 
-        self.mst_uuid = data.get("Master_UUID", None)
-        self.mst_info = data.get("Master_Info_File", None)
+        self.mst_uuid = data.get(master + "_UUID", None)
+        self.mst_info = data.get(master + "_Info_File", None)
         self.sql_delay = data.get("SQL_Delay", None)
         self.sql_remain = data.get("SQL_Remaining_Delay", None)
-        self.slv_sql_state = data.get("Slave_SQL_Running_State", None)
-        self.mst_retry = data.get("Master_Retry_Count", None)
-        self.mst_bind = data.get("Master_Bind", None)
+        self.slv_sql_state = data.get(slave + "_SQL_Running_State", None)
+        self.mst_retry = data.get(master + "_Retry_Count", None)
+        self.mst_bind = data.get(master + "_Bind", None)
         self.io_err_time = data.get("Last_IO_Error_Timestamp", None)
         self.sql_err_time = data.get("Last_SQL_Error_Timestamp", None)
-        self.ssl_crl = data.get("Master_SSL_Crl", None)
-        self.ssl_crl_path = data.get("Master_SSL_Crlpath", None)
+        self.ssl_crl = data.get(master + "_SSL_Crl", None)
+        self.ssl_crl_path = data.get(master + "_SSL_Crlpath", None)
         self.retrieved_gtid = data.get("Retrieved_Gtid_Set", None)
         self.exe_gtid = data.get("Executed_Gtid_Set", None)
         self.auto_pos = data.get("Auto_Position", None)
 
-        # tran_retry and run are in different location in MySQL 8.0
-        if self.version[0] < 8:
+        # tran_retry and run are in different location in MySQL 8
+        if self.version < (8, 0, 0):
             self.run = fetch_global_var(self, "slave_running")["Slave_running"]
             self.tran_retry = fetch_global_var(
                 self,
@@ -1869,7 +1905,7 @@ class SlaveRep(Rep):
             self.tran_retry = self.col_sql(sql % (ctr))[0][ctr]
 
         self.tmp_tbl = fetch_global_var(
-            self, "slave_open_temp_tables")["Slave_open_temp_tables"]
+            self, slave2 + "_open_temp_tables")[slave3 + "_open_temp_tables"]
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
         self.upd_gtid_pos()
@@ -2003,13 +2039,16 @@ class SlaveRep(Rep):
 
         """
 
+        # Semantic change in MySQL 8.0.22
+        master = "Source" if self.version >= (8, 0, 22) else "Master"
+
         data = show_slave_stat(self)[0]
 
         try:
-            self.secs_behind = int(data["Seconds_Behind_Master"])
+            self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_Master"]
+            self.secs_behind = data["Seconds_Behind_" + master]
 
     def get_time(self):
 

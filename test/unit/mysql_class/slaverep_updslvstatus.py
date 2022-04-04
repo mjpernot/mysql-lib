@@ -43,6 +43,10 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_post_8026
+        test_pre_8026
+        test_post_8022
+        test_pre_8022
         test_run
         test_run_pre
         test_none_secsbehind
@@ -85,70 +89,250 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
         self.version = (5, 7, 33)
-        self.version2 = (8, 0, 23)
-        self.fetch_vars = [{"Slave_running": "ON"},
-                           {"Slave_retried_transactions": 0},
-                           {"Slave_open_temp_tables": "1"}]
+        self.version2 = (8, 0, 0)
+        self.version3 = (8, 0, 21)
+        self.version4 = (8, 0, 23)
+        self.version5 = (8, 0, 28)
+        self.fetch_vars = [
+            {"Slave_running": "ON"}, {"Slave_retried_transactions": 0},
+            {"Slave_open_temp_tables": "1"}]
         self.fetch_vars2 = [{"Slave_open_temp_tables": "1"}]
-        self.query = [[{"SERVICE_STATE": "ON"}],
-                      [{"COUNT_TRANSACTIONS_RETRIES": 0}]]
+        self.fetch_vars3 = [{"Replica_open_temp_tables": "1"}]
+        self.query = [
+            [{"SERVICE_STATE": "ON"}], [{"COUNT_TRANSACTIONS_RETRIES": 0}]]
+        self.read_only = {"read_only": "ON"}
 
-        self.show_stat = [{"Slave_IO_State": "up",
-                           "Master_Host": "masterhost",
-                           "Master_Port": "masterport",
-                           "Connect_Retry": "conn_retry",
-                           "Master_Log_File": "masterlog",
-                           "Read_Master_Log_Pos": "masterpos",
-                           "Relay_Log_File": "relaylog",
-                           "Relay_Log_Pos": "relaypos",
-                           "Relay_Master_Log_File": "relaymasterlog",
-                           "Slave_IO_Running": "running",
-                           "Slave_SQL_Running": "sqlcode",
-                           "Replicate_Do_DB": "dodb",
-                           "Replicate_Ignore_DB": "ignoredb",
-                           "Replicate_Do_Table": "dotable",
-                           "Replicate_Ignore_Table": "ignoretable",
-                           "Replicate_Wild_Do_Table": "wilddo",
-                           "Replicate_Wild_Ignore_Table": "wildignore",
-                           "Last_Errno": "lastnumber",
-                           "Last_Error": "lasterror",
-                           "Skip_Counter": "skipcnt",
-                           "Exec_Master_Log_Pos": "execmasterpos",
-                           "Relay_Log_Space": "logspave",
-                           "Until_Condition": "untilcond",
-                           "Until_Log_File": "untilog",
-                           "Until_Log_Pos": "untilpos",
-                           "Master_SSL_Allowed": "sslallow",
-                           "Master_SSL_CA_File": "sslcafile",
-                           "Master_SSL_CA_Path": "sslcapath",
-                           "Master_SSL_Cert": "sslcert",
-                           "Master_SSL_Cipher": "cipher",
-                           "Master_SSL_Key": "sllkey",
-                           "Seconds_Behind_Master": "secsbehind",
-                           "Master_SSL_Verify_Server_Cert": "sslverify",
-                           "Last_IO_Errno": "lastionumber",
-                           "Last_IO_Error": "lastioerror",
-                           "Last_SQL_Errno": "lastsqlnumber",
-                           "Last_SQL_Error": "lastsqlerror",
-                           "Replicate_Ignore_Server_Ids": "ignoreids",
-                           "Master_Server_Id": "serverid",
-                           "Master_UUID": "uuid",
-                           "Master_Info_File": "infofile",
-                           "SQL_Delay": "delay",
-                           "SQL_Remaining_Delay": "remaindelay",
-                           "Slave_SQL_Running_State": "sqlstate",
-                           "Master_Retry_Count": "retrycnt",
-                           "Master_Bind": "bind",
-                           "Last_IO_Error_Timestamp": "iotime",
-                           "Last_SQL_Error_Timestamp": "sqltime",
-                           "Master_SSL_Crl": "sslcrl",
-                           "Master_SSL_Crlpath": "sslpath",
-                           "Retrieved_Gtid_Set": "retgtid",
-                           "Executed_Gtid_Set": "exegtid",
-                           "Auto_Position": "autopos"}]
+        self.show_stat = [
+            {"Slave_IO_State": "up",
+             "Master_Host": "masterhost",
+             "Master_Port": "masterport",
+             "Connect_Retry": "conn_retry",
+             "Master_Log_File": "masterlog",
+             "Read_Master_Log_Pos": "masterpos",
+             "Relay_Log_File": "relaylog",
+             "Relay_Log_Pos": "relaypos",
+             "Relay_Master_Log_File": "relaymasterlog",
+             "Slave_IO_Running": "running",
+             "Slave_SQL_Running": "sqlcode",
+             "Replicate_Do_DB": "dodb",
+             "Replicate_Ignore_DB": "ignoredb",
+             "Replicate_Do_Table": "dotable",
+             "Replicate_Ignore_Table": "ignoretable",
+             "Replicate_Wild_Do_Table": "wilddo",
+             "Replicate_Wild_Ignore_Table": "wildignore",
+             "Last_Errno": "lastnumber",
+             "Last_Error": "lasterror",
+             "Skip_Counter": "skipcnt",
+             "Exec_Master_Log_Pos": "execmasterpos",
+             "Relay_Log_Space": "logspave",
+             "Until_Condition": "untilcond",
+             "Until_Log_File": "untilog",
+             "Until_Log_Pos": "untilpos",
+             "Master_SSL_Allowed": "sslallow",
+             "Master_SSL_CA_File": "sslcafile",
+             "Master_SSL_CA_Path": "sslcapath",
+             "Master_SSL_Cert": "sslcert",
+             "Master_SSL_Cipher": "cipher",
+             "Master_SSL_Key": "sllkey",
+             "Seconds_Behind_Master": "secsbehind",
+             "Master_SSL_Verify_Server_Cert": "sslverify",
+             "Last_IO_Errno": "lastionumber",
+             "Last_IO_Error": "lastioerror",
+             "Last_SQL_Errno": "lastsqlnumber",
+             "Last_SQL_Error": "lastsqlerror",
+             "Replicate_Ignore_Server_Ids": "ignoreids",
+             "Master_Server_Id": "serverid",
+             "Master_UUID": "uuid",
+             "Master_Info_File": "infofile",
+             "SQL_Delay": "delay",
+             "SQL_Remaining_Delay": "remaindelay",
+             "Slave_SQL_Running_State": "sqlstate",
+             "Master_Retry_Count": "retrycnt",
+             "Master_Bind": "bind",
+             "Last_IO_Error_Timestamp": "iotime",
+             "Last_SQL_Error_Timestamp": "sqltime",
+             "Master_SSL_Crl": "sslcrl",
+             "Master_SSL_Crlpath": "sslpath",
+             "Retrieved_Gtid_Set": "retgtid",
+             "Executed_Gtid_Set": "exegtid",
+             "Auto_Position": "autopos"}]
+        self.show_stat2 = [
+            {"Replica_IO_State": "up",
+             "Source_Host": "masterhost",
+             "Source_Port": "masterport",
+             "Connect_Retry": "conn_retry",
+             "Source_Log_File": "masterlog",
+             "Read_Source_Log_Pos": "masterpos",
+             "Relay_Log_File": "relaylog",
+             "Relay_Log_Pos": "relaypos",
+             "Relay_Source_Log_File": "relaymasterlog",
+             "Replica_IO_Running": "running",
+             "Replica_SQL_Running": "sqlcode",
+             "Replicate_Do_DB": "dodb",
+             "Replicate_Ignore_DB": "ignoredb",
+             "Replicate_Do_Table": "dotable",
+             "Replicate_Ignore_Table": "ignoretable",
+             "Replicate_Wild_Do_Table": "wilddo",
+             "Replicate_Wild_Ignore_Table": "wildignore",
+             "Last_Errno": "lastnumber",
+             "Last_Error": "lasterror",
+             "Skip_Counter": "skipcnt",
+             "Exec_Source_Log_Pos": "execmasterpos",
+             "Relay_Log_Space": "logspave",
+             "Until_Condition": "untilcond",
+             "Until_Log_File": "untilog",
+             "Until_Log_Pos": "untilpos",
+             "Source_SSL_Allowed": "sslallow",
+             "Source_SSL_CA_File": "sslcafile",
+             "Source_SSL_CA_Path": "sslcapath",
+             "Source_SSL_Cert": "sslcert",
+             "Source_SSL_Cipher": "cipher",
+             "Source_SSL_Key": "sllkey",
+             "Seconds_Behind_Source": "secsbehind",
+             "Source_SSL_Verify_Server_Cert": "sslverify",
+             "Last_IO_Errno": "lastionumber",
+             "Last_IO_Error": "lastioerror",
+             "Last_SQL_Errno": "lastsqlnumber",
+             "Last_SQL_Error": "lastsqlerror",
+             "Replicate_Ignore_Server_Ids": "ignoreids",
+             "Source_Server_Id": "serverid",
+             "Source_UUID": "uuid",
+             "Source_Info_File": "infofile",
+             "SQL_Delay": "delay",
+             "SQL_Remaining_Delay": "remaindelay",
+             "Replica_SQL_Running_State": "sqlstate",
+             "Source_Retry_Count": "retrycnt",
+             "Source_Bind": "bind",
+             "Last_IO_Error_Timestamp": "iotime",
+             "Last_SQL_Error_Timestamp": "sqltime",
+             "Source_SSL_Crl": "sslcrl",
+             "Source_SSL_Crlpath": "sslpath",
+             "Retrieved_Gtid_Set": "retgtid",
+             "Executed_Gtid_Set": "exegtid",
+             "Auto_Position": "autopos"}]
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch("mysql_class.Server.col_sql")
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_post_8026(self, mock_stat, mock_global, mock_var, mock_qry):
+
+        """Function:  test_post_8026
+
+        Description:  Test with post-MySQL 8.0.26.
+
+        Arguments:
+
+        """
+
+        mock_var.return_value = self.read_only
+        mock_global.side_effect = self.fetch_vars3
+        mock_stat.return_value = self.show_stat2
+        mock_qry.side_effect = self.query
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = self.version5
+        mysqlrep.upd_slv_status()
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.tmp_tbl), ("up", "1"))
+
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch("mysql_class.Server.col_sql")
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_pre_8026(self, mock_stat, mock_global, mock_var, mock_qry):
+
+        """Function:  test_pre_8026
+
+        Description:  Test with pre-MySQL 8.0.26.
+
+        Arguments:
+
+        """
+
+        mock_var.return_value = self.read_only
+        mock_global.side_effect = self.fetch_vars2
+        mock_stat.return_value = self.show_stat2
+        mock_qry.side_effect = self.query
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = self.version4
+        mysqlrep.upd_slv_status()
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.tmp_tbl), ("up", "1"))
+
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch("mysql_class.Server.col_sql")
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_post_8022(self, mock_stat, mock_global, mock_var, mock_qry):
+
+        """Function:  test_post_8022
+
+        Description:  Test with post-MySQL 8.0.22, but pre-MySQL 8.0.26.
+
+        Arguments:
+
+        """
+
+        mock_var.return_value = self.read_only
+        mock_global.side_effect = self.fetch_vars2
+        mock_stat.return_value = self.show_stat2
+        mock_qry.side_effect = self.query
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = self.version4
+        mysqlrep.upd_slv_status()
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.mst_host), ("up", "masterhost"))
+
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch("mysql_class.Server.col_sql")
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_pre_8022(self, mock_stat, mock_global, mock_var, mock_qry):
+
+        """Function:  test_pre_8022
+
+        Description:  Test with pre-MySQL 8.0.22, but post-MySQL 8.0.0.
+
+        Arguments:
+
+        """
+
+        mock_var.return_value = self.read_only
+        mock_global.side_effect = self.fetch_vars2
+        mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = self.version3
+        mysqlrep.upd_slv_status()
+
+        self.assertEqual(
+            (mysqlrep.io_state, mysqlrep.mst_host), ("up", "masterhost"))
+
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
@@ -157,13 +341,13 @@ class UnitTest(unittest.TestCase):
 
         """Function:  test_run
 
-        Description:  Test with run attribute in MySQL 8.0.
+        Description:  Test with run attribute in MySQL 8.0.0.
 
         Arguments:
 
         """
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
@@ -176,8 +360,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual((mysqlrep.run, mysqlrep.tran_retry), ("ON", 0))
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -191,7 +375,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -203,8 +387,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual((mysqlrep.run, mysqlrep.tran_retry), ("ON", 0))
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -220,7 +404,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Seconds_Behind_Master"] = None
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -232,8 +416,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.secs_behind, None)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -249,7 +433,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Seconds_Behind_Master"] = 1
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -261,8 +445,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.secs_behind, 1)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -278,7 +462,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Seconds_Behind_Master"] = "1"
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -290,8 +474,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.secs_behind, 1)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -305,7 +489,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -317,8 +501,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.secs_behind, "secsbehind")
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -334,7 +518,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Skip_Counter"] = 1
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -346,8 +530,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.skip_ctr, 1)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -363,7 +547,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Skip_Counter"] = "1"
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -375,8 +559,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.skip_ctr, 1)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -390,7 +574,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -402,8 +586,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.skip_ctr, "skipcnt")
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -419,7 +603,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Master_Server_Id"] = 11
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -431,8 +615,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.mst_id, 11)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -448,7 +632,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Master_Server_Id"] = "11"
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -460,8 +644,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.mst_id, 11)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -475,7 +659,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -487,8 +671,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.mst_id, "serverid")
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -504,7 +688,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Last_SQL_Errno"] = 1
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -516,8 +700,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.sql_err, 1)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -533,7 +717,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Last_SQL_Errno"] = "1"
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -545,8 +729,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.sql_err, 1)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -560,7 +744,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -572,8 +756,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.sql_err, "lastsqlnumber")
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -589,7 +773,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Last_IO_Errno"] = 1
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -601,8 +785,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.io_err, 1)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -618,7 +802,7 @@ class UnitTest(unittest.TestCase):
 
         self.show_stat[0]["Last_IO_Errno"] = "1"
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -630,8 +814,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.io_err, 1)
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -645,7 +829,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 
@@ -657,8 +841,8 @@ class UnitTest(unittest.TestCase):
 
         self.assertEqual(mysqlrep.io_err, "lastionumber")
 
-    @mock.patch("mysql_class.SlaveRep.upd_gtid_pos",
-                mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -672,7 +856,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_var.return_value = {"read_only": "ON"}
+        mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
 

@@ -29,7 +29,7 @@ else:
 sys.path.append(os.getcwd())
 import mysql_libs
 import mysql_class
-import lib.cmds_gen as cmds_gen
+import lib.gen_libs as gen_libs
 import version
 
 __version__ = version.__version__
@@ -72,7 +72,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        slaves = cmds_gen.create_cfg_array(self.config_name,
+        slaves = gen_libs.create_cfg_array(self.config_name,
                                            cfg_path=self.config_dir)
         srv = mysql_libs.create_slv_array(slaves)
 
@@ -88,7 +88,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        slaves = cmds_gen.create_cfg_array(self.config_name,
+        slaves = gen_libs.create_cfg_array(self.config_name,
                                            cfg_path=self.config_dir)
         srv = mysql_libs.create_slv_array(slaves)
 

@@ -12,10 +12,10 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_class.Rep.get_serv_id: Converted output from unicode to int.
 
 ### Changed
-- mysql_class.show_slave_hosts: Added version check for 8.0.22 to determine if 'slave hosts' or 'replicas' should be used.
-- mysql_libs.start_slave_until: Added version check for 8.0.22 to determine if 'slave' or 'replica' should be used and added version check for 8.0.26 to determine if 'master' or 'source' should be used.
-- mysql_libs.reset_slave, mysql_libs.start_slave_until: Added version check for 8.0.22 to determine if 'slave' or 'replica' should be used.
-- mysql_libs.change_master_to: Added version check for 8.0.23 to determine if 'master' or 'source' should be used.
+- mysql_class.SlaveRep.upd_slv_status, mysql_libs.start_slave_until: Added version checks for 8.0.22 and 8.0.26 to determine semantic changes.
+- mysql_class.SlaveRep.upd_slv_time, mysql_class.SlaveRep.upd_slv_state, mysql_class.SlaveRep.start_slave, mysql_class.SlaveRep.stop_slave, mysql_class.slave_stop, mysql_class.slave_start, mysql_class.show_slave_stat, mysql_class.show_slave_hosts, mysql_libs.reset_slave, mysql_libs.start_slave_until:  Added Added version for 8.0.22 to determine semantic changes.
+- mysql_class.Server.fetch_slv_rep_cfg, mysql_class.Server.upd_slv_rep_stat: Added version for 8.0.26 to determine semantic changes.
+- mysql_libs.change_master_to: Added version check for 8.0.23 to determine semantic changes.
 - mysql_libs.create_slv_array: Added silent parameter to connect call.
 - mysql_class.Server.\_\_init\_\_: Added tls_version attribute.
 - Documentation updates.
