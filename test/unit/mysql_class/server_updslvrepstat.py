@@ -83,7 +83,7 @@ class UnitTest(unittest.TestCase):
         mock_sysvar.side_effect = [
             {"log_bin": "ON"}, {"read_only": "YES"},
             {"log_replica_updates": "YES"}, {"sync_source_info": "NO"},
-            {"sync_relay_log": "ON"},  {"sync_relay_log_info": "YES"}]
+            {"sync_relay_log": "ON"}, {"sync_relay_log_info": "YES"}]
 
         mysqldb = mysql_class.Server(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -109,7 +109,7 @@ class UnitTest(unittest.TestCase):
         mock_sysvar.side_effect = [
             {"log_bin": "ON"}, {"read_only": "YES"},
             {"log_slave_updates": "YES"}, {"sync_master_info": "NO"},
-            {"sync_relay_log": "ON"},  {"sync_relay_log_info": "YES"}]
+            {"sync_relay_log": "ON"}, {"sync_relay_log_info": "YES"}]
 
         mysqldb = mysql_class.Server(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -135,7 +135,7 @@ class UnitTest(unittest.TestCase):
         mock_sysvar.side_effect = [
             {"log_bin": "ON"}, {"read_only": "YES"},
             {"log_slave_updates": "YES"}, {"sync_master_info": "NO"},
-            {"sync_relay_log": "ON"},  {"sync_relay_log_info": "YES"}]
+            {"sync_relay_log": "ON"}, {"sync_relay_log_info": "YES"}]
 
         mysqldb = mysql_class.Server(
             self.name, self.server_id, self.sql_user, self.sql_pass,
