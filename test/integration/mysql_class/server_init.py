@@ -313,7 +313,11 @@ class UnitTest(unittest.TestCase):
             self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
             os_type=self.machine, ssl_verify_cert=self.cfg.ssl_verify_cert)
 
-        self.assertEqual(mysqldb.ssl_verify_cert, True)
+        if self.cfg.ssl_verify_cert:
+            self.assertEqual(mysqldb.ssl_verify_cert, True)
+
+        else:
+            self.assertEqual(mysqldb.ssl_verify_cert, False)
 
     def test_ssl_verify_cert(self):
 
@@ -345,7 +349,11 @@ class UnitTest(unittest.TestCase):
             self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
             os_type=self.machine, ssl_verify_id=self.cfg.ssl_verify_id)
 
-        self.assertEqual(mysqldb.ssl_verify_id, True)
+        if self.cfg.ssl_verify_id:
+            self.assertEqual(mysqldb.ssl_verify_id, True)
+
+        else:
+            self.assertEqual(mysqldb.ssl_verify_id, False)
 
     def test_ssl_verify_id(self):
 
@@ -377,7 +385,11 @@ class UnitTest(unittest.TestCase):
             self.cfg.name, self.cfg.sid, self.cfg.user, self.cfg.japd,
             os_type=self.machine, ssl_disabled=self.cfg.ssl_disabled)
 
-        self.assertEqual(mysqldb.ssl_disabled, True)
+        if self.cfg.ssl_disabled:
+            self.assertEqual(mysqldb.ssl_disabled, True)
+
+        else:
+            self.assertEqual(mysqldb.ssl_disabled, False)
 
     def test_ssl_disabled(self):
 
