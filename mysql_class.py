@@ -42,6 +42,7 @@ __version__ = version.__version__
 # Global
 KEY1 = "pass"
 KEY2 = "wd"
+SHOW = "show "
 
 
 def fetch_global_var(server, var):
@@ -79,7 +80,9 @@ def fetch_sys_var(server, var, **kwargs):
 
     """
 
-    cmd = "show " + kwargs.get("level", "session") + " variables like %s"
+    global SHOW
+
+    cmd = SHOW + kwargs.get("level", "session") + " variables like %s"
 
     return server.vert_sql(cmd, (var,))
 
@@ -125,10 +128,12 @@ def show_slave_hosts(server):
 
     """
 
+    global SHOW
+
     # Semantic change in MySQL 8.0.22
     slaves = "replicas" if server.version >= (8, 0, 22) else "slave hosts"
 
-    return server.col_sql("show " + slaves)
+    return server.col_sql(SHOW + slaves)
 
 
 def show_slave_stat(server):
@@ -143,10 +148,12 @@ def show_slave_stat(server):
 
     """
 
+    global SHOW
+
     # Semantic change in MySQL 8.0.22
     slave = "replica" if server.version >= (8, 0, 22) else "slave"
 
-    return server.col_sql("show " + slave + " status")
+    return server.col_sql(SHOW + slave + " status")
 
 
 def slave_start(server):
