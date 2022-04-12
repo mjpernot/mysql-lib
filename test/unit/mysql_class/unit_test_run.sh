@@ -37,6 +37,7 @@ test/unit/mysql_class/rep_showslvhosts.py
 test/unit/mysql_class/rep_showslvstate.py
 test/unit/mysql_class/rep_startslave.py
 test/unit/mysql_class/rep_stopslave.py
+test/unit/mysql_class/rep_verify_srv_id.py
 test/unit/mysql_class/server_chg_db.py
 test/unit/mysql_class/server_connect.py
 test/unit/mysql_class/server_disconnect.py
@@ -50,6 +51,7 @@ test/unit/mysql_class/server_is_connected.py
 test/unit/mysql_class/server_reconnect.py
 test/unit/mysql_class/server_set_pass_config.py
 test/unit/mysql_class/server_set_ssl_config.py
+test/unit/mysql_class/server_set_tls_config.py
 test/unit/mysql_class/server_setsrvbinlogcrc.py
 test/unit/mysql_class/server_setsrvgtid.py
 test/unit/mysql_class/server_setup_ssl.py

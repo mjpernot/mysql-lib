@@ -9,7 +9,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir ('lib') {
-                    git branch: "master", credentialsId: "2cfb403c-be21-4fac-94d7-c8cd5c531feb", url: "https://gitlab.code.dicelab.net/JAC-IDM/python-lib.git"
+                    git branch: "mod/286", credentialsId: "2cfb403c-be21-4fac-94d7-c8cd5c531feb", url: "https://gitlab.code.dicelab.net/JAC-IDM/python-lib.git"
                 }
                 sh """
                 virtualenv test_env
@@ -48,6 +48,7 @@ pipeline {
                 ./test/unit/mysql_class/rep_showslvstate.py
                 ./test/unit/mysql_class/rep_startslave.py
                 ./test/unit/mysql_class/rep_stopslave.py
+                ./test/unit/mysql_class/rep_verify_srv_id.py
                 ./test/unit/mysql_class/server_chg_db.py
                 ./test/unit/mysql_class/server_connect.py
                 ./test/unit/mysql_class/server_disconnect.py
@@ -61,6 +62,7 @@ pipeline {
                 ./test/unit/mysql_class/server_reconnect.py
                 ./test/unit/mysql_class/server_set_pass_config.py
                 ./test/unit/mysql_class/server_set_ssl_config.py
+                ./test/unit/mysql_class/server_set_tls_config.py
                 ./test/unit/mysql_class/server_setsrvbinlogcrc.py
                 ./test/unit/mysql_class/server_setsrvgtid.py
                 ./test/unit/mysql_class/server_setup_ssl.py
@@ -108,7 +110,6 @@ pipeline {
                 ./test/unit/mysql_libs/select_wait_until.py
                 ./test/unit/mysql_libs/create_slv_array.py
                 ./test/unit/mysql_libs/crt_cmd.py
-                ./test/unit/mysql_libs/crt_srv_inst.py
                 ./test/unit/mysql_libs/fetch_slv.py
                 ./test/unit/mysql_libs/find_name.py
                 ./test/unit/mysql_libs/is_cfg_valid.py
@@ -155,6 +156,11 @@ pipeline {
                     server.upload(uploadSpec)
                 }
             }
+        }
+    }
+    post {
+        always {
+            cleanWs disableDeferredWipeout: true
         }
     }
 }

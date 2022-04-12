@@ -43,6 +43,10 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_tls_version2
+        test_tls_version
+        test_tls_version_empty2
+        test_tls_version_empty
         test_ssl_config7
         test_ssl_config6
         test_ssl_config5
@@ -100,6 +104,8 @@ class UnitTest(unittest.TestCase):
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
+        self.tls_versions = ["TLSv1.1", "T:Sv1.2"]
+
         self.results = self.machine.defaults_file
 
         self.config = {}
@@ -171,6 +177,77 @@ class UnitTest(unittest.TestCase):
         self.config8["ssl_disabled"] = False
         self.config8["ssl_verify_identity"] = False
         self.config8["ssl_verify_cert"] = True
+
+        self.config9 = {}
+        self.config9[key1 + key2] = self.sql_pass
+
+        self.config10 = {}
+        self.config10[key1 + key2] = self.sql_pass
+        self.config10["tls_versions"] = self.tls_versions
+
+    def test_tls_version2(self):
+
+        """Function:  test_tls_version2
+
+        Description:  Test with tls_version passed to class.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, tls_versions=self.tls_versions)
+
+        self.assertEqual(mysqldb.config, self.config10)
+
+    def test_tls_version(self):
+
+        """Function:  test_tls_version
+
+        Description:  Test with tls_version passed to class.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, tls_versions=self.tls_versions)
+
+        self.assertEqual(mysqldb.tls_versions, self.tls_versions)
+
+    def test_tls_version_empty2(self):
+
+        """Function:  test_tls_version_empty2
+
+        Description:  Test with default tls_version setting.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.config, self.config9)
+
+    def test_tls_version_empty(self):
+
+        """Function:  test_tls_version_empty
+
+        Description:  Test with default tls_version setting.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine)
+
+        self.assertEqual(mysqldb.tls_versions, [])
 
     def test_ssl_config7(self):
 

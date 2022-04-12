@@ -43,6 +43,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_post_8026
+        test_pre_8026
         test_value
 
     """
@@ -68,6 +70,58 @@ class UnitTest(unittest.TestCase):
         self.extra_def_file = "extra_cfg_file"
 
     @mock.patch("mysql_class.fetch_sys_var")
+    def test_post_8026(self, mock_sysvar):
+
+        """Function:  test_post_8026
+
+        Description:  Test with post-MySQL 8.0.26.
+
+        Arguments:
+
+        """
+
+        mock_sysvar.side_effect = [
+            {"log_bin": "ON"}, {"read_only": "YES"},
+            {"log_replica_updates": "YES"}, {"sync_source_info": "NO"},
+            {"sync_relay_log": "ON"}, {"sync_relay_log_info": "YES"}]
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqldb.version = (8, 0, 28)
+
+        mysqldb.upd_slv_rep_stat()
+
+        self.assertEqual(
+            (mysqldb.log_bin, mysqldb.sync_rly_info), ("ON", "YES"))
+
+    @mock.patch("mysql_class.fetch_sys_var")
+    def test_pre_8026(self, mock_sysvar):
+
+        """Function:  test_pre_8026
+
+        Description:  Test with pre-MySQL 8.0.26.
+
+        Arguments:
+
+        """
+
+        mock_sysvar.side_effect = [
+            {"log_bin": "ON"}, {"read_only": "YES"},
+            {"log_slave_updates": "YES"}, {"sync_master_info": "NO"},
+            {"sync_relay_log": "ON"}, {"sync_relay_log_info": "YES"}]
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqldb.version = (8, 0, 21)
+
+        mysqldb.upd_slv_rep_stat()
+
+        self.assertEqual(
+            (mysqldb.log_bin, mysqldb.sync_rly_info), ("ON", "YES"))
+
+    @mock.patch("mysql_class.fetch_sys_var")
     def test_value(self, mock_sysvar):
 
         """Function:  test_value
@@ -78,20 +132,20 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mock_sysvar.side_effect = [{"log_bin": "ON"},
-                                   {"read_only": "YES"},
-                                   {"log_slave_updates": "YES"},
-                                   {"sync_master_info": "NO"},
-                                   {"sync_relay_log": "ON"},
-                                   {"sync_relay_log_info": "YES"}]
-        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                     self.sql_pass, self.machine,
-                                     defaults_file=self.defaults_file)
+        mock_sysvar.side_effect = [
+            {"log_bin": "ON"}, {"read_only": "YES"},
+            {"log_slave_updates": "YES"}, {"sync_master_info": "NO"},
+            {"sync_relay_log": "ON"}, {"sync_relay_log_info": "YES"}]
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqldb.version = (8, 0, 21)
 
         mysqldb.upd_slv_rep_stat()
 
-        self.assertEqual((mysqldb.log_bin, mysqldb.sync_rly_info),
-                         ("ON", "YES"))
+        self.assertEqual(
+            (mysqldb.log_bin, mysqldb.sync_rly_info), ("ON", "YES"))
 
 
 if __name__ == "__main__":
