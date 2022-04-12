@@ -32,12 +32,12 @@
 
 ###### Create requirements file in another program's project to install mysql-lib as a library module.
 
-Create requirements-mysql-lib.txt file and requirements-python-lib.txt files:
+Create requirements-mysql-lib.txt file and requirements-mysql-python-lib.txt files:
 
 ```
 cd {Python_Project}
-cp requirements-mysql-lib.txt > {Other_Python_Project}/requirements-mysql-lib.txt
-cp requirements-python-lib.txt > {Other_Python_Project}/requirements-python-lib.txt
+cp requirements-mysql-lib.txt {Other_Python_Project}/requirements-mysql-lib.txt
+cp requirements-python-lib.txt {Other_Python_Project}/requirements-mysql-python-lib.txt
 ```
 
 ##### Modify the other program's README.md file to add the pip commands under the "Install supporting classes and libraries" section.
@@ -46,7 +46,7 @@ Modify the {Other_Python_Project}/README.md file:
 
 ```
    pip install -r requirements-mysql-lib.txt --target mysql_lib --trusted-host pypi.appdev.proj.coe.ic.gov
-   pip install -r requirements-python-lib.txt --target mysql_lib/lib --trusted-host pypi.appdev.proj.coe.ic.gov
+   pip install -r requirements-mysql-python-lib.txt --target mysql_lib/lib --trusted-host pypi.appdev.proj.coe.ic.gov
 ```
 
 ##### Add the general Mysql-Lib requirements to the other program's requirements.txt file.  Remove any duplicates.

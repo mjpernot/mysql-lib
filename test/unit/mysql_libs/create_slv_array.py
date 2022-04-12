@@ -57,8 +57,9 @@ class SlaveRep2(object):
         """
 
         self.conn = False
+        self.silent = False
 
-    def connect(self):
+    def connect(self, silent):
 
         """Method:  upd_slv_status
 
@@ -67,6 +68,8 @@ class SlaveRep2(object):
         Arguments:
 
         """
+
+        self.silent = silent
 
         return True
 
@@ -94,8 +97,9 @@ class SlaveRep(object):
         """
 
         self.conn = True
+        self.silent = False
 
-    def connect(self):
+    def connect(self, silent):
 
         """Method:  upd_slv_status
 
@@ -104,6 +108,8 @@ class SlaveRep(object):
         Arguments:
 
         """
+
+        self.silent = silent
 
         return True
 
@@ -116,6 +122,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_silent_option
         test_ssl_flag2
         test_ssl_flag
         test_ssl2
@@ -144,87 +151,90 @@ class UnitTest(unittest.TestCase):
 
         self.slave = SlaveRep()
         self.slave2 = SlaveRep2()
-        self.cfg_array = {"name": "name", "sid": "sid", "user": "user",
-                          "japd": None, "serv_os": "Linux",
-                          "host": "hostname", "port": 3306,
-                          "cfg_file": "cfg_file"}
-        self.cfg_array2 = [{"name": "name", "sid": "sid", "user": "user",
-                            "japd": None, "serv_os": "Linux",
-                            "host": "hostname", "port": 3306,
-                            "cfg_file": "cfg_file"},
-                           {"name": "name2", "sid": "sid2", "user": "user",
-                            "japd": None, "serv_os": "Linux",
-                            "host": "hostname", "port": 3306,
-                            "cfg_file": "cfg_file"}]
-        self.cfg_array3 = {"name": "name", "sid": "sid", "user": "user",
-                           "japd": None, "serv_os": "Linux",
-                           "host": "hostname", "port": 3306,
-                           "cfg_file": "cfg_file", "rep_user": "rep_user",
-                           "rep_japd": None}
-        self.cfg_array4 = [{"name": "name", "sid": "sid", "user": "user",
-                            "japd": None, "serv_os": "Linux",
-                            "host": "hostname", "port": 3306,
-                            "cfg_file": "cfg_file", "rep_user": "rep_user",
-                            "rep_japd": None},
-                           {"name": "name2", "sid": "sid2", "user": "user",
-                            "japd": None, "serv_os": "Linux",
-                            "host": "hostname", "port": 3306,
-                            "cfg_file": "cfg_file", "rep_user": "rep_user",
-                            "rep_japd": None}]
-        self.cfg_array5 = {"name": "name", "sid": "sid", "user": "user",
-                           "japd": None, "serv_os": "Linux",
-                           "host": "hostname", "port": 3306,
-                           "cfg_file": "cfg_file", "rep_user": "rep_user",
-                           "rep_japd": None, "ssl_client_ca": "CAFile",
-                           "ssl_client_key": "KeyFile",
-                           "ssl_client_cert": "CertFile",
-                           "ssl_client_flag": 2048, "ssl_disabled": False,
-                           "ssl_verify_id": False, "ssl_verify_cert": False}
-        self.cfg_array6 = [{"name": "name", "sid": "sid", "user": "user",
-                            "japd": None, "serv_os": "Linux",
-                            "host": "hostname", "port": 3306,
-                            "cfg_file": "cfg_file", "rep_user": "rep_user",
-                            "rep_japd": None, "ssl_client_ca": "CAFile",
-                            "ssl_client_key": "KeyFile",
-                            "ssl_client_cert": "CertFile",
-                            "ssl_client_flag": 2048, "ssl_disabled": False,
-                            "ssl_verify_id": False, "ssl_verify_cert": False},
-                           {"name": "name2", "sid": "sid2", "user": "user",
-                            "japd": None, "serv_os": "Linux",
-                            "host": "hostname", "port": 3306,
-                            "cfg_file": "cfg_file", "rep_user": "rep_user",
-                            "rep_japd": None, "ssl_client_ca": "CAFile",
-                            "ssl_client_key": "KeyFile",
-                            "ssl_client_cert": "CertFile",
-                            "ssl_client_flag": 2048, "ssl_disabled": False,
-                            "ssl_verify_id": False, "ssl_verify_cert": False}]
-        self.cfg_array7 = {"name": "name", "sid": "sid", "user": "user",
-                           "japd": None, "serv_os": "Linux",
-                           "host": "hostname", "port": 3306,
-                           "cfg_file": "cfg_file", "rep_user": "rep_user",
-                           "rep_japd": None, "ssl_client_ca": "CAFile",
-                           "ssl_client_key": "KeyFile",
-                           "ssl_client_cert": "CertFile",
-                           "ssl_client_flag": None, "ssl_disabled": False,
-                           "ssl_verify_id": False, "ssl_verify_cert": False}
-        self.cfg_array8 = [{"name": "name", "sid": "sid", "user": "user",
-                            "japd": None, "serv_os": "Linux",
-                            "host": "hostname", "port": 3306,
-                            "cfg_file": "cfg_file", "rep_user": "rep_user",
-                            "rep_japd": None, "ssl_client_ca": "CAFile",
-                            "ssl_client_key": "KeyFile",
-                            "ssl_client_cert": "CertFile",
-                            "ssl_client_flag": None, "ssl_disabled": False,
-                            "ssl_verify_id": False, "ssl_verify_cert": False},
-                           {"name": "name2", "sid": "sid2", "user": "user",
-                            "japd": None, "serv_os": "Linux",
-                            "host": "hostname", "port": 3306,
-                            "cfg_file": "cfg_file", "rep_user": "rep_user",
-                            "rep_japd": None, "ssl_client_ca": "CAFile",
-                            "ssl_client_key": "KeyFile",
-                            "ssl_client_cert": "CertFile",
-                            "ssl_client_flag": None, "ssl_disabled": False,
-                            "ssl_verify_id": False, "ssl_verify_cert": False}]
+        self.cfg_array = {
+            "name": "name", "sid": "sid", "user": "user", "japd": None,
+            "serv_os": "Linux", "host": "hostname", "port": 3306,
+            "cfg_file": "cfg_file"}
+        self.cfg_array2 = [
+            {"name": "name", "sid": "sid", "user": "user", "japd": None,
+             "serv_os": "Linux", "host": "hostname", "port": 3306,
+             "cfg_file": "cfg_file"},
+            {"name": "name2", "sid": "sid2", "user": "user", "japd": None,
+             "serv_os": "Linux", "host": "hostname", "port": 3306,
+             "cfg_file": "cfg_file"}]
+        self.cfg_array3 = {
+            "name": "name", "sid": "sid", "user": "user", "japd": None,
+            "serv_os": "Linux", "host": "hostname", "port": 3306,
+            "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None}
+        self.cfg_array4 = [
+            {"name": "name", "sid": "sid", "user": "user", "japd": None,
+             "serv_os": "Linux", "host": "hostname", "port": 3306,
+             "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None},
+            {"name": "name2", "sid": "sid2", "user": "user", "japd": None,
+             "serv_os": "Linux", "host": "hostname", "port": 3306,
+             "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None}]
+        self.cfg_array5 = {
+            "name": "name", "sid": "sid", "user": "user", "japd": None,
+            "serv_os": "Linux", "host": "hostname", "port": 3306,
+            "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None,
+            "ssl_client_ca": "CAFile", "ssl_client_key": "KeyFile",
+            "ssl_client_cert": "CertFile", "ssl_client_flag": 2048,
+            "ssl_disabled": False, "ssl_verify_id": False,
+            "ssl_verify_cert": False}
+        self.cfg_array6 = [
+            {"name": "name", "sid": "sid", "user": "user", "japd": None,
+             "serv_os": "Linux", "host": "hostname", "port": 3306,
+             "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None,
+             "ssl_client_ca": "CAFile", "ssl_client_key": "KeyFile",
+             "ssl_client_cert": "CertFile", "ssl_client_flag": 2048,
+             "ssl_disabled": False, "ssl_verify_id": False,
+             "ssl_verify_cert": False},
+            {"name": "name2", "sid": "sid2", "user": "user", "japd": None,
+             "serv_os": "Linux", "host": "hostname", "port": 3306,
+             "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None,
+             "ssl_client_ca": "CAFile", "ssl_client_key": "KeyFile",
+             "ssl_client_cert": "CertFile", "ssl_client_flag": 2048,
+             "ssl_disabled": False, "ssl_verify_id": False,
+             "ssl_verify_cert": False}]
+        self.cfg_array7 = {
+            "name": "name", "sid": "sid", "user": "user", "japd": None,
+            "serv_os": "Linux", "host": "hostname", "port": 3306,
+            "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None,
+            "ssl_client_ca": "CAFile", "ssl_client_key": "KeyFile",
+            "ssl_client_cert": "CertFile", "ssl_client_flag": None,
+            "ssl_disabled": False, "ssl_verify_id": False,
+            "ssl_verify_cert": False}
+        self.cfg_array8 = [
+            {"name": "name", "sid": "sid", "user": "user", "japd": None,
+             "serv_os": "Linux", "host": "hostname", "port": 3306,
+             "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None,
+             "ssl_client_ca": "CAFile", "ssl_client_key": "KeyFile",
+             "ssl_client_cert": "CertFile", "ssl_client_flag": None,
+             "ssl_disabled": False, "ssl_verify_id": False,
+             "ssl_verify_cert": False},
+            {"name": "name2", "sid": "sid2", "user": "user", "japd": None,
+             "serv_os": "Linux", "host": "hostname", "port": 3306,
+             "cfg_file": "cfg_file", "rep_user": "rep_user", "rep_japd": None,
+             "ssl_client_ca": "CAFile", "ssl_client_key": "KeyFile",
+             "ssl_client_cert": "CertFile", "ssl_client_flag": None,
+             "ssl_disabled": False, "ssl_verify_id": False,
+             "ssl_verify_cert": False}]
+
+    @mock.patch("mysql_libs.mysql_class.SlaveRep")
+    def test_silent_option(self, mock_rep):
+
+        """Function:  test_silent_option
+
+        Description:  Test with the silent option.
+
+        Arguments:
+
+        """
+
+        mock_rep.return_value = self.slave
+        slaves = mysql_libs.create_slv_array([self.cfg_array], silent=True)
+
+        self.assertEqual(len(slaves), 1)
 
     @mock.patch("mysql_libs.mysql_class.SlaveRep")
     def test_ssl_flag2(self, mock_rep):

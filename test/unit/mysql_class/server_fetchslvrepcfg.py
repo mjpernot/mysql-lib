@@ -42,6 +42,8 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_post_8026
+        test_pre_8026
         test_value
 
     """
@@ -66,6 +68,48 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 
+    def test_post_8026(self):
+
+        """Function:  test_post_8026
+
+        Description:  Test with post-MySQL 8.0.26.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqldb.version = (8, 0, 28)
+
+        self.assertEqual(
+            mysqldb.fetch_slv_rep_cfg(), (
+                {"log_bin": None, "sync_relay_log": None, "read_only": None,
+                 "sync_source_info": None, "log_replica_updates": None,
+                 "sync_relay_log_info": None}))
+
+    def test_pre_8026(self):
+
+        """Function:  test_pre_8026
+
+        Description:  Test with pre-MySQL 8.0.26.
+
+        Arguments:
+
+        """
+
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqldb.version = (8, 0, 21)
+
+        self.assertEqual(
+            mysqldb.fetch_slv_rep_cfg(), (
+                {"log_bin": None, "sync_relay_log": None, "read_only": None,
+                 "sync_master_info": None, "log_slave_updates": None,
+                 "sync_relay_log_info": None}))
+
     def test_value(self):
 
         """Function:  test_value
@@ -76,15 +120,16 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        mysqldb = mysql_class.Server(self.name, self.server_id, self.sql_user,
-                                     self.sql_pass, self.machine,
-                                     defaults_file=self.defaults_file)
+        mysqldb = mysql_class.Server(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqldb.version = (8, 0, 21)
 
-        self.assertEqual(mysqldb.fetch_slv_rep_cfg(),
-                         ({"log_bin": None, "sync_relay_log": None,
-                           "read_only": None, "sync_master_info": None,
-                           "log_slave_updates": None,
-                           "sync_relay_log_info": None}))
+        self.assertEqual(
+            mysqldb.fetch_slv_rep_cfg(), (
+                {"log_bin": None, "sync_relay_log": None, "read_only": None,
+                 "sync_master_info": None, "log_slave_updates": None,
+                 "sync_relay_log_info": None}))
 
 
 if __name__ == "__main__":
