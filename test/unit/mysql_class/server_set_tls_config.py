@@ -61,6 +61,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
+        tls12 = "TLSv1.2"
         key1 = "pass"
         key2 = "wd"
         self.name = "Mysql_Server"
@@ -72,9 +73,9 @@ class UnitTest(unittest.TestCase):
         self.port = 3306
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
-        self.tls_versions = ["TLSv1.1", "TLSv1.2"]
-        self.tls_versions2 = "TLSv1.2"
-        self.tls_versions2a = ["TLSv1.2"]
+        self.tls_versions = ["TLSv1.1", tls12]
+        self.tls_versions2 = tls12
+        self.tls_versions2a = [tls12]
 
         self.config = {}
         self.config[key1 + key2] = self.sql_pass
