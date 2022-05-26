@@ -7,6 +7,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ## [5.3.1] - 2022-05-26
 - Updated mysql-connector-python to v8.0.22
 
+### Changed
+- Documentation update
+
 
 ## [5.3.0] - 2022-02-14
 - Added TLS version capability to classes.
