@@ -8,6 +8,11 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Updated mysql-connector-python to v8.0.22
 
 ### Changed
+- mysql_class.SlaveRep.fetch_ign_tbl: Refactored method.
+- mysql_class.SlaveRep.fetch_do_tbl: Refactored method.
+- mysql_class.Rep.fetch_ign_db: Refactored method.
+- mysql_class.Rep.fetch_do_db: Refactored method.
+- mysql_class.Server.set_srv_gtid: Refactored method.
 - Documentation update
 
 
