@@ -25,6 +25,7 @@ test/integration/mysql_class/server_connect.py
 test/integration/mysql_class/server_disconnect.py
 test/integration/mysql_class/server_fetch_log.py
 test/integration/mysql_class/server_fetch_mst_rep_cfg.py
+test/integration/mysql_class/server_fetch_slv_rep_cfg.py
 test/integration/mysql_class/server_flush_logs.py
 test/integration/mysql_class/server_get_name.py
 test/integration/mysql_class/server_init.py
@@ -35,6 +36,7 @@ test/integration/mysql_class/server_set_srv_gtid.py
 test/integration/mysql_class/server_sql.py
 test/integration/mysql_class/server_upd_log_stats.py
 test/integration/mysql_class/server_upd_mst_rep_stat.py
+test/integration/mysql_class/server_upd_slv_rep_stat.py
 test/integration/mysql_class/server_upd_srv_perf.py
 test/integration/mysql_class/server_upd_srv_stat.py
 test/integration/mysql_class/server_vert_sql.py
