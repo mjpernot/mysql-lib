@@ -80,7 +80,11 @@ class UnitTest(unittest.TestCase):
 
         data = mysql_class.show_slave_hosts(self.svr)
 
-        self.assertTrue(data and data[0]["Slave_UUID"])
+        if "Replica_UUID" in data[0]:
+            self.assertTrue(data[0]["Replica_UUID"])
+
+        else:
+            self.assertTrue(data[0]["Slave_UUID"])
 
     def test_show_master_stat(self):
 
