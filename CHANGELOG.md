@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.3.1] - 2022-05-26
+- Updated mysql-connector-python to v8.0.22
+
+### Changed
+- mysql_class.SlaveRep.fetch_ign_tbl: Refactored method.
+- mysql_class.SlaveRep.fetch_do_tbl: Refactored method.
+- mysql_class.Rep.fetch_ign_db: Refactored method.
+- mysql_class.Rep.fetch_do_db: Refactored method.
+- mysql_class.Server.set_srv_gtid: Refactored method.
+- Documentation update
+
+
 ## [5.3.0] - 2022-02-14
 - Added TLS version capability to classes.
 - Updated to work with MySQL 8.0.28 new semantic changes.

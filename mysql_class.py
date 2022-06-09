@@ -542,23 +542,24 @@ class Server(object):
         Description:  Initialization of an instance of the Server class.
 
         Arguments:
-            (input) name -> Name of the MySQL server.
-            (input) server_id -> Server's ID.
-            (input) sql_user -> SQL user's name.
-            (input) sql_pass -> SQL user's pswd.
-            (input) os_type -> Machine operating system type class instance.
+            (input) name -> Name of the MySQL server
+            (input) server_id -> Server's ID
+            (input) sql_user -> SQL user's name
+            (input) sql_pass -> SQL user's pswd
+            (input) os_type -> Machine operating system type class instance
             (input) kwargs:
-                extra_def_file -> Location of extra defaults file.
-                host -> Host name or IP of server.
-                port -> Port for MySQL.
-                defaults_file -> Location of my.cnf file.
-                ssl_client_ca -> SSL certificate authority file.
-                ssl_client_key -> SSL X.509 key file.
-                ssl_client_cert -> SSL X.509 certificate file.
-                ssl_client_flag -> SSL client flag option.
-                ssl_disabled -> True|False - Disable SSL.
-                ssl_verify_id -> True|False - Validate the destination host.
-                ssl_verify_cert -> True|False - Validate the CA certification.
+                extra_def_file -> Location of extra defaults file
+                host -> Host name or IP of server
+                port -> Port for MySQL
+                defaults_file -> Location of my.cnf file
+                ssl_client_ca -> SSL certificate authority file
+                ssl_client_key -> SSL X.509 key file
+                ssl_client_cert -> SSL X.509 certificate file
+                ssl_client_flag -> SSL client flag option
+                ssl_disabled -> True|False - Disable SSL
+                ssl_verify_id -> True|False - Validate the destination host
+                ssl_verify_cert -> True|False - Validate the CA certification
+                tls_versions -> List of TLS versions
 
         """
 
@@ -706,12 +707,7 @@ class Server(object):
 
         var = "gtid_mode"
         data = fetch_sys_var(self, var)
-
-        if data and data[var] == "ON":
-            self.gtid_mode = True
-
-        else:
-            self.gtid_mode = False
+        self.gtid_mode = True if data and data[var] == "ON" else False
 
     def upd_srv_perf(self):
 
@@ -1370,12 +1366,7 @@ class Rep(Server):
 
         """
 
-        do_dic = []
-
-        if self.do_db:
-            do_dic = gen_libs.str_2_list(self.do_db, ",")
-
-        return do_dic
+        return gen_libs.str_2_list(self.do_db, ",") if self.do_db else list()
 
     def fetch_ign_db(self):
 
@@ -1388,12 +1379,7 @@ class Rep(Server):
 
         """
 
-        ign_dic = []
-
-        if self.ign_db:
-            ign_dic = gen_libs.str_2_list(self.ign_db, ",")
-
-        return ign_dic
+        return gen_libs.str_2_list(self.ign_db, ",") if self.ign_db else list()
 
     def verify_srv_id(self):
 
@@ -2097,13 +2083,8 @@ class SlaveRep(Rep):
 
         """
 
-        do_dic = []
-
-        if self.do_tbl:
-            do_dic = gen_libs.list_2_dict(gen_libs.str_2_list(self.do_tbl,
-                                                              ","))
-
-        return do_dic
+        return gen_libs.list_2_dict(
+            gen_libs.str_2_list(self.do_tbl, ",")) if self.do_tbl else list()
 
     def fetch_ign_tbl(self):
 
@@ -2116,10 +2097,5 @@ class SlaveRep(Rep):
 
         """
 
-        ign_dic = []
-
-        if self.ign_tbl:
-            ign_dic = gen_libs.list_2_dict(gen_libs.str_2_list(self.ign_tbl,
-                                                               ","))
-
-        return ign_dic
+        return gen_libs.list_2_dict(
+            gen_libs.str_2_list(self.ign_tbl, ",")) if self.ign_tbl else list()
