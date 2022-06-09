@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # Classification (U)
 
-"""Program:  show_slave_hosts.py
+"""Program:  server_fetch_slv_rep_cfg.py
 
-    Description:  Integration testing of show_slave_hosts in mysql_class.py.
+    Description:  Integration testing of Server.fetch_slv_rep_cfg in
+        mysql_class.py.
 
     Usage:
-        test/integration/mysql_class/show_slave_hosts.py
+        test/integration/mysql_class/server_fetch_slv_rep_cfg.py
 
     Arguments:
 
@@ -43,8 +44,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
-        test_show_master_stat2
-        test_show_master_stat
+        test_fetch_slv_rep_cfg
 
     """
 
@@ -60,45 +60,28 @@ class UnitTest(unittest.TestCase):
 
         self.base_dir = "test/integration"
         self.config_dir = os.path.join(self.base_dir, "config")
-        self.config_name = "mysql_cfg"
+        self.config_name = "master_mysql_cfg"
         cfg = gen_libs.load_module(self.config_name, self.config_dir)
-        self.svr = mysql_class.Server(
+        self.svr = mysql_class.MasterRep(
             cfg.name, cfg.sid, cfg.user, cfg.japd,
             os_type=getattr(machine, cfg.serv_os)(), host=cfg.host,
             port=cfg.port, defaults_file=cfg.cfg_file)
         self.svr.connect()
 
-    def test_show_master_stat2(self):
+    def test_fetch_slv_rep_cfg(self):
 
-        """Function:  test_show_master_stat2
+        """Function:  test_fetch_slv_rep_cfg
 
-        Description:  Test show_master_stat function.
-
-        Arguments:
-
-        """
-
-        data = mysql_class.show_slave_hosts(self.svr)
-
-        if "Replica_UUID" in data[0]:
-            self.assertTrue(data[0]["Replica_UUID"])
-
-        else:
-            self.assertTrue(data[0]["Slave_UUID"])
-
-    def test_show_master_stat(self):
-
-        """Function:  test_show_master_stat
-
-        Description:  Test show_master_stat function.
+        Description:  Test the fetch_slv_rep_cfg method.
 
         Arguments:
 
         """
 
-        data = mysql_class.show_slave_hosts(self.svr)
+        self.svr.upd_slv_rep_stat()
+        data = self.svr.fetch_slv_rep_cfg()
 
-        self.assertTrue(isinstance(data, list))
+        self.assertTrue(isinstance(data, dict))
 
 
 if __name__ == "__main__":
