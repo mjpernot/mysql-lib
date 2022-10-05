@@ -7,6 +7,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ## [5.3.2] - 2022-10-05
 - Updated to work in Python 3 too.
 
+### Changed
+- Changed to use "from . import" or "import" for local modules depending on Python version and environment configuration.
+
 
 ## [5.3.1] - 2022-05-26
 - Updated mysql-connector-python to v8.0.22
