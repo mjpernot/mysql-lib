@@ -809,7 +809,7 @@ class Server(object):
 
         # Data derived from above status values.
         # Days up since last recycle.
-        self.days_up = int(float(self.uptime) / 3600 / 24)
+        self.days_up = int(self.uptime / 3600.0 / 24)
 
         # Base memory for database (in bytes).
         self.base_mem = self.buf_size + self.indb_buf + self.indb_log_buf \
@@ -1072,7 +1072,7 @@ class Server(object):
         keys = [str(line[0]) for line in self.conn.cmd_query(cmd)["columns"]]
 
         for line in self.conn.get_rows()[0]:
-            data.append(dict(zip(keys, [item for item in line])))
+            data.append(dict(list(zip(keys, [item for item in line]))))
 
         return data
 
