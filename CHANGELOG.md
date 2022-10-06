@@ -9,6 +9,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ### Changed
 - Changed to use "from . import" or "import" for local modules depending on Python version and environment configuration.
+- mysql_class.Server.connect: Changed exception handler to work in Python 3.
+- mysql_class.compare_sets, mysql_class.GTIDSet.union: Explicitly converted dictionary items to list.
+- mysql_class.GTIDSet.\_\_init\_\_: Added python version check to use basestring or str check.
 
 
 ## [5.3.1] - 2022-05-26

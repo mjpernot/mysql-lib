@@ -29,6 +29,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 # Standard
+import sys
 import copy
 
 # Third-party
@@ -247,7 +248,7 @@ def compare_sets(lhs, rhs):
     both = copy.deepcopy(lhs)
     both.union(rhs)
 
-    for uuid, rngs in both.gtids.items():
+    for uuid, rngs in list(both.gtids.items()):
         # They are incomparable.
         if lcheck and rcheck:
             return lcheck, rcheck
@@ -326,8 +327,13 @@ class GTIDSet(object):
         gtids = {}
 
         # Convert to string to parse.
-        if not isinstance(obj, basestring):
-            obj = str(obj)
+        if sys.version_info < (3, 0):
+            if not isinstance(obj, basestring):
+                obj = str(obj)
+
+        else:
+            if not isinstance(obj, str):
+                obj = str(obj)
 
         # Parse string and construct a GTID set.
         for uuid_set in obj.split(","):
@@ -393,7 +399,7 @@ class GTIDSet(object):
         gtids = self.gtids
 
         # Parse the other GTID set and combine with the first GTID set.
-        for uuid, rngs in other.gtids.items():
+        for uuid, rngs in list(other.gtids.items()):
             if uuid not in gtids:
                 gtids[uuid] = rngs
 
@@ -988,7 +994,7 @@ class Server(object):
                 self.version = self.conn.get_server_version()
                 self.conn_msg = None
 
-            except mysql.connector.Error, err:
+            except mysql.connector.Error as err:
                 self.conn_msg = \
                     "Couldn't connect to database.  MySQL error %d: %s" \
                     % (err.args[0], err.args[1])
