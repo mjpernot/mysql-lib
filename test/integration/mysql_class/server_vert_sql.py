@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Classification (U)
 
 """Program:  server_vert_sql.py
@@ -83,7 +82,7 @@ class UnitTest(unittest.TestCase):
 
         data = self.svr.vert_sql(self.cmd2)
 
-        self.assertTrue(data["Uptime"] > 0)
+        self.assertTrue(int(data["Uptime"]) > 0)
 
     def test_params(self):
 
@@ -97,7 +96,7 @@ class UnitTest(unittest.TestCase):
 
         data = self.svr.vert_sql(self.cmd, (self.var,))
 
-        self.assertTrue(data["Uptime"] > 0)
+        self.assertTrue(int(data["Uptime"]) > 0)
 
 
 if __name__ == "__main__":
