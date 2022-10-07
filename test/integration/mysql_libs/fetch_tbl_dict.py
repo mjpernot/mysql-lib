@@ -81,7 +81,7 @@ class UnitTest(unittest.TestCase):
         key_name = "TABLE_NAME"
         data = mysql_libs.fetch_tbl_dict(self.svr, "mysql")
 
-        if key_name not in data[0].keys():
+        if key_name not in list(data[0].keys()):
             key_name = "table_name"
 
         self.assertTrue("db" in [item[key_name] for item in data])
