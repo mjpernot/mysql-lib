@@ -5,8 +5,8 @@
 #   is located at.
 
 echo "Integration test: mysql_libs"  
-test/integration/mysql_libs/create_instance.py
-test/integration/mysql_libs/fetch_db_dict.py
-test/integration/mysql_libs/fetch_logs.py
-test/integration/mysql_libs/fetch_tbl_dict.py
-test/integration/mysql_libs/is_cfg_valid.py
+/usr/bin/python ./test/integration/mysql_libs/create_instance.py
+/usr/bin/python ./test/integration/mysql_libs/fetch_db_dict.py
+/usr/bin/python ./test/integration/mysql_libs/fetch_logs.py
+/usr/bin/python ./test/integration/mysql_libs/fetch_tbl_dict.py
+/usr/bin/python ./test/integration/mysql_libs/is_cfg_valid.py

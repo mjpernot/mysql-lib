@@ -25,8 +25,11 @@
 """
 
 # Libraries and Global Variables
+from __future__ import print_function
+from __future__ import absolute_import
 
 # Standard
+import sys
 import copy
 
 # Third-party
@@ -34,8 +37,13 @@ import collections
 import mysql.connector
 
 # Local
-import lib.gen_libs as gen_libs
-import version
+try:
+    from .lib import gen_libs
+    from . import version
+
+except (ValueError, ImportError) as err:
+    import lib.gen_libs as gen_libs
+    import version
 
 __version__ = version.__version__
 
@@ -240,7 +248,7 @@ def compare_sets(lhs, rhs):
     both = copy.deepcopy(lhs)
     both.union(rhs)
 
-    for uuid, rngs in both.gtids.items():
+    for uuid, rngs in list(both.gtids.items()):
         # They are incomparable.
         if lcheck and rcheck:
             return lcheck, rcheck
@@ -319,8 +327,13 @@ class GTIDSet(object):
         gtids = {}
 
         # Convert to string to parse.
-        if not isinstance(obj, basestring):
-            obj = str(obj)
+        if sys.version_info < (3, 0):
+            if not isinstance(obj, basestring):
+                obj = str(obj)
+
+        else:
+            if not isinstance(obj, str):
+                obj = str(obj)
 
         # Parse string and construct a GTID set.
         for uuid_set in obj.split(","):
@@ -386,7 +399,7 @@ class GTIDSet(object):
         gtids = self.gtids
 
         # Parse the other GTID set and combine with the first GTID set.
-        for uuid, rngs in other.gtids.items():
+        for uuid, rngs in list(other.gtids.items()):
             if uuid not in gtids:
                 gtids[uuid] = rngs
 
@@ -796,7 +809,7 @@ class Server(object):
 
         # Data derived from above status values.
         # Days up since last recycle.
-        self.days_up = int(float(self.uptime) / 3600 / 24)
+        self.days_up = int(self.uptime / 3600.0 / 24)
 
         # Base memory for database (in bytes).
         self.base_mem = self.buf_size + self.indb_buf + self.indb_log_buf \
@@ -981,7 +994,7 @@ class Server(object):
                 self.version = self.conn.get_server_version()
                 self.conn_msg = None
 
-            except mysql.connector.Error, err:
+            except mysql.connector.Error as err:
                 self.conn_msg = \
                     "Couldn't connect to database.  MySQL error %d: %s" \
                     % (err.args[0], err.args[1])
@@ -1059,7 +1072,7 @@ class Server(object):
         keys = [str(line[0]) for line in self.conn.cmd_query(cmd)["columns"]]
 
         for line in self.conn.get_rows()[0]:
-            data.append(dict(zip(keys, [item for item in line])))
+            data.append(dict(list(zip(keys, [item for item in line]))))
 
         return data
 

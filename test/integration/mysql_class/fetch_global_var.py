@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Classification (U)
 
 """Program:  fetch_global_var.py
@@ -78,7 +77,7 @@ class UnitTest(unittest.TestCase):
         """
 
         data = mysql_class.fetch_global_var(self.svr, "Uptime")
-        self.assertTrue(data["Uptime"] > 0)
+        self.assertTrue(int(data["Uptime"]) > 0)
 
 
 if __name__ == "__main__":
