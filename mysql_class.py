@@ -60,9 +60,9 @@ def fetch_global_var(server, var):
     Description:  Returns the value for a global variable.
 
     Arguments:
-        (input) server -> Server instance.
-        (input) var -> Global variable name.
-        (output) Variable returned in dictionary format (e.g. {name: value}).
+        (input) server -> Server instance
+        (input) var -> Global variable name
+        (output) Variable returned in dictionary format (e.g. {name: value})
 
     """
 
@@ -80,11 +80,11 @@ def fetch_sys_var(server, var, **kwargs):
         NOTE:  Will use 'session' level by default.
 
     Arguments:
-        (input) server -> Server instance.
-        (input) var -> Variable name.
+        (input) server -> Server instance
+        (input) var -> Variable name
         (Input) **kwargs:
-            level - global|session - level at which command will run.
-        (output) Variable returned in dictionary format (e.g. {name: value}).
+            level - global|session - level at which command will run
+        (output) Variable returned in dictionary format (e.g. {name: value})
 
     """
 
@@ -102,7 +102,7 @@ def flush_logs(server):
     Description:  Run the MySQL 'flush logs' command.
 
     Arguments:
-        (input) server -> Server instance.
+        (input) server -> Server instance
 
     """
 
@@ -116,8 +116,8 @@ def show_master_stat(server):
     Description:  Return results of the 'show master status' command.
 
     Arguments:
-        (input) server -> Server instance.
-        (output) Results of command in dictionary format.
+        (input) server -> Server instance
+        (output) Results of command in dictionary format
 
     """
 
@@ -131,8 +131,8 @@ def show_slave_hosts(server):
     Description:  Return the output of the 'show slave hosts' command.
 
     Arguments:
-        (input) server -> Server instance.
-        (output) Results of command in dictionary format.
+        (input) server -> Server instance
+        (output) Results of command in dictionary format
 
     """
 
@@ -151,8 +151,8 @@ def show_slave_stat(server):
     Description:  Return the output of the 'show slave status' command.
 
     Arguments:
-        (input) server -> Server instance.
-        (output) Results of command in dictionary format.
+        (input) server -> Server instance
+        (output) Results of command in dictionary format
 
     """
 
@@ -171,7 +171,7 @@ def slave_start(server):
     Description:  Starts the slave thread.
 
     Arguments:
-        (input) server -> Server instance.
+        (input) server -> Server instance
 
     """
 
@@ -188,7 +188,7 @@ def slave_stop(server):
     Description:  Stops the slave thread.
 
     Arguments:
-        (input) server -> Server instance.
+        (input) server -> Server instance
 
     """
 
@@ -219,7 +219,7 @@ class Position(collections.namedtuple("Position", "file, pos")):
             be raised.
 
         Arguments:
-            (input) other -> Second server to be compared with.
+            (input) other -> Second server to be compared with
 
         """
 
@@ -235,10 +235,10 @@ def compare_sets(lhs, rhs):
         item than the right hand side and vice verse.
 
     Arguments:
-        (input) lhs -> Left hand side set.
-        (input) rhs -> Right hand side set.
-        (output) lcheck -> True | False for Left side check.
-        (output) rcheck -> True | False for Right side check.
+        (input) lhs -> Left hand side set
+        (input) rhs -> Right hand side set
+        (output) lcheck -> True | False for Left side check
+        (output) rcheck -> True | False for Right side check
 
     """
 
@@ -270,10 +270,10 @@ def _inner_compare(gtid_set, uuid, rngs):
         to the method.
 
     Arguments:
-        (input) gtid_set -> GTIDSet instance.
-        (input) uuid -> Universal Unqiue Identifier.
-        (input) rngs -> Set of ranges.
-        (output) -> True|False on whether UUID was detected.
+        (input) gtid_set -> GTIDSet instance
+        (input) uuid -> Universal Unqiue Identifier
+        (input) rngs -> Set of ranges
+        (output) -> True|False on whether UUID was detected
 
     """
 
@@ -320,20 +320,18 @@ class GTIDSet(object):
         Description:  Initialization an instance of the GTIDSet class.
 
         Arguments:
-            (input) obj -> Raw GTID name and range.
+            (input) obj -> Raw GTID name and range
 
         """
 
         gtids = {}
 
-        # Convert to string to parse.
-        if sys.version_info < (3, 0):
-            if not isinstance(obj, basestring):
-                obj = str(obj)
+        # Convert to string to parse
+        if sys.version_info < (3, 0) and not isinstance(obj, basestring):
+            obj = str(obj)
 
-        else:
-            if not isinstance(obj, str):
-                obj = str(obj)
+        elif sys.version_info >= (3, 0) and not isinstance(obj, str):
+            obj = str(obj)
 
         # Parse string and construct a GTID set.
         for uuid_set in obj.split(","):
@@ -362,7 +360,7 @@ class GTIDSet(object):
         Description:  Combines and converts to a string all parts of the class.
 
         Arguments:
-            (output) -> String of the GTID class combined together.
+            (output) -> String of the GTID class combined together
 
         """
 
@@ -385,10 +383,10 @@ class GTIDSet(object):
             want to compute the union of two sets 'lhs' and 'rhs' you have to
             do something like:
                 data = copy.deepcopy(lhs)
-                data.union(rhs).
+                data.union(rhs)
 
         Arguments:
-            (input) other -> Second GTID set.
+            (input) other -> Second GTID set
 
         """
 
@@ -415,7 +413,7 @@ class GTIDSet(object):
         Description:  Is first GTID set less than second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -429,7 +427,7 @@ class GTIDSet(object):
         Description:  Is first GTID set less than or equal to second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -443,7 +441,7 @@ class GTIDSet(object):
         Description:  Is first GTID set equal to second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -458,7 +456,7 @@ class GTIDSet(object):
         Description:  Is first GTID set not equal to second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -472,7 +470,7 @@ class GTIDSet(object):
             set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -485,7 +483,7 @@ class GTIDSet(object):
         Description:  Is first GTID set greater than second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -499,7 +497,7 @@ class GTIDSet(object):
             set (other).
 
         Arguments:
-            (output) result -> First set with elements from second set.
+            (output) result -> First set with elements from second set
 
         """
 
@@ -977,8 +975,8 @@ class Server(object):
 
         Arguments:
             (input) kwargs:
-                database -> Name of database to connect to.
-                silent -> True|False - Print connection error message.
+                database -> Name of database to connect to
+                silent -> True|False - Print connection error message
 
         """
 
@@ -1022,11 +1020,11 @@ class Server(object):
             as either a cursor row iteration or single result set.
 
         Arguments:
-            (input) cmd -> SQL command.
-            (input) res_set -> row|all - determines the result set.
-            (input) params -> Position arguments for the SQL command.
-                NOTE:  Arguments must be in a list or tuple.
-            (output) Returns cursor row iteration or single result set of data.
+            (input) cmd -> SQL command
+            (input) res_set -> row|all - determines the result set
+            (input) params -> Position arguments for the SQL command
+                NOTE:  Arguments must be in a list or tuple
+            (output) Returns cursor row iteration or single result set of data
 
         """
 
@@ -1046,8 +1044,8 @@ class Server(object):
             the command executed.
 
         Arguments:
-            (input) cmd -> Command SQL.
-            (output) Results of the command executed in dictionary format.
+            (input) cmd -> Command SQL
+            (output) Results of the command executed in dictionary format
 
         """
 
@@ -1063,8 +1061,8 @@ class Server(object):
             of dictionaries key-values.
 
         Arguments:
-            (input) cmd -> Command SQL.
-            (output) data -> Results of the sql executed in list format.
+            (input) cmd -> Command SQL
+            (output) data -> Results of the sql executed in list format
 
         """
 
@@ -1086,10 +1084,10 @@ class Server(object):
             format.
 
         Arguments:
-            (input) cmd -> Command SQL.
-            (input) params -> Position arguments for the SQL command.
-                NOTE:  Arguments must be in a list or tuple.
-            (output) data -> Results of the sql executed in list format.
+            (input) cmd -> Command SQL
+            (input) params -> Position arguments for the SQL command
+                NOTE:  Arguments must be in a list or tuple
+            (output) data -> Results of the sql executed in list format
 
         """
 
@@ -1107,7 +1105,7 @@ class Server(object):
         Description:  Checks to see if the connection is still active.
 
         Arguments:
-            (output) -> Returns True|False on whether connection is active.
+            (output) -> Returns True|False on whether connection is active
 
         """
 
@@ -1136,7 +1134,7 @@ class Server(object):
         Description:  Change to another database.
 
         Arguments:
-            (input) dbn -> Name of database.
+            (input) dbn -> Name of database
 
         """
 
@@ -1150,7 +1148,7 @@ class Server(object):
         Description:  Return the server's name.
 
         Arguments:
-            (output) name -> Server Name.
+            (output) name -> Server Name
 
         """
 
@@ -1160,7 +1158,7 @@ class Server(object):
 
         """Method:  set_pass_config
 
-        Description:  Set the SQL passwd config attributes.
+        Description:  Set the SQL passwd config attributes
 
         Arguments:
 
@@ -1181,10 +1179,10 @@ class Server(object):
             dictionary.
 
         Arguments:
-            (input) ssl_client_ca -> SSL certificate authority file.
-            (input) ssl_client_key -> SSL X.509 key file.
-            (input) ssl_client_cert -> SSL X.509 certificate file.
-            (input) ssl_client_flag -> SSL client flag option.
+            (input) ssl_client_ca -> SSL certificate authority file
+            (input) ssl_client_key -> SSL X.509 key file
+            (input) ssl_client_cert -> SSL X.509 certificate file
+            (input) ssl_client_flag -> SSL client flag option
 
         """
 
