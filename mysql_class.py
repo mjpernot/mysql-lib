@@ -327,10 +327,8 @@ class GTIDSet(object):
         gtids = {}
 
         # Convert to string to parse
-        if sys.version_info < (3, 0) and not isinstance(obj, basestring):
-            obj = str(obj)
-
-        elif sys.version_info >= (3, 0) and not isinstance(obj, str):
+        if (sys.version_info < (3, 0) and not isinstance(obj, basestring)) or \
+           (sys.version_info >= (3, 0) and not isinstance(obj, str)):
             obj = str(obj)
 
         # Parse string and construct a GTID set.
