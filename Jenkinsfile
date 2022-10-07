@@ -15,7 +15,7 @@ pipeline {
                 virtualenv test_env
                 source test_env/bin/activate
                 pip2 install mock==2.0.0 --user
-                pip2 install mysql-connector-python==8.0.16 --user
+                pip2 install mysql-connector-python==8.0.22 --user
                 /usr/bin/python2 ./test/unit/mysql_class/fetch_global_var.py
                 /usr/bin/python2 ./test/unit/mysql_class/fetch_sys_var.py
                 /usr/bin/python2 ./test/unit/mysql_class/flush_logs.py
