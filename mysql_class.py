@@ -31,8 +31,6 @@ from __future__ import absolute_import
 # Standard
 import sys
 import copy
-
-# Third-party
 import collections
 import mysql.connector
 

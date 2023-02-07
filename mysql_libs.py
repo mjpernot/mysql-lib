@@ -47,8 +47,6 @@ from __future__ import absolute_import
 
 # Standard
 import time
-
-# Third-party
 import mysql.connector
 
 # Local
