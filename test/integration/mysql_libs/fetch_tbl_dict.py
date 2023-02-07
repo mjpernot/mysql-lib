@@ -17,13 +17,7 @@
 # Standard
 import sys
 import os
-
-if sys.version_info < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
-
-# Third-party
+import unittest
 
 # Local
 sys.path.append(os.getcwd())
@@ -81,7 +75,7 @@ class UnitTest(unittest.TestCase):
         key_name = "TABLE_NAME"
         data = mysql_libs.fetch_tbl_dict(self.svr, "mysql")
 
-        if key_name not in data[0].keys():
+        if key_name not in list(data[0].keys()):
             key_name = "table_name"
 
         self.assertTrue("db" in [item[key_name] for item in data])
