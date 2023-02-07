@@ -42,18 +42,25 @@
 """
 
 # Libraries and Global Variables
+from __future__ import print_function
+from __future__ import absolute_import
 
 # Standard
 import time
-
-# Third-party
 import mysql.connector
 
 # Local
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import mysql_class
-import version
+try:
+    from .lib import gen_libs
+    from .lib import machine
+    from . import mysql_class
+    from . import version
+
+except (ValueError, ImportError) as err:
+    import lib.gen_libs as gen_libs
+    import lib.machine as machine
+    import mysql_class
+    import version
 
 __version__ = version.__version__
 

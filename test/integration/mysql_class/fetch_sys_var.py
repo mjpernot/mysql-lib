@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # Classification (U)
 
 """Program:  fetch_sys_var.py
@@ -17,13 +16,7 @@
 # Standard
 import sys
 import os
-
-if sys.version_info < (2, 7):
-    import unittest2 as unittest
-else:
-    import unittest
-
-# Third-party
+import unittest
 
 # Local
 sys.path.append(os.getcwd())
@@ -80,7 +73,7 @@ class UnitTest(unittest.TestCase):
 
         data = mysql_class.fetch_sys_var(self.svr, "wait_timeout",
                                          level="global")
-        self.assertTrue(data["wait_timeout"] >= 0)
+        self.assertTrue(int(data["wait_timeout"]) >= 0)
 
     def test_fetch_session(self):
 
@@ -94,7 +87,7 @@ class UnitTest(unittest.TestCase):
 
         data = mysql_class.fetch_sys_var(self.svr, "warning_count",
                                          level="session")
-        self.assertTrue(data["warning_count"] >= 0)
+        self.assertTrue(int(data["warning_count"]) >= 0)
 
     def test_fetch_default(self):
 
@@ -107,7 +100,7 @@ class UnitTest(unittest.TestCase):
         """
 
         data = mysql_class.fetch_sys_var(self.svr, "warning_count")
-        self.assertTrue(data["warning_count"] >= 0)
+        self.assertTrue(int(data["warning_count"]) >= 0)
 
 
 if __name__ == "__main__":

@@ -25,17 +25,23 @@
 """
 
 # Libraries and Global Variables
+from __future__ import print_function
+from __future__ import absolute_import
 
 # Standard
+import sys
 import copy
-
-# Third-party
 import collections
 import mysql.connector
 
 # Local
-import lib.gen_libs as gen_libs
-import version
+try:
+    from .lib import gen_libs
+    from . import version
+
+except (ValueError, ImportError) as err:
+    import lib.gen_libs as gen_libs
+    import version
 
 __version__ = version.__version__
 
@@ -52,9 +58,9 @@ def fetch_global_var(server, var):
     Description:  Returns the value for a global variable.
 
     Arguments:
-        (input) server -> Server instance.
-        (input) var -> Global variable name.
-        (output) Variable returned in dictionary format (e.g. {name: value}).
+        (input) server -> Server instance
+        (input) var -> Global variable name
+        (output) Variable returned in dictionary format (e.g. {name: value})
 
     """
 
@@ -72,11 +78,11 @@ def fetch_sys_var(server, var, **kwargs):
         NOTE:  Will use 'session' level by default.
 
     Arguments:
-        (input) server -> Server instance.
-        (input) var -> Variable name.
+        (input) server -> Server instance
+        (input) var -> Variable name
         (Input) **kwargs:
-            level - global|session - level at which command will run.
-        (output) Variable returned in dictionary format (e.g. {name: value}).
+            level - global|session - level at which command will run
+        (output) Variable returned in dictionary format (e.g. {name: value})
 
     """
 
@@ -94,7 +100,7 @@ def flush_logs(server):
     Description:  Run the MySQL 'flush logs' command.
 
     Arguments:
-        (input) server -> Server instance.
+        (input) server -> Server instance
 
     """
 
@@ -108,8 +114,8 @@ def show_master_stat(server):
     Description:  Return results of the 'show master status' command.
 
     Arguments:
-        (input) server -> Server instance.
-        (output) Results of command in dictionary format.
+        (input) server -> Server instance
+        (output) Results of command in dictionary format
 
     """
 
@@ -123,8 +129,8 @@ def show_slave_hosts(server):
     Description:  Return the output of the 'show slave hosts' command.
 
     Arguments:
-        (input) server -> Server instance.
-        (output) Results of command in dictionary format.
+        (input) server -> Server instance
+        (output) Results of command in dictionary format
 
     """
 
@@ -143,8 +149,8 @@ def show_slave_stat(server):
     Description:  Return the output of the 'show slave status' command.
 
     Arguments:
-        (input) server -> Server instance.
-        (output) Results of command in dictionary format.
+        (input) server -> Server instance
+        (output) Results of command in dictionary format
 
     """
 
@@ -163,7 +169,7 @@ def slave_start(server):
     Description:  Starts the slave thread.
 
     Arguments:
-        (input) server -> Server instance.
+        (input) server -> Server instance
 
     """
 
@@ -180,7 +186,7 @@ def slave_stop(server):
     Description:  Stops the slave thread.
 
     Arguments:
-        (input) server -> Server instance.
+        (input) server -> Server instance
 
     """
 
@@ -211,7 +217,7 @@ class Position(collections.namedtuple("Position", "file, pos")):
             be raised.
 
         Arguments:
-            (input) other -> Second server to be compared with.
+            (input) other -> Second server to be compared with
 
         """
 
@@ -227,10 +233,10 @@ def compare_sets(lhs, rhs):
         item than the right hand side and vice verse.
 
     Arguments:
-        (input) lhs -> Left hand side set.
-        (input) rhs -> Right hand side set.
-        (output) lcheck -> True | False for Left side check.
-        (output) rcheck -> True | False for Right side check.
+        (input) lhs -> Left hand side set
+        (input) rhs -> Right hand side set
+        (output) lcheck -> True | False for Left side check
+        (output) rcheck -> True | False for Right side check
 
     """
 
@@ -240,7 +246,7 @@ def compare_sets(lhs, rhs):
     both = copy.deepcopy(lhs)
     both.union(rhs)
 
-    for uuid, rngs in both.gtids.items():
+    for uuid, rngs in list(both.gtids.items()):
         # They are incomparable.
         if lcheck and rcheck:
             return lcheck, rcheck
@@ -262,10 +268,10 @@ def _inner_compare(gtid_set, uuid, rngs):
         to the method.
 
     Arguments:
-        (input) gtid_set -> GTIDSet instance.
-        (input) uuid -> Universal Unqiue Identifier.
-        (input) rngs -> Set of ranges.
-        (output) -> True|False on whether UUID was detected.
+        (input) gtid_set -> GTIDSet instance
+        (input) uuid -> Universal Unqiue Identifier
+        (input) rngs -> Set of ranges
+        (output) -> True|False on whether UUID was detected
 
     """
 
@@ -312,14 +318,15 @@ class GTIDSet(object):
         Description:  Initialization an instance of the GTIDSet class.
 
         Arguments:
-            (input) obj -> Raw GTID name and range.
+            (input) obj -> Raw GTID name and range
 
         """
 
         gtids = {}
 
-        # Convert to string to parse.
-        if not isinstance(obj, basestring):
+        # Convert to string to parse
+        if (sys.version_info < (3, 0) and not isinstance(obj, basestring)) or \
+           (sys.version_info >= (3, 0) and not isinstance(obj, str)):
             obj = str(obj)
 
         # Parse string and construct a GTID set.
@@ -349,7 +356,7 @@ class GTIDSet(object):
         Description:  Combines and converts to a string all parts of the class.
 
         Arguments:
-            (output) -> String of the GTID class combined together.
+            (output) -> String of the GTID class combined together
 
         """
 
@@ -372,10 +379,10 @@ class GTIDSet(object):
             want to compute the union of two sets 'lhs' and 'rhs' you have to
             do something like:
                 data = copy.deepcopy(lhs)
-                data.union(rhs).
+                data.union(rhs)
 
         Arguments:
-            (input) other -> Second GTID set.
+            (input) other -> Second GTID set
 
         """
 
@@ -386,7 +393,7 @@ class GTIDSet(object):
         gtids = self.gtids
 
         # Parse the other GTID set and combine with the first GTID set.
-        for uuid, rngs in other.gtids.items():
+        for uuid, rngs in list(other.gtids.items()):
             if uuid not in gtids:
                 gtids[uuid] = rngs
 
@@ -402,7 +409,7 @@ class GTIDSet(object):
         Description:  Is first GTID set less than second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -416,7 +423,7 @@ class GTIDSet(object):
         Description:  Is first GTID set less than or equal to second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -430,7 +437,7 @@ class GTIDSet(object):
         Description:  Is first GTID set equal to second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -445,7 +452,7 @@ class GTIDSet(object):
         Description:  Is first GTID set not equal to second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -459,7 +466,7 @@ class GTIDSet(object):
             set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -472,7 +479,7 @@ class GTIDSet(object):
         Description:  Is first GTID set greater than second GTID set.
 
         Arguments:
-            (output) -> True | False.
+            (output) -> True | False
 
         """
 
@@ -486,7 +493,7 @@ class GTIDSet(object):
             set (other).
 
         Arguments:
-            (output) result -> First set with elements from second set.
+            (output) result -> First set with elements from second set
 
         """
 
@@ -796,7 +803,7 @@ class Server(object):
 
         # Data derived from above status values.
         # Days up since last recycle.
-        self.days_up = int(float(self.uptime) / 3600 / 24)
+        self.days_up = int(self.uptime / 3600.0 / 24)
 
         # Base memory for database (in bytes).
         self.base_mem = self.buf_size + self.indb_buf + self.indb_log_buf \
@@ -964,8 +971,8 @@ class Server(object):
 
         Arguments:
             (input) kwargs:
-                database -> Name of database to connect to.
-                silent -> True|False - Print connection error message.
+                database -> Name of database to connect to
+                silent -> True|False - Print connection error message
 
         """
 
@@ -981,7 +988,7 @@ class Server(object):
                 self.version = self.conn.get_server_version()
                 self.conn_msg = None
 
-            except mysql.connector.Error, err:
+            except mysql.connector.Error as err:
                 self.conn_msg = \
                     "Couldn't connect to database.  MySQL error %d: %s" \
                     % (err.args[0], err.args[1])
@@ -1009,11 +1016,11 @@ class Server(object):
             as either a cursor row iteration or single result set.
 
         Arguments:
-            (input) cmd -> SQL command.
-            (input) res_set -> row|all - determines the result set.
-            (input) params -> Position arguments for the SQL command.
-                NOTE:  Arguments must be in a list or tuple.
-            (output) Returns cursor row iteration or single result set of data.
+            (input) cmd -> SQL command
+            (input) res_set -> row|all - determines the result set
+            (input) params -> Position arguments for the SQL command
+                NOTE:  Arguments must be in a list or tuple
+            (output) Returns cursor row iteration or single result set of data
 
         """
 
@@ -1033,8 +1040,8 @@ class Server(object):
             the command executed.
 
         Arguments:
-            (input) cmd -> Command SQL.
-            (output) Results of the command executed in dictionary format.
+            (input) cmd -> Command SQL
+            (output) Results of the command executed in dictionary format
 
         """
 
@@ -1050,8 +1057,8 @@ class Server(object):
             of dictionaries key-values.
 
         Arguments:
-            (input) cmd -> Command SQL.
-            (output) data -> Results of the sql executed in list format.
+            (input) cmd -> Command SQL
+            (output) data -> Results of the sql executed in list format
 
         """
 
@@ -1059,7 +1066,7 @@ class Server(object):
         keys = [str(line[0]) for line in self.conn.cmd_query(cmd)["columns"]]
 
         for line in self.conn.get_rows()[0]:
-            data.append(dict(zip(keys, [item for item in line])))
+            data.append(dict(list(zip(keys, [item for item in line]))))
 
         return data
 
@@ -1073,10 +1080,10 @@ class Server(object):
             format.
 
         Arguments:
-            (input) cmd -> Command SQL.
-            (input) params -> Position arguments for the SQL command.
-                NOTE:  Arguments must be in a list or tuple.
-            (output) data -> Results of the sql executed in list format.
+            (input) cmd -> Command SQL
+            (input) params -> Position arguments for the SQL command
+                NOTE:  Arguments must be in a list or tuple
+            (output) data -> Results of the sql executed in list format
 
         """
 
@@ -1094,7 +1101,7 @@ class Server(object):
         Description:  Checks to see if the connection is still active.
 
         Arguments:
-            (output) -> Returns True|False on whether connection is active.
+            (output) -> Returns True|False on whether connection is active
 
         """
 
@@ -1123,7 +1130,7 @@ class Server(object):
         Description:  Change to another database.
 
         Arguments:
-            (input) dbn -> Name of database.
+            (input) dbn -> Name of database
 
         """
 
@@ -1137,7 +1144,7 @@ class Server(object):
         Description:  Return the server's name.
 
         Arguments:
-            (output) name -> Server Name.
+            (output) name -> Server Name
 
         """
 
@@ -1147,7 +1154,7 @@ class Server(object):
 
         """Method:  set_pass_config
 
-        Description:  Set the SQL passwd config attributes.
+        Description:  Set the SQL passwd config attributes
 
         Arguments:
 
@@ -1168,10 +1175,10 @@ class Server(object):
             dictionary.
 
         Arguments:
-            (input) ssl_client_ca -> SSL certificate authority file.
-            (input) ssl_client_key -> SSL X.509 key file.
-            (input) ssl_client_cert -> SSL X.509 certificate file.
-            (input) ssl_client_flag -> SSL client flag option.
+            (input) ssl_client_ca -> SSL certificate authority file
+            (input) ssl_client_key -> SSL X.509 key file
+            (input) ssl_client_cert -> SSL X.509 certificate file
+            (input) ssl_client_flag -> SSL client flag option
 
         """
 
