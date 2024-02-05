@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.3.3] - 2024-02-05
+
+
 ## [5.3.2] - 2022-10-05
 - Updated to work in Python 3 too.
 
