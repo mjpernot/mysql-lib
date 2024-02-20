@@ -8,7 +8,11 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Updated to work in Red Hat 8 environment.
 - Updated python-lib to v3.0.2
 
+### Fixed
+- mysql_libs.change_master_to: Added "if" statement to determine the change master syntax to be used.
+
 ### Changed
+- mysql_class.GTIDSets.\_\_init\_\_: Refactored "if" statement to determine type of string.
 - Documentation changes.
 
 
