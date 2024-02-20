@@ -9,6 +9,7 @@
   * Prerequisites
   * Installation
     - Pip Installation
+    - Git Installation
   * Testing
     - Unit
     - Integration
@@ -17,11 +18,10 @@
 # Prerequisites:
 
   * List of Linux packages that need to be installed on the server via git.
-    - git
-    - python-pip
-
-  * Local class/library dependencies within the program structure.
-    - python-lib
+    - Centos 7 (Running Python 2.7):
+      -> python-pip
+    - Redhat 8 (Running Python 3.6):
+      -> python3-pip
 
 
 # Installation:
@@ -35,27 +35,74 @@
 Create requirements-mysql-lib.txt file and requirements-mysql-python-lib.txt files:
 
 ```
-cd {Python_Project}
-cp requirements-mysql-lib.txt {Other_Python_Project}/requirements-mysql-lib.txt
-cp requirements-python-lib.txt {Other_Python_Project}/requirements-mysql-python-lib.txt
+cp {Python_Project}/requirements-mysql-lib.txt {Other_Python_Project}/requirements-mysql-lib.txt
+cp {Python_Project}/requirements-python-lib.txt {Other_Python_Project}/requirements-mysql-python-lib.txt
 ```
 
 ##### Modify the other program's README.md file to add the pip commands under the "Install supporting classes and libraries" section.
 
+Centos 7 (Running Python 2.7):
 Modify the {Other_Python_Project}/README.md file:
 
 ```
-   pip install -r requirements-mysql-lib.txt --target mysql_lib --trusted-host pypi.appdev.proj.coe.ic.gov
-   pip install -r requirements-mysql-python-lib.txt --target mysql_lib/lib --trusted-host pypi.appdev.proj.coe.ic.gov
+pip install -r requirements-mysql-lib.txt --target mysql_lib --trusted-host pypi.appdev.proj.coe.ic.gov
+pip install -r requirements-mysql-python-lib.txt --target mysql_lib/lib --trusted-host pypi.appdev.proj.coe.ic.gov
+```
+
+Redhat 8 (Running Python 3.6):
+Modify the {Other_Python_Project}/README.md file:
+
+```
+python -m pip install -r requirements-mysql-lib.txt --target mysql_lib --trusted-host pypi.appdev.proj.coe.ic.gov
+python -m pip install -r requirements-python-lib.txt --target mysql_lib/lib --trusted-host pypi.appdev.proj.coe.ic.gov
 ```
 
 ##### Add the general Mysql-Lib requirements to the other program's requirements.txt file.  Remove any duplicates.
 
+Centos 7 (Running Python 2.7):
 Add/modify the following lines to the {Other_Python_Project}/requirements.txt file:
 
 ```
-mysql-connector-python==8.0.16
+chardet==4.0.0
+distro==1.6.0
+email==4.0.3
+mysql-connector-python==8.0.22
+protobuf==3.19.1
 simplejson==2.0.9
+```
+
+Redhat 8 (Running Python 3.6):
+Add/modify the following lines to the {Other_Python_Project}/requirements.txt file:
+
+```
+chardet==3.0.4
+distro==1.6.0
+mysql-connector-python==8.0.16
+protobuf==3.19.1
+simplejson==2.0.9
+```
+
+### Git Installation:
+
+Install the project using git.
+
+```
+git clone git@sc.appdev.proj.coe.ic.gov:JAC-DSXD/mysql-lib.git
+```
+
+Install/upgrade system modules.
+
+Centos 7 (Running Python 2.7):
+
+```
+sudo pip install -r requirements.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic.gov
+```
+
+Redhat 8 (Running Python 3.6):
+NOTE: Install as the user that will use the package.
+
+```
+python -m pip install --user -r requirements3.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic.gov
 ```
 
 
@@ -65,23 +112,7 @@ simplejson==2.0.9
 
 ### Installation:
 
-Install the project using git.
-
-```
-umask 022
-cd {Python_Project}
-git clone git@sc.appdev.proj.coe.ic.gov:JAC-DSXD/mysql-lib.git
-```
-
-Install/upgrade system modules.
-
-```
-cd mysql-lib
-sudo bash
-umask 022
-pip install -r requirements.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic.gov
-exit
-```
+Install the project using the procedures in the Git Installation section.
 
 ### Testing:
 
@@ -104,7 +135,7 @@ NOTE:  Integration testing will require access to a MySQL database server.
 
 ### Installation:
 
-Install the project using the procedures in the Unit Testing - Installation section.
+Install the project using the procedures in the Git Installation section.
 
 ### Configuration:
 
