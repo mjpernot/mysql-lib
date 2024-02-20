@@ -111,8 +111,9 @@ def change_master_to(mst, slv):
 
     # Semantic change in MySQL 8.0.23
     master = "source" if db_ver >= (8, 0, 23) else "master"
+    cmd = "replication source" if db_ver >= (8, 0, 23) else "master"
 
-    chg_master_to = """change """ + master + """ to """ + master + \
+    chg_master_to = """change """ + cmd + """ to """ + master + \
         """_host='%s', """ + master + """_port=%s, """ + master + \
         """_user='%s', """ + master + """_""" + KEY1 + KEY2 + """='%s'"""
 

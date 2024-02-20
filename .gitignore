@@ -1,5 +1,5 @@
-# Files to ignore in Git repository.
 *.pyc
+.scannerwork/
 *.py.HOLD
 *swp
 lib

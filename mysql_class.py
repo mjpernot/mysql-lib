@@ -29,7 +29,6 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 # Standard
-import sys
 import copy
 import collections
 import mysql.connector
@@ -325,8 +324,7 @@ class GTIDSet(object):
         gtids = {}
 
         # Convert to string to parse
-        if (sys.version_info < (3, 0) and not isinstance(obj, basestring)) or \
-           (sys.version_info >= (3, 0) and not isinstance(obj, str)):
+        if not isinstance(obj, gen_libs.str_type()):
             obj = str(obj)
 
         # Parse string and construct a GTID set.
