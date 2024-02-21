@@ -75,11 +75,11 @@ Redhat 8 (Running Python 3.6):
 Add/modify the following lines to the {Other_Python_Project}/requirements.txt file:
 
 ```
-chardet==3.0.4
+chardet==4.0.0
 distro==1.6.0
 mysql-connector-python==8.0.16
 protobuf==3.19.1
-simplejson==2.0.9
+simplejson==3.12.0
 ```
 
 ### Git Installation:
@@ -103,6 +103,19 @@ NOTE: Install as the user that will use the package.
 
 ```
 python -m pip install --user -r requirements3.txt --upgrade --trusted-host pypi.appdev.proj.coe.ic.gov
+```
+
+Install supporting classes and libraries
+Centos 7 (Running Python 2.7):
+
+```
+pip install -r requirements-python-lib.txt --target lib --trusted-host pypi.appdev.proj.coe.ic.gov
+```
+
+Redhat 8 (Running Python 3.6):
+
+```
+python -m pip install -r requirements-python-lib.txt --target lib --trusted-host pypi.appdev.proj.coe.ic.gov
 ```
 
 
