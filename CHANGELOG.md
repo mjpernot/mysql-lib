@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.3.4] - 2024-02-21
+- Updated python-lib to v3.0.3
+- Updated requirements for Python 3.
+
+### Changed
+- Set simplejson to 3.12.0 for Python 3.
+
+
 ## [5.3.3] - 2024-02-05
 - Updated to work in Red Hat 8 environment.
 - Updated python-lib to v3.0.2
