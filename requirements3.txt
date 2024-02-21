@@ -2,4 +2,4 @@ chardet==4.0.0
 distro==1.6.0
 mysql-connector-python==8.0.22
 protobuf==3.19.1
-simplejson==2.0.9
+simplejson==3.12.0
