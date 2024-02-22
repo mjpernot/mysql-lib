@@ -63,7 +63,7 @@ Centos 7 (Running Python 2.7):
 Add/modify the following lines to the {Other_Python_Project}/requirements.txt file:
 
 ```
-chardet==4.0.0
+chardet==3.0.4
 distro==1.6.0
 email==4.0.3
 mysql-connector-python==8.0.22
@@ -75,9 +75,9 @@ Redhat 8 (Running Python 3.6):
 Add/modify the following lines to the {Other_Python_Project}/requirements.txt file:
 
 ```
-chardet==4.0.0
+chardet==3.0.4
 distro==1.6.0
-mysql-connector-python==8.0.16
+mysql-connector-python==8.0.22
 protobuf==3.19.1
 simplejson==3.12.0
 ```
