@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.3.5] - 2024-03-18
+- Fixed error with SlaveRep secs.behind being set to null.
+
+
 ## [5.3.4] - 2024-02-21
 - Updated python-lib to v3.0.3
 - Updated module requirements for Python.
