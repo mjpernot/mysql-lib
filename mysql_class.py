@@ -45,8 +45,6 @@ except (ValueError, ImportError) as err:
 __version__ = version.__version__
 
 # Global
-KEY1 = "pass"
-KEY2 = "wd"
 SHOW = "show "
 
 
@@ -1158,10 +1156,7 @@ class Server(object):
 
         """
 
-        global KEY1
-        global KEY2
-
-        self.config[KEY1 + KEY2] = self.sql_pass
+        self.config["passwd"] = self.sql_pass
 
     def setup_ssl(self, ssl_client_ca=None, ssl_client_key=None,
                   ssl_client_cert=None,

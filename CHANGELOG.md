@@ -7,6 +7,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ## [5.3.5] - 2024-03-18
 - Fixed error with SlaveRep secs.behind being set to null.
 
+### Changed
+- Removed global variables KEY1 and KEY2.
+
 
 ## [5.3.4] - 2024-02-21
 - Updated python-lib to v3.0.3
