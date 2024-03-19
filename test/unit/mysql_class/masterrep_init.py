@@ -36,6 +36,7 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
+        test_slaves
         test_ssl_config7
         test_ssl_config6
         test_ssl_config5
@@ -168,6 +169,22 @@ class UnitTest(unittest.TestCase):
         self.config8["ssl_disabled"] = False
         self.config8["ssl_verify_identity"] = False
         self.config8["ssl_verify_cert"] = True
+
+    def test_slaves(self):
+
+        """Function:  test_slaves
+
+        Description:  Test the slaves attribute.
+
+        Arguments:
+
+        """
+
+        mysqlrep = mysql_class.MasterRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            os_type=self.machine, defaults_file=self.defaults_file)
+
+        self.assertEqual(mysqlrep.slaves, list())
 
     def test_ssl_config7(self):
 
