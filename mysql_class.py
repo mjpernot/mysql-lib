@@ -1468,6 +1468,7 @@ class MasterRep(Rep):
         self.exe_gtid = None
         self.rep_user = kwargs.get("rep_user", None)
         self.rep_japd = kwargs.get("rep_japd", None)
+        self.slaves = list()
 
     def connect(self, **kwargs):
 
@@ -1528,6 +1529,7 @@ class MasterRep(Rep):
         self.upd_log_stats()
         data = show_master_stat(self)[0]
         self.exe_gtid = data.get("Executed_Gtid_Set", None)
+        self.slaves = self.show_slv_hosts()
 
 
 class SlaveRep(Rep):

@@ -8,7 +8,9 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Fixed error with SlaveRep secs.behind being set to null.
 
 ### Changed
-- Removed global variables KEY1 and KEY2.
+- mysql_class.MasterRep.\_\_init\_\_: Added self.slaves attribute.
+- mysql_class.MasterRep.upd_mst_status: Set the self.slaves attribute.
+- mysql_class.Server: Removed global variables KEY1 and KEY2.
 
 
 ## [5.3.4] - 2024-02-21
