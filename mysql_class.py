@@ -45,8 +45,6 @@ except (ValueError, ImportError) as err:
 __version__ = version.__version__
 
 # Global
-KEY1 = "pass"
-KEY2 = "wd"
 SHOW = "show "
 
 
@@ -1158,10 +1156,7 @@ class Server(object):
 
         """
 
-        global KEY1
-        global KEY2
-
-        self.config[KEY1 + KEY2] = self.sql_pass
+        self.config["passwd"] = self.sql_pass
 
     def setup_ssl(self, ssl_client_ca=None, ssl_client_key=None,
                   ssl_client_cert=None,
@@ -1473,6 +1468,7 @@ class MasterRep(Rep):
         self.exe_gtid = None
         self.rep_user = kwargs.get("rep_user", None)
         self.rep_japd = kwargs.get("rep_japd", None)
+        self.slaves = list()
 
     def connect(self, **kwargs):
 
@@ -1533,6 +1529,7 @@ class MasterRep(Rep):
         self.upd_log_stats()
         data = show_master_stat(self)[0]
         self.exe_gtid = data.get("Executed_Gtid_Set", None)
+        self.slaves = self.show_slv_hosts()
 
 
 class SlaveRep(Rep):
@@ -1723,7 +1720,7 @@ class SlaveRep(Rep):
             self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_" + master]
+            self.secs_behind = "null" if self.secs_behind is None else "UNK"
 
     def start_slave(self):
 
@@ -1749,7 +1746,7 @@ class SlaveRep(Rep):
             self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_" + master]
+            self.secs_behind = "null" if self.secs_behind is None else "UNK"
 
     def show_slv_state(self):
 
@@ -1845,7 +1842,7 @@ class SlaveRep(Rep):
             self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_" + master]
+            self.secs_behind = "null" if self.secs_behind is None else "UNK"
 
         self.ssl_verify = data[master + "_SSL_Verify_Server_Cert"]
 
@@ -2046,7 +2043,7 @@ class SlaveRep(Rep):
             self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = data["Seconds_Behind_" + master]
+            self.secs_behind = "null" if self.secs_behind is None else "UNK"
 
     def get_time(self):
 
