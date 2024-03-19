@@ -94,7 +94,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.start_slave()
 
         self.assertEqual(
-            (mysqlrep.io_state, mysqlrep.secs_behind), ("Up", None))
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Up", "null"))
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
@@ -119,7 +119,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.start_slave()
 
         self.assertEqual(
-            (mysqlrep.io_state, mysqlrep.secs_behind), ("Up", None))
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Up", "null"))
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
@@ -144,7 +144,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.start_slave()
 
         self.assertEqual(
-            (mysqlrep.io_state, mysqlrep.secs_behind), ("Up", None))
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Up", "null"))
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
@@ -217,7 +217,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.start_slave()
 
         self.assertEqual(
-            (mysqlrep.io_state, mysqlrep.secs_behind), ("Up", "time"))
+            (mysqlrep.io_state, mysqlrep.secs_behind), ("Up", "null"))
 
     @mock.patch("mysql_class.slave_start", mock.Mock(return_value=True))
     @mock.patch("mysql_class.show_slave_stat")
