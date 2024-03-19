@@ -92,7 +92,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.version = self.version2
         mysqlrep.upd_slv_time()
 
-        self.assertEqual(mysqlrep.secs_behind, None)
+        self.assertEqual(mysqlrep.secs_behind, "null")
 
     @mock.patch("mysql_class.show_slave_stat")
     def test_pre_8022(self, mock_stat):
@@ -115,7 +115,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.version = self.version
         mysqlrep.upd_slv_time()
 
-        self.assertEqual(mysqlrep.secs_behind, None)
+        self.assertEqual(mysqlrep.secs_behind, "null")
 
     @mock.patch("mysql_class.show_slave_stat")
     def test_none_secsbehind(self, mock_stat):
@@ -138,7 +138,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.version = self.version
         mysqlrep.upd_slv_time()
 
-        self.assertEqual(mysqlrep.secs_behind, None)
+        self.assertEqual(mysqlrep.secs_behind, "null")
 
     @mock.patch("mysql_class.show_slave_stat")
     def test_int_secsbehind(self, mock_stat):

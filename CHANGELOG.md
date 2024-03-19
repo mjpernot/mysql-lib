@@ -6,9 +6,10 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.3.5] - 2024-03-18
 - Fixed error with SlaveRep secs.behind being set to null.
+- Added slaves attribute in MasterRep class.
 
 ### Fixed
-- mysql_class.SlaveRep.upd_slv_time: Fixed down slave times to return "null" or "UNK".
+- mysql_class.SlaveRep: Fixed down slave times to return "null" or "UNK" in the secs_behind attribute.
 
 ### Changed
 - mysql_class.MasterRep.\_\_init\_\_: Added self.slaves attribute.

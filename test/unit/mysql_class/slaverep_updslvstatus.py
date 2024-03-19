@@ -407,7 +407,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.version = self.version
         mysqlrep.upd_slv_status()
 
-        self.assertEqual(mysqlrep.secs_behind, None)
+        self.assertEqual(mysqlrep.secs_behind, "null")
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
@@ -492,7 +492,7 @@ class UnitTest(unittest.TestCase):
         mysqlrep.version = self.version
         mysqlrep.upd_slv_status()
 
-        self.assertEqual(mysqlrep.secs_behind, "secsbehind")
+        self.assertEqual(mysqlrep.secs_behind, "null")
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
