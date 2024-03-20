@@ -19,6 +19,7 @@ coverage run -a --source=mysql_class test/integration/mysql_class/masterrep_upd_
 coverage run -a --source=mysql_class test/integration/mysql_class/rep_fetch_do_db.py
 coverage run -a --source=mysql_class test/integration/mysql_class/rep_fetch_ign_db.py
 coverage run -a --source=mysql_class test/integration/mysql_class/rep_get_serv_id.py
+coverage run -a --source=mysql_class test/integration/mysql_class/rep_get_serv_uuid.py
 coverage run -a --source=mysql_class test/integration/mysql_class/rep_init.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_chg_db.py
 coverage run -a --source=mysql_class test/integration/mysql_class/server_cmd_sql.py

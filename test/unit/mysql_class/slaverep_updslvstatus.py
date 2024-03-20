@@ -206,6 +206,37 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.fetch_sys_var")
+    @mock.patch("mysql_class.fetch_global_var")
+    @mock.patch("mysql_class.show_slave_stat")
+    def test_server_uuid(self, mock_stat, mock_global, mock_var):
+
+        """Function:  test_server_uuid
+
+        Description:  Test with server_uuid aatribute.
+
+        Arguments:
+
+        """
+
+        mock_var.return_value = self.read_only
+        mock_global.side_effect = self.fetch_vars
+        mock_stat.return_value = self.show_stat
+
+        mysqlrep = mysql_class.SlaveRep(
+            self.name, self.server_id, self.sql_user, self.sql_pass,
+            self.machine, defaults_file=self.defaults_file)
+        mysqlrep.version = self.version
+        mysqlrep.upd_slv_status()
+
+        self.assertEqual(mysqlrep.slave_uuid, "ServerUUID")
+
+    @mock.patch(
+        "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
@@ -236,6 +267,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
@@ -266,6 +299,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
@@ -296,6 +331,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
@@ -326,6 +363,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
@@ -355,6 +394,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -382,6 +423,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -411,6 +454,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -440,6 +485,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -469,6 +516,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -496,6 +545,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -525,6 +576,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -554,6 +607,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -581,6 +636,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -610,6 +667,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -639,6 +698,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -666,6 +727,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -695,6 +758,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -724,6 +789,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -751,6 +818,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -780,6 +849,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -809,6 +880,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -836,6 +909,8 @@ class UnitTest(unittest.TestCase):
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
+    @mock.patch(
+        "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
@@ -859,9 +934,9 @@ class UnitTest(unittest.TestCase):
         mysqlrep.version = self.version
         mysqlrep.upd_slv_status()
 
-        self.assertEqual((mysqlrep.io_state, mysqlrep.slv_io,
-                          mysqlrep.slv_sql, mysqlrep.auto_pos),
-                         ("up", "running", "sqlcode", "autopos"))
+        self.assertEqual((
+            mysqlrep.io_state, mysqlrep.slv_io, mysqlrep.slv_sql,
+            mysqlrep.auto_pos), ("up", "running", "sqlcode", "autopos"))
 
 
 if __name__ == "__main__":
