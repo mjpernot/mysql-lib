@@ -2062,7 +2062,7 @@ class SlaveRep(Rep):
 
         except (ValueError, TypeError):
             self.secs_behind = "null" if self.secs_behind is None \
-                or self.secs_behind == "null" else "UNK"
+                or self.secs_behind == "null" else "UNK1"
 
     def get_time(self):
 
