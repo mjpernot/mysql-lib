@@ -1737,7 +1737,8 @@ class SlaveRep(Rep):
             self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = "null" if self.secs_behind is None else "UNK"
+            self.secs_behind = "null" if self.secs_behind is None \
+                or self.secs_behind == "null" else "UNK"
 
     def start_slave(self):
 
@@ -1763,7 +1764,8 @@ class SlaveRep(Rep):
             self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = "null" if self.secs_behind is None else "UNK"
+            self.secs_behind = "null" if self.secs_behind is None \
+                or self.secs_behind == "null" else "UNK"
 
     def show_slv_state(self):
 
@@ -1859,7 +1861,8 @@ class SlaveRep(Rep):
             self.secs_behind = int(data["Seconds_Behind_" + master])
 
         except (ValueError, TypeError):
-            self.secs_behind = "null" if self.secs_behind is None else "UNK"
+            self.secs_behind = "null" if self.secs_behind is None \
+                or self.secs_behind == "null" else "UNK"
 
         self.ssl_verify = data[master + "_SSL_Verify_Server_Cert"]
 
@@ -2062,7 +2065,7 @@ class SlaveRep(Rep):
 
         except (ValueError, TypeError):
             self.secs_behind = "null" if self.secs_behind is None \
-                or self.secs_behind == "null" else "UNK1"
+                or self.secs_behind == "null" else "UNK"
 
     def get_time(self):
 
