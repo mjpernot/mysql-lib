@@ -35,6 +35,7 @@ coverage run -a --source=mysql_class test/unit/mysql_class/position_cmp.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_fetchdodb.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_fetchigndb.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_getservid.py
+coverage run -a --source=mysql_class test/unit/mysql_class/rep_getservuuid.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_init.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_showslvhosts.py
 coverage run -a --source=mysql_class test/unit/mysql_class/rep_showslvstate.py

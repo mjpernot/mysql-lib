@@ -1243,6 +1243,7 @@ class Rep(Server):
         stop_slave
         start_slave
         get_serv_id
+        get_serv_uuid
         show_slv_state
         fetch_do_db
         fetch_ign_db
@@ -1344,7 +1345,7 @@ class Rep(Server):
 
         """Method:  get_serv_id
 
-        Description:  Calls the get_serv_id function with the class instance.
+        Description:  Calls the fetch_sys_var function with the class instance.
 
         Arguments:
             (output) Return the server's ID.
@@ -1354,6 +1355,21 @@ class Rep(Server):
         var = "server_id"
 
         return int(fetch_sys_var(self, var)[var])
+
+    def get_serv_uuid(self):
+
+        """Method:  get_serv_uuid
+
+        Description:  Calls the fetch_sys_var function with the class instance.
+
+        Arguments:
+            (output) Return the server's UUID.
+
+        """
+
+        var = "server_uuid"
+
+        return fetch_sys_var(self, var)[var]
 
     def fetch_do_db(self):
 
@@ -1671,6 +1687,7 @@ class SlaveRep(Rep):
         self.purged_gtidset = None
         self.retrieved_gtidset = None
         self.exe_gtidset = None
+        self.slave_uuid = None
 
         # Replication connection attributes in replica set.
         self.rep_user = kwargs.get("rep_user", None)
@@ -1904,6 +1921,7 @@ class SlaveRep(Rep):
         self.read_only = fetch_sys_var(self, "read_only")["read_only"]
 
         self.upd_gtid_pos()
+        self.slave_uuid = self.get_serv_uuid()
 
     def upd_gtid_pos(self):
 

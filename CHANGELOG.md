@@ -6,15 +6,21 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.3.5] - 2024-03-18
 - Fixed error with SlaveRep secs.behind being set to null.
+- Added slave_uuid attribute to SlaveRep class.
 - Added slaves attribute in MasterRep class.
 
 ### Fixed
 - mysql_class.SlaveRep: Fixed down slave times to return "null" or "UNK" in the secs_behind attribute.
 
 ### Changed
+- mysql_class.Rep.\_\_init\_\_: Added self.server_uuid attribute.
+- mysql_class.SlaveRep.upd_slv_status: Set the self.server_uuid attribute.
 - mysql_class.MasterRep.\_\_init\_\_: Added self.slaves attribute.
 - mysql_class.MasterRep.upd_mst_status: Set the self.slaves attribute.
 - mysql_class.Server: Removed global variables KEY1 and KEY2.
+
+### Added
+- mysql_class.Rep.get_serv_uuid: Return the servers UUID.
 
 
 ## [5.3.4] - 2024-02-21

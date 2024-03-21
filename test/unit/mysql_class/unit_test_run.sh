@@ -32,6 +32,7 @@ echo "Unit test: mysql_class"
 /usr/bin/python ./test/unit/mysql_class/rep_fetchdodb.py
 /usr/bin/python ./test/unit/mysql_class/rep_fetchigndb.py
 /usr/bin/python ./test/unit/mysql_class/rep_getservid.py
+/usr/bin/python ./test/unit/mysql_class/rep_getservuuid.py
 /usr/bin/python ./test/unit/mysql_class/rep_init.py
 /usr/bin/python ./test/unit/mysql_class/rep_showslvhosts.py
 /usr/bin/python ./test/unit/mysql_class/rep_showslvstate.py
