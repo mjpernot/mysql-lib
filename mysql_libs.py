@@ -20,6 +20,8 @@
         fetch_slv
         fetch_tbl_dict
         find_name
+        get_all_dbs_tbls
+        get_db_tbl
         is_cfg_valid
         is_logs_synced
         is_rep_delay
@@ -469,6 +471,83 @@ def find_name(slaves, name):
             return slv
 
     return None
+
+
+def get_all_dbs_tbls(server, db_list, dict_key, **kwargs):
+
+    """Function:  get_all_dbs_tbls
+
+    Description:  Return a dictionary of databases with table lists.
+
+    Arguments:
+        (input) server -> Server instance
+        (input) db_list -> List of database names
+        (input) dict_key -> Dictionary key that is tuned to the Mysql version
+        (input) kwargs:
+            ign_db_tbl -> Database dictionary with list of tables to ignore
+        (output) db_dict -> Dictionary of databases and lists of tables
+
+    """
+
+    db_dict = dict()
+    db_list = list(db_list)
+    ign_db_tbl = dict(kwargs.get("ign_db_tbl", dict()))
+
+    for dbs in db_list:
+        tbl_list = gen_libs.dict_2_list(fetch_tbl_dict(server, dbs), dict_key)
+        ign_tbls = ign_db_tbl[dbs] if dbs in ign_db_tbl else list()
+        tbl_list = gen_libs.del_not_and_list(tbl_list, ign_tbls)
+        db_dict[dbs] = tbl_list
+
+    return db_dict
+
+
+def get_db_tbl(server, db_list, **kwargs):
+
+    """Function:  get_db_tbl
+
+    Description:  Returns a list of tables and databases in dictionary object.
+
+    Arguments:
+        (input) server -> Server instance
+        (input) db_list -> List of database names, empty will return all dbs 
+        (input) **kwargs:
+            ign_dbs -> List of databases to skip
+            tbls -> List of tables to compare
+            ign_db_tbl -> Database dictionary with list of tables to ignore
+        (output) db_dict -> Dictionary of databases and lists of tables
+
+    """
+
+    db_dict = dict()
+    db_list = list(db_list)
+    dict_key = "TABLE_NAME" if server.version >= (8, 0) else "table_name"
+    ign_dbs = list(kwargs.get("ign_dbs", list()))
+    tbls = kwargs.get("tbls", list())
+    ign_db_tbl = dict(kwargs.get("ign_db_tbl", dict()))
+
+    if db_list:
+        db_list = gen_libs.del_not_and_list(db_list, ign_dbs)
+
+        if len(db_list) == 1 and tbls:
+            db_tables = gen_libs.dict_2_list(
+                fetch_tbl_dict(server, db_list[0]), dict_key)
+            tbl_list = gen_libs.del_not_in_list(tbls, db_tables)
+            db_dict[db_list[0]] = tbl_list
+
+        elif db_list:
+            db_dict = get_all_dbs_tbls(
+                server, db_list, dict_key, ign_db_tbl=ign_db_tbl)
+
+    else:
+        db_list = gen_libs.dict_2_list(fetch_db_dict(server), "Database")
+        db_list = gen_libs.del_not_and_list(db_list, ign_dbs)
+
+        if db_list:
+            db_dict = get_all_dbs_tbls(
+                server, db_list, dict_key, ign_db_tbl=ign_db_tbl)
+
+    return db_dict
 
 
 def is_cfg_valid(servers):

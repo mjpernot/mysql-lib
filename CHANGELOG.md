@@ -7,6 +7,10 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 ## [5.3.6] - 2024-08-29
 - Updated python-lib to 3.0.4
 
+### Added
+- mysql_libs.get_all_dbs_tbls: Return a dictionary of databases with table lists.
+- mysql_libs.get_db_tbl: Returns a list of tables and databases in dictionary object.
+
 
 ## [5.3.5] - 2024-03-18
 - Fixed error with SlaveRep secs.behind being set to null.
