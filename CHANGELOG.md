@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.3.6] - 2024-08-29
+- Updated python-lib to 3.0.4
+
+
 ## [5.3.5] - 2024-03-18
 - Fixed error with SlaveRep secs.behind being set to null.
 - Added slave_uuid attribute to SlaveRep class.
