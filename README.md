@@ -60,27 +60,11 @@ python -m pip install -r requirements-python-lib.txt --target mysql_lib/lib --tr
 ##### Add the general Mysql-Lib requirements to the other program's requirements.txt file.  Remove any duplicates.
 
 Centos 7 (Running Python 2.7):
-Add/modify the following lines to the {Other_Python_Project}/requirements.txt file:
-
-```
-chardet==3.0.4
-distro==1.6.0
-email==4.0.3
-mysql-connector-python==8.0.22
-protobuf==3.19.1
-simplejson==2.0.9
-```
+{Python_Project}/requirements.txt
 
 Redhat 8 (Running Python 3.6):
-Add/modify the following lines to the {Other_Python_Project}/requirements.txt file:
+{Python_Project}/requirements3.txt
 
-```
-chardet==3.0.4
-distro==1.6.0
-mysql-connector-python==8.0.22
-protobuf==3.19.1
-simplejson==3.12.0
-```
 
 ### Git Installation:
 
@@ -170,10 +154,9 @@ Make the appropriate change to the environment.
     - port = 3306
 
 ```
-cd test/integration/config
-cp mysql_cfg.py.TEMPLATE mysql_cfg.py
-vim mysql_cfg.py
-chmod 600 mysql_cfg.py
+cp mysql_cfg.py test/integration/config
+vim test/integration/config/mysql_cfg.py
+chmod 600 test/integration/config/mysql_cfg.py
 ```
 
 Create MySQL definition file.
@@ -184,9 +167,9 @@ Make the appropriate change to the environment.
     - socket=DIRECTORY_PATH/mysql.sock
 
 ```
-cp mysql.cfg.TEMPLATE mysql.cfg
-vim mysql.cfg
-chmod 600 mysql.cfg
+cp mysql.cfg test/integration/config
+vim test/integration/config/mysql.cfg
+chmod 600 test/integration/config/mysql.cfg
 ```
 
 ### Testing:
@@ -229,10 +212,9 @@ Make the appropriate change to the environment.
     - port = 3306
 
 ```
-cd test/integration/config
-cp mysql_cfg.py.TEMPLATE master_mysql_cfg.py
-vim master_mysql_cfg.py
-chmod 600 master_mysql_cfg.py
+cp mysql_cfg.py test/integration/config/master_mysql_cfg.py
+vim test/integration/config/master_mysql_cfg.py
+chmod 600 test/integration/config/master_mysql_cfg.py
 ```
 
 Create MySQL definition file.
@@ -243,9 +225,9 @@ Make the appropriate change to the environment.
     - socket=DIRECTORY_PATH/mysql.sock
 
 ```
-cp mysql.cfg.TEMPLATE mysql.cfg
-vim mysql.cfg
-chmod 600 mysql.cfg
+cp mysql.cfg test/integration/config
+vim test/integration/config/mysql.cfg
+chmod 600 test/integration/config/mysql.cfg
 ```
 
 ### Testing:
@@ -288,10 +270,9 @@ Make the appropriate change to the environment.
     - port = 3306
 
 ```
-cd test/integration/config
-cp mysql_cfg.py.TEMPLATE slave_mysql_cfg.py
-vim slave_mysql_cfg.py
-chmod 600 slave_mysql_cfg.py
+cp mysql_cfg.py test/integration/config/slave_mysql_cfg.py
+vim test/integration/config/slave_mysql_cfg.py
+chmod 600 test/integration/config/slave_mysql_cfg.py
 ```
 
 Create MySQL definition file.
@@ -302,9 +283,9 @@ Make the appropriate change to the environment.
     - socket=DIRECTORY_PATH/mysql.sock
 
 ```
-cp mysql.cfg.TEMPLATE mysql.cfg
-vim mysql.cfg
-chmod 600 mysql.cfg
+cp mysql.cfg test/integration/config
+vim test/integration/config/mysql.cfg
+chmod 600 test/integration/config/mysql.cfg
 ```
 
 Create a MySQL slave configuration file.
@@ -327,9 +308,9 @@ Make the appropriate change to the environment.
   * NOTE:  Create a new set of entries for each slave in the MySQL replica set.
 
 ```
-cp slave.txt.TEMPLATE slave.txt
-vim slave.txt
-chmod 600 slave.txt
+cp slave.txt test/integration/config
+vim test/integration/config/slave.txt
+chmod 600 test/integration/config/slave.txt
 ```
 
 ### Testing:

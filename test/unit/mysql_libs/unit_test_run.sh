@@ -17,6 +17,8 @@ echo "Unit test: mysql_libs"
 /usr/bin/python ./test/unit/mysql_libs/fetch_db_dict.py
 /usr/bin/python ./test/unit/mysql_libs/fetch_logs.py
 /usr/bin/python ./test/unit/mysql_libs/fetch_tbl_dict.py
+/usr/bin/python ./test/unit/mysql_libs/get_all_dbs_tbls.py
+/usr/bin/python ./test/unit/mysql_libs/get_db_tbl.py
 /usr/bin/python ./test/unit/mysql_libs/optimize_tbl.py
 /usr/bin/python ./test/unit/mysql_libs/purge_bin_logs.py
 /usr/bin/python ./test/unit/mysql_libs/reset_master.py
