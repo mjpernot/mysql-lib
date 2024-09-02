@@ -39,7 +39,8 @@ ssl_client_cert = None
 # Example: ssl_mode = REQUIRED
 ssl_mode = "PREFERRED"
 # SSL Client Flag Value.
-# If not set, will take the default value of mysql.connector.ClientFlag.SSL (typically 2048).
+# If not set, will take the default value of mysql.connector.ClientFlag.SSL
+#   (typically 2048).
 ssl_client_flag = None
 # SSL Disabled
 # Will disable SSL for connection if set to True.
@@ -52,6 +53,7 @@ ssl_verify_id = False
 ssl_verify_cert = False
 # TLS Version settings
 # TLS Version(s) allowed to be used to connect to MySQL.
-# If an empty list, then will use the default TLS version provided by the MySQL server.
+# If an empty list, then will use the default TLS version provided by the MySQL
+#   server.
 # Example: tls_versions = ["TLSv1.1", "TLSv1.2"]
 tls_versions = []

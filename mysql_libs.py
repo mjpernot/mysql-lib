@@ -510,7 +510,7 @@ def get_db_tbl(server, db_list, **kwargs):
 
     Arguments:
         (input) server -> Server instance
-        (input) db_list -> List of database names, empty will return all dbs 
+        (input) db_list -> List of database names, empty will return all dbs
         (input) **kwargs:
             ign_dbs -> List of databases to skip
             tbls -> List of tables to compare
