@@ -2,10 +2,10 @@
 # Classification (U)
 # Unclassified until filled in.
 user = "USER"
-japd = "PSWORD"
+japd = 'PSWORD'
 # Replication user information
 rep_user = "REP_USER"
-rep_japd = "REP_PSWORD"
+rep_japd = 'REP_PSWORD'
 # MySQL DB host information
 # DO NOT USE 127.0.0.1 or localhost for the master, use actual IP.
 host = "HOST_IP"
@@ -19,7 +19,7 @@ serv_os = "Linux"
 # MySQL database port (default is 3306)
 port = 3306
 # MySQL configuration settings
-cfg_file = "MYSQL_DIRECTORY/mysqld.cnf"
+cfg_file = "/etc/my.cnf"
 # SSL Configuration settings
 # If not set will connect to MySQL without using SSL connections.
 # File containing the SSL certificate authority.
@@ -39,7 +39,8 @@ ssl_client_cert = None
 # Example: ssl_mode = REQUIRED
 ssl_mode = "PREFERRED"
 # SSL Client Flag Value.
-# If not set, will take the default value of mysql.connector.ClientFlag.SSL (typically 2048).
+# If not set, will take the default value of mysql.connector.ClientFlag.SSL
+#   (typically 2048).
 ssl_client_flag = None
 # SSL Disabled
 # Will disable SSL for connection if set to True.
@@ -52,6 +53,7 @@ ssl_verify_id = False
 ssl_verify_cert = False
 # TLS Version settings
 # TLS Version(s) allowed to be used to connect to MySQL.
-# If an empty list, then will use the default TLS version provided by the MySQL server.
+# If an empty list, then will use the default TLS version provided by the MySQL
+#   server.
 # Example: tls_versions = ["TLSv1.1", "TLSv1.2"]
 tls_versions = []
