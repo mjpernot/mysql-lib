@@ -115,8 +115,8 @@ Install the project using the procedures in the Git Installation section.
 
 ```
 cd {Python_Project}/mysql-lib
-test/unit/mysql_libs/unit_test_run.sh
-test/unit/mysql_class/unit_test_run.sh
+test/unit/mysql_libs/unit_test_run3.sh
+test/unit/mysql_class/unit_test_run3.sh
 ```
 
 ### Code Coverage:
@@ -176,8 +176,8 @@ chmod 600 test/integration/config/mysql.cfg
 
 ```
 cd {Python_Project}/mysql-lib
-test/integration/mysql_libs/integration_test_run.sh
-test/integration/mysql_class/integration_test_run.sh
+test/integration/mysql_libs/integration_test_run3.sh
+test/integration/mysql_class/integration_test_run3.sh
 ```
 
 ### Code Coverage:
@@ -234,7 +234,7 @@ chmod 600 test/integration/config/mysql.cfg
 
 ```
 cd {Python_Project}/mysql-lib
-test/integration/mysql_class/rep_integration_test_run.sh
+test/integration/mysql_class/rep_integration_test_run3.sh
 ```
 
 ### Code Coverage:
@@ -317,7 +317,7 @@ chmod 600 test/integration/config/slave.txt
 
 ```
 cd {Python_Project}/mysql-lib
-test/integration/mysql_class/slaverep_integration_test_run.sh
+test/integration/mysql_class/slaverep_integration_test_run3.sh
 ```
 
 ### Code Coverage:
