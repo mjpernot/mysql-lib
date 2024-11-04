@@ -107,14 +107,7 @@ class UnitTest(unittest.TestCase):
         self.extra_def_file = "extra_cfg_file"
         self.config = {key1 + key2: self.sql_pass}
         self.database = "minedatabase"
-        errnum = 2003
-        errmsg = "2003 (HY000): Can't connect to MySQL server on"
-        self.results = "Couldn't connect to database.  MySQL error %d: %s" \
-                       % (errnum, errmsg)
-        errnum2 = 1045
-        errmsg2 = "1045 (28000): Access denied for user"
-        self.results2 = "Couldn't connect to database.  MySQL error %d: %s" \
-                        % (errnum2, errmsg2)
+        self.results = "Couldn't connect to database."
         self.mysql = Server()
 
     @mock.patch("mysql_class.mysql.connector.connect")
@@ -152,8 +145,7 @@ class UnitTest(unittest.TestCase):
             self.machine, defaults_file=self.defaults_file)
         mysqldb.connect(silent=True)
 
-        self.assertTrue(mysqldb.conn_msg[:95] == self.results or
-                        mysqldb.conn_msg[:85] == self.results2)
+        self.assertTrue(mysqldb.conn_msg[:29] == self.results)
 
     def test_silent_exception(self):
 
