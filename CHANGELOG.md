@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.3.8] - 2024-11-01
+- Updated chardet==4.0.0 for Python 3
+- Updated distro==1.9.0 for Python 3
+- Updated mysql-connector-python==8.0.28 for Python 3
+- Updated protobuf==3.19.6 for Python 3
+- Updated python-lib to v3.0.7
+
+
 ## [5.3.7] - 2024-09-27
 - Updated simplejson=3.13.2 for Python 3
 - Updated python-lib to v3.0.5
