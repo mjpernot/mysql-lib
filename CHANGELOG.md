@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.4.0] - 2024-12-13
+- Removed support for Python 2.7.
+- Update python-lib to v4.0.0
+
+### Deprecated
+- Support for MySQL 5.5
+- Support for MySQL 5.6
+- Support for MySQL 5.7
+
+
 ## [5.3.9] - 2024-11-15
 
 ### Fixed
