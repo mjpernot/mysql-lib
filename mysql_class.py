@@ -25,8 +25,6 @@
 """
 
 # Libraries and Global Variables
-from __future__ import print_function
-from __future__ import absolute_import
 
 # Standard
 import copy
@@ -34,13 +32,8 @@ import collections
 import mysql.connector
 
 # Local
-try:
-    from .lib import gen_libs
-    from . import version
-
-except (ValueError, ImportError) as err:
-    import lib.gen_libs as gen_libs
-    import version
+import lib.gen_libs as gen_libs                 # pylint:disable=R0402,E0401
+import version                                  # pylint:disable=E0401
 
 __version__ = version.__version__
 
