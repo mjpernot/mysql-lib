@@ -21,13 +21,13 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import version
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class Server(object):
+class Server():                             # pylint:disable=R0903
 
     """Class:  Server
 
@@ -81,7 +81,7 @@ class UnitTest(unittest.TestCase):
         self.slv_list.append(self.slave2)
         self.slave = "Slave3"
         self.err_msg = \
-            "Error:  Slave %s was not found in slave array." % (self.slave)
+            f"Error:  Slave {self.slave} was not found in slave array."
 
     @mock.patch("mysql_libs.find_name")
     def test_slave_not_found(self, mock_find):

@@ -44,31 +44,20 @@
 """
 
 # Libraries and Global Variables
-from __future__ import print_function
-from __future__ import absolute_import
 
 # Standard
 import time
 import mysql.connector
 
 # Local
-try:
-    from .lib import gen_libs
-    from .lib import machine
-    from . import mysql_class
-    from . import version
-
-except (ValueError, ImportError) as err:
-    import lib.gen_libs as gen_libs
-    import lib.machine as machine
-    import mysql_class
-    import version
+import lib.gen_libs as gen_libs                 # pylint:disable=R0402,E0401
+import lib.machine as machine                   # pylint:disable=R0402,E0401
+import mysql_class                              # pylint:disable=E0401
+import version                                  # pylint:disable=E0401
 
 __version__ = version.__version__
 
 # Global
-KEY1 = "pass"
-KEY2 = "word"
 
 
 def analyze_tbl(server, dbn, tbl):
@@ -105,9 +94,6 @@ def change_master_to(mst, slv):
 
     """
 
-    global KEY1
-    global KEY2
-
     # Use the earilest version between master and slave
     db_ver = mst.version if mst.version <= slv.version else slv.version
 
@@ -117,7 +103,7 @@ def change_master_to(mst, slv):
 
     chg_master_to = """change """ + cmd + """ to """ + master + \
         """_host='%s', """ + master + """_port=%s, """ + master + \
-        """_user='%s', """ + master + """_""" + KEY1 + KEY2 + """='%s'"""
+        """_user='%s', """ + master + """_password='%s'"""
 
     # Add SSL options if master is configured
     if mysql_class.fetch_sys_var(
@@ -141,7 +127,7 @@ def change_master_to(mst, slv):
         slv.cmd_sql(chg_master_to % (mst.host, int(mst.port), mst.rep_user,
                                      mst.rep_japd, mst.file, mst.pos))
 
-    print("Changed Slave: {0} to new Master: {1}".format(slv.name, mst.name))
+    print(f"Changed Slave: {slv.name} to new Master: {mst.name}")
 
 
 def checksum(server, dbn, tbl):
@@ -424,8 +410,7 @@ def fetch_slv(slaves, slv_name):
 
     if not slv:
         err_flag = True
-        err_msg = "Error:  Slave %s was not found in slave array." \
-                  % (slv_name)
+        err_msg = f"Error:  Slave {slv_name} was not found in slave array."
 
     return slv, err_flag, err_msg
 
@@ -445,8 +430,8 @@ def fetch_tbl_dict(server, dbn, tbl_type="BASE TABLE"):
 
     """
 
-    qry = """select table_name from information_schema.tables where
-        table_type = '%s' and table_schema = '%s'""" % (tbl_type, dbn)
+    qry = """select table_name from information_schema.tables where""" + \
+          f""" table_type = '{tbl_type}' and table_schema = '{dbn}'"""
 
     return server.col_sql(qry)
 
@@ -489,13 +474,13 @@ def get_all_dbs_tbls(server, db_list, dict_key, **kwargs):
 
     """
 
-    db_dict = dict()
+    db_dict = {}
     db_list = list(db_list)
-    ign_db_tbl = dict(kwargs.get("ign_db_tbl", dict()))
+    ign_db_tbl = dict(kwargs.get("ign_db_tbl", {}))
 
     for dbs in db_list:
         tbl_list = gen_libs.dict_2_list(fetch_tbl_dict(server, dbs), dict_key)
-        ign_tbls = ign_db_tbl[dbs] if dbs in ign_db_tbl else list()
+        ign_tbls = ign_db_tbl[dbs] if dbs in ign_db_tbl else []
         tbl_list = gen_libs.del_not_and_list(tbl_list, ign_tbls)
         db_dict[dbs] = tbl_list
 
@@ -519,12 +504,12 @@ def get_db_tbl(server, db_list, **kwargs):
 
     """
 
-    db_dict = dict()
+    db_dict = {}
     db_list = list(db_list)
     dict_key = "TABLE_NAME" if server.version >= (8, 0) else "table_name"
-    ign_dbs = list(kwargs.get("ign_dbs", list()))
-    tbls = kwargs.get("tbls", list())
-    ign_db_tbl = dict(kwargs.get("ign_db_tbl", dict()))
+    ign_dbs = list(kwargs.get("ign_dbs", []))
+    tbls = kwargs.get("tbls", [])
+    ign_db_tbl = dict(kwargs.get("ign_db_tbl", {}))
 
     if db_list:
         db_list = gen_libs.del_not_and_list(db_list, ign_dbs)
@@ -573,16 +558,16 @@ def is_cfg_valid(servers):
             status, err_msg = gen_libs.chk_crt_file(svr.extra_def_file)
 
             if not status:
-                status_msg.append("%s" % (err_msg))
+                status_msg.append(f"{err_msg}")
 
             if svr.extra_def_file and not status:
-                status_msg.append("%s:  %s is missing." % (svr.name,
-                                                           svr.extra_def_file))
+                status_msg.append(f"{svr.name}: "
+                                  f" {svr.extra_def_file} is missing.")
                 status = False
 
         else:
             status = False
-            status_msg.append("%s:  extra_def_file is not set." % (svr.name))
+            status_msg.append(f"{svr.name}:  extra_def_file is not set.")
 
     return status, status_msg
 
@@ -784,9 +769,9 @@ def select_wait_until(server, gtid_pos, timeout=0):
 
     """
 
-    return server.sql("select wait_until_sql_thread_after_gtids(%s, %s)"
-                      % ('"' + str(gtid_pos) + '"', timeout),
-                      res_set="all")
+    return server.sql(
+        f'select wait_until_sql_thread_after_gtids("{str(gtid_pos)}",'
+        f' {timeout})', res_set="all")
 
 
 def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
@@ -821,13 +806,12 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
     # Non-GTID MySQL.
     if log_file and log_pos:
         start_slv_until = start_slv + \
-            """master_log_file='%s', master_log_pos='%s'""" \
-            % (log_file, log_pos)
+            f"""master_log_file='{log_file}', master_log_pos='{log_pos}'"""
 
         # Semantic change in MySQL 8.0.26
         master = "source" if slv.version >= (8, 0, 26) else "master"
         master_pos_wait = """select """ + master + \
-            """_pos_wait('%s', '%s')""" % (log_file, log_pos)
+            f"""_pos_wait('{log_file}', '{log_pos}')"""
 
         slv.cmd_sql(start_slv_until)
         slv.cmd_sql(master_pos_wait)
@@ -835,7 +819,7 @@ def start_slave_until(slv, log_file=None, log_pos=None, **kwargs):
     # GTID MySQL.
     elif slv.gtid_mode and gtid:
         start_slv_until = start_slv + """sql_""" + stop_pos + \
-            """_gtids='%s'""" % (gtid)
+            f"""_gtids='{gtid}'"""
         slv.cmd_sql(start_slv_until)
 
     else:
@@ -868,8 +852,8 @@ def switch_to_master(mst, slv, timeout=0):
 
     # Wait for relay log to empty.
     slv.upd_gtid_pos()
-    status_flag = next(iter(select_wait_until(slv, slv.retrieved_gtidset,
-                                              timeout)[0]))
+    status_flag = next(iter(select_wait_until(
+        slv, slv.retrieved_gtidset, timeout)[0]))
 
     if status_flag >= 0:
         mysql_class.slave_stop(slv)
@@ -898,12 +882,10 @@ def sync_delay(mst, slv, opt):
         if opt == "IO":
             _io_delay_chk(mst, slv)
 
-        print("Master: {0}\tFile: {1}, Position: {2}".format(mst.name,
-                                                             mst.file,
-                                                             mst.pos))
+        print(f"Master: {mst.name}\tFile: {mst.file}, Position: {mst.pos}")
 
         if mst.gtid_mode:
-            print("\tGTID: {0}".format(mst.exe_gtid))
+            print(f"\tGTID: {mst.exe_gtid}")
 
         # Wait until position has reached for GTID or non-GTID.
         if mst.gtid_mode and slv.gtid_mode:
@@ -937,13 +919,13 @@ def _io_delay_chk(mst, slv):
                                               stop_pos="after")
 
         if err_flag:
-            print("Error: %s" % (err_msg))
+            print(f"Error: {err_msg}")
 
     else:
         err_flag, err_msg = start_slave_until(slv, mst.file, mst.pos)
 
         if err_flag:
-            print("Error: %s" % (err_msg))
+            print(f"Error: {err_msg}")
 
 
 def sync_rep_slv(mst, slv):
@@ -967,8 +949,8 @@ def sync_rep_slv(mst, slv):
 
     if slv.mst_id != mst.server_id:
         err_flag = True
-        err_msg = "Error:  Slave's Master ID %s doesn't match Master ID %s." \
-                  % (slv.mst_id, mst.server_id)
+        err_msg = f"Error:  Slave's Master ID {slv.mst_id} doesn't match" + \
+                  f" Master ID {mst.server_id}."
 
         return err_flag, err_msg
 
@@ -982,7 +964,7 @@ def sync_rep_slv(mst, slv):
 
             if not is_logs_synced(mst, slv):
                 err_flag = True
-                err_msg = "Error:  Server %s not in sync with master." % (slv)
+                err_msg = f"Error:  Server {slv} not in sync with master."
 
     return err_flag, err_msg
 
@@ -1033,15 +1015,14 @@ def _io_wait_chk(slv, gtid, log_file, log_pos):
 
     while True:
         if slv.gtid_mode:
-            print("Slave:  {0}\t Retrieved GTID: {1}".
-                  format(slv.name, slv.retrieved_gtid))
+            print(f"Slave:  {slv.name}\t Retrieved GTID: {slv.retrieved_gtid}")
 
             if slv.retrieved_gtid == gtid:
                 return
 
         else:
-            print("Slave:  {0}\tFile: {1}, Position: {2}".
-                  format(slv.name, slv.mst_log, slv.mst_read_pos))
+            print(f"Slave:  {slv.name}\tFile: {slv.mst_log},"
+                  f" Position: {slv.mst_read_pos}")
 
             if slv.mst_log == log_file and slv.mst_read_pos == log_pos:
                 return
@@ -1069,14 +1050,14 @@ def _sql_wait_chk(slv, gtid, log_file, log_pos):
 
     while True:
         if slv.gtid_mode:
-            print("Slave:  {0}\tGTID: {1}".format(slv.name, slv.exe_gtid))
+            print(f"Slave:  {slv.name}\tGTID: {slv.exe_gtid}")
 
             if slv.exe_gtid == gtid:
                 return
 
         else:
-            print("Slave: {0}\tcurrent file: {1}, current position: {2}".
-                  format(slv.name, slv.relay_mst_log, slv.exec_mst_pos))
+            print(f"Slave: {slv.name}\tcurrent file: {slv.relay_mst_log},"
+                  f" current position: {slv.exec_mst_pos}")
 
             if slv.relay_mst_log == log_file and slv.exec_mst_pos == log_pos:
                 return

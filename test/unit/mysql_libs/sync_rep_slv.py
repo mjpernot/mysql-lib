@@ -21,13 +21,13 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import version
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class MasterRep(object):
+class MasterRep():                          # pylint:disable=R0903
 
     """Class:  MasterRep
 
@@ -51,7 +51,7 @@ class MasterRep(object):
         self.server_id = 10
 
 
-class SlaveRep(object):
+class SlaveRep():                           # pylint:disable=R0903
 
     """Class:  SlaveRep
 
@@ -130,7 +130,7 @@ class UnitTest(unittest.TestCase):
         mock_delay.return_value = True
         mock_sync.side_effect = [False, True, False]
         slave = SlaveRep()
-        err_msg = "Error:  Server %s not in sync with master." % (slave)
+        err_msg = f"Error:  Server {slave} not in sync with master."
 
         self.assertEqual(mysql_libs.sync_rep_slv(self.master, slave),
                          (True, err_msg))
@@ -151,8 +151,8 @@ class UnitTest(unittest.TestCase):
         mock_sync.side_effect = [False, True, True]
         slave = SlaveRep()
 
-        self.assertEqual(mysql_libs.sync_rep_slv(self.master, slave),
-                         (False, None))
+        self.assertEqual(
+            mysql_libs.sync_rep_slv(self.master, slave), (False, None))
 
     @mock.patch("mysql_libs.is_logs_synced")
     @mock.patch("mysql_libs.chg_slv_state")
@@ -170,8 +170,8 @@ class UnitTest(unittest.TestCase):
         mock_sync.return_value = True
         slave = SlaveRep(slv_stat=True)
 
-        self.assertEqual(mysql_libs.sync_rep_slv(self.master, slave),
-                         (False, None))
+        self.assertEqual(
+            mysql_libs.sync_rep_slv(self.master, slave), (False, None))
 
     def test_ids_not_match(self):
 
@@ -184,11 +184,12 @@ class UnitTest(unittest.TestCase):
         """
 
         slave = SlaveRep(11)
-        err_msg = "Error:  Slave's Master ID %s doesn't match Master ID %s." \
-                  % (slave.mst_id, self.master.server_id)
+        err_msg = \
+            f"Error:  Slave's Master ID {slave.mst_id} doesn't" \
+            f" match Master ID {self.master.server_id}."
 
-        self.assertEqual(mysql_libs.sync_rep_slv(self.master, slave),
-                         (True, err_msg))
+        self.assertEqual(
+            mysql_libs.sync_rep_slv(self.master, slave), (True, err_msg))
 
 
 if __name__ == "__main__":

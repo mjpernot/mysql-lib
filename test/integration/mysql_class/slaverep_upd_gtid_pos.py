@@ -21,10 +21,10 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -71,13 +71,13 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        data1 = "%s" % self.svr.purged_gtidset
+        data1 = f"{self.svr.purged_gtidset}"
         self.svr.connect()
         self.svr.upd_gtid_pos()
-        data1a = "%s" % self.svr.purged_gtidset
+        data1a = f"{self.svr.purged_gtidset}"
 
         if self.svr.gtid_mode:
-            self.assertTrue(data1 != data1a)
+            self.assertNotEqual(data1, data1a)
 
         else:
             self.assertEqual(data1, data1a)
@@ -92,12 +92,12 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        data1 = "%s" % self.svr.retrieved_gtidset
-        data2 = "%s" % self.svr.exe_gtidset
+        data1 = f"{self.svr.retrieved_gtidset}"
+        data2 = f"{self.svr.exe_gtidset}"
         self.svr.connect()
         self.svr.upd_gtid_pos()
-        data1a = "%s" % self.svr.retrieved_gtidset
-        data2a = "%s" % self.svr.exe_gtidset
+        data1a = f"{self.svr.retrieved_gtidset}"
+        data2a = f"{self.svr.exe_gtidset}"
 
         self.assertTrue(data1 != data1a and data2 != data2a)
 

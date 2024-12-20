@@ -21,11 +21,11 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_libs                           # pylint:disable=E0401,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -78,7 +78,7 @@ class UnitTest(unittest.TestCase):
         if key_name not in list(data[0].keys()):
             key_name = "table_name"
 
-        self.assertTrue("db" in [item[key_name] for item in data])
+        self.assertIn("db", [item[key_name] for item in data])
 
 
 if __name__ == "__main__":

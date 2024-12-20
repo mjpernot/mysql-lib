@@ -21,9 +21,9 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import mysql_class
-import version
+import mysql_libs                           # pylint:disable=E0401,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -67,7 +67,7 @@ class UnitTest(unittest.TestCase):
         srv = mysql_libs.create_instance(
             self.config_name, self.config_dir, mysql_class.SlaveRep)
 
-        self.assertTrue(isinstance(srv, mysql_class.SlaveRep))
+        self.assertIsInstance(srv, mysql_class.SlaveRep)
 
 
 if __name__ == "__main__":

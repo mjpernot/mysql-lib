@@ -21,10 +21,10 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -76,7 +76,7 @@ class UnitTest(unittest.TestCase):
         fname = self.svr.file
         self.svr.flush_logs()
 
-        self.assertTrue(self.svr.file != fname)
+        self.assertNotEqual(self.svr.file, fname)
 
     def test_base(self):
 

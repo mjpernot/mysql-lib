@@ -20,10 +20,10 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -73,7 +73,7 @@ class UnitTest(unittest.TestCase):
 
         data = mysql_class.fetch_sys_var(self.svr, "wait_timeout",
                                          level="global")
-        self.assertTrue(int(data["wait_timeout"]) >= 0)
+        self.assertGreaterEqual(int(data["wait_timeout"]), 0)
 
     def test_fetch_session(self):
 
@@ -87,7 +87,7 @@ class UnitTest(unittest.TestCase):
 
         data = mysql_class.fetch_sys_var(self.svr, "warning_count",
                                          level="session")
-        self.assertTrue(int(data["warning_count"]) >= 0)
+        self.assertGreaterEqual(int(data["warning_count"]), 0)
 
     def test_fetch_default(self):
 
@@ -100,7 +100,7 @@ class UnitTest(unittest.TestCase):
         """
 
         data = mysql_class.fetch_sys_var(self.svr, "warning_count")
-        self.assertTrue(int(data["warning_count"]) >= 0)
+        self.assertGreaterEqual(int(data["warning_count"]), 0)
 
 
 if __name__ == "__main__":
