@@ -50,10 +50,17 @@ import time
 import mysql.connector
 
 # Local
-import lib.gen_libs as gen_libs                 # pylint:disable=R0402,E0401
-import lib.machine as machine                   # pylint:disable=R0402,E0401
-import mysql_class                              # pylint:disable=E0401
-import version                                  # pylint:disable=E0401
+try:
+    from .lib import gen_libs
+    from .lib import machine
+    from . import mysql_class
+    from . import version
+
+except (ValueError, ImportError) as err:
+    import lib.gen_libs as gen_libs                     # pylint:disable=R0402
+    import lib.machine as machine                       # pylint:disable=R0402
+    import mysql_class
+    import version
 
 __version__ = version.__version__
 
