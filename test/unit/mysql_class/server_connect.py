@@ -21,15 +21,15 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class Server(object):
+class Server():                             # pylint:disable=R0903
 
     """Class:  Server
 
@@ -145,7 +145,7 @@ class UnitTest(unittest.TestCase):
             self.machine, defaults_file=self.defaults_file)
         mysqldb.connect(silent=True)
 
-        self.assertTrue(mysqldb.conn_msg[:29] == self.results)
+        self.assertEqual(mysqldb.conn_msg[:29], self.results)
 
     def test_silent_exception(self):
 

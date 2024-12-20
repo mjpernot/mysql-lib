@@ -21,10 +21,10 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import mysql_class
-import lib.gen_libs as gen_libs
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import mysql_libs                           # pylint:disable=E0401,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -70,7 +70,7 @@ class UnitTest(unittest.TestCase):
                                            cfg_path=self.config_dir)
         srv = mysql_libs.create_slv_array(slaves)
 
-        self.assertTrue(isinstance(srv[0], mysql_class.SlaveRep))
+        self.assertIsInstance(srv[0], mysql_class.SlaveRep)
 
     def test_create_slv_array(self):
 
@@ -86,7 +86,7 @@ class UnitTest(unittest.TestCase):
                                            cfg_path=self.config_dir)
         srv = mysql_libs.create_slv_array(slaves)
 
-        self.assertTrue(isinstance(srv, list))
+        self.assertIsInstance(srv, list)
 
 
 if __name__ == "__main__":

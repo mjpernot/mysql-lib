@@ -22,13 +22,13 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import version
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class SlaveRep(object):
+class SlaveRep():                           # pylint:disable=R0903
 
     """Class:  SlaveRep
 
@@ -62,7 +62,7 @@ class SlaveRep(object):
         self.rep_japd = kwargs.get("rep_japd", None)
 
 
-class Server(object):
+class Server():                             # pylint:disable=R0903
 
     """Class:  Server
 
@@ -102,7 +102,7 @@ class Server(object):
         self.ssl_verify_cert = kwargs.get("ssl_verify_cert", False)
 
 
-class Cfg(object):
+class Cfg():                                # pylint:disable=R0903
 
     """Class:  Cfg
 
@@ -134,7 +134,7 @@ class Cfg(object):
         self.extra_def_file = "extra_def_file"
 
 
-class Cfg2(object):
+class Cfg2():                               # pylint:disable=R0903
 
     """Class:  Cfg2
 
@@ -168,7 +168,7 @@ class Cfg2(object):
         self.rep_japd = "rep_japd"
 
 
-class Cfg3(object):
+class Cfg3():                               # pylint:disable=R0903
 
     """Class:  Cfg3
 
@@ -425,7 +425,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertTrue(isinstance(srv_inst, Server))
+        self.assertIsInstance(srv_inst, Server)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_none_ssl_verify_cert(self, mock_cfg):
@@ -562,7 +562,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertTrue(isinstance(srv_inst, Server))
+        self.assertIsInstance(srv_inst, Server)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_no_ssl_verify_cert(self, mock_cfg):
@@ -699,7 +699,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertTrue(isinstance(srv_inst, Server))
+        self.assertIsInstance(srv_inst, Server)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_rep_user2(self, mock_cfg):
@@ -734,7 +734,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", SlaveRep)
 
-        self.assertTrue(isinstance(srv_inst, SlaveRep))
+        self.assertIsInstance(srv_inst, SlaveRep)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_none_rep_user2(self, mock_cfg):
@@ -751,7 +751,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertEqual(srv_inst.__dict__.get("rep_user", None), None)
+        self.assertIsNone(srv_inst.__dict__.get("rep_user", None))
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_none_rep_user(self, mock_cfg):
@@ -768,7 +768,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertTrue(isinstance(srv_inst, Server))
+        self.assertIsInstance(srv_inst, Server)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_none_extra_def_file2(self, mock_cfg):
@@ -786,7 +786,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertEqual(srv_inst.extra_def_file, None)
+        self.assertIsNone(srv_inst.extra_def_file)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_none_extra_def_file(self, mock_cfg):
@@ -804,7 +804,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertTrue(isinstance(srv_inst, Server))
+        self.assertIsInstance(srv_inst, Server)
 
     @mock.patch("mysql_libs.gen_libs.load_module")
     def test_create_instance(self, mock_cfg):
@@ -821,7 +821,7 @@ class UnitTest(unittest.TestCase):
 
         srv_inst = mysql_libs.create_instance("Cfgfile", "DirPath", Server)
 
-        self.assertTrue(isinstance(srv_inst, Server))
+        self.assertIsInstance(srv_inst, Server)
 
 
 if __name__ == "__main__":

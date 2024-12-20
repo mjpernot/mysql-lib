@@ -20,8 +20,8 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import version
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -66,7 +66,7 @@ class UnitTest(unittest.TestCase):
         gtid1 = mysql_class.GTIDSet(self.gtidset1)
         gtid2 = mysql_class.GTIDSet(self.gtidset2)
 
-        self.assertFalse(gtid2 <= gtid1)
+        self.assertGreater(gtid2, gtid1)
 
     def test_gtidset_le_equal(self):
 
@@ -81,7 +81,7 @@ class UnitTest(unittest.TestCase):
         gtid1 = mysql_class.GTIDSet(self.gtidset1)
         gtid2 = mysql_class.GTIDSet(self.gtidset1)
 
-        self.assertTrue(gtid1 <= gtid2)
+        self.assertLessEqual(gtid1, gtid2)
 
     def test_gtidset_le_true(self):
 
@@ -96,7 +96,7 @@ class UnitTest(unittest.TestCase):
         gtid1 = mysql_class.GTIDSet(self.gtidset1)
         gtid2 = mysql_class.GTIDSet(self.gtidset2)
 
-        self.assertTrue(gtid1 <= gtid2)
+        self.assertLessEqual(gtid1, gtid2)
 
 
 if __name__ == "__main__":

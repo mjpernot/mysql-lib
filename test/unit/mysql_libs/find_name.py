@@ -20,13 +20,13 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import version
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class Server(object):
+class Server():                             # pylint:disable=R0903
 
     """Class:  Server
 
@@ -89,7 +89,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertEqual(mysql_libs.find_name(self.slv_list, "Slave3"), None)
+        self.assertIsNone(mysql_libs.find_name(self.slv_list, "Slave3"))
 
     def test_slave_found(self):
 

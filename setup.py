@@ -19,7 +19,7 @@ import version
 # Read in long description from README file.
 here = os.path.abspath(os.path.dirname(__file__))
 
-with open(os.path.join(here, "README.md")) as f_hdlr:
+with open(os.path.join(here, "README.md"), "r", encoding="UTF-8") as f_hdlr:
     LONG_DESCRIPTION = f_hdlr.read()
 
 setuptools.setup(
@@ -47,10 +47,6 @@ setuptools.setup(
         #  5 - Production/Stable
         "Development Status :: 5 - Production/Stable",
         "Operating System :: Linux",
-        "Operating System :: Linux :: Centos",
-        "Operating System :: Linux :: Centos :: 7",
-        "Programming Language :: Python",
-        "Programming Language :: Python :: 2.7",
         "Operating System :: Linux :: Red Hat",
         "Operating System :: Linux :: Red Hat :: 8",
         "Programming Language :: Python",

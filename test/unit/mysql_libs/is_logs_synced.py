@@ -20,13 +20,13 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import version
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class MasterRep(object):
+class MasterRep():                          # pylint:disable=R0903
 
     """Class:  MasterRep
 
@@ -37,7 +37,8 @@ class MasterRep(object):
 
     """
 
-    def __init__(self, name, gtid_mode, exe_gtid, filename, pos):
+    def __init__(                           # pylint:disable=R0913
+            self, name, gtid_mode, exe_gtid, filename, pos):
 
         """Method:  __init__
 
@@ -54,7 +55,7 @@ class MasterRep(object):
         self.pos = pos
 
 
-class SlaveRep(object):
+class SlaveRep():                           # pylint:disable=R0903
 
     """Class:  SlaveRep
 
@@ -65,7 +66,8 @@ class SlaveRep(object):
 
     """
 
-    def __init__(self, name, gtid_mode, exe_gtid, relay_log, mst_pos):
+    def __init__(                           # pylint:disable=R0913
+            self, name, gtid_mode, exe_gtid, relay_log, mst_pos):
 
         """Method:  __init__
 
@@ -106,8 +108,6 @@ class UnitTest(unittest.TestCase):
         Arguments:
 
         """
-
-        pass
 
     def test_logs_not_synced_non_gtid(self):
 

@@ -21,14 +21,14 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
-import lib.gen_libs as gen_libs
-import mysql_libs
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class MasterRep(object):
+class MasterRep():                          # pylint:disable=R0903
 
     """Class:  MasterRep
 
@@ -39,7 +39,8 @@ class MasterRep(object):
 
     """
 
-    def __init__(self, name, gtid_mode, exe_gtid, filename, pos):
+    def __init__(                           # pylint:disable=R0913
+            self, name, gtid_mode, exe_gtid, filename, pos):
 
         """Method:  __init__
 
@@ -56,7 +57,7 @@ class MasterRep(object):
         self.pos = pos
 
 
-class SlaveRep(object):
+class SlaveRep():                           # pylint:disable=R0903
 
     """Class:  SlaveRep
 
@@ -116,8 +117,6 @@ class UnitTest(unittest.TestCase):
         Arguments:
 
         """
-
-        pass
 
     @mock.patch("mysql_libs.wait_until")
     @mock.patch("mysql_libs.start_slave_until")
