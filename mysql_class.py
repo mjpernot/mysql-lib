@@ -76,7 +76,7 @@ def fetch_sys_var(server, var, **kwargs):
 
     """
 
-    global SHOW
+    global SHOW                                     # pylint:disable=W0602
 
     cmd = SHOW + kwargs.get("level", "session") + " variables like %s"
 
@@ -124,7 +124,7 @@ def show_slave_hosts(server):
 
     """
 
-    global SHOW
+    global SHOW                                     # pylint:disable=W0602
 
     # Semantic change in MySQL 8.0.22
     slaves = "replicas" if server.version >= (8, 0, 22) else "slave hosts"
@@ -144,7 +144,7 @@ def show_slave_stat(server):
 
     """
 
-    global SHOW
+    global SHOW                                     # pylint:disable=W0602
 
     # Semantic change in MySQL 8.0.22
     slave = "replica" if server.version >= (8, 0, 22) else "slave"
@@ -193,6 +193,8 @@ class Position(collections.namedtuple("Position", "file, pos")):
     Description:  Class which holds a binary log position for a specific
         server.
 
+    Known Error:  The cmp() function is no longer support in Python 3.
+
     Methods:
         __cmp__
 
@@ -211,7 +213,8 @@ class Position(collections.namedtuple("Position", "file, pos")):
 
         """
 
-        return cmp((self.file, self.pos), (other.file, other.pos))
+        return cmp(                                     # pylint:disable=E0602
+            (self.file, self.pos), (other.file, other.pos))
 
 
 def compare_sets(lhs, rhs):
@@ -269,15 +272,14 @@ def _inner_compare(gtid_set, uuid, rngs):
     if uuid not in gtid_set.gtids:
         return True
 
-    else:
-        for rng1, rng2 in zip(rngs, gtid_set.gtids[uuid]):
-            if rng1 != rng2:
-                return True
+    for rng1, rng2 in zip(rngs, gtid_set.gtids[uuid]):
+        if rng1 != rng2:
+            return True
 
     return False
 
 
-class GTIDSet(object):
+class GTIDSet():
 
     """Class:  GTIDSet
 
@@ -331,8 +333,9 @@ class GTIDSet(object):
 
             for rng in rngs:
                 if len(rng) > 2 or len(rng) == 2 and int(rng[0]) > int(rng[1]):
-                    raise ValueError("Range %s in '%s' is not a valid range."
-                                     % ("-".join(str(i) for i in rng), rng))
+                    rng2 = "-".join(str(i) for i in rng)
+                    raise ValueError(
+                        f"Range {rng2} in '{rng}' is not a valid range.")
 
             gtids[uuid] = gen_libs.normalize(rngs)
 
@@ -492,7 +495,7 @@ class GTIDSet(object):
         return data
 
 
-class Server(object):
+class Server():                                 # pylint:disable=R0902,R0904
 
     """Class:  Server
 
@@ -531,7 +534,8 @@ class Server(object):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
+    def __init__(                               # pylint:disable=R0915,R0913
+            self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -586,7 +590,7 @@ class Server(object):
         self.set_ssl_config()
 
         # TLS configuration settings
-        self.tls_versions = kwargs.get("tls_versions", list())
+        self.tls_versions = kwargs.get("tls_versions", [])
         self.set_tls_config()
 
         # SQL connection handler.
@@ -703,7 +707,7 @@ class Server(object):
 
         var = "gtid_mode"
         data = fetch_sys_var(self, var)
-        self.gtid_mode = True if data and data[var] == "ON" else False
+        self.gtid_mode = bool(data) and data[var] == "ON"
 
     def upd_srv_perf(self):
 
@@ -979,8 +983,8 @@ class Server(object):
 
             except mysql.connector.Error as err:
                 self.conn_msg = \
-                    "Couldn't connect to database.  MySQL error %d: %s" \
-                    % (err.args[0], err.args[1])
+                    f"Couldn't connect to database. " \
+                    f" MySQL error {err.args[0]}: {err.args[1]}"
 
                 if not silent:
                     print(self.conn_msg)
@@ -1055,7 +1059,7 @@ class Server(object):
         keys = [str(line[0]) for line in self.conn.cmd_query(cmd)["columns"]]
 
         for line in self.conn.get_rows()[0]:
-            data.append(dict(list(zip(keys, [item for item in line]))))
+            data.append(dict(list(zip(keys, list(line)))))
 
         return data
 
@@ -1244,7 +1248,8 @@ class Rep(Server):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
+    def __init__(                                       # pylint:disable=R0913
+            self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -1271,7 +1276,8 @@ class Rep(Server):
 
         """
 
-        super(Rep, self).__init__(
+        super(                                          # pylint:disable=R1725
+            Rep, self).__init__(
             name, server_id, sql_user, sql_pass, os_type=os_type,
             host=kwargs.get("host", "localhost"),
             port=kwargs.get("port", 3306),
@@ -1296,8 +1302,6 @@ class Rep(Server):
 
         """
 
-        pass
-
     def stop_slave(self):
 
         """Method:  stop_slave
@@ -1307,8 +1311,6 @@ class Rep(Server):
         Arguments:
 
         """
-
-        pass
 
     def start_slave(self):
 
@@ -1320,8 +1322,6 @@ class Rep(Server):
 
         """
 
-        pass
-
     def show_slv_state(self):
 
         """Method:  show_slv_state
@@ -1331,8 +1331,6 @@ class Rep(Server):
         Arguments:
 
         """
-
-        pass
 
     def get_serv_id(self):
 
@@ -1375,7 +1373,7 @@ class Rep(Server):
 
         """
 
-        return gen_libs.str_2_list(self.do_db, ",") if self.do_db else list()
+        return gen_libs.str_2_list(self.do_db, ",") if self.do_db else []
 
     def fetch_ign_db(self):
 
@@ -1388,7 +1386,7 @@ class Rep(Server):
 
         """
 
-        return gen_libs.str_2_list(self.ign_db, ",") if self.ign_db else list()
+        return gen_libs.str_2_list(self.ign_db, ",") if self.ign_db else []
 
     def verify_srv_id(self):
 
@@ -1402,10 +1400,10 @@ class Rep(Server):
 
         """
 
-        return True if self.server_id == self.get_serv_id() else False
+        return self.server_id == self.get_serv_id()
 
 
-class MasterRep(Rep):
+class MasterRep(Rep):                                   # pylint:disable=R0902
 
     """Class:  MasterRep
 
@@ -1423,7 +1421,8 @@ class MasterRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
+    def __init__(                                       # pylint:disable=R0913
+            self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -1455,7 +1454,8 @@ class MasterRep(Rep):
 
         """
 
-        super(MasterRep, self).__init__(
+        super(                                          # pylint:disable=R1725
+            MasterRep, self).__init__(
             name, server_id, sql_user, sql_pass, os_type=os_type,
             host=kwargs.get("host", "localhost"),
             port=kwargs.get("port", 3306),
@@ -1477,7 +1477,7 @@ class MasterRep(Rep):
         self.exe_gtid = None
         self.rep_user = kwargs.get("rep_user", None)
         self.rep_japd = kwargs.get("rep_japd", None)
-        self.slaves = list()
+        self.slaves = []
 
     def connect(self, **kwargs):
 
@@ -1492,10 +1492,11 @@ class MasterRep(Rep):
 
         """
 
-        super(MasterRep, self).connect(silent=kwargs.get("silent", False))
+        super(                                          # pylint:disable=R1725
+            MasterRep, self).connect(silent=kwargs.get("silent", False))
 
         if self.conn:
-            super(MasterRep, self).set_srv_gtid()
+            super(MasterRep, self).set_srv_gtid()       # pylint:disable=R1725
             self.upd_mst_status()
 
     def show_slv_hosts(self):
@@ -1541,7 +1542,7 @@ class MasterRep(Rep):
         self.slaves = self.show_slv_hosts()
 
 
-class SlaveRep(Rep):
+class SlaveRep(Rep):                                # pylint:disable=R0902
 
     """Class:  SlaveRep
 
@@ -1573,7 +1574,8 @@ class SlaveRep(Rep):
 
     """
 
-    def __init__(self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
+    def __init__(                               # pylint:disable=R0915,R0913
+            self, name, server_id, sql_user, sql_pass, os_type, **kwargs):
 
         """Method:  __init__
 
@@ -1605,7 +1607,8 @@ class SlaveRep(Rep):
 
         """
 
-        super(SlaveRep, self).__init__(
+        super(                                          # pylint:disable=R1725
+            SlaveRep, self).__init__(
             name, server_id, sql_user, sql_pass, os_type=os_type,
             host=kwargs.get("host", "localhost"),
             port=kwargs.get("port", 3306),
@@ -1699,10 +1702,11 @@ class SlaveRep(Rep):
 
         """
 
-        super(SlaveRep, self).connect(silent=kwargs.get("silent", False))
+        super(                                          # pylint:disable=R1725
+            SlaveRep, self).connect(silent=kwargs.get("silent", False))
 
         if self.conn:
-            super(SlaveRep, self).set_srv_gtid()
+            super(SlaveRep, self).set_srv_gtid()        # pylint:disable=R1725
             self.upd_slv_status()
 
     def stop_slave(self):
@@ -1793,7 +1797,7 @@ class SlaveRep(Rep):
         self.slv_io = data[slave + "_IO_Running"]
         self.slv_sql = data[slave + "_SQL_Running"]
 
-    def upd_slv_status(self):
+    def upd_slv_status(self):                           # pylint:disable=R0915
 
         """Method:  upd_slv_status
 
@@ -2101,7 +2105,7 @@ class SlaveRep(Rep):
         """
 
         return gen_libs.list_2_dict(
-            gen_libs.str_2_list(self.do_tbl, ",")) if self.do_tbl else list()
+            gen_libs.str_2_list(self.do_tbl, ",")) if self.do_tbl else []
 
     def fetch_ign_tbl(self):
 
@@ -2115,4 +2119,4 @@ class SlaveRep(Rep):
         """
 
         return gen_libs.list_2_dict(
-            gen_libs.str_2_list(self.ign_tbl, ",")) if self.ign_tbl else list()
+            gen_libs.str_2_list(self.ign_tbl, ",")) if self.ign_tbl else []

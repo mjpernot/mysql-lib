@@ -8,6 +8,15 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Removed support for Python 2.7.
 - Update python-lib to v4.0.0
 
+### Changed
+- gen_class.\_inner_compare:  Refactored outer "if" statement.
+- gen_class.GTIDSet.\_\_init\_\_:  Refactored raise exception call.
+- gen_class.Server.set_srv_gtid: Replaced "if" statement with bool call.
+- gen_class.Server.col_sql:  Replaced comprehension with list() call.
+- gen_class.Rep.verify_srv_id: Refactored the "if" statement.
+- gen_libs:  Replaced dict() with {} and list() with [].
+- gen_libs:  Converted strings to f-strings.
+
 ### Deprecated
 - Support for MySQL 5.5
 - Support for MySQL 5.6

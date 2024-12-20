@@ -138,8 +138,8 @@ chmod 600 test/integration/config/mysql.cfg
 ### Testing:
 
 ```
-test/integration/mysql_libs/integration_test_run3.sh
-test/integration/mysql_class/integration_test_run3.sh
+test/integration/mysql_libs/integration_test_run.sh
+test/integration/mysql_class/integration_test_run.sh
 ```
 
 ### Code Coverage:
@@ -194,7 +194,7 @@ chmod 600 test/integration/config/mysql.cfg
 ### Testing:
 
 ```
-test/integration/mysql_class/rep_integration_test_run3.sh
+test/integration/mysql_class/rep_integration_test_run.sh
 ```
 
 ### Code Coverage:
@@ -275,7 +275,7 @@ chmod 600 test/integration/config/slave.txt
 ### Testing:
 
 ```
-test/integration/mysql_class/slaverep_integration_test_run3.sh
+test/integration/mysql_class/slaverep_integration_test_run.sh
 ```
 
 ### Code Coverage:

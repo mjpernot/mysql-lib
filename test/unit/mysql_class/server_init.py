@@ -21,9 +21,9 @@ import mysql.connector
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.machine as machine
-import version
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -378,7 +378,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine, ssl_verify_cert=True)
 
-        self.assertEqual(mysqldb.ssl_verify_cert, True)
+        self.assertTrue(mysqldb.ssl_verify_cert)
 
     def test_ssl_verify_cert(self):
 
@@ -394,7 +394,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_verify_cert, False)
+        self.assertFalse(mysqldb.ssl_verify_cert)
 
     def test_ssl_verify_id2(self):
 
@@ -410,7 +410,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine, ssl_verify_id=True)
 
-        self.assertEqual(mysqldb.ssl_verify_id, True)
+        self.assertTrue(mysqldb.ssl_verify_id)
 
     def test_ssl_verify_id(self):
 
@@ -426,7 +426,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_verify_id, False)
+        self.assertFalse(mysqldb.ssl_verify_id)
 
     def test_ssl_disabled2(self):
 
@@ -442,7 +442,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine, ssl_disabled=True)
 
-        self.assertEqual(mysqldb.ssl_disabled, True)
+        self.assertTrue(mysqldb.ssl_disabled)
 
     def test_ssl_disabled(self):
 
@@ -458,7 +458,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_disabled, False)
+        self.assertFalse(mysqldb.ssl_disabled)
 
     def test_ssl_client_flag2(self):
 
@@ -523,7 +523,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_client_cert, None)
+        self.assertIsNone(mysqldb.ssl_client_cert)
 
     def test_ssl_client_key2(self):
 
@@ -555,7 +555,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_client_key, None)
+        self.assertIsNone(mysqldb.ssl_client_key)
 
     def test_ssl_client_ca2(self):
 
@@ -587,7 +587,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_client_ca, None)
+        self.assertIsNone(mysqldb.ssl_client_ca)
 
     def test_sql_pass(self):
 
@@ -619,7 +619,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.indb_buf_write, None)
+        self.assertIsNone(mysqldb.indb_buf_write)
 
     def test_version(self):
 
@@ -635,7 +635,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.version, None)
+        self.assertIsNone(mysqldb.version)
 
     def test_config(self):
 
@@ -667,7 +667,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.extra_def_file, None)
+        self.assertIsNone(mysqldb.extra_def_file)
 
     def test_extra_def_file(self):
 

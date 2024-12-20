@@ -21,9 +21,9 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.machine as machine
-import version
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -79,7 +79,7 @@ class UnitTest(unittest.TestCase):
 
         mysqldb.set_srv_gtid()
 
-        self.assertEqual(mysqldb.gtid_mode, False)
+        self.assertFalse(mysqldb.gtid_mode)
 
     @mock.patch("mysql_class.fetch_sys_var")
     def test_value(self, mock_sysvar):
@@ -99,7 +99,7 @@ class UnitTest(unittest.TestCase):
 
         mysqldb.set_srv_gtid()
 
-        self.assertEqual(mysqldb.gtid_mode, True)
+        self.assertTrue(mysqldb.gtid_mode)
 
 
 if __name__ == "__main__":

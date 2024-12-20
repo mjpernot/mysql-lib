@@ -20,10 +20,10 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -92,7 +92,7 @@ class UnitTest(unittest.TestCase):
 
         self.svr.upd_srv_stat()
 
-        self.assertTrue(self.svr.prct_mem >= 0)
+        self.assertGreaterEqual(self.svr.prct_mem, 0)
 
     def test_decision(self):
 
@@ -126,7 +126,7 @@ class UnitTest(unittest.TestCase):
 
         self.svr.upd_srv_stat()
 
-        self.assertTrue(self.svr.thr_mem >= 0)
+        self.assertGreaterEqual(self.svr.thr_mem, 0)
 
     def test_base(self):
 
@@ -140,7 +140,7 @@ class UnitTest(unittest.TestCase):
 
         self.svr.upd_srv_stat()
 
-        self.assertTrue(self.svr.max_conn >= 0)
+        self.assertGreaterEqual(self.svr.max_conn, 0)
 
 
 if __name__ == "__main__":

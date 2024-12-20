@@ -21,16 +21,14 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 # Global
-KEY1 = "pass"
-KEY2 = "wd"
 
 
 class UnitTest(unittest.TestCase):
@@ -75,10 +73,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        global KEY1
-        global KEY2
-
-        new_config = {KEY1 + KEY2: self.new_sql_pass}
+        new_config = {"passwd": self.new_sql_pass}
         self.svr.sql_pass = self.new_sql_pass
 
         self.svr.set_pass_config()

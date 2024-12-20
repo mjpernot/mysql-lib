@@ -20,14 +20,14 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import lib.gen_libs as gen_libs
-import mysql_libs
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class SlaveRep(object):
+class SlaveRep():                           # pylint:disable=R0903
 
     """Class:  SlaveRep
 
@@ -112,7 +112,7 @@ class UnitTest(unittest.TestCase):
         self.slave2.mst_read_pos = 1111
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs._io_wait_chk(
+            self.assertFalse(mysql_libs._io_wait_chk(  # pylint:disable=W0212
                 self.slave2, log_file="mst_log", log_pos=12345, gtid=10))
 
     def test_io_non_gtid_good(self):
@@ -128,7 +128,7 @@ class UnitTest(unittest.TestCase):
         self.slave.gtid_mode = None
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs._io_wait_chk(
+            self.assertFalse(mysql_libs._io_wait_chk(  # pylint:disable=W0212
                 self.slave2, log_file="mst_log", log_pos=12345, gtid=10))
 
     def test_io_gtid_update(self):
@@ -144,8 +144,8 @@ class UnitTest(unittest.TestCase):
         self.slave.retrieved_gtid = 11
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs._io_wait_chk(self.slave, 10, None,
-                                                     None))
+            self.assertFalse(mysql_libs._io_wait_chk(  # pylint:disable=W0212
+                self.slave, 10, None, None))
 
     def test_io_gtid_good(self):
 
@@ -158,8 +158,8 @@ class UnitTest(unittest.TestCase):
         """
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs._io_wait_chk(self.slave, 10, None,
-                                                     None))
+            self.assertFalse(mysql_libs._io_wait_chk(  # pylint:disable=W0212
+                self.slave, 10, None, None))
 
 
 if __name__ == "__main__":

@@ -20,10 +20,10 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -76,7 +76,7 @@ class UnitTest(unittest.TestCase):
 
         data = self.svr.vert_sql(self.cmd2)
 
-        self.assertTrue(int(data["Uptime"]) > 0)
+        self.assertGreater(int(data["Uptime"]), 0)
 
     def test_params(self):
 
@@ -90,7 +90,7 @@ class UnitTest(unittest.TestCase):
 
         data = self.svr.vert_sql(self.cmd, (self.var,))
 
-        self.assertTrue(int(data["Uptime"]) > 0)
+        self.assertGreater(int(data["Uptime"]), 0)
 
 
 if __name__ == "__main__":

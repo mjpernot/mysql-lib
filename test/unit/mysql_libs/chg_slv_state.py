@@ -20,14 +20,14 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import lib.gen_libs as gen_libs
-import mysql_libs
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class Server(object):
+class Server():
 
     """Class:  Server
 
@@ -50,8 +50,6 @@ class Server(object):
         Arguments:
 
         """
-
-        pass
 
     def stop_slave(self):
 

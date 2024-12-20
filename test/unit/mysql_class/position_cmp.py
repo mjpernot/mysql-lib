@@ -20,8 +20,8 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import version
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -70,7 +70,7 @@ class UnitTest(unittest.TestCase):
         position1 = mysql_class.Position(self.file1, self.pos1)
         position3 = mysql_class.Position(self.file3, self.pos3)
 
-        self.assertTrue(position1 == position3)
+        self.assertEqual(position1, position3)
 
     def test_positions_equal(self):
 
@@ -85,7 +85,7 @@ class UnitTest(unittest.TestCase):
         position1 = mysql_class.Position(self.file1, self.pos1)
         position3 = mysql_class.Position(self.file3, self.pos3)
 
-        self.assertTrue(position1 == position3)
+        self.assertEqual(position1, position3)
 
 
 if __name__ == "__main__":

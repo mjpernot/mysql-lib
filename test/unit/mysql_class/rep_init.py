@@ -21,9 +21,9 @@ import mysql.connector
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.machine as machine
-import version
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -302,7 +302,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine, ssl_verify_cert=True)
 
-        self.assertEqual(mysqldb.ssl_verify_cert, True)
+        self.assertTrue(mysqldb.ssl_verify_cert)
 
     def test_ssl_verify_cert(self):
 
@@ -318,7 +318,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_verify_cert, False)
+        self.assertFalse(mysqldb.ssl_verify_cert)
 
     def test_ssl_verify_id2(self):
 
@@ -334,7 +334,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine, ssl_verify_id=True)
 
-        self.assertEqual(mysqldb.ssl_verify_id, True)
+        self.assertTrue(mysqldb.ssl_verify_id)
 
     def test_ssl_verify_id(self):
 
@@ -350,7 +350,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_verify_id, False)
+        self.assertFalse(mysqldb.ssl_verify_id)
 
     def test_ssl_disabled2(self):
 
@@ -366,7 +366,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine, ssl_disabled=True)
 
-        self.assertEqual(mysqldb.ssl_disabled, True)
+        self.assertTrue(mysqldb.ssl_disabled)
 
     def test_ssl_disabled(self):
 
@@ -382,7 +382,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqldb.ssl_disabled, False)
+        self.assertFalse(mysqldb.ssl_disabled)
 
     def test_ssl_client_flag2(self):
 
@@ -447,7 +447,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqlrep.ssl_client_cert, None)
+        self.assertIsNone(mysqlrep.ssl_client_cert)
 
     def test_ssl_client_key2(self):
 
@@ -479,7 +479,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqlrep.ssl_client_key, None)
+        self.assertIsNone(mysqlrep.ssl_client_key)
 
     def test_ssl_client_ca2(self):
 
@@ -511,7 +511,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqlrep.ssl_client_ca, None)
+        self.assertIsNone(mysqlrep.ssl_client_ca)
 
     def test_sql_pass(self):
 
@@ -543,7 +543,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqlrep.indb_buf_write, None)
+        self.assertIsNone(mysqlrep.indb_buf_write)
 
     def test_version(self):
 
@@ -559,7 +559,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             os_type=self.machine)
 
-        self.assertEqual(mysqlrep.version, None)
+        self.assertIsNone(mysqlrep.version)
 
     def test_config(self):
 

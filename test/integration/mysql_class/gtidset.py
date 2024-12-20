@@ -20,10 +20,10 @@ import unittest
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_class
-import lib.gen_libs as gen_libs
-import lib.machine as machine
-import version
+import lib.gen_libs as gen_libs             # pylint:disable=E0401,R0402,C0413
+import lib.machine as machine               # pylint:disable=E0401,R0402,C0413
+import mysql_class                          # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
@@ -83,7 +83,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertFalse(self.svr.exe_gtidset > self.svr2.exe_gtidset)
+        self.assertGreater(self.svr.exe_gtidset, self.svr2.exe_gtidset)
 
     def test_less_than(self):
 
@@ -95,7 +95,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertFalse(self.svr.exe_gtidset < self.svr2.exe_gtidset)
+        self.assertLess(self.svr.exe_gtidset, self.svr2.exe_gtidset)
 
     def test_not_equal(self):
 
@@ -107,7 +107,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertFalse(self.svr.exe_gtidset != self.svr2.exe_gtidset)
+        self.assertNotEqual(self.svr.exe_gtidset, self.svr2.exe_gtidset)
 
     def test_greater_than_equal(self):
 
@@ -119,7 +119,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(self.svr.exe_gtidset >= self.svr2.exe_gtidset)
+        self.assertGreaterEqual(self.svr.exe_gtidset, self.svr2.exe_gtidset)
 
     def test_less_than_equal(self):
 
@@ -131,7 +131,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(self.svr.exe_gtidset <= self.svr2.exe_gtidset)
+        self.assertLessEqual(self.svr.exe_gtidset, self.svr2.exe_gtidset)
 
     def test_equal(self):
 
@@ -143,7 +143,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(self.svr.exe_gtidset == self.svr2.exe_gtidset)
+        self.assertEqual(self.svr.exe_gtidset, self.svr2.exe_gtidset)
 
     def test_string2(self):
 
@@ -155,9 +155,9 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        line = "%s" % self.svr.exe_gtidset
+        line = f"{self.svr.exe_gtidset}"
 
-        self.assertTrue(isinstance(line, str))
+        self.assertIsInstance(line, str)
 
     def test_string(self):
 
@@ -171,7 +171,7 @@ class UnitTest(unittest.TestCase):
 
         line = str(self.svr.exe_gtidset)
 
-        self.assertTrue(isinstance(line, str))
+        self.assertIsInstance(line, str)
 
     def test_is_class(self):
 
@@ -183,7 +183,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.assertTrue(isinstance(self.svr.exe_gtidset, mysql_class.GTIDSet))
+        self.assertIsInstance(self.svr.exe_gtidset, mysql_class.GTIDSet)
 
 
 if __name__ == "__main__":

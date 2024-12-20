@@ -21,13 +21,13 @@ import mock
 
 # Local
 sys.path.append(os.getcwd())
-import mysql_libs
-import version
+import mysql_libs                           # pylint:disable=E0401,C0413
+import version                              # pylint:disable=E0401,C0413
 
 __version__ = version.__version__
 
 
-class SlaveRep2(object):
+class SlaveRep2():                          # pylint:disable=R0903
 
     """Class:  SlaveRep2
 
@@ -67,7 +67,7 @@ class SlaveRep2(object):
         return True
 
 
-class SlaveRep(object):
+class SlaveRep():                           # pylint:disable=R0903
 
     """Class:  SlaveRep
 
