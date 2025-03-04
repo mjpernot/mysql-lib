@@ -1,11 +1,11 @@
 # Classification (U)
 
-"""Program:  _sql_wait_chk.py
+"""Program:  sql_wait_chk.py
 
-    Description:  Unit testing of _sql_wait_chk in mysql_libs.py.
+    Description:  Unit testing of sql_wait_chk in mysql_libs.py.
 
     Usage:
-        test/unit/mysql_libs/_sql_wait_chk.py
+        test/unit/mysql_libs/sql_wait_chk.py
 
     Arguments:
 
@@ -112,7 +112,7 @@ class UnitTest(unittest.TestCase):
         self.slave2.exec_mst_pos = 11111
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs._sql_wait_chk(  # pylint:disable=W0212
+            self.assertFalse(mysql_libs.sql_wait_chk(  # pylint:disable=W0212
                 self.slave2, log_file="relay_mst_log", log_pos=12345,
                 gtid=12345))
 
@@ -127,7 +127,7 @@ class UnitTest(unittest.TestCase):
         """
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs._sql_wait_chk(  # pylint:disable=W0212
+            self.assertFalse(mysql_libs.sql_wait_chk(  # pylint:disable=W0212
                 self.slave2, log_file="relay_mst_log", log_pos=12345,
                 gtid=12345))
 
@@ -144,7 +144,7 @@ class UnitTest(unittest.TestCase):
         self.slave.exe_gtid = 11111
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs._sql_wait_chk(  # pylint:disable=W0212
+            self.assertFalse(mysql_libs.sql_wait_chk(  # pylint:disable=W0212
                 self.slave, 12345, None, None))
 
     def test_sql_gtid_good(self):
@@ -158,7 +158,7 @@ class UnitTest(unittest.TestCase):
         """
 
         with gen_libs.no_std_out():
-            self.assertFalse(mysql_libs._sql_wait_chk(  # pylint:disable=W0212
+            self.assertFalse(mysql_libs.sql_wait_chk(  # pylint:disable=W0212
                 self.slave, 12345, None, None))
 
 

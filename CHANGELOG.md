@@ -4,6 +4,33 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.5.0] - 2025-03-04
+- Removed support for MySQL 5.5/5.6/5.7
+
+### Added
+- mysql_libs.sql_wait_chk: Checks the slave's SQL thread to to see if the server has reached the master's log.
+- mysql_libs.io_wait_chk: Checks the slave's IO thread to to see if the server has reached the master's log.
+- mysql_libs.io_rep_chk: Does an IO thread check in the replication system.
+- mysql_libs.sql_rep_chk: Does a SQL thread check in the replication system.
+- mysql_libs.io_delay_chk: Checks to see if there is an IO delay between the master and and slave.
+
+### Changed
+- mysql_libs.wait_until: Replaced \_sql_wait_chk call with sql_wait_chk call.
+- mysql_libs.wait_until: Replaced \_io_wait_chk call with io_wait_chk call.
+- mysql_libs.sync_delay:  Replaced \_io_delay_chk call with io_delay_chk call.
+- mysql_libs.is_rep_delay: Replaced \_io_rep_chk call with io_rep_chk call.
+- mysql_libs.is_rep_delay: Replaced \_sql_rep_chk call with sql_rep_chk call.
+- mysql_libs.get_db_tbl: Removed MySQL 5.6 code.
+- Documentation changes.
+
+### Removed
+- mysql_libs.\_sql_wait_chk function.
+- mysql_libs.\_io_wait_chk function.
+- mysql_libs.\_io_delay_chk function.
+- mysql_libs.\_io_rep_chk function.
+- mysql_libs.\_sql_rep_chk function.
+
+
 ## [5.4.0] - 2024-12-13
 - Removed support for Python 2.7.
 - Update python-lib to v4.0.0
