@@ -6,8 +6,10 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 
 ## [5.5.0] - 2025-03-04
 - Removed support for MySQL 5.5/5.6/5.7
+- Fixed Position class using \_\_cmp\_\_ as it is no longer supported in Python 3.
 
 ### Added
+- mysql_class.Position.cmp:  Compare two positions lexicographically.
 - mysql_libs.sql_wait_chk: Checks the slave's SQL thread to to see if the server has reached the master's log.
 - mysql_libs.io_wait_chk: Checks the slave's IO thread to to see if the server has reached the master's log.
 - mysql_libs.io_rep_chk: Does an IO thread check in the replication system.
@@ -15,6 +17,8 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - mysql_libs.io_delay_chk: Checks to see if there is an IO delay between the master and and slave.
 
 ### Changed
+- mysql_class.GTIDSet.\_\_init\_\_: Replaced gen_libs.str_type call with str datatype.
+- mysql_class.SlaveRep.upd_slv_status: Removed code for MySQL 5.6 support and refactored trans_retry section.
 - mysql_libs.wait_until: Replaced \_sql_wait_chk call with sql_wait_chk call.
 - mysql_libs.wait_until: Replaced \_io_wait_chk call with io_wait_chk call.
 - mysql_libs.sync_delay:  Replaced \_io_delay_chk call with io_delay_chk call.
@@ -24,6 +28,7 @@ The format is based on "Keep a Changelog".  This project adheres to Semantic Ver
 - Documentation changes.
 
 ### Removed
+- mysql_class.Position.\_\_cmp\_\_ method.
 - mysql_libs.\_sql_wait_chk function.
 - mysql_libs.\_io_wait_chk function.
 - mysql_libs.\_io_delay_chk function.
