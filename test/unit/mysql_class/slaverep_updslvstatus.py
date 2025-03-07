@@ -45,7 +45,7 @@ class UnitTest(unittest.TestCase):
         test_none_secsbehind
         test_int_secsbehind
         test_string_secsbehind
-        test_except_secsbehind -> Test raising exception: Seconds_Behind_Master
+        test_except_secsbehind
         test_int_skipcounter
         test_string_skipcounter
         test_except_skipcounter
@@ -81,20 +81,23 @@ class UnitTest(unittest.TestCase):
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
-        self.version = (5, 7, 33)
+#        self.version = (5, 7, 33)
+        self.version = (8, 0, 30)
         self.version2 = (8, 0, 0)
         self.version3 = (8, 0, 21)
         self.version4 = (8, 0, 23)
         self.version5 = (8, 0, 28)
-        self.fetch_vars = [
-            {"Slave_running": "ON"}, {"Slave_retried_transactions": 0},
-            {"Slave_open_temp_tables": "1"}]
+#        self.fetch_vars = [
+#            {"Slave_running": "ON"}, {"Slave_retried_transactions": 0},
+#            {"Slave_open_temp_tables": "1"}]
+        self.fetch_vars = [{"Replica_open_temp_tables": "1"}]
         self.fetch_vars2 = [{"Slave_open_temp_tables": "1"}]
         self.fetch_vars3 = [{"Replica_open_temp_tables": "1"}]
         self.query = [
             [{"SERVICE_STATE": "ON"}], [{"COUNT_TRANSACTIONS_RETRIES": 0}]]
         self.read_only = {"read_only": "ON"}
 
+        """
         self.show_stat = [
             {"Slave_IO_State": "up",
              "Master_Host": "masterhost",
@@ -149,6 +152,7 @@ class UnitTest(unittest.TestCase):
              "Retrieved_Gtid_Set": "retgtid",
              "Executed_Gtid_Set": "exegtid",
              "Auto_Position": "autopos"}]
+        """
         self.show_stat2 = [
             {"Replica_IO_State": "up",
              "Source_Host": "masterhost",
@@ -203,15 +207,17 @@ class UnitTest(unittest.TestCase):
              "Retrieved_Gtid_Set": "retgtid",
              "Executed_Gtid_Set": "exegtid",
              "Auto_Position": "autopos"}]
+        self.show_stat = self.show_stat2
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_server_uuid(self, mock_stat, mock_global, mock_var):
+    def test_server_uuid(self, mock_stat, mock_global, mock_var, mock_qry):
 
         """Function:  test_server_uuid
 
@@ -224,6 +230,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -396,10 +403,11 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_run_pre(self, mock_stat, mock_global, mock_var):
+    def test_run_pre(self, mock_stat, mock_global, mock_var, mock_qry):
 
         """Function:  test_run_pre
 
@@ -412,6 +420,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -425,10 +434,11 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_none_secsbehind(self, mock_stat, mock_global, mock_var):
+    def test_none_secsbehind(self, mock_stat, mock_global, mock_var, mock_qry):
 
         """Function:  test_none_secsbehind
 
@@ -443,6 +453,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -456,10 +467,11 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_int_secsbehind(self, mock_stat, mock_global, mock_var):
+    def test_int_secsbehind(self, mock_stat, mock_global, mock_var, mock_qry):
 
         """Function:  test_int_secsbehind
 
@@ -474,6 +486,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -487,10 +500,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_string_secsbehind(self, mock_stat, mock_global, mock_var):
+    def test_string_secsbehind(self, mock_stat, mock_global, mock_var,
+                               mock_qry):
 
         """Function:  test_string_secsbehind
 
@@ -505,6 +520,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -518,10 +534,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_except_secsbehind(self, mock_stat, mock_global, mock_var):
+    def test_except_secsbehind(self, mock_stat, mock_global, mock_var,
+                               mock_qry):
 
         """Function:  test_except_secsbehind
 
@@ -534,6 +552,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -547,10 +566,11 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_int_skipcounter(self, mock_stat, mock_global, mock_var):
+    def test_int_skipcounter(self, mock_stat, mock_global, mock_var, mock_qry):
 
         """Function:  test_int_skipcounter
 
@@ -565,6 +585,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -578,10 +599,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_string_skipcounter(self, mock_stat, mock_global, mock_var):
+    def test_string_skipcounter(self, mock_stat, mock_global, mock_var,
+                                mock_qry):
 
         """Function:  test_string_skipcounter
 
@@ -596,6 +619,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -609,10 +633,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_except_skipcounter(self, mock_stat, mock_global, mock_var):
+    def test_except_skipcounter(self, mock_stat, mock_global, mock_var,
+                                mock_qry):
 
         """Function:  test_except_skipcounter
 
@@ -625,6 +651,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -638,10 +665,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_int_masterserverid(self, mock_stat, mock_global, mock_var):
+    def test_int_masterserverid(self, mock_stat, mock_global, mock_var,
+                                mock_qry):
 
         """Function:  test_int_masterserverid
 
@@ -656,6 +685,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -669,10 +699,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_string_masterserverid(self, mock_stat, mock_global, mock_var):
+    def test_string_masterserverid(self, mock_stat, mock_global, mock_var,
+                                   mock_qry):
 
         """Function:  test_string_masterserverid
 
@@ -687,6 +719,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -700,10 +733,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_except_masterserverid(self, mock_stat, mock_global, mock_var):
+    def test_except_masterserverid(self, mock_stat, mock_global, mock_var,
+                                   mock_qry):
 
         """Function:  test_except_masterserverid
 
@@ -716,6 +751,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -729,10 +765,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_int_lastsqlerror(self, mock_stat, mock_global, mock_var):
+    def test_int_lastsqlerror(self, mock_stat, mock_global, mock_var,
+                              mock_qry):
 
         """Function:  test_int_lastsqlerror
 
@@ -747,6 +785,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -760,10 +799,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_string_lastsqlerror(self, mock_stat, mock_global, mock_var):
+    def test_string_lastsqlerror(self, mock_stat, mock_global, mock_var,
+                                 mock_qry):
 
         """Function:  test_string_lastsqlerror
 
@@ -778,6 +819,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -791,10 +833,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_except_lastsqlerror(self, mock_stat, mock_global, mock_var):
+    def test_except_lastsqlerror(self, mock_stat, mock_global, mock_var,
+                                 mock_qry):
 
         """Function:  test_except_lastsqlerror
 
@@ -807,6 +851,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -820,10 +865,11 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_int_lastioerror(self, mock_stat, mock_global, mock_var):
+    def test_int_lastioerror(self, mock_stat, mock_global, mock_var, mock_qry):
 
         """Function:  test_int_lastioerror
 
@@ -838,6 +884,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -851,10 +898,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_string_lastioerror(self, mock_stat, mock_global, mock_var):
+    def test_string_lastioerror(self, mock_stat, mock_global, mock_var,
+                                mock_qry):
 
         """Function:  test_string_lastioerror
 
@@ -869,6 +918,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -882,10 +932,12 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_except_lastioerror(self, mock_stat, mock_global, mock_var):
+    def test_except_lastioerror(self, mock_stat, mock_global, mock_var,
+                                mock_qry):
 
         """Function:  test_except_lastioerror
 
@@ -898,6 +950,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
@@ -911,10 +964,11 @@ class UnitTest(unittest.TestCase):
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
     @mock.patch(
         "mysql_class.Rep.get_serv_uuid", mock.Mock(return_value="ServerUUID"))
+    @mock.patch("mysql_class.Server.col_sql")
     @mock.patch("mysql_class.fetch_sys_var")
     @mock.patch("mysql_class.fetch_global_var")
     @mock.patch("mysql_class.show_slave_stat")
-    def test_value(self, mock_stat, mock_global, mock_var):
+    def test_value(self, mock_stat, mock_global, mock_var, mock_qry):
 
         """Function:  test_value
 
@@ -927,6 +981,7 @@ class UnitTest(unittest.TestCase):
         mock_var.return_value = self.read_only
         mock_global.side_effect = self.fetch_vars
         mock_stat.return_value = self.show_stat
+        mock_qry.side_effect = self.query
 
         mysqlrep = mysql_class.SlaveRep(
             self.name, self.server_id, self.sql_user, self.sql_pass,
