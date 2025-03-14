@@ -2,7 +2,7 @@
 
 """Program:  position_cmp.py
 
-    Description:  Unit testing of Position.__cmp__ in mysql_class.py.
+    Description:  Unit testing of Position.cmp in mysql_class.py.
 
     Usage:
         test/unit/mysql_class/position_cmp.py
@@ -34,8 +34,13 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
-        test_positions_not_equal
-        test_positions_equal
+        test_file_after2
+        test_file_after
+        test_file_before2
+        test_file_before
+        test_pos_after
+        test_pos_before
+        test_file_pos_equal
 
     """
 
@@ -49,30 +54,95 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        self.fname = "mysql-bin.01111"
-        self.file1 = self.fname
-        self.pos1 = 23489
-        self.file2 = self.fname
-        self.pos2 = 23482
-        self.file3 = self.fname
-        self.pos3 = 23489
+        fname = "mysql-bin.00001"
+        fname2 = "mysql-bin.00002"
+        fname3 = "mysql-bin.00003"
+        pos = 101
+        pos2 = 102
+        pos3 = 103
 
-    def test_positions_not_equal(self):
+        self.master = mysql_class.Position(fname2, pos2)
+        self.slave1 = mysql_class.Position(fname2, pos)
+        self.slave2 = mysql_class.Position(fname2, pos2)
+        self.slave3 = mysql_class.Position(fname2, pos3)
+        self.slave4 = mysql_class.Position(fname, pos)
+        self.slave5 = mysql_class.Position(fname3, pos3)
+        self.slave6 = mysql_class.Position(fname3, pos2)
+        self.slave7 = mysql_class.Position(fname, pos2)
 
-        """Function:  test_positions_not_equal
+    def test_file_after2(self):
 
-        Description:  Test with positions not equal.
+        """Function:  test_file_after2
+
+        Description:  Test with file after other file.
 
         Arguments:
 
         """
 
-        position1 = mysql_class.Position(self.file1, self.pos1)
-        position3 = mysql_class.Position(self.file3, self.pos3)
+        self.assertEqual(self.master.cmp(self.slave6), -1)
 
-        self.assertEqual(position1, position3)
+    def test_file_after(self):
 
-    def test_positions_equal(self):
+        """Function:  test_file_after
+
+        Description:  Test with file after other file.
+
+        Arguments:
+
+        """
+
+        self.assertEqual(self.master.cmp(self.slave5), -1)
+
+    def test_file_before2(self):
+
+        """Function:  test_file_before2
+
+        Description:  Test with file before other file.
+
+        Arguments:
+
+        """
+
+        self.assertEqual(self.master.cmp(self.slave7), 1)
+
+    def test_file_before(self):
+
+        """Function:  test_file_before
+
+        Description:  Test with file before other file.
+
+        Arguments:
+
+        """
+
+        self.assertEqual(self.master.cmp(self.slave4), 1)
+
+    def test_pos_after(self):
+
+        """Function:  test_pos_after
+
+        Description:  Test with position after other position.
+
+        Arguments:
+
+        """
+
+        self.assertEqual(self.master.cmp(self.slave3), -1)
+
+    def test_pos_before(self):
+
+        """Function:  test_pos_before
+
+        Description:  Test with position before other position.
+
+        Arguments:
+
+        """
+
+        self.assertEqual(self.master.cmp(self.slave1), 1)
+
+    def test_file_pos_equal(self):
 
         """Function:  test_positions_equal
 
@@ -82,10 +152,7 @@ class UnitTest(unittest.TestCase):
 
         """
 
-        position1 = mysql_class.Position(self.file1, self.pos1)
-        position3 = mysql_class.Position(self.file3, self.pos3)
-
-        self.assertEqual(position1, position3)
+        self.assertEqual(self.master.cmp(self.slave2), 0)
 
 
 if __name__ == "__main__":

@@ -25,8 +25,8 @@
         is_cfg_valid
         is_logs_synced
         is_rep_delay
-        _io_rep_chk
-        _sql_rep_chk
+        io_rep_chk
+        sql_rep_chk
         optimize_tbl
         purge_bin_logs
         reset_master
@@ -35,11 +35,11 @@
         start_slave_until
         switch_to_master
         sync_delay
-        _io_delay_chk
+        io_delay_chk
         sync_rep_slv
         wait_until
-        _io_wait_chk
-        _sql_wait_chk
+        io_wait_chk
+        sql_wait_chk
 
 """
 
@@ -513,7 +513,7 @@ def get_db_tbl(server, db_list, **kwargs):
 
     db_dict = {}
     db_list = list(db_list)
-    dict_key = "TABLE_NAME" if server.version >= (8, 0) else "table_name"
+    dict_key = "TABLE_NAME"
     ign_dbs = list(kwargs.get("ign_dbs", []))
     tbls = kwargs.get("tbls", [])
     ign_db_tbl = dict(kwargs.get("ign_db_tbl", {}))
@@ -625,17 +625,17 @@ def is_rep_delay(mst, slv, opt):
     is_delay = False
 
     if opt == "IO":
-        is_delay = _io_rep_chk(mst, slv)
+        is_delay = io_rep_chk(mst, slv)
 
     else:
-        is_delay = _sql_rep_chk(mst, slv)
+        is_delay = sql_rep_chk(mst, slv)
 
     return is_delay
 
 
-def _io_rep_chk(mst, slv, is_delayed=False):
+def io_rep_chk(mst, slv, is_delayed=False):
 
-    """Function:  _io_rep_chk
+    """Function:  io_rep_chk
 
     Description:  Does an IO thread check in the replication system.  Will
         determine whether to use GTIDs or the file and log positions
@@ -660,9 +660,9 @@ def _io_rep_chk(mst, slv, is_delayed=False):
     return is_delayed
 
 
-def _sql_rep_chk(mst, slv, is_delayed=False):
+def sql_rep_chk(mst, slv, is_delayed=False):
 
-    """Function:  _sql_rep_chk
+    """Function:  sql_rep_chk
 
     Description:  Does an SQL thread check in the replication system.  Will
         determine whether to use GTIDs or the file and log positions
@@ -887,7 +887,7 @@ def sync_delay(mst, slv, opt):
     if is_rep_delay(mst, slv, opt):
 
         if opt == "IO":
-            _io_delay_chk(mst, slv)
+            io_delay_chk(mst, slv)
 
         print(f"Master: {mst.name}\tFile: {mst.file}, Position: {mst.pos}")
 
@@ -905,9 +905,9 @@ def sync_delay(mst, slv, opt):
             slv.stop_slave()
 
 
-def _io_delay_chk(mst, slv):
+def io_delay_chk(mst, slv):
 
-    """Function:  _io_delay_chk
+    """Function:  io_delay_chk
 
     Description:  Checks to see if there is an IO delay between the master and
         slave.  Calls function to sync up between the master and slave.
@@ -922,8 +922,8 @@ def _io_delay_chk(mst, slv):
     if mst.gtid_mode and slv.gtid_mode:
 
         # Using the "sql_after_gtid" option.
-        err_flag, err_msg = start_slave_until(slv, gtid=mst.exe_gtid,
-                                              stop_pos="after")
+        err_flag, err_msg = start_slave_until(
+            slv, gtid=mst.exe_gtid, stop_pos="after")
 
         if err_flag:
             print(f"Error: {err_msg}")
@@ -997,15 +997,15 @@ def wait_until(slv, opt, log_file=None, log_pos=None, **kwargs):
     slv.upd_slv_status()
 
     if opt == "IO":
-        _io_wait_chk(slv, gtid, log_file, log_pos)
+        io_wait_chk(slv, gtid, log_file, log_pos)
 
     else:
-        _sql_wait_chk(slv, gtid, log_file, log_pos)
+        sql_wait_chk(slv, gtid, log_file, log_pos)
 
 
-def _io_wait_chk(slv, gtid, log_file, log_pos):
+def io_wait_chk(slv, gtid, log_file, log_pos):
 
-    """Function:  _io_wait_chk
+    """Function:  io_wait_chk
 
     Description:  Checks the slave's IO thread to to see if the server has
         reached the master's log file and position (non-GTID enabled) or the
@@ -1038,9 +1038,9 @@ def _io_wait_chk(slv, gtid, log_file, log_pos):
         slv.upd_slv_status()
 
 
-def _sql_wait_chk(slv, gtid, log_file, log_pos):
+def sql_wait_chk(slv, gtid, log_file, log_pos):
 
-    """Function:  _sql_wait_chk
+    """Function:  sql_wait_chk
 
     Description:  Checks the slave's SQL thread to to see if the server has
         reached the master's log file and position (non-GTID enabled) or the

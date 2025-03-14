@@ -84,8 +84,8 @@ coverage run -a --source=mysql_class test/unit/mysql_class/slaverep_stopslave.py
 coverage run -a --source=mysql_class test/unit/mysql_class/slaverep_updslvstate.py
 coverage run -a --source=mysql_class test/unit/mysql_class/slaverep_updslvtime.py
 coverage run -a --source=mysql_class test/unit/mysql_class/slaverep_updgtidpos.py
-coverage run -a --source=mysql_libs test/unit/mysql_libs/_io_wait_chk.py
-coverage run -a --source=mysql_libs test/unit/mysql_libs/_sql_wait_chk.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/io_wait_chk.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/sql_wait_chk.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/analyze_tbl.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/change_master_to.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/checksum.py
@@ -115,6 +115,9 @@ coverage run -a --source=mysql_libs test/unit/mysql_libs/switch_to_master.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/sync_delay.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/sync_rep_slv.py
 coverage run -a --source=mysql_libs test/unit/mysql_libs/wait_until.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/io_delay_chk.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/io_rep_chk.py
+coverage run -a --source=mysql_libs test/unit/mysql_libs/sql_rep_chk.py
 
 echo ""
 echo "Producing code coverage report"

@@ -5,8 +5,8 @@
 #   is located at.
 
 echo "Unit test: mysql_libs"  
-/usr/bin/python ./test/unit/mysql_libs/_io_wait_chk.py
-/usr/bin/python ./test/unit/mysql_libs/_sql_wait_chk.py
+/usr/bin/python ./test/unit/mysql_libs/io_wait_chk.py
+/usr/bin/python ./test/unit/mysql_libs/sql_wait_chk.py
 /usr/bin/python ./test/unit/mysql_libs/analyze_tbl.py
 /usr/bin/python ./test/unit/mysql_libs/change_master_to.py
 /usr/bin/python ./test/unit/mysql_libs/checksum.py
@@ -36,4 +36,7 @@ echo "Unit test: mysql_libs"
 /usr/bin/python ./test/unit/mysql_libs/sync_delay.py
 /usr/bin/python ./test/unit/mysql_libs/sync_rep_slv.py
 /usr/bin/python ./test/unit/mysql_libs/wait_until.py
+/usr/bin/python ./test/unit/mysql_libs/io_delay_chk.py
+/usr/bin/python ./test/unit/mysql_libs/io_rep_chk.py
+/usr/bin/python ./test/unit/mysql_libs/sql_rep_chk.py
 
