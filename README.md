@@ -81,10 +81,6 @@ Install the project using the procedures in the Git Installation section.
 ```
 test/unit/mysql_libs/unit_test_run.sh
 test/unit/mysql_class/unit_test_run.sh
-```
-
-### Code Coverage:
-```
 test/unit/mysql_libs/code_coverage.sh
 test/unit/mysql_class/code_coverage.sh
 ```
@@ -140,10 +136,6 @@ chmod 600 test/integration/config/mysql.cfg
 ```
 test/integration/mysql_libs/integration_test_run.sh
 test/integration/mysql_class/integration_test_run.sh
-```
-
-### Code Coverage:
-```
 test/integration/mysql_libs/code_coverage.sh
 test/integration/mysql_class/code_coverage.sh
 ```
@@ -195,10 +187,6 @@ chmod 600 test/integration/config/mysql.cfg
 
 ```
 test/integration/mysql_class/rep_integration_test_run.sh
-```
-
-### Code Coverage:
-```
 test/integration/mysql_class/rep_code_coverage.sh
 ```
 
@@ -276,10 +264,6 @@ chmod 600 test/integration/config/slave.txt
 
 ```
 test/integration/mysql_class/slaverep_integration_test_run.sh
-```
-
-### Code Coverage:
-```
 test/integration/mysql_class/slaverep_code_coverage.sh
 ```
 

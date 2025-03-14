@@ -1,11 +1,11 @@
 # Classification (U)
 
-"""Program:  is_rep_delay.py
+"""Program:  sql_rep_chk.py
 
-    Description:  Unit testing of is_rep_delay in mysql_libs.py.
+    Description:  Unit testing of sql_rep_chk in mysql_libs.py.
 
     Usage:
-        test/unit/mysql_libs/is_rep_delay.py
+        test/unit/mysql_libs/sql_rep_chk.py
 
     Arguments:
 
@@ -96,10 +96,6 @@ class UnitTest(unittest.TestCase):
         test_sql_synced_non_gtid
         test_sql_not_synced_gtid
         test_sql_synced_gtid
-        test_io_not_synced_non_gtid
-        test_io_synced_non_gtid
-        test_io_not_synced_gtid
-        test_io_synced_gtid
 
     """
 
@@ -127,7 +123,7 @@ class UnitTest(unittest.TestCase):
         slave = SlaveRep(None, None, None, None, None, relay_log="File1",
                          exe_pos=12346)
 
-        self.assertTrue(mysql_libs.is_rep_delay(master, slave, "SQL"))
+        self.assertTrue(mysql_libs.sql_rep_chk(master, slave))
 
     def test_sql_synced_non_gtid(self):
 
@@ -143,7 +139,7 @@ class UnitTest(unittest.TestCase):
         slave = SlaveRep(None, None, None, None, None, relay_log="File1",
                          exe_pos=12345)
 
-        self.assertFalse(mysql_libs.is_rep_delay(master, slave, "SQL"))
+        self.assertFalse(mysql_libs.sql_rep_chk(master, slave))
 
     def test_sql_not_synced_gtid(self):
 
@@ -159,7 +155,7 @@ class UnitTest(unittest.TestCase):
         slave = SlaveRep("Yes", None, None, None, 12346, relay_log=None,
                          exe_pos=None)
 
-        self.assertTrue(mysql_libs.is_rep_delay(master, slave, "SQL"))
+        self.assertTrue(mysql_libs.sql_rep_chk(master, slave))
 
     def test_sql_synced_gtid(self):
 
@@ -175,71 +171,7 @@ class UnitTest(unittest.TestCase):
         slave = SlaveRep("Yes", None, None, None, 12345, relay_log=None,
                          exe_pos=None)
 
-        self.assertFalse(mysql_libs.is_rep_delay(master, slave, "SQL"))
-
-    def test_io_not_synced_non_gtid(self):
-
-        """Function:  test_io_not_synced_non_gtid
-
-        Description:  Test with IO is not synced with non-GTID.
-
-        Arguments:
-
-        """
-
-        master = MasterRep(None, None, "File1", 12345)
-        slave = SlaveRep(None, None, "File1", 12346, None, relay_log=None,
-                         exe_pos=None)
-
-        self.assertTrue(mysql_libs.is_rep_delay(master, slave, "IO"))
-
-    def test_io_synced_non_gtid(self):
-
-        """Function:  test_io_synced_non_gtid
-
-        Description:  Test with IO is synced with non-GTID.
-
-        Arguments:
-
-        """
-
-        master = MasterRep(None, None, "File1", 12345)
-        slave = SlaveRep(None, None, "File1", 12345, None, relay_log=None,
-                         exe_pos=None)
-
-        self.assertFalse(mysql_libs.is_rep_delay(master, slave, "IO"))
-
-    def test_io_not_synced_gtid(self):
-
-        """Function:  test_io_not_synced_gtid
-
-        Description:  Test with IO is not synced with GTID.
-
-        Arguments:
-
-        """
-
-        master = MasterRep("Yes", 12345, None, None)
-        slave = SlaveRep("Yes", 12346, None, None, None, relay_log=None,
-                         exe_pos=None)
-
-        self.assertTrue(mysql_libs.is_rep_delay(master, slave, "IO"))
-
-    def test_io_synced_gtid(self):
-
-        """Function:  test_io_synced_gtid
-
-        Description:  Test with IO is synced with GTID.
-
-        Arguments:
-
-        """
-
-        master = MasterRep("Yes", 12345, None, None)
-        slave = SlaveRep("Yes", 12345, None, None, None, relay_log=None,
-                         exe_pos=None)
-
-        self.assertFalse(mysql_libs.is_rep_delay(master, slave, "IO"))
+        self.assertFalse(mysql_libs.sql_rep_chk(master, slave))
 
 
 if __name__ == "__main__":

@@ -198,28 +198,28 @@ class Position(collections.namedtuple("Position", "file, pos")):
     Description:  Class which holds a binary log position for a specific
         server.
 
-    Known Error:  The cmp() function is no longer support in Python 3.
-
     Methods:
-        __cmp__
+        cmp
 
     """
 
-    def __cmp__(self, other):
+    def cmp(self, other):
 
-        """Method:  __cmp__
+        """Method: cmp
 
-        Description:  Compare two positions lexicographically.  If the
-            positions are from different servers, a ValueError exception will
-            be raised.
+        Description:  Compare two positions lexicographically.  Returns -1, 0
+            or 1.
+            Return values:
+                -1: self is before other
+                0: self and other are equal
+                1: self is after other
 
         Arguments:
             (input) other -> Second server to be compared with
 
         """
 
-        return cmp(                                     # pylint:disable=E0602
-            (self.file, self.pos), (other.file, other.pos))
+        return (self > other) - (self < other)
 
 
 def compare_sets(lhs, rhs):
@@ -322,7 +322,7 @@ class GTIDSet():
         gtids = {}
 
         # Convert to string to parse
-        if not isinstance(obj, gen_libs.str_type()):
+        if not isinstance(obj, str):
             obj = str(obj)
 
         # Parse string and construct a GTID set.
@@ -1906,20 +1906,15 @@ class SlaveRep(Rep):                                # pylint:disable=R0902
         self.exe_gtid = data.get("Executed_Gtid_Set", None)
         self.auto_pos = data.get("Auto_Position", None)
 
-        # tran_retry and run are in different location in MySQL 8
-        if self.version < (8, 0, 0):
-            self.run = fetch_global_var(self, "slave_running")["Slave_running"]
-            self.tran_retry = fetch_global_var(
-                self,
-                "slave_retried_transactions")["Slave_retried_transactions"]
-
-        else:
-            sql = \
-                "select %s from performance_schema.replication_applier_status"
-            item = "SERVICE_STATE"
-            self.run = self.col_sql(sql % (item))[0][item]
-            ctr = "COUNT_TRANSACTIONS_RETRIES"
-            self.tran_retry = self.col_sql(sql % (ctr))[0][ctr]
+        # tran_retry
+        item = "SERVICE_STATE"
+        self.run = self.col_sql(
+            f"select {item} from"
+            f" performance_schema.replication_applier_status")[0][item]
+        ctr = "COUNT_TRANSACTIONS_RETRIES"
+        self.tran_retry = self.col_sql(
+            f"select {ctr} from"
+            f" performance_schema.replication_applier_status")[0][ctr]
 
         self.tmp_tbl = fetch_global_var(
             self, slave2 + "_open_temp_tables")[slave3 + "_open_temp_tables"]
