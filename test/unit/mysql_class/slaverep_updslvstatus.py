@@ -82,22 +82,21 @@ class UnitTest(unittest.TestCase):
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
 #        self.version = (5, 7, 33)
-        self.version = (8, 0, 30)
+        self.version = (8, 0, 0)
         self.version2 = (8, 0, 0)
         self.version3 = (8, 0, 21)
         self.version4 = (8, 0, 23)
         self.version5 = (8, 0, 28)
-#        self.fetch_vars = [
-#            {"Slave_running": "ON"}, {"Slave_retried_transactions": 0},
-#            {"Slave_open_temp_tables": "1"}]
-        self.fetch_vars = [{"Replica_open_temp_tables": "1"}]
+        self.fetch_vars = [
+            {"Slave_running": "ON"}, {"Slave_retried_transactions": 0},
+            {"Slave_open_temp_tables": "1"}]
+#        self.fetch_vars = [{"Replica_open_temp_tables": "1"}]
         self.fetch_vars2 = [{"Slave_open_temp_tables": "1"}]
         self.fetch_vars3 = [{"Replica_open_temp_tables": "1"}]
         self.query = [
             [{"SERVICE_STATE": "ON"}], [{"COUNT_TRANSACTIONS_RETRIES": 0}]]
         self.read_only = {"read_only": "ON"}
 
-        """
         self.show_stat = [
             {"Slave_IO_State": "up",
              "Master_Host": "masterhost",
@@ -152,7 +151,7 @@ class UnitTest(unittest.TestCase):
              "Retrieved_Gtid_Set": "retgtid",
              "Executed_Gtid_Set": "exegtid",
              "Auto_Position": "autopos"}]
-        """
+
         self.show_stat2 = [
             {"Replica_IO_State": "up",
              "Source_Host": "masterhost",
@@ -207,7 +206,7 @@ class UnitTest(unittest.TestCase):
              "Retrieved_Gtid_Set": "retgtid",
              "Executed_Gtid_Set": "exegtid",
              "Auto_Position": "autopos"}]
-        self.show_stat = self.show_stat2
+#        self.show_stat = self.show_stat2
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
@@ -526,6 +525,7 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             self.machine, defaults_file=self.defaults_file)
         mysqlrep.version = self.version
+        
         mysqlrep.upd_slv_status()
 
         self.assertEqual(mysqlrep.secs_behind, 1)
