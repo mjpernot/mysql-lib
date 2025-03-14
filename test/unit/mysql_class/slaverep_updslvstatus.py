@@ -81,7 +81,6 @@ class UnitTest(unittest.TestCase):
         self.port = 3307
         self.defaults_file = "def_cfg_file"
         self.extra_def_file = "extra_cfg_file"
-#        self.version = (5, 7, 33)
         self.version = (8, 0, 0)
         self.version2 = (8, 0, 0)
         self.version3 = (8, 0, 21)
@@ -90,7 +89,6 @@ class UnitTest(unittest.TestCase):
         self.fetch_vars = [
             {"Slave_running": "ON"}, {"Slave_retried_transactions": 0},
             {"Slave_open_temp_tables": "1"}]
-#        self.fetch_vars = [{"Replica_open_temp_tables": "1"}]
         self.fetch_vars2 = [{"Slave_open_temp_tables": "1"}]
         self.fetch_vars3 = [{"Replica_open_temp_tables": "1"}]
         self.query = [
@@ -206,7 +204,6 @@ class UnitTest(unittest.TestCase):
              "Retrieved_Gtid_Set": "retgtid",
              "Executed_Gtid_Set": "exegtid",
              "Auto_Position": "autopos"}]
-#        self.show_stat = self.show_stat2
 
     @mock.patch(
         "mysql_class.SlaveRep.upd_gtid_pos", mock.Mock(return_value=True))
@@ -227,7 +224,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -417,7 +414,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -450,7 +447,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Seconds_Behind_Master"] = None
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -483,7 +480,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Seconds_Behind_Master"] = 1
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -517,7 +514,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Seconds_Behind_Master"] = "1"
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -525,7 +522,6 @@ class UnitTest(unittest.TestCase):
             self.name, self.server_id, self.sql_user, self.sql_pass,
             self.machine, defaults_file=self.defaults_file)
         mysqlrep.version = self.version
-        
         mysqlrep.upd_slv_status()
 
         self.assertEqual(mysqlrep.secs_behind, 1)
@@ -550,7 +546,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -583,7 +579,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Skip_Counter"] = 1
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -617,7 +613,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Skip_Counter"] = "1"
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -649,7 +645,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -683,7 +679,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Master_Server_Id"] = 11
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -717,7 +713,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Master_Server_Id"] = "11"
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -749,7 +745,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -783,7 +779,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Last_SQL_Errno"] = 1
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -817,7 +813,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Last_SQL_Errno"] = "1"
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -849,7 +845,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -882,7 +878,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Last_IO_Errno"] = 1
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -916,7 +912,7 @@ class UnitTest(unittest.TestCase):
         self.show_stat[0]["Last_IO_Errno"] = "1"
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -948,7 +944,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
@@ -979,7 +975,7 @@ class UnitTest(unittest.TestCase):
         """
 
         mock_var.return_value = self.read_only
-        mock_global.side_effect = self.fetch_vars
+        mock_global.side_effect = self.fetch_vars2
         mock_stat.return_value = self.show_stat
         mock_qry.side_effect = self.query
 
