@@ -73,10 +73,10 @@ class UnitTest(unittest.TestCase):
                                      self.sql_pass, self.machine,
                                      defaults_file=self.defaults_file)
 
-        self.assertEqual(mysqldb.fetch_mst_rep_cfg(),
-                         ({"log_bin": None, "innodb_support_xa": None,
-                           "sync_binlog": None, "binlog_format": None,
-                           "innodb_flush_log_at_trx_commit": None}))
+        self.assertEqual(
+            mysqldb.fetch_mst_rep_cfg(), {
+                "log_bin": None, "sync_binlog": None, "binlog_format": None,
+                "innodb_flush_log_at_trx_commit": None})
 
 
 if __name__ == "__main__":

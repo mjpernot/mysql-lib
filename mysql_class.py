@@ -612,7 +612,6 @@ class Server():                                 # pylint:disable=R0902,R0904
         self.log_bin = None
         self.sync_log = None
         self.innodb_flush = None
-        self.innodb_xa = None
         self.log_format = None
 
         # Slave rep config settings.
@@ -849,10 +848,6 @@ class Server():                                 # pylint:disable=R0902,R0904
             self,
             "innodb_flush_log_at_trx_commit")["innodb_flush_log_at_trx_commit"]
 
-        # innodb_support_xa has been removed in MySQL 8.0
-        self.innodb_xa = fetch_sys_var(
-            self, "innodb_support_xa").get("innodb_support_xa", None)
-
         self.log_format = fetch_sys_var(self, "binlog_format")["binlog_format"]
 
     def upd_slv_rep_stat(self):
@@ -891,7 +886,6 @@ class Server():                                 # pylint:disable=R0902,R0904
         """
 
         return {"log_bin": self.log_bin,
-                "innodb_support_xa": self.innodb_xa,
                 "sync_binlog": self.sync_log,
                 "binlog_format": self.log_format,
                 "innodb_flush_log_at_trx_commit": self.innodb_flush}

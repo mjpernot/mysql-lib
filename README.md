@@ -114,8 +114,8 @@ Make the appropriate change to the environment.
 
 ```
 cp mysql_cfg.py test/integration/config
-vim test/integration/config/mysql_cfg.py
 chmod 600 test/integration/config/mysql_cfg.py
+vim test/integration/config/mysql_cfg.py
 ```
 
 Create MySQL definition file.
@@ -127,8 +127,8 @@ Make the appropriate change to the environment.
 
 ```
 cp mysql.cfg test/integration/config
-vim test/integration/config/mysql.cfg
 chmod 600 test/integration/config/mysql.cfg
+vim test/integration/config/mysql.cfg
 ```
 
 ### Testing:
@@ -166,8 +166,8 @@ Make the appropriate change to the environment.
 
 ```
 cp mysql_cfg.py test/integration/config/master_mysql_cfg.py
-vim test/integration/config/master_mysql_cfg.py
 chmod 600 test/integration/config/master_mysql_cfg.py
+vim test/integration/config/master_mysql_cfg.py
 ```
 
 Create MySQL definition file.
@@ -179,8 +179,8 @@ Make the appropriate change to the environment.
 
 ```
 cp mysql.cfg test/integration/config
-vim test/integration/config/mysql.cfg
 chmod 600 test/integration/config/mysql.cfg
+vim test/integration/config/mysql.cfg
 ```
 
 ### Testing:
@@ -218,8 +218,8 @@ Make the appropriate change to the environment.
 
 ```
 cp mysql_cfg.py test/integration/config/slave_mysql_cfg.py
-vim test/integration/config/slave_mysql_cfg.py
 chmod 600 test/integration/config/slave_mysql_cfg.py
+vim test/integration/config/slave_mysql_cfg.py
 ```
 
 Create MySQL definition file.
@@ -231,8 +231,8 @@ Make the appropriate change to the environment.
 
 ```
 cp mysql.cfg test/integration/config
-vim test/integration/config/mysql.cfg
 chmod 600 test/integration/config/mysql.cfg
+vim test/integration/config/mysql.cfg
 ```
 
 Create a MySQL slave configuration file.
@@ -256,8 +256,8 @@ Make the appropriate change to the environment.
 
 ```
 cp slave.txt test/integration/config
-vim test/integration/config/slave.txt
 chmod 600 test/integration/config/slave.txt
+vim test/integration/config/slave.txt
 ```
 
 ### Testing:
