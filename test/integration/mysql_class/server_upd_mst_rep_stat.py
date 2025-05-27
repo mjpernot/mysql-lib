@@ -37,7 +37,6 @@ class UnitTest(unittest.TestCase):
 
     Methods:
         setUp
-        test_innodb_xa
         test_base3
         test_base2
         test_base
@@ -63,22 +62,6 @@ class UnitTest(unittest.TestCase):
             os_type=getattr(machine, cfg.serv_os)(), host=cfg.host,
             port=cfg.port, defaults_file=cfg.cfg_file)
         self.svr.connect()
-
-    def test_innodb_xa(self):
-
-        """Function:  test_innodb_xa
-
-        Description:  Test with innodb_xa attribute.
-
-        Arguments:
-
-        """
-
-        self.svr.upd_mst_rep_stat()
-
-        self.assertTrue(
-            (self.svr.innodb_xa and self.svr.version[0] < 8) or
-            (self.svr.innodb_xa is None and self.svr.version[0] >= 8))
 
     def test_base3(self):
 

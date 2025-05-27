@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on "Keep a Changelog".  This project adheres to Semantic Versioning.
 
 
+## [5.5.1] - 2025-05-27
+- Updated python-lib to v4.0.1
+- Removed support for pre-MySQL 8 versions.
+
+### Fixed:
+- mysql_libs.get_db_tbl: Removed tables to be ignored from table list for single database check.
+
+### Changed
+- mysql_class.Server.\_\_init\_\_: Removed innodb_xa attribute - no longer in MySQL 8.X.
+- mysql_class.Server.upd_mst_rep_stat: Removed setting the innodb_xa attribute - no longer in MySQL 8.X.
+- mysql_class.Server.fetch_mst_rep_cfg: Removed adding innodb_xa to dictionary object - no longer in MySQL 8.X.
+
+
 ## [5.5.0] - 2025-03-04
 - Removed support for MySQL 5.5/5.6/5.7
 - Fixed Position class using \_\_cmp\_\_ as it is no longer supported in Python 3.
